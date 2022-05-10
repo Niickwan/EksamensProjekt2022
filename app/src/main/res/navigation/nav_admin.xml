@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/FragmentAdminHome">
+
+    <fragment
+        android:id="@+id/FragmentAdminHome"
+        android:name="com.jmmnt.UI.FragmentAdminHome"
+        android:label="@string/fragment_admin_home_label"
+        tools:layout="@layout/fragment_admin_home">
+        <action
+            android:id="@+id/action_FragmentAdminHome_to_FragmentAdminNotInUse"
+            app:destination="@id/FragmentAdminNotInUse" />
+    </fragment>
+    <fragment
+        android:id="@+id/FragmentAdminNotInUse"
+        android:name="com.jmmnt.UI.FragmentAdminNotInUse"
+        android:label="@string/fragment_admin_not_in_use_label"
+        tools:layout="@layout/fragment_admin_not_in_use"/>
+</navigation>
