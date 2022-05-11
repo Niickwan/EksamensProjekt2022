@@ -13,6 +13,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.jmmnt.Database.DB_Con;
 import com.jmmnt.R;
 import com.jmmnt.databinding.ActivityLoginBinding;
 
@@ -23,6 +24,10 @@ public class ActivityLogin extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityLoginBinding binding;
+
+    DB_Con db_con = DB_Con.getInstance();
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

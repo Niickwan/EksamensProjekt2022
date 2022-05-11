@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EksamensProjekt2022">
         <activity
-            android:name=".UI.ActivityEmployee"
+            android:name=".UI.ActivityUser"
             android:exported="false"
             android:label="@string/title_activity_user"
             android:theme="@style/Theme.EksamensProjekt2022.NoActionBar" />

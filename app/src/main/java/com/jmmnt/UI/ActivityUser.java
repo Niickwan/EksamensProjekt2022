@@ -16,7 +16,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.jmmnt.R;
 import com.jmmnt.databinding.ActivityUserBinding;
 
-public class ActivityEmployee extends AppCompatActivity {
+public class ActivityUser extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityUserBinding binding;
