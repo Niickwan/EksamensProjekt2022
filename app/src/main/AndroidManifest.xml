@@ -12,7 +12,7 @@
         <activity
             android:name=".UI.ActivityEmployee"
             android:exported="false"
-            android:label="@string/title_activity_employee"
+            android:label="@string/title_activity_user"
             android:theme="@style/Theme.EksamensProjekt2022.NoActionBar" />
         <activity
             android:name=".UI.ActivityAdmin"

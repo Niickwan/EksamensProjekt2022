@@ -13,7 +13,7 @@
     <string name="fragment_admin_not_in_use_label">AdminNotInUse</string>
 
     <!-- EMPLOYEE FRAGMENTS -->
-    <string name="title_activity_employee">USER</string>
+    <string name="title_activity_user">USER</string>
     <string name="fragment_user_home_label">UserHome</string>
     <string name="fragment_user_not_in_use_label">UserNotInUse</string>
 </resources>
