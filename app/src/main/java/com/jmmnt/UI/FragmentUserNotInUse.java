@@ -7,14 +7,12 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
 
-import com.jmmnt.R;
-import com.jmmnt.databinding.FragmentAdminNotInUseBinding;
+import com.jmmnt.databinding.FragmentUserNotInUseBinding;
 
-public class FragmentEmployeeNotInUse extends Fragment {
+public class FragmentUserNotInUse extends Fragment {
 
-    private FragmentAdminNotInUseBinding binding;
+    private FragmentUserNotInUseBinding binding;
 
     @Override
     public View onCreateView(
@@ -22,7 +20,7 @@ public class FragmentEmployeeNotInUse extends Fragment {
             Bundle savedInstanceState
     ) {
 
-        binding = FragmentAdminNotInUseBinding.inflate(inflater, container, false);
+        binding = FragmentUserNotInUseBinding.inflate(inflater, container, false);
         return binding.getRoot();
 
     }

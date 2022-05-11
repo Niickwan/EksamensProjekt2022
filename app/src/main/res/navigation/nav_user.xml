@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/FragmentUserHome">
+
+    <fragment
+        android:id="@+id/FragmentUserHome"
+        android:name="com.jmmnt.UI.FragmentUserHome"
+        android:label="@string/fragment_user_home_label"
+        tools:layout="@layout/fragment_user_home"/>
+    <fragment
+        android:id="@+id/FragmentUserNotInUse"
+        android:name="com.jmmnt.UI.FragmentUserNotInUse"
+        android:label="@string/fragment_user_not_in_use_label"
+        tools:layout="@layout/fragment_user_not_in_use"/>
+</navigation>

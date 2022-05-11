@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/jense/AndroidStudioProjects/EksamensProjekt2022/app/src/main/res/layout/activity_admin.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/jense/AndroidStudioProjects/EksamensProjekt2022/app/src/main/res/layout/activity_employee.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/jense/AndroidStudioProjects/EksamensProjekt2022/app/src/main/res/layout/content_admin.xml" value="0.21770833333333334" />
         <entry key="..\:/Users/jense/AndroidStudioProjects/EksamensProjekt2022/app/src/main/res/layout/content_employee.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/jense/AndroidStudioProjects/EksamensProjekt2022/app/src/main/res/layout/content_login.xml" value="0.3625" />
@@ -13,6 +14,7 @@
         <entry key="..\:/Users/jense/AndroidStudioProjects/EksamensProjekt2022/app/src/main/res/layout/fragment_employee_not_in_use.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/jense/AndroidStudioProjects/EksamensProjekt2022/app/src/main/res/layout/fragment_login_home.xml" value="0.3625" />
         <entry key="..\:/Users/jense/AndroidStudioProjects/EksamensProjekt2022/app/src/main/res/layout/fragment_login_not_in_use.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/jense/AndroidStudioProjects/EksamensProjekt2022/app/src/main/res/layout/fragment_user_not_in_use.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/jense/AndroidStudioProjects/EksamensProjekt2022/app/src/main/res/menu/menu_main.xml" value="0.36666666666666664" />
       </map>
     </option>

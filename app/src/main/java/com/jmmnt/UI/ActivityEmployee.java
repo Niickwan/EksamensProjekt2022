@@ -14,18 +14,18 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.jmmnt.R;
-import com.jmmnt.databinding.ActivityEmployeeBinding;
+import com.jmmnt.databinding.ActivityUserBinding;
 
 public class ActivityEmployee extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
-    private ActivityEmployeeBinding binding;
+    private ActivityUserBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityEmployeeBinding.inflate(getLayoutInflater());
+        binding = ActivityUserBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         setSupportActionBar(binding.toolbar);
