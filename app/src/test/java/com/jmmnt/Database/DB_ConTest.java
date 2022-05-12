@@ -19,4 +19,9 @@ public class DB_ConTest {
         assertTrue(res1);
         //Test1
     }
+
+    @Test
+    public void validateLogin() throws SQLException {
+        assertEquals(1, db.validateLogin("Nicklas", "Jensen"));
+    }
 }
