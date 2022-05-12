@@ -22,7 +22,6 @@ import com.jmmnt.databinding.FragmentLoginHomeBinding;
 public class FragmentLoginHome extends Fragment {
 
     private FragmentLoginHomeBinding binding;
-
     private DB_Con db_con = DB_Con.getInstance();
 
     private Button login;

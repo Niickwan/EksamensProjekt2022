@@ -1,6 +1,8 @@
-package com.company.UseCase;
+package com.jmmnt.UseCase;
 
-import com.company.Entity.Assignment;
+
+
+import com.jmmnt.Entities.Assignment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +42,8 @@ public class EditAssignment{
     //The method then returns true if they do contain the same chars, and false if they do not.
     //TODO skal lægge i general use-case (måske??????)
     public boolean checkIfStringMatchesInput(String s, String input){
-            return s.matches("(.*)" + input + "(.*)");
+
+            return s.toLowerCase().matches("(.*)" + input.toLowerCase() + "(.*)");
     }
     //This method takes a list of assignments and a string
     //the method then uses the methods findCaseMatchingInput and sortCaseByIndex
@@ -49,4 +52,5 @@ public class EditAssignment{
     public List<Assignment> getSearchedCases(List<Assignment> assignments, String input){
         return sortCasesByindex(assignments, findCaseMatchingInput(assignments, input));
     }
+
 }

@@ -1,4 +1,4 @@
-package com.company.Entity;
+package com.jmmnt.Entities;
 
 public class Customer extends Person{
     public Customer(String firstName, String lastName) {
