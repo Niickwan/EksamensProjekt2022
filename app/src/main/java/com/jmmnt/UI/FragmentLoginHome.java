@@ -3,31 +3,25 @@ package com.jmmnt.UI;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
 
 import com.jmmnt.Database.DB_Con;
-import com.jmmnt.R;
 import com.jmmnt.databinding.FragmentLoginHomeBinding;
 
 public class FragmentLoginHome extends Fragment {
 
     private FragmentLoginHomeBinding binding;
     private DB_Con db_con = DB_Con.getInstance();
-
-    private Button login;
-    private TextView loginLabel;
-    private EditText username, password;
-
 
     @Override
     public View onCreateView(
@@ -46,18 +40,26 @@ public class FragmentLoginHome extends Fragment {
         binding.loginBtn.setOnClickListener(v -> new Thread(() -> {
             int loginRights = -1;
             try {
-                loginRights = db_con.validateLogin(binding.usernameEt.toString(), binding.passwordEt.toString());
+                loginRights = db_con.validateLogin(binding.usernameEt.getText().toString(), binding.passwordEt.getText().toString());
                 if (loginRights == 1){
                     switchScene(getActivity(), ActivityAdmin.class);
                 } else if(loginRights == 2) {
                     switchScene(getActivity(), ActivityUser.class);
+                } else {
+                    toastAlert("Forkert Login");
                 }
 
 
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }));
+        }).start());
+    }
+
+    private void toastAlert(String text) {
+        Looper.prepare();
+        Toast.makeText(getActivity(),text, Toast.LENGTH_LONG).show();
+        Looper.loop();
     }
 
     @Override
