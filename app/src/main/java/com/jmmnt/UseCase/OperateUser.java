@@ -1,9 +1,6 @@
 package com.jmmnt.UseCase;
 
-import com.jmmnt.Database.DB_Con;
 import com.jmmnt.Entities.User;
-
-import java.sql.SQLException;
 
 public class OperateUser {
 
