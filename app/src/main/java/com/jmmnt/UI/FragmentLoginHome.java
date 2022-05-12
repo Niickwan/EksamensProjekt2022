@@ -14,8 +14,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.jmmnt.Database.DB_Con;
+import com.jmmnt.R;
 import com.jmmnt.databinding.FragmentLoginHomeBinding;
 
 public class FragmentLoginHome extends Fragment {
@@ -41,9 +43,9 @@ public class FragmentLoginHome extends Fragment {
             int loginRights = -1;
             try {
                 loginRights = db_con.validateLogin(binding.usernameEt.getText().toString(), binding.passwordEt.getText().toString());
-                if (loginRights == 1){
+                if (loginRights == 1) {
                     switchScene(getActivity(), ActivityAdmin.class);
-                } else if(loginRights == 2) {
+                } else if (loginRights == 2) {
                     switchScene(getActivity(), ActivityUser.class);
                 } else {
                     toastAlert("Forkert Login");
@@ -53,12 +55,17 @@ public class FragmentLoginHome extends Fragment {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
         }).start());
+
+        binding.registerBtn.setOnClickListener(view1 -> NavHostFragment.findNavController(FragmentLoginHome.this)
+                .navigate(R.id.action_FragmentLoginHome_to_FragmentLoginRegister));
+
     }
 
     private void toastAlert(String text) {
         Looper.prepare();
-        Toast.makeText(getActivity(),text, Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), text, Toast.LENGTH_LONG).show();
         Looper.loop();
     }
 

@@ -9,10 +9,14 @@
         android:id="@+id/FragmentLoginHome"
         android:name="com.jmmnt.UI.FragmentLoginHome"
         android:label="@string/fragment_login_home_label"
-        tools:layout="@layout/fragment_login_home"/>
+        tools:layout="@layout/fragment_login_home">
+        <action
+            android:id="@+id/action_FragmentLoginHome_to_FragmentLoginRegister"
+            app:destination="@id/FragmentLoginRegister" />
+    </fragment>
     <fragment
-        android:id="@+id/FragmentLoginNotInUse"
-        android:name="com.jmmnt.UI.FragmentLoginNotInUse"
-        android:label="@string/fragment_login_not_in_use_label"
-        tools:layout="@layout/fragment_login_not_in_use"/>
+        android:id="@+id/FragmentLoginRegister"
+        android:name="com.jmmnt.UI.FragmentLoginRegister"
+        android:label="@string/fragment_login_register_label"
+        tools:layout="@layout/fragment_login_register" />
 </navigation>
