@@ -9,4 +9,3 @@ public class BranchTest {
         return "Ole";
     }
 }
-
