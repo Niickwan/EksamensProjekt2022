@@ -18,12 +18,13 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.jmmnt.Database.DB_Con;
 import com.jmmnt.R;
+import com.jmmnt.UseCase.OperateDB;
 import com.jmmnt.databinding.FragmentLoginHomeBinding;
 
 public class FragmentLoginHome extends Fragment {
 
     private FragmentLoginHomeBinding binding;
-    private DB_Con db_con = DB_Con.getInstance();
+    private OperateDB opDB = new OperateDB();
 
     @Override
     public View onCreateView(
@@ -41,7 +42,7 @@ public class FragmentLoginHome extends Fragment {
         binding.loginBtn.setOnClickListener(v -> new Thread(() -> {
             int loginRights = -1;
             try {
-                loginRights = db_con.validateLogin(binding.usernameEt.getText().toString(), binding.passwordEt.getText().toString());
+                loginRights = opDB.validateLogin(binding.emailEt.getText().toString(), binding.passwordEt.getText().toString());
                 if (loginRights == 1) {
                     switchScene(getActivity(), ActivityAdmin.class);
                 } else if (loginRights == 2) {
@@ -49,7 +50,6 @@ public class FragmentLoginHome extends Fragment {
                 } else {
                     toastAlert("Forkert Login");
                 }
-
 
             } catch (Exception e) {
                 e.printStackTrace();
