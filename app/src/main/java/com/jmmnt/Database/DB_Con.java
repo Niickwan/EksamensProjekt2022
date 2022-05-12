@@ -1,5 +1,7 @@
 package com.jmmnt.Database;
 
+import com.jmmnt.Entities.User;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -52,4 +54,23 @@ public class DB_Con {
         }
         return userRights;
     }
+
+    public boolean createNewUser(User user) throws SQLException {
+        int isUserCreated = 0;
+        connection = connection();
+        String userInfo = "INSERT INTO User (Email, Password, Name, Surname, UserRights) "
+                + "VALUES ('"
+                + user.getEmail() + "', '"
+                + user.getPassword() + "', '"
+                + user.getFirstName() + "', '"
+                + user.getSurname() + "', '"
+                + user.getUserRights() + "')";
+            preStmt = connection.prepareStatement(userInfo);
+            isUserCreated = preStmt.executeUpdate();
+            preStmt.close();
+            connection.close();
+
+        return isUserCreated == 1;
+    }
+
 }
