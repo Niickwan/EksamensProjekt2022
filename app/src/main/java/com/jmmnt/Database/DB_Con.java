@@ -37,12 +37,12 @@ public class DB_Con {
             return dbCon;
     }
 
-    public int validateLogin(String username, String password) throws SQLException {
+    public int validateLogin(String email, String password) throws SQLException {
         int userRights = -1;
-        String MySQL = "SELECT * FROM User WHERE Username = ? AND Password = ?";
+        String MySQL = "SELECT * FROM User WHERE Email = ? AND Password = ?";
         connection = connection();
         preStmt = connection.prepareStatement(MySQL);
-        preStmt.setString(1, username);
+        preStmt.setString(1, email);
         preStmt.setString(2, password);
         rs = preStmt.executeQuery();
         if (rs.next()) {
