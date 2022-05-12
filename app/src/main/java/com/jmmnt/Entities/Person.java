@@ -1,4 +1,4 @@
-package com.company.Entity;
+package com.jmmnt.Entities;
 
 public abstract class Person {
     private String firstName;

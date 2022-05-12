@@ -1,4 +1,4 @@
-package com.company.Entity;
+package com.jmmnt.Entities;
 
 import java.util.ArrayList;
 
@@ -9,6 +9,7 @@ public class AssignmentContainer {
         return assignmentList;
     }
 
+    //TODO skal slettes, bruges til test
     public AssignmentContainer(){
         assignmentList.add(new Assignment(new Customer("lars", "sørensen"),
                 new User("christian", " jørgensen", "abc2"),
