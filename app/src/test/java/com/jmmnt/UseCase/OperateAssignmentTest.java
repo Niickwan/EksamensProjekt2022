@@ -11,8 +11,8 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EditAssignmentTest {
-    EditAssignment ea = new EditAssignment();
+public class OperateAssignmentTest {
+    OperateAssignment ea = new OperateAssignment();
 
     @Test
     public void sortCasesByindex() {
@@ -76,21 +76,5 @@ public class EditAssignmentTest {
         List<Integer> res5 = ea.findCaseMatchingInput(assignmentList, "Jørgen");
         assertNotEquals(expected5,res5);
 
-    }
-
-    @Test
-    public void checkIfStringMatchesInput() {
-        boolean res1 = ea.checkIfStringMatchesInput("Hans","an");
-        assertTrue(res1);
-        boolean res2 = ea.checkIfStringMatchesInput("Hans","hans");
-        assertTrue(res2);
-        boolean res3 = ea.checkIfStringMatchesInput("Hans", "Hans");
-        assertTrue(res3);
-        boolean res4 = ea.checkIfStringMatchesInput("Hans","hanl");
-        assertFalse(res4);
-        boolean res5 = ea.checkIfStringMatchesInput("Hans", "l");
-        assertFalse(res5);
-        boolean res6 = ea.checkIfStringMatchesInput("Hans", "4");
-        assertFalse(res6);
     }
 }
