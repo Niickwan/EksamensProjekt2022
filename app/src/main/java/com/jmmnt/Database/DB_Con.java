@@ -15,7 +15,7 @@ public class DB_Con {
     private Statement stmt;
     private ResultSet rs;
     private static DB_Con dbCon;
-    private final String URL = "jdbc:mysql://mysql61.unoeuro.com:3306/dat32_dk_db_eksamen";
+    private final String URL = "jdbc:mysql://mysql61.unoeuro.com:3306/dat32_dk_db_eksamen?useSSL=true"; //TODO SSL Run error "autoReconnect=true&useSSL=false"
     private final String format = "yyyy-MM-dd";
 
     private Connection connection() {
