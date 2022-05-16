@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import com.jmmnt.Entities.User;
 import com.jmmnt.R;
+import com.jmmnt.UseCase.GeneralUseCase;
 import com.jmmnt.UseCase.OperateDB;
 import com.jmmnt.UseCase.OperateUser;
 import com.jmmnt.databinding.FragmentLoginRegisterBinding;
@@ -18,6 +19,7 @@ public class FragmentLoginRegister extends Fragment{
 
     private OperateDB opDB = new OperateDB();
     private OperateUser opUsr = new OperateUser();
+    private GeneralUseCase gUC = new GeneralUseCase();
     private View.OnFocusChangeListener setOnFocusChangeListener;
     private FragmentLoginRegisterBinding binding;
 
@@ -30,12 +32,27 @@ public class FragmentLoginRegister extends Fragment{
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding.createBtn.setOnClickListener(v -> new Thread(() -> {
-            User user = opUsr.CreateDefaultUserLoginInfo(binding.registerFirstNameEt.getText().toString(), binding.registerSurnameEt.getText().toString(),
-                    binding.registerEmailEt.getText().toString(), binding.registerPasswordEt.getText().toString());
-            try {
-                opDB.createUserInDB(user);
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
+            if(!gUC.checkIfLetters(binding.registerFirstNameEt.getText().toString())
+                || !gUC.checkIfLetters(binding.registerSurnameEt.getText().toString())
+                    || binding.registerSurnameEt.getText().toString().isEmpty()
+                || binding.registerSurnameEt.getText().toString().isEmpty()) {
+                gUC.toastAlert(getActivity(), "Fejl i navn");
+            }
+
+            else if(!gUC.checkIfEmail(binding.registerEmailEt.getText().toString()) ){
+                gUC.toastAlert(getActivity(), "Ugyldig Email");
+            }
+            else if(opDB.isEmailAvailable(binding.registerEmailEt.getText().toString())){
+                gUC.toastAlert(getActivity(), "Email er allerede oprettet");
+            }
+            else{
+                User user = opUsr.CreateDefaultUserLoginInfo(binding.registerFirstNameEt.getText().toString(), binding.registerSurnameEt.getText().toString(),
+                        binding.registerEmailEt.getText().toString(), binding.registerPasswordEt.getText().toString());
+                try {
+                    opDB.createUserInDB(user);
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
             }
         }).start());
 

@@ -15,6 +15,7 @@ import androidx.appcompat.widget.PopupMenu;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 import com.jmmnt.R;
+import com.jmmnt.UseCase.GeneralUseCase;
 import com.jmmnt.UseCase.OperateDB;
 import com.jmmnt.databinding.FragmentLoginHomeBinding;
 
@@ -22,6 +23,7 @@ public class FragmentLoginHome extends Fragment {
 
     private FragmentLoginHomeBinding binding;
     private OperateDB opDB = new OperateDB();
+    private GeneralUseCase gUC = new GeneralUseCase();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -46,7 +48,7 @@ public class FragmentLoginHome extends Fragment {
                 } else if (loginRights == 2) {
                     switchScene(getActivity(), ActivityUser.class);
                 } else {
-                    toastAlert("Forkert Login");
+                    gUC.toastAlert(getActivity(),"Forkert Login");
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -57,12 +59,6 @@ public class FragmentLoginHome extends Fragment {
             binding.emailEt.getText().clear();
             binding.passwordEt.getText().clear();
         });
-    }
-
-    private void toastAlert(String text) {
-        Looper.prepare();
-        Toast.makeText(getActivity(), text, Toast.LENGTH_LONG).show();
-        Looper.loop();
     }
 
     @Override
