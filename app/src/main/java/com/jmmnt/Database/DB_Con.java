@@ -21,7 +21,6 @@ public class DB_Con {
     private Connection connection() {
         connection = null;
         try {
-//            Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(URL, "dat32_dk", "9hkdpBFtAg34");
         } catch (SQLException e) {
             e.printStackTrace();
@@ -37,38 +36,46 @@ public class DB_Con {
             return dbCon;
     }
 
-    public int validateLogin(String email, String password) throws SQLException {
+    public int validateLogin(String email, String password) {
         int userRights = -1;
         String MySQL = "SELECT * FROM User WHERE Email = ? AND Password = ?";
-        connection = connection();
-        preStmt = connection.prepareStatement(MySQL);
-        preStmt.setString(1, email);
-        preStmt.setString(2, password);
-        rs = preStmt.executeQuery();
-        if (rs.next()) {
-            if (rs.getString("UserRights").equals("1")) userRights = 1;
-            else if (rs.getString("UserRights").equals("2")) userRights = 2;
+        try {
+            connection = connection();
+            preStmt = connection.prepareStatement(MySQL);
+            preStmt.setString(1, email);
+            preStmt.setString(2, password);
+            rs = preStmt.executeQuery();
+            if (rs.next()) {
+                if (rs.getString("UserRights").equals("1")) userRights = 1;
+                else if (rs.getString("UserRights").equals("2")) userRights = 2;
+            }
             connection.close();
             preStmt.close();
             rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return userRights;
     }
 
-    public boolean createNewUser(User user) throws SQLException {
+    public boolean createNewUser(User user) {
         int isUserCreated = 0;
-        connection = connection();
-        String userInfo = "INSERT INTO User (Email, Password, Name, Surname, UserRights) "
-                + "VALUES ('"
-                + user.getEmail() + "', '"
-                + user.getPassword() + "', '"
-                + user.getFirstName() + "', '"
-                + user.getSurname() + "', '"
-                + user.getUserRights() + "')";
+        try {
+            connection = connection();
+            String userInfo = "INSERT INTO User (Email, Password, Name, Surname, UserRights) "
+                    + "VALUES ('"
+                    + user.getEmail() + "', '"
+                    + user.getPassword() + "', '"
+                    + user.getFirstName() + "', '"
+                    + user.getSurname() + "', '"
+                    + user.getUserRights() + "')";
             preStmt = connection.prepareStatement(userInfo);
             isUserCreated = preStmt.executeUpdate();
             preStmt.close();
             connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         return isUserCreated == 1;
     }
@@ -76,8 +83,8 @@ public class DB_Con {
     public boolean isEmailAvailable(String email){
         boolean isEmailAvailable = false;
         String MySQL = "SELECT * FROM User WHERE Email = '" + email + "'";
-        connection = connection();
         try {
+            connection = connection();
             preStmt = connection.prepareStatement(MySQL);
             rs = preStmt.executeQuery();
             if (rs.next()) isEmailAvailable = true;

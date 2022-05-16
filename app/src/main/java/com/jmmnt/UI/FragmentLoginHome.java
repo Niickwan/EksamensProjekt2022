@@ -4,12 +4,10 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.fragment.app.Fragment;
@@ -41,17 +39,13 @@ public class FragmentLoginHome extends Fragment {
         });
         binding.loginBtn.setOnClickListener(v -> new Thread(() -> {
             int loginRights = -1;
-            try {
-                loginRights = opDB.validateLogin(binding.emailEt.getText().toString(), binding.passwordEt.getText().toString());
-                if (loginRights == 1) {
-                    switchScene(getActivity(), ActivityAdmin.class);
-                } else if (loginRights == 2) {
-                    switchScene(getActivity(), ActivityUser.class);
-                } else {
-                    gUC.toastAlert(getActivity(),"Forkert Login");
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
+            loginRights = opDB.validateLogin(binding.emailEt.getText().toString(), binding.passwordEt.getText().toString());
+            if (loginRights == 1) {
+                switchScene(getActivity(), ActivityAdmin.class);
+            } else if (loginRights == 2) {
+                switchScene(getActivity(), ActivityUser.class);
+            } else {
+                gUC.toastAlert(getActivity(),"Forkert Login");
             }
         }).start());
         binding.registerBtn.setOnClickListener(view1 -> {

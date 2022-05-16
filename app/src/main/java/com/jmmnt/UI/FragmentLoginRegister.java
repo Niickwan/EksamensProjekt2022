@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import com.jmmnt.Entities.User;
@@ -12,8 +13,6 @@ import com.jmmnt.UseCase.GeneralUseCase;
 import com.jmmnt.UseCase.OperateDB;
 import com.jmmnt.UseCase.OperateUser;
 import com.jmmnt.databinding.FragmentLoginRegisterBinding;
-import java.sql.SQLException;
-
 
 public class FragmentLoginRegister extends Fragment{
 
@@ -34,7 +33,7 @@ public class FragmentLoginRegister extends Fragment{
         binding.createBtn.setOnClickListener(v -> new Thread(() -> {
             if(!gUC.checkIfLetters(binding.registerFirstNameEt.getText().toString())
                 || !gUC.checkIfLetters(binding.registerSurnameEt.getText().toString())
-                    || binding.registerSurnameEt.getText().toString().isEmpty()
+                || binding.registerSurnameEt.getText().toString().isEmpty()
                 || binding.registerSurnameEt.getText().toString().isEmpty()) {
                 gUC.toastAlert(getActivity(), "Fejl i navn");
             }
@@ -46,13 +45,12 @@ public class FragmentLoginRegister extends Fragment{
                 gUC.toastAlert(getActivity(), "Email er allerede oprettet");
             }
             else{
-                User user = opUsr.CreateDefaultUserLoginInfo(binding.registerFirstNameEt.getText().toString(), binding.registerSurnameEt.getText().toString(),
-                        binding.registerEmailEt.getText().toString(), binding.registerPasswordEt.getText().toString());
-                try {
-                    opDB.createUserInDB(user);
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
-                }
+                User user = opUsr.CreateDefaultUserLoginInfo(
+                        binding.registerFirstNameEt.getText().toString(),
+                        binding.registerSurnameEt.getText().toString(),
+                        binding.registerEmailEt.getText().toString(),
+                        binding.registerPasswordEt.getText().toString());
+                opDB.createUserInDB(user);
             }
         }).start());
 
