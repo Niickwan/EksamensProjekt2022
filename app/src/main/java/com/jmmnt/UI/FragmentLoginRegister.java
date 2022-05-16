@@ -39,8 +39,8 @@ public class FragmentLoginRegister extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         binding.createBtn.setOnClickListener(v -> new Thread(() -> {
 
-            User user = opUsr.CreateDefaultUserLoginInfo(binding.userNameEt2.getText().toString(), binding.userSurnameEt2.getText().toString(),
-                    binding.userEmailEt2.getText().toString(), binding.passwordEt2.getText().toString());
+            User user = opUsr.CreateDefaultUserLoginInfo(binding.registerUserNameEt.getText().toString(), binding.registerSurnameEt.getText().toString(),
+                    binding.registerEmailEt.getText().toString(), binding.registerPasswordEt.getText().toString());
 
             try {
                 opDB.createUserInDB(user);

@@ -7,7 +7,7 @@
     tools:context=".UI.FragmentUserNotInUse">
 
     <EditText
-        android:id="@+id/userName_et2"
+        android:id="@+id/registerUserName_et"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
@@ -15,13 +15,13 @@
         android:hint="Fornavn"
         android:inputType="textPersonName"
         android:minHeight="48dp"
-        app:layout_constraintBottom_toTopOf="@+id/userSurname_et2"
+        app:layout_constraintBottom_toTopOf="@+id/registerSurname_et"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/userSurname_et2"
+        android:id="@+id/registerSurname_et"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
@@ -29,13 +29,13 @@
         android:hint="Efternavn"
         android:inputType="textPersonName"
         android:minHeight="48dp"
-        app:layout_constraintBottom_toTopOf="@+id/userEmail_et2"
+        app:layout_constraintBottom_toTopOf="@+id/registerEmail_et"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/password_et2"
+        android:id="@+id/registerPassword_et"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -48,7 +48,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/userEmail_et2"
+        android:id="@+id/registerEmail_et"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
@@ -56,7 +56,7 @@
         android:hint="E-mail"
         android:inputType="textPersonName"
         android:minHeight="48dp"
-        app:layout_constraintBottom_toTopOf="@+id/password_et2"
+        app:layout_constraintBottom_toTopOf="@+id/registerPassword_et"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -67,7 +67,7 @@
         android:layout_marginBottom="20dp"
         android:text="Opret bruger"
         android:textSize="34sp"
-        app:layout_constraintBottom_toTopOf="@+id/userName_et2"
+        app:layout_constraintBottom_toTopOf="@+id/registerUserName_et"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -79,7 +79,7 @@
         android:text="Opret"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password_et2" />
+        app:layout_constraintTop_toBottomOf="@+id/registerPassword_et" />
 
     <Button
         android:id="@+id/button_second"
