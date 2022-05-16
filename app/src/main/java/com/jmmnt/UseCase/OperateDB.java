@@ -16,7 +16,7 @@ public class OperateDB {
         return db_con.validateLogin(email, password);
     }
 
-    public boolean isEmailAvailable(String email) throws SQLException {
+    public boolean isEmailAvailable(String email) {
         return db_con.isEmailAvailable(email);
     }
 
