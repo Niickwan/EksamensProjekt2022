@@ -16,4 +16,8 @@ public class OperateDB {
         return db_con.validateLogin(email, password);
     }
 
+    public boolean isEmailAvailable(String email) throws SQLException {
+        return db_con.isEmailAvailable(email);
+    }
+
 }
