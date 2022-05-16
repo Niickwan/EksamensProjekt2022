@@ -73,16 +73,21 @@ public class DB_Con {
         return isUserCreated == 1;
     }
 
-    public boolean isEmailAvailable(String email) throws SQLException{
+    public boolean isEmailAvailable(String email){
         boolean isEmailAvailable = false;
         String MySQL = "SELECT * FROM User WHERE Email = '" + email + "'";
         connection = connection();
-        preStmt = connection.prepareStatement(MySQL);
-        rs = preStmt.executeQuery();
-        if (rs.next()) isEmailAvailable = true;
-        connection.close();
-        preStmt.close();
-        rs.close();
+        try {
+            preStmt = connection.prepareStatement(MySQL);
+            rs = preStmt.executeQuery();
+            if (rs.next()) isEmailAvailable = true;
+            connection.close();
+            preStmt.close();
+            rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         return isEmailAvailable;
     }
 

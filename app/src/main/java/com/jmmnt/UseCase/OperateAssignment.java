@@ -22,7 +22,9 @@ public class OperateAssignment {
     }
 
     //This method takes an abitrary list of assignments and an arbitrary String.
-    //The method then finds all
+    //The method then finds all the assignments whose address/postalcode/city/addressNumber match
+    //the string, and places their index numbers into an integer arraylist and then returns the
+    //integer arraylist.
     public List<Integer> findCaseMatchingInput(List<Assignment> assignments, String input){
         ArrayList<Integer> matchingCasesIndex = new ArrayList<>();
         for (int i = 0; i < assignments.size(); i++) {
