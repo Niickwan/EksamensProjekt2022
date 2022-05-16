@@ -84,19 +84,6 @@ public class DB_Con {
         preStmt.close();
         rs.close();
         return isEmailAvailable;
-
-        /*
-        boolean checkBookingID = false;
-        String mySQL = "SELECT * FROM Booking WHERE BookingID='" + bookingID + "'";
-        connection = connection();
-        stmt = connection().createStatement();
-        rs = stmt.executeQuery(mySQL);
-        if (!rs.next()) checkBookingID = true;
-        connection.close();
-        stmt.close();
-        rs.close();
-        return checkBookingID;
-        */
     }
 
 }
