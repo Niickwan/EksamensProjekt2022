@@ -1,0 +1,14 @@
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.jmmnt.UI.ActivityLogin">
+    <item
+        android:id="@+id/recoverPassword"
+        android:title="Gendan Password"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/about"
+        android:title="Om"
+        app:showAsAction="never" />
+</menu>
