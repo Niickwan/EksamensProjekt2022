@@ -80,7 +80,7 @@ public class DB_Con {
         return isUserCreated == 1;
     }
 
-    public boolean isEmailAvailable(String email){
+    public boolean isEmailOccupied(String email){
         boolean isEmailAvailable = false;
         String MySQL = "SELECT * FROM User WHERE Email = '" + email + "'";
         try {

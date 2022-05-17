@@ -14,7 +14,7 @@ public class OperateDB {
         return db_con.validateLogin(email, password);
     }
 
-    public boolean isEmailAvailable(String email) {
-        return db_con.isEmailAvailable(email);
+    public boolean isEmailOccupied(String email) {
+        return db_con.isEmailOccupied(email);
     }
 }

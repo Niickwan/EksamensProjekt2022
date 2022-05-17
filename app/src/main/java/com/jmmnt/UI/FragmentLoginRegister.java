@@ -41,7 +41,7 @@ public class FragmentLoginRegister extends Fragment{
             else if(!gUC.checkIfEmail(binding.registerEmailEt.getText().toString()) ){
                 gUC.toastAlert(getActivity(), "Ugyldig Email");
             }
-            else if(opDB.isEmailAvailable(binding.registerEmailEt.getText().toString())){
+            else if(opDB.isEmailOccupied(binding.registerEmailEt.getText().toString())){
                 gUC.toastAlert(getActivity(), "Email er allerede oprettet");
             }
             else{
