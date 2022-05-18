@@ -5,13 +5,12 @@ public class Assignment {
     private User user;
     private String orderNumber;
     private String address;
-    private String addressNumber;
     private String postalCode;
     private String city;
     //TODO skal laves felter tjeklisten... Ikke 100% aftalt hvordan endnu.
 
 
-    public Assignment(Customer customer, User user, String orderNumber, String address, String adressNumber, String postalCode, String city) {
+    public Assignment(Customer customer, User user, String orderNumber, String address, String postalCode, String city) {
         this.customer = customer;
         this.user = user;
         this.orderNumber = orderNumber;
@@ -34,10 +33,6 @@ public class Assignment {
 
     public String getAddress() {
         return address;
-    }
-
-    public String getAddressNumber() {
-        return addressNumber;
     }
 
     public String getPostalCode() {
