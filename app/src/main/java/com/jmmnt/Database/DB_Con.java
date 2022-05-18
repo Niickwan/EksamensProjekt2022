@@ -62,13 +62,14 @@ public class DB_Con {
         int isUserCreated = 0;
         try {
             connection = connection();
-            String userInfo = "INSERT INTO User (Email, Password, Name, Surname, UserRights) "
+            String userInfo = "INSERT INTO User (Email, Password, Name, Surname, UserRights, Phonenumber) "
                     + "VALUES ('"
                     + user.getEmail() + "', '"
                     + user.getPassword() + "', '"
                     + user.getFirstName() + "', '"
                     + user.getSurname() + "', '"
-                    + user.getUserRights() + "')";
+                    + user.getUserRights() + "')"
+                    + user.getPhoneNumber() + "', '";
             preStmt = connection.prepareStatement(userInfo);
             isUserCreated = preStmt.executeUpdate();
             preStmt.close();
@@ -80,7 +81,7 @@ public class DB_Con {
         return isUserCreated == 1;
     }
 
-    public boolean isEmailOccupied(String email){
+    public boolean isEmailOccupied(String email) {
         boolean isEmailAvailable = false;
         String MySQL = "SELECT * FROM User WHERE Email = '" + email + "'";
         try {
