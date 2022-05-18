@@ -16,7 +16,6 @@ public class Assignment {
         this.user = user;
         this.orderNumber = orderNumber;
         this.address = address;
-        this.addressNumber = adressNumber;
         this.postalCode = postalCode;
         this.city = city;
     }
