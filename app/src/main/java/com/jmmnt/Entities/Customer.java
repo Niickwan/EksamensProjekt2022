@@ -1,7 +1,8 @@
 package com.jmmnt.Entities;
 
-public class Customer extends Person{
-    public Customer(String firstName, String lastName) {
-        super(firstName, lastName);
+public class Customer{
+    private String companyName;
+    public Customer(String customerName){
+        this.companyName = customerName;
     }
 }
