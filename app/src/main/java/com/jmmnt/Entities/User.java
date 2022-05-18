@@ -23,9 +23,6 @@ public class User{
         this.userRights = userRights;
     }
 
-    public User() {
-        super();
-    }
 
     public String getEmail() {
         return email;
