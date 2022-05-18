@@ -37,4 +37,12 @@ public class User{
     public int getUserRights() {
         return userRights;
     }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getSurname() {
+        return surName;
+    }
 }
