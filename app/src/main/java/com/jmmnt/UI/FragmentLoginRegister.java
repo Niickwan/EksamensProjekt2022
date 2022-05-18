@@ -48,6 +48,7 @@ public class FragmentLoginRegister extends Fragment{
                 User user = opUsr.CreateDefaultUserLoginInfo(
                         binding.registerFirstNameEt.getText().toString(),
                         binding.registerSurnameEt.getText().toString(),
+                        binding.registerPhoneNumberEt.getText().toString(),
                         binding.registerEmailEt.getText().toString(),
                         binding.registerPasswordEt.getText().toString());
                 opDB.createUserInDB(user);

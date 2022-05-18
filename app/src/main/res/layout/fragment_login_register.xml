@@ -94,6 +94,25 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
+        android:id="@+id/registerPhoneNumber_et"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/edittext_design"
+        android:ems="10"
+        android:hint="Telefonnummer"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        android:textAlignment="center"
+        android:theme="@style/EditTextTheme"
+        app:layout_constraintBottom_toTopOf="@+id/registerPassword_et"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
         android:id="@+id/registerEmail_et"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -107,9 +126,9 @@
         android:minHeight="48dp"
         android:textAlignment="center"
         android:theme="@style/EditTextTheme"
-        app:layout_constraintBottom_toTopOf="@+id/registerPassword_et"
+        app:layout_constraintBottom_toTopOf="@+id/registerPhoneNumber_et"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
