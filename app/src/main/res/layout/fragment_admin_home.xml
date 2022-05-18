@@ -12,11 +12,9 @@
         android:id="@+id/sjaellands_erhvervsakademi3"
         android:layout_width="87dp"
         android:layout_height="39dp"
+        android:layout_marginStart="15dp"
         android:layout_marginTop="50dp"
-        android:layout_marginEnd="255dp"
         android:src="@drawable/sjaellands_erhvervsakademi"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.289"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,96 +22,115 @@
         android:id="@+id/zealand_logo3"
         android:layout_width="166dp"
         android:layout_height="62dp"
+        android:layout_marginStart="15dp"
         android:layout_marginTop="5dp"
-        android:layout_marginEnd="200dp"
         android:src="@drawable/zealand_logo"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/admin_login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="next"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:orientation="vertical"
-        app:flow_horizontalAlign="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.859"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Admin"
-            android:textStyle="bold"
-            android:textAlignment="center"
-            android:textColor="@color/darkblue"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/profile_picture" />
-
-        <ImageView
-            android:id="@+id/profile_picture"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/profile_icon"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <Button
-        android:id="@+id/button"
+        android:id="@+id/createNewAssignmentBtn"
         android:layout_width="0dp"
-        android:layout_height="45dp"
+        android:layout_height="48dp"
         android:layout_marginStart="60dp"
-        android:layout_marginTop="236dp"
+        android:layout_marginTop="150dp"
         android:layout_marginEnd="60dp"
         android:background="@drawable/button_design"
-        android:text="Button"
+        android:text="@string/fragment_admin_menu_button_create_new_assignment"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/searchBtn"
         android:layout_width="0dp"
-        android:layout_height="45dp"
+        android:layout_height="48dp"
         android:layout_marginStart="60dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="60dp"
         android:background="@drawable/button_design"
-        android:text="Button"
+        android:text="@string/fragment_admin_menu_button_Search"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintTop_toBottomOf="@+id/createNewAssignmentBtn" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/editChecklistBtn"
         android:layout_width="0dp"
-        android:layout_height="45dp"
+        android:layout_height="48dp"
         android:layout_marginStart="60dp"
         android:layout_marginTop="36dp"
         android:layout_marginEnd="60dp"
         android:background="@drawable/button_design"
-        android:text="Button"
+        android:text="@string/fragment_admin_menu_button_edit_checklist"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button3" />
+        app:layout_constraintTop_toBottomOf="@+id/searchBtn" />
+
+    <Button
+        android:id="@+id/editAdminProfileBtn"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="60dp"
+        android:background="@drawable/button_design"
+        android:text="@string/fragment_admin_menu_button_edit_admin_user"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editChecklistBtn" />
+
+    <Button
+        android:id="@+id/editUserProfileBtn"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="60dp"
+        android:background="@drawable/button_design"
+        android:text="@string/fragment_admin_menu_button_edit_employee_user"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editAdminProfileBtn"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/profile_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        android:text="Root"
+        android:textAlignment="center"
+        android:textColor="@color/darkblue"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/profile_picture"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/profile_name_tv2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Admin"
+        android:textAlignment="center"
+        android:textColor="@color/darkblue"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/profile_picture"
+        app:layout_constraintTop_toBottomOf="@+id/profile_name_tv" />
+
+    <ImageView
+        android:id="@+id/profile_picture"
+        android:layout_width="54dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:src="@drawable/profile_icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/profile_icon" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

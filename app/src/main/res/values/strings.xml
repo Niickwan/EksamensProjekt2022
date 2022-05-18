@@ -21,6 +21,15 @@
     <string name="fragment_admin_not_in_use_label">AdminNotInUse</string>
     <string name="fragment_admin_profile_icon_name">Admin</string>
 
+    <!-- ADMIN MENU -->
+    <string name="fragment_admin_menu_button_create_new_assignment">Ny sag</string>
+    <string name="fragment_admin_menu_button_Search">Søg</string>
+    <string name="fragment_admin_menu_button_edit_checklist">Rediger Tjekliste</string>
+    <string name="fragment_admin_menu_button_edit_admin_user">Rediger Admin</string>
+    <string name="fragment_admin_menu_button_edit_employee_user">Rediger Bruger</string>
+
+
+
     <!-- EMPLOYEE FRAGMENTS -->
     <string name="title_activity_user">USER</string>
     <string name="fragment_user_home_label">UserHome</string>
