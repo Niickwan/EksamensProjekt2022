@@ -1,6 +1,7 @@
 package com.jmmnt.UI;
 
 import static android.app.Activity.RESULT_OK;
+import static android.content.ContentValues.TAG;
 
 import android.Manifest;
 import android.app.Activity;
@@ -9,7 +10,9 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,12 +27,16 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import com.jmmnt.Entities.User;
+import com.jmmnt.FTP.FTPClientFunctions;
 import com.jmmnt.R;
 import com.jmmnt.UseCase.GeneralUseCase;
 import com.jmmnt.UseCase.OperateDB;
 import com.jmmnt.UseCase.OperateUser;
 import com.jmmnt.databinding.FragmentLoginRegisterBinding;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Objects;
 
 public class FragmentLoginRegister extends Fragment{
@@ -40,6 +47,7 @@ public class FragmentLoginRegister extends Fragment{
     private View.OnFocusChangeListener setOnFocusChangeListener;
     private FragmentLoginRegisterBinding binding;
     private ActivityResultLauncher<Intent> activityResultLauncher;
+    private FTPClientFunctions ftpMethodClass = new FTPClientFunctions();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -49,6 +57,8 @@ public class FragmentLoginRegister extends Fragment{
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        //METODER TIL KAMERA------------------------------------------------------------
         //TODO skal flyttes til det fragment, hvor der bliver taget billeder
         activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
@@ -56,7 +66,7 @@ public class FragmentLoginRegister extends Fragment{
                 if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                     Bundle bundle = result.getData().getExtras();
                     Bitmap bitmap = (Bitmap) bundle.get("data");
-                    binding.imageView32.setImageBitmap(bitmap);
+                    ftpMethodClass.sendPicToFTP(bitmap, "TempName.png","/public_html/assignments",requireContext());
                 }
             }
         });
@@ -72,7 +82,20 @@ public class FragmentLoginRegister extends Fragment{
                 }
             }
         });
+        //METODER TIL KAMERA------------------------------------------------------------
 
+
+        //ftp.sendPicToFTP();
+
+
+        //binding.FTPButton.setOnClickListener(new Thread(() -> {
+           //ftpMethodClass.sendPicToFTP();
+     //   }).start());
+
+
+
+
+        //METODER TIL CREATE USER-------------------------------------------------------
         binding.createBtn.setOnClickListener(v -> new Thread(() -> {
             if(!gUC.checkIfLetters(binding.registerFirstNameEt.getText().toString())
                 || !gUC.checkIfLetters(binding.registerSurnameEt.getText().toString())
@@ -123,7 +146,7 @@ public class FragmentLoginRegister extends Fragment{
         binding.registerSurnameEt.setOnFocusChangeListener(setOnFocusChangeListener);
         binding.registerEmailEt.setOnFocusChangeListener(setOnFocusChangeListener);
         binding.registerPasswordEt.setOnFocusChangeListener(setOnFocusChangeListener);
-
+        //METODER TIL CREATE USER-------------------------------------------------------
 
     }
 

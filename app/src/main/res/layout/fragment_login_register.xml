@@ -149,4 +149,13 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:src="@tools:sample/avatars" />
 
+    <Button
+        android:id="@+id/FTPButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="28dp"
+        android:text="Tryk For FTP :)"
+        app:layout_constraintBottom_toTopOf="@+id/TrykForBillede"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
