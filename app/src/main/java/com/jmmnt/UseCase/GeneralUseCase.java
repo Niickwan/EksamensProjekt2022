@@ -1,11 +1,31 @@
 package com.jmmnt.UseCase;
 
+import static android.app.Activity.RESULT_OK;
+
+import static androidx.activity.result.ActivityResultCallerKt.registerForActivityResult;
+
+import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.os.Looper;
+import android.provider.MediaStore;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+
+import com.jmmnt.databinding.ActivityUserBinding;
+
 public class GeneralUseCase {
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
     private static Toast toast = null;
+
     //This method takes two strings and checks if one of the strings (s)
     //Contains the same chars as the other string (input)
     //The method then returns true if they do contain the same chars, and false if they do not.
@@ -13,15 +33,15 @@ public class GeneralUseCase {
         return s.toLowerCase().matches("(.*)" + input.toLowerCase() + "(.*)");
     }
 
-    public Boolean checkIfNumber(String text, int lengthOfNumber) {
+    public boolean checkIfNumber(String text, int lengthOfNumber) {
         return text.matches("[0-9]+") && text.length() == lengthOfNumber;
     }
 
-    public Boolean checkIfLetters(String text){
+    public boolean checkIfLetters(String text){
         return !text.matches(".*[0-9].*");
     }
 
-    public Boolean checkIfEmail(String text){
+    public boolean checkIfEmail(String text){
         String emailTjek = "^[a-zA-Z0-9_+&*-]+(?:\\."+
                 "[a-zA-Z0-9_+&*-]+)*@" +
                 "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
@@ -38,4 +58,9 @@ public class GeneralUseCase {
         toast.show();
         Looper.loop();
     }
+
+    public void createCamera(ActivityUserBinding binding, ImageView image) {
+    }
+
+
 }

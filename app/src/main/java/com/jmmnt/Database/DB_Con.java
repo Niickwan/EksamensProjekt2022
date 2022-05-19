@@ -46,8 +46,8 @@ public class DB_Con {
             preStmt.setString(2, password);
             rs = preStmt.executeQuery();
             if (rs.next()) {
-                if (rs.getString("UserRights").equals("1")) userRights = 1;
-                else if (rs.getString("UserRights").equals("2")) userRights = 2;
+                if (rs.getString("User_Rights").equals("1")) userRights = 1;
+                else if (rs.getString("User_Rights").equals("2")) userRights = 2;
             }
             connection.close();
             preStmt.close();
