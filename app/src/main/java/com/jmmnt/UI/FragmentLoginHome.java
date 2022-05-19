@@ -8,14 +8,18 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
+
 import com.jmmnt.R;
 import com.jmmnt.UseCase.GeneralUseCase;
 import com.jmmnt.UseCase.OperateDB;
 import com.jmmnt.databinding.FragmentLoginHomeBinding;
+
+import java.sql.SQLException;
 
 public class FragmentLoginHome extends Fragment {
 
@@ -45,7 +49,7 @@ public class FragmentLoginHome extends Fragment {
             } else if (loginRights == 2) {
                 switchScene(getActivity(), ActivityUser.class);
             } else {
-                gUC.toastAlert(getActivity(),"Forkert Login");
+                gUC.toastAlert(getActivity(), "Forkert Login");
             }
         }).start());
         binding.registerBtn.setOnClickListener(view1 -> {
@@ -53,6 +57,7 @@ public class FragmentLoginHome extends Fragment {
             binding.emailEt.getText().clear();
             binding.passwordEt.getText().clear();
         });
+
     }
 
     @Override
@@ -94,6 +99,42 @@ public class FragmentLoginHome extends Fragment {
         dialog.show();
     }
 
-
-
 }
+
+/*
+//TODO Måde at kunne indsætte billeder i databasen. Det virker ikke endnu.
+
+    public void insertImageIntoDatabase() {
+        try {
+            connection = connection();
+            preStmt = connection.prepareStatement("INSERT INTO IMAGES VALUES(?,?)");
+            preStmt.setString(1, "sample image");
+            InputStream inputStream = null;
+            inputStream = new FileInputStream("C:\\Brugere\\jacob\\Skrivebord\\Gaming\\DL2.png");
+            preStmt.setBlob(2, inputStream);
+            System.out.println("Jeg sætter et billede ind via db.con");
+            preStmt.execute();
+            preStmt.close();
+            connection.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+*/
+//TODO knap-bindingen inde fra fragmentet, der ligges under OnviewCreated
+        /*
+        binding.hejsa.setOnClickListener(v -> new Thread(() -> {
+                System.out.println("JEG TRYKKES PÅ");
+                OperateDB operateDB = new OperateDB();
+                try {
+                    operateDB.insertImageIntoDatabase();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                System.out.println("jeg har kørt metoden");
+            }).start());
+         */
+
+//TODO Husk at lave metoden med kaldet i OperateDB

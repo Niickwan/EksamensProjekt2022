@@ -2,12 +2,41 @@ package com.jmmnt.Database;
 
 import com.jmmnt.Entities.User;
 
+import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.io.FileInputStream;
+import java.io.InputStream;
+
+/*
+Importliste i forbindelse med den store - ikke anvendte - FTP-Metode
+
+import android.util.Log;
+import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPReply;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import org.apache.commons.net.ftp.FTP;
+import org.apache.commons.net.ftp.FTPFile;
+import static android.content.ContentValues.TAG;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.os.Environment;
+import android.util.Log;
+import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity;
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
+import android.content.Context;
+import android.util.Log;
+
+Importliste slut
+ */
 
 public class DB_Con {
     private Connection connection;
