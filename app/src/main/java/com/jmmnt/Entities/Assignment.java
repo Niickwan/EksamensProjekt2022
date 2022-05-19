@@ -7,8 +7,6 @@ public class Assignment {
     private String address;
     private String postalCode;
     private String city;
-    //TODO skal laves felter tjeklisten... Ikke 100% aftalt hvordan endnu.
-
 
     public Assignment(Customer customer, User user, String orderNumber, String address, String postalCode, String city) {
         this.customer = customer;
