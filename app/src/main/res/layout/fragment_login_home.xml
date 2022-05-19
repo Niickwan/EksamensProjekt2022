@@ -66,6 +66,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="60dp"
         android:text="@string/fragment_login_title"
+        android:textStyle="bold"
         android:textColor="@color/darkblue"
         android:textSize="34sp"
         app:layout_constraintBottom_toTopOf="@+id/email_et"

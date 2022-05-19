@@ -21,7 +21,6 @@ public class DB_Con {
     private Connection connection() {
         connection = null;
         try {
-//            Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(URL, "dat32_dk", "9hkdpBFtAg34");
         } catch (SQLException e) {
             e.printStackTrace();
@@ -46,8 +45,8 @@ public class DB_Con {
         preStmt.setString(2, password);
         rs = preStmt.executeQuery();
         if (rs.next()) {
-            if (rs.getString("UserRights").equals("1")) userRights = 1;
-            else if (rs.getString("UserRights").equals("2")) userRights = 2;
+            if (rs.getString("User_Rights").equals("1")) userRights = 1;
+            else if (rs.getString("User_Rights").equals("2")) userRights = 2;
             connection.close();
             preStmt.close();
             rs.close();
@@ -58,7 +57,7 @@ public class DB_Con {
     public boolean createNewUser(User user) throws SQLException {
         int isUserCreated = 0;
         connection = connection();
-        String userInfo = "INSERT INTO User (Email, Password, Name, Surname, UserRights) "
+        String userInfo = "INSERT INTO User (Email, Password, Name, Surname, User_Rights) "
                 + "VALUES ('"
                 + user.getEmail() + "', '"
                 + user.getPassword() + "', '"
