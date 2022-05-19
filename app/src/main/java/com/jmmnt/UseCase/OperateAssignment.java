@@ -12,10 +12,11 @@ public class OperateAssignment {
     //TODO søge KUN på aktive eller KUN på ikke aktive
     //SEARCHING METHODS------------------------------------------------------
 
-    public List<Object> getSearchedObjectsMultipleStrings(List<Object> objects, String[] objectStrings, String input){
+    //ObjectStatus should be null if the searched objects dont need a specific status.
+    public List<Object> getSearchedObjectsMultipleStrings(List<Object> objects, String[] objectStrings, String input, String objectStatus){
         ArrayList<Object> multipleStringSearchArray = new ArrayList<>();
         for (String objectString : objectStrings) {
-            multipleStringSearchArray.addAll(getSearchedObjects(objects, objectString, input));
+            multipleStringSearchArray.addAll(getSearchedObjects(objects, objectString, input, objectStatus));
         }
         return multipleStringSearchArray;
     }
@@ -38,9 +39,15 @@ public class OperateAssignment {
         }
         return matchingCasesIndex;
     }
-
-    public List<Object> getSearchedObjects(List<Object> objects, String objectString, String input){
-        return sortObjectsByindex(objects, findObjectsMatchingInput(objects,objectString, input));
+    //ObjectStatus should be null if the searched objects dont need a specific status.
+    public List<Object> getSearchedObjects(List<Object> objects, String objectString, String input, String objectStatus){
+        if(objectStatus == null) {
+            return sortObjectsByindex(objects, findObjectsMatchingInput(objects, objectString, input));
+        }
+        else{
+            objects = sortObjectsByindex(objects, findObjectsMatchingInput(objects, objectStatus, input));
+            return sortObjectsByindex(objects, findObjectsMatchingInput(objects, objectString, input));
+        }
     }
 
 
