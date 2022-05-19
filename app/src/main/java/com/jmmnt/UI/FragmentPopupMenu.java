@@ -3,6 +3,7 @@ package com.jmmnt.UI;
 import android.content.Context;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -30,16 +31,10 @@ public class FragmentPopupMenu extends Fragment {
                 null, false), ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
         pw.showAsDropDown(view, 0,0, Gravity.RIGHT | Gravity.TOP);
 
-
-        LayoutInflater l = (LayoutInflater) layoutInflater.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View layout = l.inflate(R.layout.popup_menu_profile, null);
-
-
-        Button btn = layout.findViewById(R.id.knappen);
-        btn.setOnClickListener(new View.OnClickListener() {
+        pw.getContentView().findViewById(R.id.popupMenuAbout_tv).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("KNAP KNAP KNAP");
+                System.out.println("WTF WTF WTRF");
             }
         });
 
