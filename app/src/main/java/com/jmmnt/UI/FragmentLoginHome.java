@@ -47,7 +47,7 @@ public class FragmentLoginHome extends Fragment {
                 switchScene(getActivity(), ActivityUser.class);
                 clearInputFields();
             } else {
-                gUC.toastAlert(getActivity(),getString(R.string.fragment_login_wrong_input));
+                gUC.toastAlert(getActivity(), getString(R.string.fragment_login_wrong_input));
             }
         }).start());
         binding.registerBtn.setOnClickListener(view1 -> {
