@@ -13,6 +13,7 @@ import androidx.appcompat.widget.PopupMenu;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 import com.jmmnt.R;
+import com.jmmnt.UseCase.Encryption;
 import com.jmmnt.UseCase.GeneralUseCase;
 import com.jmmnt.UseCase.OperateDB;
 import com.jmmnt.databinding.FragmentLoginHomeBinding;
@@ -39,7 +40,7 @@ public class FragmentLoginHome extends Fragment {
         });
         binding.loginBtn.setOnClickListener(v -> new Thread(() -> {
             int loginRights = -1;
-            loginRights = opDB.validateLogin(binding.emailEt.getText().toString(), binding.passwordEt.getText().toString());
+            loginRights = opDB.validateLogin(binding.emailEt.getText().toString(), Encryption.encrypt(binding.passwordEt.getText().toString()));
             if (loginRights == 1) {
                 switchScene(getActivity(), ActivityAdmin.class);
                 clearInputFields();
