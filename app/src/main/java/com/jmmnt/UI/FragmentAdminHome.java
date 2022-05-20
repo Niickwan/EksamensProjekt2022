@@ -29,7 +29,8 @@ public class FragmentAdminHome extends Fragment {
         binding.profilePicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                fpm.showProfileMenu(view, getLayoutInflater());
+                //TODO hent profil data fra DB (navn, email, tlf). Det skal vises i popupmenuen
+                fpm.showProfileMenu(view, getLayoutInflater(), getActivity());
             }
         });
         binding.createNewAssignmentBtn.setOnClickListener(view1 -> NavHostFragment.findNavController(FragmentAdminHome.this)

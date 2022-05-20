@@ -36,8 +36,8 @@ public class DB_Con {
             return dbCon;
     }
 
-    public int validateLogin(String email, String password) {
-        int userRights = -1;
+    public User validateLogin(String email, String password) {
+        User user = null;
         String MySQL = "SELECT * FROM User WHERE Email = ? AND Password = ?";
         try {
             connection = connection();
@@ -46,8 +46,13 @@ public class DB_Con {
             preStmt.setString(2, password);
             rs = preStmt.executeQuery();
             if (rs.next()) {
-                if (rs.getString("User_Rights").equals("1")) userRights = 1;
-                else if (rs.getString("User_Rights").equals("2")) userRights = 2;
+                user = new User(
+                        rs.getString("Email"),
+                        rs.getString("Firstname"),
+                        rs.getString("Surname"),
+                        rs.getString("Phonenumber"),
+                        rs.getInt("User_ID"),
+                        rs.getInt("User_Rights"));
             }
             connection.close();
             preStmt.close();
@@ -55,7 +60,7 @@ public class DB_Con {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return userRights;
+        return user;
     }
 
     public boolean createNewUser(User user) {

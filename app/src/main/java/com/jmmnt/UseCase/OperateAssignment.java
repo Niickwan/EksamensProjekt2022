@@ -6,13 +6,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OperateAssignment {
-    private GeneralUseCase gUC = new GeneralUseCase();
+    private GeneralUseCase gUC = GeneralUseCase.getInstance();
 
     //TODO lave en ekstra funktion der tjekker status (aktiv, ikke aktiv) sådan at man kan
     //TODO søge KUN på aktive eller KUN på ikke aktive
     //SEARCHING METHODS------------------------------------------------------
 
-    //Search for objects by comparing mutiple object strings AND comparing the objects status
+    //Search for objects by comparing multiple object strings AND comparing the objects status
     public List<Object> getSearchedObjectsMultipleStrings(List<Object> objects, String[] objectStrings, String input, String objectStatus){
         ArrayList<Object> multipleStringSearchArray = new ArrayList<>();
         for (String objectString : objectStrings) {
@@ -21,7 +21,7 @@ public class OperateAssignment {
         return multipleStringSearchArray;
     }
 
-    //Search for object by comparing mutiple object strings WITHOUT comparing the objects status
+    //Search for object by comparing multiple object strings WITHOUT comparing the objects status
     public List<Object> getSearchedObjectsMultipleStrings(List<Object> objects, String[] objectStrings, String input){
         ArrayList<Object> multipleStringSearchArray = new ArrayList<>();
         for (String objectString : objectStrings) {
