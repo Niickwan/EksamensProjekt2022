@@ -98,7 +98,10 @@ public class FragmentLoginRegister extends Fragment{
             }
             else if(!binding.registerPhoneNumberEt.getText().toString().isEmpty()
                     && !gUC.checkIfNumber(binding.registerPhoneNumberEt.getText().toString(), 8)){
-                gUC.toastAlert(getActivity(),"Telefon nummer ikke udfyldt korrekt");
+                gUC.toastAlert(getActivity(),"Telefonnummer ikke udfyldt korrekt");
+            }
+            else if(opDB.isPhonenumberOccupied(binding.registerPhoneNumberEt.getText().toString())){
+                gUC.toastAlert(getActivity(), "Telefonnummer er allerede oprettet");
             }
             else if(!binding.registerEmailEt.getText().toString().isEmpty() &&
                     !gUC.checkIfEmail(binding.registerEmailEt.getText().toString()) ){
