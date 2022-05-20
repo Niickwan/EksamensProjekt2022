@@ -21,6 +21,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import com.jmmnt.Entities.User;
+import com.jmmnt.UseCase.Encryption;
 import com.jmmnt.UseCase.FTP.FTPClientFunctions;
 import com.jmmnt.R;
 import com.jmmnt.UseCase.GeneralUseCase;
@@ -46,7 +47,6 @@ public class FragmentLoginRegister extends Fragment{
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         //METODER TIL KAMERA------------------------------------------------------------
         //TODO skal flyttes til det fragment, hvor der bliver taget billeder
         activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
@@ -105,7 +105,7 @@ public class FragmentLoginRegister extends Fragment{
                         binding.registerSurnameEt.getText().toString(),
                         binding.registerPhoneNumberEt.getText().toString(),
                         binding.registerEmailEt.getText().toString(),
-                        binding.registerPasswordEt.getText().toString());
+                        Encryption.encrypt(binding.registerPasswordEt.getText().toString()));
                 opDB.createUserInDB(user);
             }
         }).start());
