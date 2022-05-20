@@ -21,6 +21,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import com.jmmnt.Entities.User;
+import com.jmmnt.UseCase.Encryption;
 import com.jmmnt.UseCase.FTP.FTPClientFunctions;
 import com.jmmnt.R;
 import com.jmmnt.UseCase.GeneralUseCase;
@@ -46,7 +47,6 @@ public class FragmentLoginRegister extends Fragment{
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         //METODER TIL KAMERA------------------------------------------------------------
         //TODO skal flyttes til det fragment, hvor der bliver taget billeder
         activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
@@ -88,16 +88,30 @@ public class FragmentLoginRegister extends Fragment{
         binding.createBtn.setOnClickListener(v -> new Thread(() -> {
             if(!gUC.checkIfLetters(binding.registerFirstNameEt.getText().toString())
                 || !gUC.checkIfLetters(binding.registerSurnameEt.getText().toString())
-                || binding.registerSurnameEt.getText().toString().isEmpty()
-                || binding.registerSurnameEt.getText().toString().isEmpty()) {
+                || binding.registerFirstNameEt.getText().toString().isEmpty()
+                    || binding.registerSurnameEt.getText().toString().isEmpty()) {
                 gUC.toastAlert(getActivity(), "Fejl i navn");
             }
-
-            else if(!gUC.checkIfEmail(binding.registerEmailEt.getText().toString()) ){
+            else if(binding.registerEmailEt.getText().toString().isEmpty()
+                    && binding.registerPhoneNumberEt.getText().toString().isEmpty()){
+                gUC.toastAlert(getActivity(), "Udfyld enten email eller telefon");
+            }
+            else if(!binding.registerPhoneNumberEt.getText().toString().isEmpty()
+                    && !gUC.checkIfNumber(binding.registerPhoneNumberEt.getText().toString(), 8)){
+                gUC.toastAlert(getActivity(),"Telefonnummer ikke udfyldt korrekt");
+            }
+            else if(opDB.isPhonenumberOccupied(binding.registerPhoneNumberEt.getText().toString())){
+                gUC.toastAlert(getActivity(), "Telefonnummer er allerede oprettet");
+            }
+            else if(!binding.registerEmailEt.getText().toString().isEmpty() &&
+                    !gUC.checkIfEmail(binding.registerEmailEt.getText().toString()) ){
                 gUC.toastAlert(getActivity(), "Ugyldig Email");
             }
             else if(opDB.isEmailOccupied(binding.registerEmailEt.getText().toString())){
                 gUC.toastAlert(getActivity(), "Email er allerede oprettet");
+            }
+            else if(binding.registerPasswordEt.getText().toString().isEmpty()){
+                gUC.toastAlert(getActivity(),"Password er ikke udfyldt");
             }
             else{
                 User user = opUsr.CreateDefaultUserLoginInfo(
@@ -105,7 +119,7 @@ public class FragmentLoginRegister extends Fragment{
                         binding.registerSurnameEt.getText().toString(),
                         binding.registerPhoneNumberEt.getText().toString(),
                         binding.registerEmailEt.getText().toString(),
-                        binding.registerPasswordEt.getText().toString());
+                        Encryption.encrypt(binding.registerPasswordEt.getText().toString()));
                 opDB.createUserInDB(user);
             }
         }).start());

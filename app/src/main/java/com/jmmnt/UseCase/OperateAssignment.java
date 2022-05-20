@@ -2,6 +2,10 @@ package com.jmmnt.UseCase;
 
 
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,6 +63,23 @@ public class OperateAssignment {
         return sortObjectsByindex(objects, findObjectsMatchingInput(objects, objectString, input));
     }
 
+    //Create folder on server
+    public boolean createFolderOnServer(String orderNr, String floor, String room) {
+        boolean isFolderCreated = false;
+        try {
+            URL url = new URL("https://dat32.dk/createAssignment.php?assignment="
+                    + orderNr + "/"
+                    + floor + "/"
+                    + room);
+            BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
+            String isSuccessful = in.readLine();
+            in.close();
+            isFolderCreated = isSuccessful.equalsIgnoreCase("True");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return isFolderCreated;
+    }
 
 
     //SEARCHING METHODS------------------------------------------------------

@@ -18,4 +18,8 @@ public class OperateDB {
     public boolean isEmailOccupied(String email) {
         return db_con.isEmailOccupied(email);
     }
+
+    public boolean isPhonenumberOccupied(String phoneNumber) {
+        return db_con.isPhonenumberOccupied(phoneNumber);
+    }
 }

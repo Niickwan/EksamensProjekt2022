@@ -73,6 +73,7 @@ public class GeneralUseCase {
         Looper.loop();
     }
 
+
     public void createCamera(ActivityUserBinding binding, ImageView image) {
     }
 
@@ -80,6 +81,5 @@ public class GeneralUseCase {
         Intent switchActivity = new Intent(fromScene, toScene);
         fromScene.startActivity(switchActivity);
     }
-
 
 }

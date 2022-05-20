@@ -13,6 +13,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.jmmnt.Entities.LoggedInUser;
 import com.jmmnt.Entities.User;
 import com.jmmnt.R;
+import com.jmmnt.UseCase.Encryption;
 import com.jmmnt.UseCase.GeneralUseCase;
 import com.jmmnt.UseCase.OperateDB;
 import com.jmmnt.databinding.FragmentLoginHomeBinding;
@@ -52,7 +53,7 @@ public class FragmentLoginHome extends Fragment {
                     clearInputFields();
                 }
             } else {
-                gUC.toastAlert(getActivity(),getString(R.string.fragment_login_wrong_input));
+                gUC.toastAlert(getActivity(), getString(R.string.fragment_login_wrong_input));
             }
         }).start());
 
