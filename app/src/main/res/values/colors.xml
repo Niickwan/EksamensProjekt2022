@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
+    <color name="purple_200">#171E29</color>
+    <color name="purple_500">#08EE00</color>
+    <color name="purple_700">#171E29</color>
     <color name="teal_200">#DA0303</color>
     <color name="teal_700">#870101</color>
-    <color name="black">#FF000000</color>
+    <color name="black">#FFFFFF</color>
     <color name="white">#FFFFFF</color>
+    <color name="darkgrey">#24242C</color>
 
     <!-- Buttons -->
     <color name="darkblue">#171E29</color>

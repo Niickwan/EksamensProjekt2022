@@ -8,6 +8,26 @@
     android:background="@color/background_color_zealand"
     tools:context=".UI.FragmentLoginHome">
 
+    <ImageView
+        android:id="@+id/sjaellands_erhvervsakademi"
+        android:layout_width="87dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/sjaellands_erhvervsakademi"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/zealand_logo"
+        android:layout_width="166dp"
+        android:layout_height="62dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/zealand_logo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <EditText
         android:id="@+id/email_et"
         android:layout_width="0dp"
@@ -46,6 +66,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="60dp"
         android:text="@string/fragment_login_title"
+        android:textStyle="bold"
         android:textColor="@color/darkblue"
         android:textSize="34sp"
         app:layout_constraintBottom_toTopOf="@+id/email_et"
@@ -65,29 +86,6 @@
         app:layout_constraintTop_toBottomOf="@+id/login_btn" />
 
     <ImageView
-        android:id="@+id/zealand_logo"
-        android:layout_width="166dp"
-        android:layout_height="62dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="200dp"
-        android:src="@drawable/zealand_logo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/sjaellands_erhvervsakademi"
-        android:layout_width="87dp"
-        android:layout_height="39dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="255dp"
-        android:src="@drawable/sjaellands_erhvervsakademi"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.289"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
         android:id="@+id/three_dot_menu"
         android:layout_width="33dp"
         android:layout_height="32dp"
@@ -95,8 +93,6 @@
         android:layout_marginEnd="5dp"
         android:src="@drawable/three_dot_menu"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/zealand_logo"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button

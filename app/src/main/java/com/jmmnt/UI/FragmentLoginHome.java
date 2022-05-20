@@ -42,10 +42,12 @@ public class FragmentLoginHome extends Fragment {
             loginRights = opDB.validateLogin(binding.emailEt.getText().toString(), binding.passwordEt.getText().toString());
             if (loginRights == 1) {
                 switchScene(getActivity(), ActivityAdmin.class);
+                clearInputFields();
             } else if (loginRights == 2) {
                 switchScene(getActivity(), ActivityUser.class);
+                clearInputFields();
             } else {
-                gUC.toastAlert(getActivity(),"Forkert Login");
+                gUC.toastAlert(getActivity(),getString(R.string.fragment_login_wrong_input));
             }
         }).start());
         binding.registerBtn.setOnClickListener(view1 -> {
@@ -78,7 +80,7 @@ public class FragmentLoginHome extends Fragment {
                     return true;
                 }
                 if (id == R.id.about) {
-                    showPopupMenuAbout();
+                    popupMenuShowAbout();
                     return true;
                 }
                 return false;
@@ -87,11 +89,16 @@ public class FragmentLoginHome extends Fragment {
         ppm.show();
     }
 
-    private void showPopupMenuAbout() {
+    private void popupMenuShowAbout() {
         Dialog dialog = new Dialog(getActivity());
         dialog.setContentView(R.layout.fragment_login_company_info);
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.show();
+    }
+
+    private void clearInputFields() {
+        binding.emailEt.getText().clear();
+        binding.passwordEt.getText().clear();
     }
 
 

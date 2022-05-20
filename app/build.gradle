@@ -59,6 +59,7 @@ dependencies {
     implementation files('libs\\poi-ooxml-5.2.2.jar')
     implementation files('libs\\poi-ooxml-lite-5.2.2.jar')
     implementation files('libs\\xmlbeans-5.0.3.jar')
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation files('libs\\commons-net-3.8.0-sources.jar')
     implementation files('libs\\commons-net-3.8.0.jar')
     implementation files('libs\\commons-net-3.8.0.jar')
