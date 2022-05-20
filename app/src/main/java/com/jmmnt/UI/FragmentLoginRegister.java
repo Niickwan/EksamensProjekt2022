@@ -88,16 +88,27 @@ public class FragmentLoginRegister extends Fragment{
         binding.createBtn.setOnClickListener(v -> new Thread(() -> {
             if(!gUC.checkIfLetters(binding.registerFirstNameEt.getText().toString())
                 || !gUC.checkIfLetters(binding.registerSurnameEt.getText().toString())
-                || binding.registerSurnameEt.getText().toString().isEmpty()
-                || binding.registerSurnameEt.getText().toString().isEmpty()) {
+                || binding.registerFirstNameEt.getText().toString().isEmpty()
+                    || binding.registerSurnameEt.getText().toString().isEmpty()) {
                 gUC.toastAlert(getActivity(), "Fejl i navn");
             }
-
-            else if(!gUC.checkIfEmail(binding.registerEmailEt.getText().toString()) ){
+            else if(binding.registerEmailEt.getText().toString().isEmpty()
+                    && binding.registerPhoneNumberEt.getText().toString().isEmpty()){
+                gUC.toastAlert(getActivity(), "Udfyld enten email eller telefon");
+            }
+            else if(!binding.registerPhoneNumberEt.getText().toString().isEmpty()
+                    && !gUC.checkIfNumber(binding.registerPhoneNumberEt.getText().toString(), 8)){
+                gUC.toastAlert(getActivity(),"Telefon nummer ikke udfyldt korrekt");
+            }
+            else if(!binding.registerEmailEt.getText().toString().isEmpty() &&
+                    !gUC.checkIfEmail(binding.registerEmailEt.getText().toString()) ){
                 gUC.toastAlert(getActivity(), "Ugyldig Email");
             }
             else if(opDB.isEmailOccupied(binding.registerEmailEt.getText().toString())){
                 gUC.toastAlert(getActivity(), "Email er allerede oprettet");
+            }
+            else if(binding.registerPasswordEt.getText().toString().isEmpty()){
+                gUC.toastAlert(getActivity(),"Password er ikke udfyldt");
             }
             else{
                 User user = opUsr.CreateDefaultUserLoginInfo(

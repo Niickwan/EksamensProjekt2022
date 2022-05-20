@@ -18,6 +18,30 @@ public class DB_Con {
     private final String URL = "jdbc:mysql://mysql61.unoeuro.com:3306/dat32_dk_db_eksamen?useSSL=true"; //TODO SSL Run error "autoReconnect=true&useSSL=false"
     private final String format = "yyyy-MM-dd";
 
+
+    private boolean uploadMySQLCall(String sqlString){
+        int SQLCallSucceded = 0;
+        try {
+            connection = connection();
+            preStmt = connection.prepareStatement(sqlString);
+            SQLCallSucceded = preStmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(connection);
+        }
+        return SQLCallSucceded == 1;
+     }
+
+    private void closeConnection(Connection connection){
+        try {
+            preStmt.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     private Connection connection() {
         connection = null;
         try {
@@ -38,7 +62,7 @@ public class DB_Con {
 
     public int validateLogin(String email, String password) {
         int userRights = -1;
-        String MySQL = "SELECT * FROM User WHERE Email = ? AND Password = ?";
+        String MySQL = "SELECT * FROM User WHERE Email = ? AND BINARY Password = ?";
         try {
             connection = connection();
             preStmt = connection.prepareStatement(MySQL);
@@ -59,26 +83,17 @@ public class DB_Con {
     }
 
     public boolean createNewUser(User user) {
-        int isUserCreated = 0;
-        try {
             connection = connection();
-            String userInfo = "INSERT INTO User (Email, Password, Name, Surname, UserRights, Phonenumber) "
+            String userInfo = "INSERT INTO User (Email, Password, Name, Surname, User_Rights, Phonenumber) "
                     + "VALUES ('"
                     + user.getEmail() + "', '"
                     + user.getPassword() + "', '"
                     + user.getFirstName() + "', '"
                     + user.getSurname() + "', '"
-                    + user.getUserRights() + "')"
-                    + user.getPhoneNumber() + "', '";
-            preStmt = connection.prepareStatement(userInfo);
-            isUserCreated = preStmt.executeUpdate();
-            preStmt.close();
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+                    + user.getUserRights() + "', '"
+                    + user.getPhoneNumber() + "')";
 
-        return isUserCreated == 1;
+            return uploadMySQLCall(userInfo);
     }
 
     public boolean isEmailOccupied(String email) {
