@@ -1,12 +1,19 @@
 package com.jmmnt.Entities;
 
+import com.jmmnt.UI.FragmentPopupMenu;
+
 public class User {
-    String email;
-    String password;
-    String firstName;
-    String surName;
-    String phoneNumber;
-    int userRights;
+    private String email;
+    private String password;
+    private String firstName;
+    private String surName;
+    private String phoneNumber;
+    private int userID;
+    private int userRights;
+
+    private User(){
+    }
+
 
     //general-use user constructor, not consisting potential confidential information
     public User(String firstName, String surName, String email) {
@@ -15,7 +22,16 @@ public class User {
         this.email = email;
     }
 
-    //user constructor for creation of username, password and userrights.
+    public User(String email, String firstName, String surName, String phoneNumber, int userID, int userRights) {
+        this.email = email;
+        this.firstName = firstName;
+        this.surName = surName;
+        this.phoneNumber = phoneNumber;
+        this.userID = userID;
+        this.userRights = userRights;
+    }
+
+    //user constructor for creation of username, password and user rights.
     public User(String firstName, String surname, String phoneNumber, String email, String password, int userRights) {
         this.firstName = firstName;
         this.surName = surname;
@@ -52,4 +68,6 @@ public class User {
     public String getSurname() {
         return surName;
     }
+
+
 }

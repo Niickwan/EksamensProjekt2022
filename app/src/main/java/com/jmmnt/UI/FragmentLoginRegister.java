@@ -33,7 +33,7 @@ public class FragmentLoginRegister extends Fragment{
 
     private OperateDB opDB = new OperateDB();
     private OperateUser opUsr = new OperateUser();
-    private GeneralUseCase gUC = new GeneralUseCase();
+    private GeneralUseCase gUC = GeneralUseCase.getInstance();
     private View.OnFocusChangeListener setOnFocusChangeListener;
     private FragmentLoginRegisterBinding binding;
     private ActivityResultLauncher<Intent> activityResultLauncher;
