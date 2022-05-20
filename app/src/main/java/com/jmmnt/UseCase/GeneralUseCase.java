@@ -58,9 +58,4 @@ public class GeneralUseCase {
         toast.show();
         Looper.loop();
     }
-
-    public void createCamera(ActivityUserBinding binding, ImageView image) {
-    }
-
-
 }

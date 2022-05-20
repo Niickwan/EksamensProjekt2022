@@ -84,7 +84,7 @@ public class DB_Con {
 
     public boolean createNewUser(User user) {
             connection = connection();
-            String userInfo = "INSERT INTO User (Email, Password, Name, Surname, User_Rights, Phonenumber) "
+            String userInfo = "INSERT INTO User (Email, Password, Firstname, Surname, User_Rights, Phonenumber) "
                     + "VALUES ('"
                     + user.getEmail() + "', '"
                     + user.getPassword() + "', '"
@@ -95,7 +95,24 @@ public class DB_Con {
 
             return uploadMySQLCall(userInfo);
     }
+    //disse kunne potential blive lavet til ÉN general--------------------------------
+    public boolean isPhonenumberOccupied(String phoneNumber) {
+        boolean isPhoneNumberAvailable = false;
+        String MySQL = "SELECT * FROM User WHERE Phonenumber = '" + phoneNumber + "'";
+        try {
+            connection = connection();
+            preStmt = connection.prepareStatement(MySQL);
+            rs = preStmt.executeQuery();
+            if (rs.next()) isPhoneNumberAvailable = true;
+            connection.close();
+            preStmt.close();
+            rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
+        return isPhoneNumberAvailable;
+    }
     public boolean isEmailOccupied(String email) {
         boolean isEmailAvailable = false;
         String MySQL = "SELECT * FROM User WHERE Email = '" + email + "'";
@@ -113,5 +130,5 @@ public class DB_Con {
 
         return isEmailAvailable;
     }
-
+    //disse kunne potential blive lavet til ÉN general--------------------------------
 }
