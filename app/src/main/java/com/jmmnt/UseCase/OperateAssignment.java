@@ -2,34 +2,46 @@ package com.jmmnt.UseCase;
 
 
 
-import com.jmmnt.Entities.Assignment;
-
 import java.util.ArrayList;
 import java.util.List;
-//TODO eventuel lave en ekstra funktion der tjekker status (aktiv, ikke aktiv) sådan at man kan
-//TODO søge KUN på aktive eller KUN på ikke aktive
+
 public class OperateAssignment {
     private GeneralUseCase gUC = new GeneralUseCase();
-    //This method takes an arbitrary list of assignments and an arbitrary list of integers.
-    //The method then finds all the assignments whose indexes match the integers in the integer list
-    //and returns the assignments in a new list, sortedAssignments.
-    public List<Assignment> sortCasesByindex(List<Assignment> assignments, List<Integer> indexList){
-        ArrayList<Assignment> sortedAssignments = new ArrayList<    >();
-        for (Integer integer : indexList) {
-            sortedAssignments.add(assignments.get(integer));
+
+    //TODO lave en ekstra funktion der tjekker status (aktiv, ikke aktiv) sådan at man kan
+    //TODO søge KUN på aktive eller KUN på ikke aktive
+    //SEARCHING METHODS------------------------------------------------------
+
+    //Search for objects by comparing mutiple object strings AND comparing the objects status
+    public List<Object> getSearchedObjectsMultipleStrings(List<Object> objects, String[] objectStrings, String input, String objectStatus){
+        ArrayList<Object> multipleStringSearchArray = new ArrayList<>();
+        for (String objectString : objectStrings) {
+            multipleStringSearchArray.addAll(getSearchedObjects(objects, objectString, input, objectStatus));
         }
-        return sortedAssignments;
+        return multipleStringSearchArray;
     }
 
-    //This method takes an abitrary list of assignments and an arbitrary String.
-    //The method then finds all
-    public List<Integer> findCaseMatchingInput(List<Assignment> assignments, String input){
+    //Search for object by comparing mutiple object strings WITHOUT comparing the objects status
+    public List<Object> getSearchedObjectsMultipleStrings(List<Object> objects, String[] objectStrings, String input){
+        ArrayList<Object> multipleStringSearchArray = new ArrayList<>();
+        for (String objectString : objectStrings) {
+            multipleStringSearchArray.addAll(getSearchedObjects(objects, objectString, input));
+        }
+        return multipleStringSearchArray;
+    }
+
+    public List<Object> sortObjectsByindex(List<Object> objects, List<Integer> indexList){
+        ArrayList<Object> sortedObjects = new ArrayList<>();
+        for (Integer integer : indexList) {
+            sortedObjects.add(objects.get(integer));
+        }
+        return sortedObjects;
+    }
+
+    public List<Integer> findObjectsMatchingInput(List<Object> objects, String objectString, String input){
         ArrayList<Integer> matchingCasesIndex = new ArrayList<>();
-        for (int i = 0; i < assignments.size(); i++) {
-            if(gUC.checkIfStringMatchesInput(assignments.get(i).getAddress(), input)
-               || gUC.checkIfStringMatchesInput(assignments.get(i).getPostalCode(), input)
-               || gUC.checkIfStringMatchesInput(assignments.get(i).getCity(), input)
-               || gUC.checkIfStringMatchesInput(assignments.get(i).getAddressNumber(), input))
+        for (int i = 0; i < objects.size(); i++) {
+            if(gUC.checkIfStringMatchesInput(objectString, input))
             {
                 matchingCasesIndex.add(i);
             }
@@ -37,12 +49,18 @@ public class OperateAssignment {
         return matchingCasesIndex;
     }
 
-    //This method takes a list of assignments and a string
-    //the method then uses the methods findCaseMatchingInput and sortCaseByIndex
-    //to get and return a list of assignments whose address, postalCode or city matches the
-    //string
-    public List<Assignment> getSearchedCases(List<Assignment> assignments, String input){
-        return sortCasesByindex(assignments, findCaseMatchingInput(assignments, input));
+    //Search for objects by comparing a single object string AND comparing the objects status
+    public List<Object> getSearchedObjects(List<Object> objects, String objectString, String input, String objectStatus){
+        return sortObjectsByindex(objects, findObjectsMatchingInput(objects, objectString, input));
     }
+
+    //Search for objects by comparing a single object string WITHOUT comparing the objects status
+    public List<Object> getSearchedObjects(List<Object> objects, String objectString, String input){
+        return sortObjectsByindex(objects, findObjectsMatchingInput(objects, objectString, input));
+    }
+
+
+
+    //SEARCHING METHODS------------------------------------------------------
 
 }

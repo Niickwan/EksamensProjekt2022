@@ -36,40 +36,67 @@ public class DB_Con {
             return dbCon;
     }
 
-    public int validateLogin(String email, String password) throws SQLException {
+    public int validateLogin(String email, String password) {
         int userRights = -1;
         String MySQL = "SELECT * FROM User WHERE Email = ? AND Password = ?";
-        connection = connection();
-        preStmt = connection.prepareStatement(MySQL);
-        preStmt.setString(1, email);
-        preStmt.setString(2, password);
-        rs = preStmt.executeQuery();
-        if (rs.next()) {
-            if (rs.getString("User_Rights").equals("1")) userRights = 1;
-            else if (rs.getString("User_Rights").equals("2")) userRights = 2;
+        try {
+            connection = connection();
+            preStmt = connection.prepareStatement(MySQL);
+            preStmt.setString(1, email);
+            preStmt.setString(2, password);
+            rs = preStmt.executeQuery();
+            if (rs.next()) {
+                if (rs.getString("User_Rights").equals("1")) userRights = 1;
+                else if (rs.getString("User_Rights").equals("2")) userRights = 2;
+            }
             connection.close();
             preStmt.close();
             rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return userRights;
     }
 
-    public boolean createNewUser(User user) throws SQLException {
+    public boolean createNewUser(User user) {
         int isUserCreated = 0;
-        connection = connection();
-        String userInfo = "INSERT INTO User (Email, Password, Name, Surname, User_Rights) "
-                + "VALUES ('"
-                + user.getEmail() + "', '"
-                + user.getPassword() + "', '"
-                + user.getFirstName() + "', '"
-                + user.getSurname() + "', '"
-                + user.getUserRights() + "')";
+        try {
+            connection = connection();
+            String userInfo = "INSERT INTO User (Email, Password, Name, Surname, UserRights, Phonenumber) "
+                    + "VALUES ('"
+                    + user.getEmail() + "', '"
+                    + user.getPassword() + "', '"
+                    + user.getFirstName() + "', '"
+                    + user.getSurname() + "', '"
+                    + user.getUserRights() + "')"
+                    + user.getPhoneNumber() + "', '";
             preStmt = connection.prepareStatement(userInfo);
             isUserCreated = preStmt.executeUpdate();
             preStmt.close();
             connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         return isUserCreated == 1;
+    }
+
+    public boolean isEmailOccupied(String email) {
+        boolean isEmailAvailable = false;
+        String MySQL = "SELECT * FROM User WHERE Email = '" + email + "'";
+        try {
+            connection = connection();
+            preStmt = connection.prepareStatement(MySQL);
+            rs = preStmt.executeQuery();
+            if (rs.next()) isEmailAvailable = true;
+            connection.close();
+            preStmt.close();
+            rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return isEmailAvailable;
     }
 
 }

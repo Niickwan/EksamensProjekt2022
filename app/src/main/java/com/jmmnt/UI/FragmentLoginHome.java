@@ -4,17 +4,16 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 import com.jmmnt.R;
+import com.jmmnt.UseCase.GeneralUseCase;
 import com.jmmnt.UseCase.OperateDB;
 import com.jmmnt.databinding.FragmentLoginHomeBinding;
 
@@ -22,6 +21,7 @@ public class FragmentLoginHome extends Fragment {
 
     private FragmentLoginHomeBinding binding;
     private OperateDB opDB = new OperateDB();
+    private GeneralUseCase gUC = new GeneralUseCase();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -39,19 +39,15 @@ public class FragmentLoginHome extends Fragment {
         });
         binding.loginBtn.setOnClickListener(v -> new Thread(() -> {
             int loginRights = -1;
-            try {
-                loginRights = opDB.validateLogin(binding.emailEt.getText().toString(), binding.passwordEt.getText().toString());
-                if (loginRights == 1) {
-                    switchScene(getActivity(), ActivityAdmin.class);
-                    clearInputFields();
-                } else if (loginRights == 2) {
-                    switchScene(getActivity(), ActivityUser.class);
-                    clearInputFields();
-                } else {
-                    toastAlert(getString(R.string.fragment_login_wrong_input));
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
+            loginRights = opDB.validateLogin(binding.emailEt.getText().toString(), binding.passwordEt.getText().toString());
+            if (loginRights == 1) {
+                switchScene(getActivity(), ActivityAdmin.class);
+                clearInputFields();
+            } else if (loginRights == 2) {
+                switchScene(getActivity(), ActivityUser.class);
+                clearInputFields();
+            } else {
+                gUC.toastAlert(getActivity(),getString(R.string.fragment_login_wrong_input));
             }
         }).start());
         binding.registerBtn.setOnClickListener(view1 -> {
@@ -59,12 +55,6 @@ public class FragmentLoginHome extends Fragment {
             binding.emailEt.getText().clear();
             binding.passwordEt.getText().clear();
         });
-    }
-
-    private void toastAlert(String text) {
-        Looper.prepare();
-        Toast.makeText(getActivity(), text, Toast.LENGTH_LONG).show();
-        Looper.loop();
     }
 
     @Override
