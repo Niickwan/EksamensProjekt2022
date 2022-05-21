@@ -36,10 +36,10 @@ public class ActivityAdmin extends AppCompatActivity {
         if (!fragment.isVisible()) {
             FragmentManager fm = getSupportFragmentManager();
             fm.beginTransaction()
-                    .replace(resourceID, fragment, null)
-                    .setReorderingAllowed(true)
-                    .addToBackStack(null)
-                    .commit();
+                .replace(resourceID, fragment, null)
+                .setReorderingAllowed(true)
+                .addToBackStack(null)
+                .commit();
         }
     }
 

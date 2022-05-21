@@ -49,11 +49,12 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/loginFragmentContainerView"
-            android:name="com.jmmnt.UI.FragmentLoginHome"
+        <include
+            android:id="@+id/loginFragmentContainer"
+            layout="@layout/content_login"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+
     </LinearLayout>
 
 </LinearLayout>

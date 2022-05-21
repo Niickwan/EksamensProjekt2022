@@ -11,6 +11,7 @@
     <string name="fragment_login_Login_button">Login</string>
     <string name="fragment_login_register_button">Registrer</string>
     <string name="fragment_login_title">EL-Installatør</string>
+
     <!-- LOGIN FRAGMENT - REGISTER -->
     <string name="fragment_login_register_firstname_hint">Fornavn</string>
     <string name="fragment_login_register_surname_hint">Efternavn</string>
@@ -52,11 +53,9 @@
     <string name="popup_menu_edit_profile_password_confirm">Bekræft password</string>
     <string name="popup_menu_edit_profile_save_button">Gem</string>
 
-
-    <string name="popup_menu_edit_profile_title">Forkert login</string>
-
     <!-- TOAST ALERTS -->
     <string name="fragment_login_wrong_input">Forkert login</string>
+    <string name="fragment_login_fill_out_fields">Udfyld felter</string>
 
     <!-- APP VERSION -->
     <string name="app_build_version">App Version</string>

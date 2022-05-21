@@ -63,7 +63,6 @@ public class FragmentPopupMenu extends Fragment {
         username.setText(user.getFullName());
         email.setText(user.getEmail());
         phone.setText(user.getPhoneNumber());
-
         View.OnClickListener pwMenuItemClicked = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -73,7 +72,7 @@ public class FragmentPopupMenu extends Fragment {
                     return;
                 }
                 if (view.getId() == R.id.popupMenuEditProfile_tv){
-                    ((ActivityAdmin) activity).fragmentManager(FragmentPopupMenu.this, R.id.adminFragmentContainerView);
+                    ((ActivityAdmin) activity).fragmentManager(FragmentPopupMenu.this, R.id.adminFragmentContainer);
                     pw.dismiss();
                     return;
                 }

@@ -8,48 +8,55 @@
     android:background="@color/background_color_zealand"
     tools:context=".UI.FragmentLoginHome">
 
-    <EditText
-        android:id="@+id/email_et"
-        android:layout_width="0dp"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/email_Et"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
         android:layout_marginEnd="25dp"
-        android:layout_marginBottom="20dp"
-        android:ems="10"
-        android:hint="E-mail"
-        android:inputType="textPersonName"
-        android:minHeight="48dp"
+        android:layout_marginBottom="11dp"
         android:theme="@style/EditTextTheme"
         app:layout_constraintBottom_toTopOf="@+id/password_et"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="E-mail"
+            android:inputType="textEmailAddress"
+            tools:ignore="TouchTargetSizeCheck" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/password_et"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
         android:layout_marginEnd="25dp"
-        android:ems="10"
-        android:hint="Password"
-        android:inputType="textPassword"
-        android:minHeight="48dp"
         android:theme="@style/EditTextTheme"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:passwordToggleEnabled="true">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            android:inputType="textPassword" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:id="@+id/login_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="100dp"
         android:text="@string/fragment_login_title"
-        android:textStyle="bold"
         android:textColor="@color/darkblue"
         android:textSize="34sp"
-        app:layout_constraintBottom_toTopOf="@+id/email_et"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/email_Et"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -69,7 +76,7 @@
         android:id="@+id/login_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="80dp"
         android:background="@drawable/button_design"
         android:text="@string/fragment_login_Login_button"
         app:layout_constraintEnd_toEndOf="parent"
