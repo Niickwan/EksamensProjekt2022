@@ -2,8 +2,10 @@
     <string name="app_name">EksamensProjekt2022</string>
     <string name="action_settings">Settings</string>
 
+    <!-- APP ICON NAME -->
+    <string name="app_icon_name">El-installatør</string>
+
     <!-- LOGIN FRAGMENTS -->
-    <string name="title_activity_login">LOGIN</string>
     <string name="fragment_login_home_label">LoginHome</string>
     <string name="fragment_login_register_label">LoginNotInUse</string>
     <string name="fragment_login_Login_button">Login</string>

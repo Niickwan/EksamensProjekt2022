@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import android.view.View;
-import android.widget.TextView;
 import com.jmmnt.Entities.LoggedInUser;
 import com.jmmnt.Entities.User;
 import com.jmmnt.databinding.ActivityAdminBinding;
@@ -14,8 +13,6 @@ public class ActivityAdmin extends AppCompatActivity {
 
     private ActivityAdminBinding binding;
     private User user = LoggedInUser.getInstance().getUser();
-    private TextView username, email, phone;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,12 +33,14 @@ public class ActivityAdmin extends AppCompatActivity {
     }
 
     public void fragmentManager(Fragment fragment, int resourceID) {
-        FragmentManager fm = getSupportFragmentManager();
-        fm.beginTransaction()
-            .replace(resourceID, fragment,null)
-            .setReorderingAllowed(true)
-            .addToBackStack(null)
-            .commit();
+        if (!fragment.isVisible()) {
+            FragmentManager fm = getSupportFragmentManager();
+            fm.beginTransaction()
+                    .replace(resourceID, fragment, null)
+                    .setReorderingAllowed(true)
+                    .addToBackStack(null)
+                    .commit();
+        }
     }
 
 
