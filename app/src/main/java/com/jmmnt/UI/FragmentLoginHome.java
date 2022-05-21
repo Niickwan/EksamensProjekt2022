@@ -1,15 +1,15 @@
 package com.jmmnt.UI;
 
 import android.os.Bundle;
+import android.os.Looper;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.PopupMenu;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
-
 import com.jmmnt.Entities.LoggedInUser;
 import com.jmmnt.Entities.User;
 import com.jmmnt.R;
@@ -34,25 +34,28 @@ public class FragmentLoginHome extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding.loginBtn.setOnClickListener(v -> new Thread(() -> {
-            opDB.validateLogin(binding.emailEt.getText().toString(), Encryption.encrypt(binding.passwordEt.getText().toString()));
-            user = LoggedInUser.getInstance().getUser();
-            if (user != null) {
-                if (user.getUserRights() == 1) {
-                    gUC.switchScene(getActivity(), ActivityAdmin.class);
-                    clearInputFields();
-                } else if (user.getUserRights() == 2) {
-                    gUC.switchScene(getActivity(), ActivityUser.class);
-                    clearInputFields();
+            System.out.println("ASLKÆJDABJSDKJASFOÆKJASJKOÆFA");
+            if (!TextUtils.isEmpty(binding.emailEt.getEditText().getText().toString()) && !TextUtils.isEmpty(binding.passwordEt.getEditText().getText().toString())){
+                opDB.validateLogin(binding.emailEt.getEditText().getText().toString(), Encryption.encrypt(binding.passwordEt.getEditText().getText().toString()));
+                user = LoggedInUser.getInstance().getUser();
+                if (user != null) {
+                    if (user.getUserRights() == 1) {
+                        gUC.switchScene(getActivity(), ActivityAdmin.class);
+                        clearInputFields();
+                    } else if (user.getUserRights() == 2) {
+                        gUC.switchScene(getActivity(), ActivityUser.class);
+                        clearInputFields();
+                    }
+                } else {
+                    gUC.toastAlert(getActivity(), getString(R.string.fragment_login_wrong_input));
                 }
-            } else {
-                gUC.toastAlert(getActivity(), getString(R.string.fragment_login_wrong_input));
+            }else {
+                gUC.toastAlert(getActivity(), getString(R.string.fragment_login_fill_out_fields));
             }
         }).start());
 
         binding.registerBtn.setOnClickListener(view1 -> {
             NavHostFragment.findNavController(FragmentLoginHome.this).navigate(R.id.action_FragmentLoginHome_to_FragmentLoginRegister);
-            binding.emailEt.getText().clear();
-            binding.passwordEt.getText().clear();
         });
     }
 
@@ -63,10 +66,11 @@ public class FragmentLoginHome extends Fragment {
     }
 
     private void clearInputFields() {
-        binding.emailEt.getText().clear();
-        binding.passwordEt.getText().clear();
+        Looper.prepare();
+        binding.emailEt.getEditText().getText().clear();
+        binding.passwordEt.getEditText().getText().clear();
+        Looper.loop();
     }
-
 
 
 }

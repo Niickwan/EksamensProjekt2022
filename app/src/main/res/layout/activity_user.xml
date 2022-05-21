@@ -73,10 +73,11 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/userFragmentContainerView"
-            android:name="com.jmmnt.UI.FragmentAdminHome"
+        <include
+            android:id="@+id/userFragmentContainer"
+            layout="@layout/content_user"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+
     </LinearLayout>
 </LinearLayout>
