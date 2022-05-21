@@ -6,8 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_color_zealand"
-    tools:context=".UI.FragmentPopupMenu"
-    android:tag="test">
+    tools:context=".UI.FragmentPopupMenu">
 
     <Button
         android:id="@+id/saveProfile_Btn"

@@ -17,6 +17,8 @@
     <string name="fragment_login_register_surname_hint">Efternavn</string>
     <string name="fragment_login_register_create_user_button">Opret</string>
     <string name="fragment_login_register_title">Opret bruger</string>
+    <string name="fragment_login_register_password">Password</string>
+    <string name="fragment_login_register_confirm_password">Bekræft password</string>
 
     <!-- ADMIN FRAGMENTS -->
     <string name="title_activity_admin">ADMIN</string>
@@ -44,6 +46,9 @@
     <string name="popup_menu_logout">Log ud</string>
 
     <!-- POPUP MENU EDIT PROFILE -->
+
+
+    <!-- POPUP MENU EDIT PROFILE -->
     <string name="popup_menu_edit_profile_edit">Rediger profil</string>
     <string name="popup_menu_edit_profile_firstname">Fornavn</string>
     <string name="popup_menu_edit_profile_surname">Efternavn</string>
@@ -56,6 +61,7 @@
     <!-- TOAST ALERTS -->
     <string name="fragment_login_wrong_input">Forkert login</string>
     <string name="fragment_login_fill_out_fields">Udfyld felter</string>
+    <string name="popup_menu_password_not_matching">Password matcher ikke</string>
 
     <!-- APP VERSION -->
     <string name="app_build_version">App Version</string>

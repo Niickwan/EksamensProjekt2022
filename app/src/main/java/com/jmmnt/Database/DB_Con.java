@@ -136,5 +136,12 @@ public class DB_Con {
 
         return isEmailAvailable;
     }
+
+    public boolean updateUser(User user) {
+
+        System.out.println("OPDATER BRUGER");
+
+        return false;
+    }
     //disse kunne potential blive lavet til ÉN general--------------------------------
 }
