@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import com.jmmnt.Entities.LoggedInUser;
 import com.jmmnt.Entities.User;
@@ -21,7 +20,7 @@ import com.jmmnt.databinding.FragmentLoginHomeBinding;
 public class FragmentLoginHome extends Fragment {
 
     private FragmentLoginHomeBinding binding;
-    private OperateDB opDB = new OperateDB();
+    private OperateDB opDB = OperateDB.getInstance();
     private GeneralUseCase gUC = GeneralUseCase.getInstance();
     private User user = null;
 
@@ -34,7 +33,6 @@ public class FragmentLoginHome extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding.loginBtn.setOnClickListener(v -> new Thread(() -> {
-            System.out.println("ASLKÆJDABJSDKJASFOÆKJASJKOÆFA");
             if (!TextUtils.isEmpty(binding.emailEt.getEditText().getText().toString()) && !TextUtils.isEmpty(binding.passwordEt.getEditText().getText().toString())){
                 opDB.validateLogin(binding.emailEt.getEditText().getText().toString(), Encryption.encrypt(binding.passwordEt.getEditText().getText().toString()));
                 user = LoggedInUser.getInstance().getUser();

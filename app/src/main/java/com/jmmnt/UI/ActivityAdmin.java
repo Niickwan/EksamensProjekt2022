@@ -1,18 +1,23 @@
 package com.jmmnt.UI;
 
+import android.app.Activity;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import android.view.View;
 import com.jmmnt.Entities.LoggedInUser;
 import com.jmmnt.Entities.User;
+import com.jmmnt.R;
 import com.jmmnt.databinding.ActivityAdminBinding;
 
 public class ActivityAdmin extends AppCompatActivity {
 
     private ActivityAdminBinding binding;
     private User user = LoggedInUser.getInstance().getUser();
+    private static String prevFragment = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,10 +41,10 @@ public class ActivityAdmin extends AppCompatActivity {
         if (!fragment.isVisible()) {
             FragmentManager fm = getSupportFragmentManager();
             fm.beginTransaction()
-                .replace(resourceID, fragment, null)
-                .setReorderingAllowed(true)
-                .addToBackStack(null)
-                .commit();
+                    .add(resourceID, fragment, null)
+                    .setReorderingAllowed(true)
+                    .addToBackStack(null)
+                    .commit();
         }
     }
 

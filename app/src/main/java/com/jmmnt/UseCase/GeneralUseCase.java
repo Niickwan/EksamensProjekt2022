@@ -68,4 +68,10 @@ public class GeneralUseCase {
         fromScene.startActivity(switchActivity);
     }
 
+    public boolean isUserInputMatching(String firstUserInput, String secondUserInput) {
+        return firstUserInput.equals(secondUserInput);
+    }
+
+
+
 }
