@@ -2,22 +2,21 @@ package com.jmmnt.UI;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
+import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+
 import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
 
 import com.jmmnt.Entities.LoggedInUser;
 import com.jmmnt.Entities.User;
 import com.jmmnt.R;
 import com.jmmnt.UseCase.GeneralUseCase;
+
 
 public class FragmentPopupMenu extends Fragment {
 
@@ -25,7 +24,6 @@ public class FragmentPopupMenu extends Fragment {
     private GeneralUseCase gUC = GeneralUseCase.getInstance();
     private TextView username, email, phone;
     private User user = LoggedInUser.getInstance().getUser();
-
 
     private FragmentPopupMenu(){
     }
@@ -36,6 +34,23 @@ public class FragmentPopupMenu extends Fragment {
         return fragmentPopupMenu;
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.popup_menu_edit_profile, container, false);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
+
+
     public void showProfileMenu(View view, LayoutInflater layoutInflater, Activity activity) {
         PopupWindow pw = new PopupWindow(layoutInflater.inflate(R.layout.popup_menu_profile,
                 null, false), ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
@@ -45,11 +60,9 @@ public class FragmentPopupMenu extends Fragment {
         email = pw.getContentView().findViewById(R.id.popupMenuEmail_tv);
         phone = pw.getContentView().findViewById(R.id.popupMenuPhone_tv);
 
-        System.out.println(user.getEmail());
-        username.setText(user.getEmail());
-
-
-        System.out.println("USERNAME "+username.getText().toString());
+        username.setText(user.getFullName());
+        email.setText(user.getEmail());
+        phone.setText(user.getPhoneNumber());
 
         View.OnClickListener pwMenuItemClicked = new View.OnClickListener() {
             @Override
@@ -60,14 +73,13 @@ public class FragmentPopupMenu extends Fragment {
                     return;
                 }
                 if (view.getId() == R.id.popupMenuEditProfile_tv){
-                    System.out.println("REDIGER"); //TODO sout
+                    ((ActivityAdmin) activity).fragmentManager(FragmentPopupMenu.this, R.id.adminFragmentContainerView);
                     pw.dismiss();
                     return;
                 }
                 if (view.getId() == R.id.popupMenuLogout_tv){
                     gUC.switchScene(activity, ActivityLogin.class);
                     pw.dismiss();
-                    return;
                 }
             }
         };
@@ -82,6 +94,5 @@ public class FragmentPopupMenu extends Fragment {
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.show();
     }
-
 
 }

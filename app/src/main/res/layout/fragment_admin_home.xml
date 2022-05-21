@@ -9,64 +9,9 @@
     android:orientation="vertical"
     tools:context=".UI.FragmentAdminHome">
 
-    <ImageView
-        android:id="@+id/sjaellands_erhvervsakademi3"
-        android:layout_width="87dp"
-        android:layout_height="39dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="50dp"
-        android:src="@drawable/sjaellands_erhvervsakademi"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/zealand_logo3"
-        android:layout_width="166dp"
-        android:layout_height="62dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="5dp"
-        android:src="@drawable/zealand_logo"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/profile_firstname_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Root"
-        android:textAlignment="center"
-        android:textColor="@color/darkblue"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/profile_picture"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/profile_surname_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Admin"
-        android:textAlignment="center"
-        android:textColor="@color/darkblue"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/profile_picture"
-        app:layout_constraintTop_toBottomOf="@+id/profile_firstname_tv" />
-
-    <ImageView
-        android:id="@+id/profile_picture"
-        android:layout_width="54dp"
-        android:layout_height="52dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="15dp"
-        android:src="@drawable/profile_icon"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/profile_icon" />
-
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="100dp"
         android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -86,7 +31,7 @@
                     android:id="@+id/createNewAssignmentBtn"
                     android:layout_width="290dp"
                     android:layout_height="48dp"
-                    android:layout_marginTop="60dp"
+                    android:layout_marginTop="100dp"
                     android:background="@drawable/button_design"
                     android:text="@string/fragment_admin_menu_button_create_new_assignment"
                     app:layout_constraintEnd_toEndOf="parent"

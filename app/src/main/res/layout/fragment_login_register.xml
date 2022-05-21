@@ -7,29 +7,6 @@
     android:background="@color/background_color_zealand"
     tools:context=".UI.FragmentUserNotInUse">
 
-    <ImageView
-        android:id="@+id/sjaellands_erhvervsakademi2"
-        android:layout_width="87dp"
-        android:layout_height="39dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="255dp"
-        android:src="@drawable/sjaellands_erhvervsakademi"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.289"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/zealand_logo2"
-        android:layout_width="166dp"
-        android:layout_height="62dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="200dp"
-        android:src="@drawable/zealand_logo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <Button
         android:id="@+id/create_btn"
         android:layout_width="wrap_content"

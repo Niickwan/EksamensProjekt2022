@@ -33,21 +33,13 @@ public class FragmentLoginHome extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        binding.threeDotMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showPopupMenu(view);
-            }
-        });
-
         binding.loginBtn.setOnClickListener(v -> new Thread(() -> {
-            opDB.validateLogin(binding.emailEt.getText().toString(), binding.passwordEt.getText().toString());
+            opDB.validateLogin(binding.emailEt.getText().toString(), Encryption.encrypt(binding.passwordEt.getText().toString()));
             user = LoggedInUser.getInstance().getUser();
             if (user != null) {
                 if (user.getUserRights() == 1) {
                     gUC.switchScene(getActivity(), ActivityAdmin.class);
                     clearInputFields();
-
                 } else if (user.getUserRights() == 2) {
                     gUC.switchScene(getActivity(), ActivityUser.class);
                     clearInputFields();
@@ -68,28 +60,6 @@ public class FragmentLoginHome extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
-    }
-
-    private void showPopupMenu(View view) {
-        PopupMenu ppm = new PopupMenu(getContext(), view);
-        ppm.getMenuInflater().inflate(R.menu.popup_menu, ppm.getMenu());
-        ppm.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                int id = item.getItemId();
-                if (id == R.id.recoverPassword) {
-                    System.out.println("GENDAN PASSWORD");
-                    return true;
-                }
-                if (id == R.id.about) {
-                    FragmentPopupMenu fpm = FragmentPopupMenu.getInstance();
-                    fpm.popupMenuShowAbout(getActivity());
-                    return true;
-                }
-                return false;
-            }
-        });
-        ppm.show();
     }
 
     private void clearInputFields() {

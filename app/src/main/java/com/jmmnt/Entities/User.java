@@ -1,7 +1,5 @@
 package com.jmmnt.Entities;
 
-import com.jmmnt.UI.FragmentPopupMenu;
-
 public class User {
     private String email;
     private String password;
@@ -10,10 +8,6 @@ public class User {
     private String phoneNumber;
     private int userID;
     private int userRights;
-
-    private User(){
-    }
-
 
     //general-use user constructor, not consisting potential confidential information
     public User(String firstName, String surName, String email) {
