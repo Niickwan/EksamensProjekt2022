@@ -35,10 +35,23 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <!-- GENERAL -->
+    <!-- POPUP MENU PROFILE -->
     <string name="popup_menu_edit_profile">Rediger profil</string>
     <string name="popup_menu_about">Om</string>
     <string name="popup_menu_logout">Log ud</string>
+
+    <!-- POPUP MENU EDIT PROFILE -->
+    <string name="popup_menu_edit_profile_edit">Rediger profil</string>
+    <string name="popup_menu_edit_profile_firstname">Fornavn</string>
+    <string name="popup_menu_edit_profile_surname">Efternavn</string>
+    <string name="popup_menu_edit_profile_phone">Telefonnummer</string>
+    <string name="popup_menu_edit_profile_email">E-mail</string>
+    <string name="popup_menu_edit_profile_password">Password</string>
+    <string name="popup_menu_edit_profile_password_confirm">Bekræft password</string>
+    <string name="popup_menu_edit_profile_save_button">Gem</string>
+
+
+    <string name="popup_menu_edit_profile_title">Forkert login</string>
 
     <!-- TOAST ALERTS -->
     <string name="fragment_login_wrong_input">Forkert login</string>

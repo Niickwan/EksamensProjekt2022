@@ -1,27 +1,13 @@
 package com.jmmnt.UseCase;
 
-import static android.app.Activity.RESULT_OK;
-
 import static androidx.activity.result.ActivityResultCallerKt.registerForActivityResult;
 
-import android.app.Activity;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.os.Bundle;
 import android.os.Looper;
-import android.provider.MediaStore;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-
-import com.jmmnt.UI.FragmentPopupMenu;
 import com.jmmnt.databinding.ActivityUserBinding;
 
 public class GeneralUseCase {

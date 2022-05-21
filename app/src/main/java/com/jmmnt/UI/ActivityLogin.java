@@ -1,24 +1,11 @@
 package com.jmmnt.UI;
 
 import android.os.Bundle;
-
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.view.View;
-
 import androidx.appcompat.widget.PopupMenu;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-
-import com.jmmnt.Database.DB_Con;
 import com.jmmnt.R;
 import com.jmmnt.databinding.ActivityLoginBinding;
-
-import android.view.Menu;
 import android.view.MenuItem;
 
 public class ActivityLogin extends AppCompatActivity {
@@ -30,6 +17,35 @@ public class ActivityLogin extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        binding.threeDotMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showPopupMenu(view);
+            }
+        });
+    }
+
+    public void showPopupMenu(View view) {
+        PopupMenu ppm = new PopupMenu(ActivityLogin.this, view);
+        ppm.getMenuInflater().inflate(R.menu.popup_menu, ppm.getMenu());
+        ppm.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                int id = item.getItemId();
+                if (id == R.id.recoverPassword) {
+                    System.out.println("GENDAN PASSWORD");
+                    return true;
+                }
+                if (id == R.id.about) {
+                    FragmentPopupMenu fpm = FragmentPopupMenu.getInstance();
+                    fpm.popupMenuShowAbout(ActivityLogin.this);
+                    return true;
+                }
+                return false;
+            }
+        });
+        ppm.show();
     }
 
 }
