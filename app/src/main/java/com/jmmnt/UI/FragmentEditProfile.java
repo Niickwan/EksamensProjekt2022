@@ -1,15 +1,12 @@
 package com.jmmnt.UI;
 
-import android.app.Activity;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.jmmnt.Entities.LoggedInUser;
 import com.jmmnt.Entities.User;
 import com.jmmnt.R;
@@ -46,7 +43,6 @@ public class FragmentEditProfile extends Fragment {
                 popupMenuEditProfile();
             }
         });
-
         binding.editFirstNameEt.setText(loggedInUser.getFirstName());
         binding.editSurnameEt.setText(loggedInUser.getSurname());
         binding.editPhoneNumberEt.setText(loggedInUser.getPhoneNumber());
@@ -59,8 +55,10 @@ public class FragmentEditProfile extends Fragment {
     }
 
     public void popupMenuEditProfile() {
-        user = null;
-        boolean isMatching = generalUseCase.isUserInputMatching(binding.editPasswordEt.getText().toString(),(binding.editConfirmPasswordEt.getText().toString()));
+
+        NavHostFragment.findNavController(FragmentEditProfile.this).navigate(R.id.action_fragmentEditProfile_to_FragmentAdminHome);
+        /*user = null;
+        boolean isMatching = generalUseCase.isInputMatching(binding.editPasswordEt.getText().toString(),(binding.editConfirmPasswordEt.getText().toString()));
         if (isMatching){
             user = new User(binding.editFirstNameEt.getText().toString(),
                     binding.editSurnameEt.getText().toString(),
@@ -71,15 +69,10 @@ public class FragmentEditProfile extends Fragment {
             boolean isProfileUpdated = operateDB.updateUserInDB(user);
             if (isProfileUpdated){
                 loggedInUser = user;
-                //NavHostFragment.findNavController(FragmentEditProfile.this).navigate(R.id.action_fragmentEditProfile_to_FragmentAdminHome);
+                NavHostFragment.findNavController(FragmentEditProfile.this).navigate(R.id.action_fragmentPopupMenu_to_FragmentAdminHome);
             }
         }else
-            gUC.toastAlert(getActivity(), getString(R.string.popup_menu_password_not_matching));
+            gUC.toastAlert(getActivity(), getString(R.string.popup_menu_password_not_matching));*/
     }
-
-    public Fragment getFragment(){
-       return FragmentEditProfile.this;
-    }
-
 
 }

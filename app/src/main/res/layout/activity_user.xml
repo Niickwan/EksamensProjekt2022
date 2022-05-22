@@ -20,7 +20,7 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/profilePictureImg"
+                android:id="@+id/profilePictureImg2"
                 android:layout_width="54dp"
                 android:layout_height="52dp"
                 android:layout_marginEnd="15dp"
@@ -38,7 +38,7 @@
                 android:textAlignment="center"
                 android:textColor="@color/darkblue"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/profilePictureImg"
+                app:layout_constraintEnd_toStartOf="@+id/profilePictureImg2"
                 app:layout_constraintTop_toBottomOf="@+id/profile_firstname_tv" />
 
             <TextView
@@ -46,12 +46,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:layout_marginEnd="54dp"
                 android:text="Root"
                 android:textAlignment="center"
                 android:textColor="@color/darkblue"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="@+id/profilePictureImg"
+                app:layout_constraintEnd_toStartOf="@+id/profilePictureImg2"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView

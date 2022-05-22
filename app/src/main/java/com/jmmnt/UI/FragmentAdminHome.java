@@ -35,5 +35,4 @@ public class FragmentAdminHome extends Fragment {
         super.onDestroyView();
         binding = null;
     }
-
 }
