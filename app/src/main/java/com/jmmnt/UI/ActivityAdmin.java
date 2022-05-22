@@ -1,12 +1,7 @@
 package com.jmmnt.UI;
 
-import android.app.Activity;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.view.View;
 import com.jmmnt.Entities.LoggedInUser;
 import com.jmmnt.Entities.User;
@@ -17,7 +12,6 @@ public class ActivityAdmin extends AppCompatActivity {
 
     private ActivityAdminBinding binding;
     private User user = LoggedInUser.getInstance().getUser();
-    private static String prevFragment = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,21 +26,47 @@ public class ActivityAdmin extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 FragmentPopupMenu fpm = FragmentPopupMenu.getInstance();
-                fpm.showProfileMenu(view, getLayoutInflater(), ActivityAdmin.this);
+                fpm.showProfileMenu(view, getLayoutInflater(), ActivityAdmin.this, R.id.nav_host_fragment_content_admin);
             }
         });
+
     }
 
-    public void fragmentManager(Fragment fragment, int resourceID) {
-        if (!fragment.isVisible()) {
-            FragmentManager fm = getSupportFragmentManager();
+    //DETTE KAN BRUGES I STEDET FOR NAV_GRAPH
+
+    //private FragmentManager fm = getSupportFragmentManager();
+
+    /*public void fragmentManager(Fragment fragment, String tag) {
+        if (fm.getBackStackEntryCount() == 0 || !fm.getBackStackEntryAt(fm.getBackStackEntryCount()-1).getName().equals(tag)) {
+            System.out.println("REPLACE ON STACK"); //TODO sout
             fm.beginTransaction()
-                    .add(resourceID, fragment, null)
+                    .replace(R.id.adminFragmentContainer, fragment, tag)
                     .setReorderingAllowed(true)
-                    .addToBackStack(null)
+                    .addToBackStack(tag)
                     .commit();
         }
     }
 
+    //((ActivityAdmin) getActivity()).fragmentManager(new FragmentAdminHome().getFragment(), getClass().getName());
 
+    @Override
+    public void onBackPressed(){
+        Fragment fragment = fm.findFragmentById(R.id.adminFragmentContainer);
+        if (fragment != null){
+            System.out.println("REMOVE FROM STACK"); //TODO sout
+            fm.beginTransaction()
+                    .remove(fragment)
+                    .commit();
+            fm.popBackStack();
+        }else
+            super.onBackPressed();
+    }*/
+
+    //DETTE ER TIL ACTIVITY SKIFT - addflag rydder stakken ved aktivitetsskrift
+
+    /*public void switchScene(Context fromScene, Class toScene) {
+        Intent switchActivity = new Intent(fromScene, toScene);
+        switchActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        fromScene.startActivity(switchActivity);
+    }*/
 }

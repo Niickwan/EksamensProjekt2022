@@ -77,7 +77,8 @@
             android:id="@+id/adminFragmentContainer"
             layout="@layout/content_admin"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            app:defaultNavHost="true" />
 
     </LinearLayout>
 

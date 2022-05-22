@@ -1,13 +1,10 @@
 package com.jmmnt.UseCase;
 
-import static androidx.activity.result.ActivityResultCallerKt.registerForActivityResult;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Looper;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import com.jmmnt.databinding.ActivityUserBinding;
 
 public class GeneralUseCase {
@@ -65,10 +62,11 @@ public class GeneralUseCase {
 
     public void switchScene(Context fromScene, Class toScene) {
         Intent switchActivity = new Intent(fromScene, toScene);
+        //switchActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         fromScene.startActivity(switchActivity);
     }
 
-    public boolean isUserInputMatching(String firstUserInput, String secondUserInput) {
+    public boolean isInputMatching(String firstUserInput, String secondUserInput) {
         return firstUserInput.equals(secondUserInput);
     }
 

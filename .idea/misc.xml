@@ -28,8 +28,9 @@
         <entry key="..\:/AndroidStudioProjects/EksamensProjekt2022/app/src/main/res/drawable/profile_picture_image.xml" value="0.3155" />
         <entry key="..\:/AndroidStudioProjects/EksamensProjekt2022/app/src/main/res/layout/activity_admin.xml" value="0.33" />
         <entry key="..\:/AndroidStudioProjects/EksamensProjekt2022/app/src/main/res/layout/activity_login.xml" value="0.33" />
-        <entry key="..\:/AndroidStudioProjects/EksamensProjekt2022/app/src/main/res/layout/activity_user.xml" value="0.31354166666666666" />
+        <entry key="..\:/AndroidStudioProjects/EksamensProjekt2022/app/src/main/res/layout/activity_user.xml" value="0.75" />
         <entry key="..\:/AndroidStudioProjects/EksamensProjekt2022/app/src/main/res/layout/content_admin.xml" value="0.31354166666666666" />
+        <entry key="..\:/AndroidStudioProjects/EksamensProjekt2022/app/src/main/res/layout/content_user.xml" value="0.33125" />
         <entry key="..\:/AndroidStudioProjects/EksamensProjekt2022/app/src/main/res/layout/fragment_admin_home.xml" value="0.48470209339774556" />
         <entry key="..\:/AndroidStudioProjects/EksamensProjekt2022/app/src/main/res/layout/fragment_admin_not_in_use.xml" value="0.31354166666666666" />
         <entry key="..\:/AndroidStudioProjects/EksamensProjekt2022/app/src/main/res/layout/fragment_blabla.xml" value="0.31354166666666666" />
@@ -38,6 +39,7 @@
         <entry key="..\:/AndroidStudioProjects/EksamensProjekt2022/app/src/main/res/layout/fragment_login_company_info.xml" value="0.25416666666666665" />
         <entry key="..\:/AndroidStudioProjects/EksamensProjekt2022/app/src/main/res/layout/fragment_login_home.xml" value="0.5" />
         <entry key="..\:/AndroidStudioProjects/EksamensProjekt2022/app/src/main/res/layout/fragment_login_register.xml" value="0.33" />
+        <entry key="..\:/AndroidStudioProjects/EksamensProjekt2022/app/src/main/res/layout/fragment_tester.xml" value="0.33125" />
         <entry key="..\:/AndroidStudioProjects/EksamensProjekt2022/app/src/main/res/layout/fragment_user_home.xml" value="0.4492753623188406" />
         <entry key="..\:/AndroidStudioProjects/EksamensProjekt2022/app/src/main/res/layout/fragment_user_not_in_use.xml" value="0.31354166666666666" />
         <entry key="..\:/AndroidStudioProjects/EksamensProjekt2022/app/src/main/res/layout/popup_menu_edit_profile.xml" value="0.5" />
