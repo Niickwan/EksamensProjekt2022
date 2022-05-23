@@ -50,7 +50,7 @@ public class FragmentLoginRegister extends Fragment{
         //METODER TIL KAMERA------------------------------------------------------------
         //TODO skal flyttes til det fragment, hvor der bliver taget billeder
         activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
-            @Override
+           @Override
             public void onActivityResult(ActivityResult result) {
                 if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                     Bundle bundle = result.getData().getExtras();
@@ -59,6 +59,7 @@ public class FragmentLoginRegister extends Fragment{
                 }
             }
         });
+
         //TODO skal flyttes til det fragment, hvor der bliver taget billeder
         binding.TrykForBillede.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,6 +72,9 @@ public class FragmentLoginRegister extends Fragment{
                 }
             }
         });
+
+
+
         //METODER TIL KAMERA------------------------------------------------------------
 
 
