@@ -60,10 +60,10 @@
                 android:layout_height="62dp"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="15dp"
-                android:src="@drawable/zealand_company_logo"
+                android:src="@drawable/zealand_company_logo_with_subheading"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@drawable/zealand_company_logo" />
+                tools:srcCompat="@drawable/zealand_company_logo_with_subheading" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.appbar.AppBarLayout>

@@ -67,12 +67,13 @@ public class DB_Con {
     public void fillUserContainer() throws SQLException {
         UserContainer userContainer = UserContainer.getInstance();
         if (!UserContainer.getUsers().isEmpty()) UserContainer.getUsers().clear();
-        String mySQL = "SELECT * FROM User ORDER BY Firstname";
+        String fill = "SELECT Firstname, Surname, Phonenumber, User_ID FROM User ORDER BY Firstname";
         connection = connection();
         stmt = connection.createStatement();
-        rs = stmt.executeQuery(mySQL);
+        rs = stmt.executeQuery(fill);
         while (rs.next()) {
-            userContainer.addUserToContainer(new User(rs.getString("Firstname"),
+            userContainer.addUserToContainer(new User(
+                    rs.getString("Firstname"),
                     rs.getString("Surname"),
                     rs.getString("Phonenumber"),
                     rs.getInt("User_ID")));

@@ -9,18 +9,18 @@
     android:background="@color/background_color_zealand"
     android:padding="5dp"
     android:layout_gravity="center"
-    tools:context=".UI.FragmentCompanyInfo">
+    >
 
     <ImageView
         android:layout_width="180dp"
         android:layout_height="66dp"
-        android:src="@drawable/zealand_company_logo2"
+        android:src="@drawable/zealand_company_logo_without_subheading"
         app:layout_constraintBottom_toTopOf="@+id/about_info_tv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.313"
-        tools:src="@drawable/zealand_company_logo2" />
+        tools:src="@drawable/zealand_company_logo_without_subheading" />
 
     <TextView
         android:id="@+id/about_info_tv"

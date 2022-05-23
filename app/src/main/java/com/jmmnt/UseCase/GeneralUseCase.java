@@ -62,7 +62,6 @@ public class GeneralUseCase {
 
     public void switchScene(Context fromScene, Class toScene) {
         Intent switchActivity = new Intent(fromScene, toScene);
-        //switchActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         fromScene.startActivity(switchActivity);
     }
 
