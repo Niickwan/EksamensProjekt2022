@@ -1,5 +1,6 @@
 package com.jmmnt.Database;
 
+import com.jmmnt.Entities.Assignment;
 import com.jmmnt.Entities.User;
 
 import java.sql.Connection;
@@ -142,6 +143,20 @@ public class DB_Con {
         System.out.println("OPDATER BRUGER");
 
         return false;
+    }
+
+    public boolean createNewAssignment(Assignment assignment) {
+        connection = connection();
+        String userInfo = "INSERT INTO Assignment (Foreman_ID, Address, Postal_Code, Status, Order_Number, Customer_Name) "
+                + "VALUES ('"
+                + assignment.getForemanId() + "', '"
+                + assignment.getAddress() + "', '"
+                + assignment.getPostalCode() + "', '"
+                + assignment.getStatus() + "', '"
+                + assignment.getOrderNumber() + "', '"
+                + assignment.getCustomerName() + "')";
+
+        return uploadMySQLCall(userInfo);
     }
     //disse kunne potential blive lavet til ÉN general--------------------------------
 }

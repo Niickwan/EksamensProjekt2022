@@ -1,6 +1,7 @@
 package com.jmmnt.UseCase;
 
 import com.jmmnt.Database.DB_Con;
+import com.jmmnt.Entities.Assignment;
 import com.jmmnt.Entities.User;
 
 public class OperateDB {
@@ -37,5 +38,9 @@ public class OperateDB {
 
     public boolean updateUserInDB(User user) {
         return db_con.updateUser(user);
+    }
+
+    public boolean createNewAssignment(Assignment assignment) {
+        return db_con.createNewAssignment(assignment);
     }
 }
