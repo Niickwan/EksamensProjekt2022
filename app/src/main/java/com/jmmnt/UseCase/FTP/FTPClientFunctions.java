@@ -11,6 +11,7 @@ import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -18,6 +19,7 @@ import java.io.IOException;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.InputStream;
 import java.io.OutputStream;
 
 public class FTPClientFunctions extends AppCompatActivity{
@@ -81,35 +83,52 @@ public class FTPClientFunctions extends AppCompatActivity{
         return status;
     }
 
+    public void ftpDownload(String remotePath, String phoneFileName){
+        new Thread(() -> {
+            ftpConnect(host, username, password, port);
+            boolean status;
+            try {
+                mFTPClient.setFileType(FTP.BINARY_FILE_TYPE);
+                File phoneDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+                File phonePath = new File(phoneDir, phoneFileName);
+                outputStream = new BufferedOutputStream(new FileOutputStream(phonePath));
+                mFTPClient.retrieveFile(remotePath, outputStream);
+                outputStream.close();
+                mFTPClient.disconnect();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }).start();
+    }
+
     public void sendPicToFTP(Bitmap bitmap, String filename,String directory, Context context) {
-        new Thread(new Runnable() {
-            public void run() {
-                boolean status;
+        new Thread(() -> {
+            boolean status;
 
-                status = ftpConnect(host, username, password, port);
-                if (status) {
-                    Log.d(TAG, "Connection Success");
+            status = ftpConnect(host, username, password, port);
+            if (status) {
+                Log.d(TAG, "Connection Success");
 
-                    File filepath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-                    File file = new File(filepath, filename);
+                File filepath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+                File file = new File(filepath, filename);
 
-                    try {
-                        outputStream = new FileOutputStream(file);
-                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
-                        outputStream.flush();
-                        outputStream.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    createDirectory(mFTPClient, directory+"/pictures");
-
-                    ftpUpload(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-                            + "/pics/" + filename, filename, directory+"/pictures", null);
-
-                    file.delete();
-
-                    ftpDisconnect();
+                try {
+                    outputStream = new FileOutputStream(file);
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+                    outputStream.flush();
+                    outputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
+                createDirectory(mFTPClient, directory+"/pictures");
+
+                ftpUpload(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+                        + "/pics/" + filename, filename, directory+"/pictures", null);
+
+                file.delete();
+
+                ftpDisconnect();
             }
         }).start();
     }
