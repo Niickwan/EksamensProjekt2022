@@ -14,12 +14,13 @@
     <ImageView
         android:layout_width="180dp"
         android:layout_height="66dp"
-        android:src="@drawable/zealand_logo"
+        android:src="@drawable/zealand_company_logo2"
         app:layout_constraintBottom_toTopOf="@+id/about_info_tv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.313" />
+        app:layout_constraintVertical_bias="0.313"
+        tools:src="@drawable/zealand_company_logo2" />
 
     <TextView
         android:id="@+id/about_info_tv"

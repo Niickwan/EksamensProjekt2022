@@ -2,18 +2,23 @@
     <string name="app_name">EksamensProjekt2022</string>
     <string name="action_settings">Settings</string>
 
+    <!-- APP ICON NAME -->
+    <string name="app_icon_name">El-installatør</string>
+
     <!-- LOGIN FRAGMENTS -->
-    <string name="title_activity_login">LOGIN</string>
     <string name="fragment_login_home_label">LoginHome</string>
     <string name="fragment_login_register_label">LoginNotInUse</string>
     <string name="fragment_login_Login_button">Login</string>
     <string name="fragment_login_register_button">Registrer</string>
     <string name="fragment_login_title">EL-Installatør</string>
+
     <!-- LOGIN FRAGMENT - REGISTER -->
     <string name="fragment_login_register_firstname_hint">Fornavn</string>
     <string name="fragment_login_register_surname_hint">Efternavn</string>
     <string name="fragment_login_register_create_user_button">Opret</string>
     <string name="fragment_login_register_title">Opret bruger</string>
+    <string name="fragment_login_register_password">Password</string>
+    <string name="fragment_login_register_confirm_password">Bekræft password</string>
 
     <!-- ADMIN FRAGMENTS -->
     <string name="title_activity_admin">ADMIN</string>
@@ -35,13 +40,28 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <!-- GENERAL -->
+    <!-- POPUP MENU PROFILE -->
     <string name="popup_menu_edit_profile">Rediger profil</string>
     <string name="popup_menu_about">Om</string>
     <string name="popup_menu_logout">Log ud</string>
 
+    <!-- POPUP MENU EDIT PROFILE -->
+
+
+    <!-- POPUP MENU EDIT PROFILE -->
+    <string name="popup_menu_edit_profile_edit">Rediger profil</string>
+    <string name="popup_menu_edit_profile_firstname">Fornavn</string>
+    <string name="popup_menu_edit_profile_surname">Efternavn</string>
+    <string name="popup_menu_edit_profile_phone">Telefonnummer</string>
+    <string name="popup_menu_edit_profile_email">E-mail</string>
+    <string name="popup_menu_edit_profile_password">Password</string>
+    <string name="popup_menu_edit_profile_password_confirm">Bekræft password</string>
+    <string name="popup_menu_edit_profile_save_button">Gem</string>
+
     <!-- TOAST ALERTS -->
     <string name="fragment_login_wrong_input">Forkert login</string>
+    <string name="fragment_login_fill_out_fields">Udfyld felter</string>
+    <string name="popup_menu_password_not_matching">Password matcher ikke</string>
 
     <!-- APP VERSION -->
     <string name="app_build_version">App Version</string>

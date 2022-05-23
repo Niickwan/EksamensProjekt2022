@@ -1,30 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_color_zealand"
-    tools:context=".UI.FragmentUserNotInUse">
+    tools:context=".UI.FragmentPopupMenu">
 
     <Button
-        android:id="@+id/create_btn"
+        android:id="@+id/saveProfile_Btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:background="@drawable/button_design"
-        android:text="@string/fragment_login_register_create_user_button"
+        android:text="@string/popup_menu_edit_profile_save_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registerConfirmPassword_et" />
+        app:layout_constraintTop_toBottomOf="@+id/editConfirmPassword_et" />
+
+    <EditText
+        android:id="@+id/editEmail_et"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="25dp"
+        android:background="@drawable/edittext_design"
+        android:ems="10"
+        android:hint="@string/popup_menu_edit_profile_email"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        android:textAlignment="center"
+        android:theme="@style/EditTextTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editPhoneNumber_et" />
+
+    <EditText
+        android:id="@+id/editPassword_et"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="25dp"
+        android:background="@drawable/edittext_design"
+        android:ems="10"
+        android:hint="@string/popup_menu_edit_profile_password"
+        android:inputType="textPassword"
+        android:minHeight="48dp"
+        android:textAlignment="center"
+        android:theme="@style/EditTextTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editEmail_et" />
+
+    <EditText
+        android:id="@+id/editConfirmPassword_et"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="25dp"
+        android:background="@drawable/edittext_design"
+        android:ems="10"
+        android:hint="@string/popup_menu_edit_profile_password_confirm"
+        android:inputType="textPassword"
+        android:minHeight="48dp"
+        android:textAlignment="center"
+        android:theme="@style/EditTextTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editPassword_et" />
 
     <TextView
-        android:id="@+id/login_tv2"
+        android:id="@+id/editProfileTitle_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:text="@string/fragment_login_register_title"
+        android:text="@string/popup_menu_edit_profile_edit"
         android:textColor="@color/darkblue"
         android:textSize="34sp"
         android:textStyle="bold"
@@ -33,7 +91,26 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/registerFirstName_et"
+        android:id="@+id/editPhoneNumber_et"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="25dp"
+        android:background="@drawable/edittext_design"
+        android:ems="10"
+        android:hint="@string/popup_menu_edit_profile_phone"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        android:textAlignment="center"
+        android:theme="@style/EditTextTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editSurname_et" />
+
+    <EditText
+        android:id="@+id/editFirstName_et"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
@@ -41,45 +118,7 @@
         android:layout_marginEnd="25dp"
         android:background="@drawable/edittext_design"
         android:ems="10"
-        android:hint="@string/fragment_login_register_firstname_hint"
-        android:inputType="textPersonName"
-        android:minHeight="48dp"
-        android:textAlignment="center"
-        android:theme="@style/EditTextTheme"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_tv2" />
-
-    <EditText
-        android:id="@+id/registerSurname_et"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="25dp"
-        android:background="@drawable/edittext_design"
-        android:ems="10"
-        android:hint="@string/fragment_login_register_surname_hint"
-        android:inputType="textPersonName"
-        android:minHeight="48dp"
-        android:textAlignment="center"
-        android:theme="@style/EditTextTheme"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registerFirstName_et" />
-
-    <EditText
-        android:id="@+id/registerPhoneNumber_et"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="25dp"
-        android:background="@drawable/edittext_design"
-        android:ems="10"
-        android:hint="Telefonnummer"
+        android:hint="@string/popup_menu_edit_profile_firstname"
         android:inputType="textPersonName"
         android:minHeight="48dp"
         android:textAlignment="center"
@@ -87,10 +126,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registerEmail_et" />
+        app:layout_constraintTop_toBottomOf="@+id/editProfileTitle_tv" />
 
     <EditText
-        android:id="@+id/registerEmail_et"
+        android:id="@+id/editSurname_et"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
@@ -98,7 +137,7 @@
         android:layout_marginEnd="25dp"
         android:background="@drawable/edittext_design"
         android:ems="10"
-        android:hint="E-mail"
+        android:hint="@string/popup_menu_edit_profile_surname"
         android:inputType="textPersonName"
         android:minHeight="48dp"
         android:textAlignment="center"
@@ -106,70 +145,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registerSurname_et" />
-
-    <EditText
-        android:id="@+id/registerPassword_et"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="25dp"
-        android:background="@drawable/edittext_design"
-        android:ems="10"
-        android:hint="@string/fragment_login_register_password"
-        android:inputType="textPassword"
-        android:minHeight="48dp"
-        android:textAlignment="center"
-        android:theme="@style/EditTextTheme"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registerPhoneNumber_et" />
-
-    <EditText
-        android:id="@+id/registerConfirmPassword_et"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="25dp"
-        android:background="@drawable/edittext_design"
-        android:ems="10"
-        android:hint="@string/fragment_login_register_confirm_password"
-        android:inputType="textPassword"
-        android:minHeight="48dp"
-        android:textAlignment="center"
-        android:theme="@style/EditTextTheme"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registerPassword_et" />
-
-    <Button
-        android:id="@+id/TrykForBillede"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:text="Tryk for billede :)"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <ImageView
-        android:id="@+id/imageView32"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:src="@tools:sample/avatars" />
-
-    <Button
-        android:id="@+id/FTPButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="28dp"
-        android:text="Tryk For FTP :)"
-        app:layout_constraintBottom_toTopOf="@+id/TrykForBillede"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/editFirstName_et" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,16 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
     tools:context=".UI.ActivityAdmin">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/Theme.EksamensProjekt2022.AppBarOverlay"/>
+        android:background="@color/background_color_zealand"
+        android:theme="@style/Theme.EksamensProjekt2022.AppBarOverlay"
+        app:elevation="0dp">
 
-    <include layout="@layout/content_admin" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+            <ImageView
+                android:id="@+id/profilePictureImg"
+                android:layout_width="54dp"
+                android:layout_height="52dp"
+                android:layout_marginEnd="15dp"
+                android:src="@drawable/profile_icon"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/profile_icon" />
+
+            <TextView
+                android:id="@+id/profile_surname_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Admin"
+                android:textAlignment="center"
+                android:textColor="@color/darkblue"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/profilePictureImg"
+                app:layout_constraintTop_toBottomOf="@+id/profile_firstname_tv" />
+
+            <TextView
+                android:id="@+id/profile_firstname_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="54dp"
+                android:text="Root"
+                android:textAlignment="center"
+                android:textColor="@color/darkblue"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/profilePictureImg"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/zealandCompanyLogo"
+                android:layout_width="166dp"
+                android:layout_height="62dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:src="@drawable/zealand_company_logo"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@drawable/zealand_company_logo" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/adminFragmentContainer"
+            layout="@layout/content_admin"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:defaultNavHost="true" />
+
+    </LinearLayout>
+
+</LinearLayout>
