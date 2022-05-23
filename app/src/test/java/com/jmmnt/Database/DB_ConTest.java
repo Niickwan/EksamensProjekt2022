@@ -25,5 +25,15 @@ public class DB_ConTest {
         assertEquals(1, db.validateLogin("Nicklas", "Jensen"));
     }
 
+    @Test
+    public void isEmailOccupied() throws SQLException {
+        assertTrue(db.isEmailOccupied("1"));
+    }
+
+    @Test
+    public void isPhonenumberOccupied() throws SQLException {
+        assertTrue(db.isPhonenumberOccupied("44332211"));
+    }
+
 
 }
