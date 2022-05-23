@@ -26,6 +26,16 @@ public class User {
     }
 
     //user constructor for creation of username, password and user rights.
+    public User(String firstName, String surname, String phoneNumber, String email, String password, int userID, int userRights) {
+        this.firstName = firstName;
+        this.surName = surname;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.password = password;
+        this.userID = userID;
+        this.userRights = userRights;
+    }
+
     public User(String firstName, String surname, String phoneNumber, String email, String password, int userRights) {
         this.firstName = firstName;
         this.surName = surname;
@@ -33,6 +43,19 @@ public class User {
         this.email = email;
         this.password = password;
         this.userRights = userRights;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", surName='" + surName + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", userID=" + userID +
+                ", userRights=" + userRights +
+                '}';
     }
 
     public String getPhoneNumber() {
@@ -63,5 +86,11 @@ public class User {
         return surName;
     }
 
+    public String getSurName() {
+        return surName;
+    }
 
+    public int getUserID() {
+        return userID;
+    }
 }

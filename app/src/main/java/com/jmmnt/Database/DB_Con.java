@@ -1,5 +1,6 @@
 package com.jmmnt.Database;
 
+import com.jmmnt.Entities.LoggedInUser;
 import com.jmmnt.Entities.User;
 
 import java.sql.Connection;
@@ -136,12 +137,30 @@ public class DB_Con {
 
         return isEmailAvailable;
     }
+    //disse kunne potential blive lavet til ÉN general--------------------------------
 
     public boolean updateUser(User user) {
+        boolean isUpdatede = false;
+        String updateUser = "UPDATE User " +
+                "SET Email = '"+user.getEmail()+"', " +
+                "Password = '"+user.getPassword()+"', " +
+                "Firstname = '"+user.getFirstName()+"', " +
+                "Surname = '"+user.getSurname()+"', " +
+                "Phonenumber = '"+user.getPhoneNumber()+"' " +
+                "WHERE User_ID = "+LoggedInUser.getInstance().getUser().getUserID()+"";
+        try {
+            connection = connection();
+            preStmt = connection.prepareStatement(updateUser);
+            int updateValue = preStmt.executeUpdate();
+            if (updateValue == 1)
+                isUpdatede = true;
+            connection.close();
+            preStmt.close();
+            rs.close();
 
-        System.out.println("OPDATER BRUGER");
-
-        return false;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return isUpdatede;
     }
-    //disse kunne potential blive lavet til ÉN general--------------------------------
 }

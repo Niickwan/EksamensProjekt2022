@@ -27,7 +27,7 @@ public class FragmentAdminHome extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding.createNewAssignmentBtn.setOnClickListener(view1 -> NavHostFragment.findNavController(FragmentAdminHome.this)
-                .navigate(R.id.action_FragmentAdminHome_to_FragmentAdminNotInUse));
+                .navigate(R.id.action_FragmentAdminHome_to_fragmentCreateOrder));
     }
 
     @Override
