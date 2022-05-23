@@ -1,30 +1,27 @@
 package com.jmmnt.UseCase;
 
-import static android.app.Activity.RESULT_OK;
-
-import static androidx.activity.result.ActivityResultCallerKt.registerForActivityResult;
-
-import android.app.Activity;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.os.Bundle;
 import android.os.Looper;
-import android.provider.MediaStore;
 import android.widget.ImageView;
 import android.widget.Toast;
-
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-
 import com.jmmnt.databinding.ActivityUserBinding;
 
 public class GeneralUseCase {
+
+
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private static Toast toast = null;
+    private static GeneralUseCase generalUseCase = null;
+
+    private GeneralUseCase(){
+    }
+
+    public static GeneralUseCase getInstance() {
+        if (generalUseCase  == null)
+            generalUseCase  = new GeneralUseCase();
+        return generalUseCase;
+    }
 
     //This method takes two strings and checks if one of the strings (s)
     //Contains the same chars as the other string (input)
@@ -59,8 +56,20 @@ public class GeneralUseCase {
         Looper.loop();
     }
 
+
     public void createCamera(ActivityUserBinding binding, ImageView image) {
     }
+
+    public void switchScene(Context fromScene, Class toScene) {
+        Intent switchActivity = new Intent(fromScene, toScene);
+        //switchActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        fromScene.startActivity(switchActivity);
+    }
+
+    public boolean isInputMatching(String firstUserInput, String secondUserInput) {
+        return firstUserInput.equals(secondUserInput);
+    }
+
 
 
 }

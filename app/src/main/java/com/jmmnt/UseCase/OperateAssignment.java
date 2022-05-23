@@ -2,35 +2,61 @@ package com.jmmnt.UseCase;
 
 
 
-import com.jmmnt.Entities.Assignment;
+import android.os.Environment;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.FormulaEvaluator;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-//TODO eventuel lave en ekstra funktion der tjekker status (aktiv, ikke aktiv) sådan at man kan
-//TODO søge KUN på aktive eller KUN på ikke aktive
+
 public class OperateAssignment {
-    private GeneralUseCase gUC = new GeneralUseCase();
-    //This method takes an arbitrary list of assignments and an arbitrary list of integers.
-    //The method then finds all the assignments whose indexes match the integers in the integer list
-    //and returns the assignments in a new list, sortedAssignments.
-    public List<Assignment> sortCasesByindex(List<Assignment> assignments, List<Integer> indexList){
-        ArrayList<Assignment> sortedAssignments = new ArrayList<    >();
-        for (Integer integer : indexList) {
-            sortedAssignments.add(assignments.get(integer));
+    private GeneralUseCase gUC = GeneralUseCase.getInstance();
+
+    //TODO lave en ekstra funktion der tjekker status (aktiv, ikke aktiv) sådan at man kan
+    //TODO søge KUN på aktive eller KUN på ikke aktive
+    //SEARCHING METHODS------------------------------------------------------
+
+    //Search for objects by comparing multiple object strings AND comparing the objects status
+    public List<Object> getSearchedObjectsMultipleStrings(List<Object> objects, String[] objectStrings, String input, String objectStatus){
+        ArrayList<Object> multipleStringSearchArray = new ArrayList<>();
+        for (String objectString : objectStrings) {
+            multipleStringSearchArray.addAll(getSearchedObjects(objects, objectString, input, objectStatus));
         }
-        return sortedAssignments;
+        return multipleStringSearchArray;
     }
 
-    //This method takes an abitrary list of assignments and an arbitrary String.
-    //The method then finds all the assignments whose address/postalcode/city/addressNumber match
-    //the string, and places their index numbers into an integer arraylist and then returns the
-    //integer arraylist.
-    public List<Integer> findCaseMatchingInput(List<Assignment> assignments, String input){
+    //Search for object by comparing multiple object strings WITHOUT comparing the objects status
+    public List<Object> getSearchedObjectsMultipleStrings(List<Object> objects, String[] objectStrings, String input){
+        ArrayList<Object> multipleStringSearchArray = new ArrayList<>();
+        for (String objectString : objectStrings) {
+            multipleStringSearchArray.addAll(getSearchedObjects(objects, objectString, input));
+        }
+        return multipleStringSearchArray;
+    }
+
+    public List<Object> sortObjectsByindex(List<Object> objects, List<Integer> indexList){
+        ArrayList<Object> sortedObjects = new ArrayList<>();
+        for (Integer integer : indexList) {
+            sortedObjects.add(objects.get(integer));
+        }
+        return sortedObjects;
+    }
+
+    public List<Integer> findObjectsMatchingInput(List<Object> objects, String objectString, String input){
         ArrayList<Integer> matchingCasesIndex = new ArrayList<>();
-        for (int i = 0; i < assignments.size(); i++) {
-            if(gUC.checkIfStringMatchesInput(assignments.get(i).getAddress(), input)
-               || gUC.checkIfStringMatchesInput(assignments.get(i).getPostalCode(), input)
-               || gUC.checkIfStringMatchesInput(assignments.get(i).getCity(), input))
+        for (int i = 0; i < objects.size(); i++) {
+            if(gUC.checkIfStringMatchesInput(objectString, input))
             {
                 matchingCasesIndex.add(i);
             }
@@ -38,12 +64,63 @@ public class OperateAssignment {
         return matchingCasesIndex;
     }
 
-    //This method takes a list of assignments and a string
-    //the method then uses the methods findCaseMatchingInput and sortCaseByIndex
-    //to get and return a list of assignments whose address, postalCode or city matches the
-    //string
-    public List<Assignment> getSearchedCases(List<Assignment> assignments, String input){
-        return sortCasesByindex(assignments, findCaseMatchingInput(assignments, input));
+    //Search for objects by comparing a single object string AND comparing the objects status
+    public List<Object> getSearchedObjects(List<Object> objects, String objectString, String input, String objectStatus){
+        return sortObjectsByindex(objects, findObjectsMatchingInput(objects, objectString, input));
     }
+
+    //Search for objects by comparing a single object string WITHOUT comparing the objects status
+    public List<Object> getSearchedObjects(List<Object> objects, String objectString, String input){
+        return sortObjectsByindex(objects, findObjectsMatchingInput(objects, objectString, input));
+    }
+
+    //Create folder on server
+    public boolean createFolderOnServer(String orderNr, String floor, String room) {
+        boolean isFolderCreated = false;
+        try {
+            URL url = new URL("https://dat32.dk/createAssignment.php?assignment="
+                    + orderNr + "/"
+                    + floor + "/"
+                    + room);
+            BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
+            String isSuccessful = in.readLine();
+            in.close();
+            isFolderCreated = isSuccessful.equalsIgnoreCase("True");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return isFolderCreated;
+    }
+
+    public ArrayList<String> getExcelArrayList(String excelFilePath) {
+        ArrayList<String> arr = new ArrayList<>();
+        File file = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS + excelFilePath + ".excel");
+        FileInputStream fis = null;
+        try {
+            fis = new FileInputStream(file);
+            XSSFWorkbook wb = new XSSFWorkbook(fis);
+            XSSFSheet sheet = wb.getSheetAt(0);
+
+            Row getRow = sheet.getRow(sheet.getLastRowNum());
+            Cell getCell = getRow.getCell(1);
+
+            FormulaEvaluator fv = wb.getCreationHelper().createFormulaEvaluator();
+            for (Row row : sheet) {
+                for (Cell cell : row) {
+                    if (fv.evaluateInCell(cell).getCellType().equals(CellType.NUMERIC)) {
+                        arr.add(String.valueOf(cell.getNumericCellValue()));
+                    } else if (fv.evaluateInCell(cell).getCellType().equals(CellType.STRING)) {
+                        arr.add(cell.getStringCellValue());
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return arr;
+    }
+
+
+    //SEARCHING METHODS------------------------------------------------------
 
 }

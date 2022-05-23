@@ -15,18 +15,21 @@
         android:theme="@style/Theme.EksamensProjekt2022">
         <activity
             android:name=".UI.ActivityUser"
+            android:screenOrientation="portrait"
             android:exported="false"
             android:label="@string/title_activity_user"
             android:theme="@style/Theme.EksamensProjekt2022.NoActionBar" />
         <activity
             android:name=".UI.ActivityAdmin"
+            android:screenOrientation="portrait"
             android:exported="false"
             android:label="@string/title_activity_admin"
             android:theme="@style/Theme.EksamensProjekt2022.NoActionBar" />
         <activity
             android:name=".UI.ActivityLogin"
+            android:screenOrientation="portrait"
             android:exported="true"
-            android:label="@string/title_activity_login"
+            android:label="@string/app_icon_name"
             android:theme="@style/Theme.EksamensProjekt2022.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

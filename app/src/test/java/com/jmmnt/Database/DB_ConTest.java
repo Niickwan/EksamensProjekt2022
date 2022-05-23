@@ -24,4 +24,6 @@ public class DB_ConTest {
     public void validateLogin() throws SQLException {
         assertEquals(1, db.validateLogin("Nicklas", "Jensen"));
     }
+
+
 }

@@ -13,10 +13,44 @@
         <action
             android:id="@+id/action_FragmentAdminHome_to_FragmentAdminNotInUse"
             app:destination="@id/FragmentAdminNotInUse" />
+        <action
+            android:id="@+id/action_FragmentAdminHome_to_fragmentPopupMenu"
+            app:destination="@id/fragmentPopupMenu" />
+        <action
+            android:id="@+id/action_FragmentAdminHome_to_fragmentCreateOrder"
+            app:destination="@id/fragmentCreateOrder" />
     </fragment>
     <fragment
         android:id="@+id/FragmentAdminNotInUse"
         android:name="com.jmmnt.UI.FragmentAdminNotInUse"
         android:label="@string/fragment_admin_not_in_use_label"
-        tools:layout="@layout/fragment_admin_not_in_use"/>
+        tools:layout="@layout/fragment_admin_not_in_use" />
+    <fragment
+        android:id="@+id/adminFragmentEditProfile"
+        android:name="com.jmmnt.UI.FragmentEditProfile"
+        android:label="FragmentEditProfile"
+        tools:layout="@layout/fragment_edit_profile" >
+        <action
+            android:id="@+id/action_fragmentEditProfile_to_FragmentAdminHome"
+            app:destination="@id/FragmentAdminHome"
+            app:popUpTo="@id/nav_graph" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentPopupMenu"
+        android:name="com.jmmnt.UI.FragmentPopupMenu"
+        android:label="popup_menu_profile"
+        tools:layout="@layout/popup_menu_profile" >
+        <action
+            android:id="@+id/action_fragmentPopupMenu_to_fragmentEditProfile"
+            app:destination="@id/adminFragmentEditProfile" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentCreateOrder"
+        android:name="com.jmmnt.UI.FragmentCreateOrder"
+        android:label="fragment_create_order"
+        tools:layout="@layout/fragment_admin_create_order" >
+        <action
+            android:id="@+id/action_fragmentCreateOrder_to_FragmentAdminHome"
+            app:destination="@id/FragmentAdminHome" />
+    </fragment>
 </navigation>

@@ -22,7 +22,8 @@ public class OperateAssignmentTest {
     @Test
     public void findCaseMatchingInput() {
         //----------------------------------------------------------------
-        ArrayList<Assignment> assignmentList = new ArrayList<>();
+
+        ArrayList<Assignment> assignmentList = new ArrayList<>();/*
         assignmentList.add(new Assignment(new Customer("lars sørensen"),
                 new User("christian", " jørgensen", "abc2"),
                 "f01594", "snerlevej","191", "4700", "Næstved"));
@@ -37,7 +38,8 @@ public class OperateAssignmentTest {
 
         assignmentList.add(new Assignment(new Customer("lars sørensen"),
                 new User("christian", " jørgensen", "abc4"),
-                "f01594", "hjørnet", "23", "4760", "Vordingborg"));
+                "f01594", "hjørnet", "23", "4760", "Vordingborg"));/*
+
         //----------------------------------------------------------------
         /*
         //test1

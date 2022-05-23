@@ -1,18 +1,13 @@
 package com.jmmnt.UI;
 
 import static android.app.Activity.RESULT_OK;
-import static android.content.ContentValues.TAG;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,30 +15,25 @@ import android.view.ViewGroup;
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import com.jmmnt.Entities.User;
-import com.jmmnt.FTP.FTPClientFunctions;
+import com.jmmnt.UseCase.Encryption;
+import com.jmmnt.UseCase.FTP.FTPClientFunctions;
 import com.jmmnt.R;
 import com.jmmnt.UseCase.GeneralUseCase;
 import com.jmmnt.UseCase.OperateDB;
 import com.jmmnt.UseCase.OperateUser;
 import com.jmmnt.databinding.FragmentLoginRegisterBinding;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Objects;
-
 public class FragmentLoginRegister extends Fragment{
 
-    private OperateDB opDB = new OperateDB();
+    private OperateDB opDB = OperateDB.getInstance();
     private OperateUser opUsr = new OperateUser();
-    private GeneralUseCase gUC = new GeneralUseCase();
+    private GeneralUseCase gUC = GeneralUseCase.getInstance();
     private View.OnFocusChangeListener setOnFocusChangeListener;
     private FragmentLoginRegisterBinding binding;
     private ActivityResultLauncher<Intent> activityResultLauncher;
@@ -57,11 +47,10 @@ public class FragmentLoginRegister extends Fragment{
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         //METODER TIL KAMERA------------------------------------------------------------
         //TODO skal flyttes til det fragment, hvor der bliver taget billeder
         activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
-            @Override
+           @Override
             public void onActivityResult(ActivityResult result) {
                 if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                     Bundle bundle = result.getData().getExtras();
@@ -70,6 +59,7 @@ public class FragmentLoginRegister extends Fragment{
                 }
             }
         });
+
         //TODO skal flyttes til det fragment, hvor der bliver taget billeder
         binding.TrykForBillede.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,6 +72,9 @@ public class FragmentLoginRegister extends Fragment{
                 }
             }
         });
+
+
+
         //METODER TIL KAMERA------------------------------------------------------------
 
 
@@ -99,16 +92,30 @@ public class FragmentLoginRegister extends Fragment{
         binding.createBtn.setOnClickListener(v -> new Thread(() -> {
             if(!gUC.checkIfLetters(binding.registerFirstNameEt.getText().toString())
                 || !gUC.checkIfLetters(binding.registerSurnameEt.getText().toString())
-                || binding.registerSurnameEt.getText().toString().isEmpty()
-                || binding.registerSurnameEt.getText().toString().isEmpty()) {
+                || binding.registerFirstNameEt.getText().toString().isEmpty()
+                    || binding.registerSurnameEt.getText().toString().isEmpty()) {
                 gUC.toastAlert(getActivity(), "Fejl i navn");
             }
-
-            else if(!gUC.checkIfEmail(binding.registerEmailEt.getText().toString()) ){
+            else if(binding.registerEmailEt.getText().toString().isEmpty()
+                    && binding.registerPhoneNumberEt.getText().toString().isEmpty()){
+                gUC.toastAlert(getActivity(), "Udfyld enten email eller telefon");
+            }
+            else if(!binding.registerPhoneNumberEt.getText().toString().isEmpty()
+                    && !gUC.checkIfNumber(binding.registerPhoneNumberEt.getText().toString(), 8)){
+                gUC.toastAlert(getActivity(),"Telefonnummer ikke udfyldt korrekt");
+            }
+            else if(opDB.isPhonenumberOccupied(binding.registerPhoneNumberEt.getText().toString())){
+                gUC.toastAlert(getActivity(), "Telefonnummer er allerede oprettet");
+            }
+            else if(!binding.registerEmailEt.getText().toString().isEmpty() &&
+                    !gUC.checkIfEmail(binding.registerEmailEt.getText().toString()) ){
                 gUC.toastAlert(getActivity(), "Ugyldig Email");
             }
             else if(opDB.isEmailOccupied(binding.registerEmailEt.getText().toString())){
                 gUC.toastAlert(getActivity(), "Email er allerede oprettet");
+            }
+            else if(binding.registerPasswordEt.getText().toString().isEmpty()){
+                gUC.toastAlert(getActivity(),"Password er ikke udfyldt");
             }
             else{
                 User user = opUsr.CreateDefaultUserLoginInfo(
@@ -116,7 +123,7 @@ public class FragmentLoginRegister extends Fragment{
                         binding.registerSurnameEt.getText().toString(),
                         binding.registerPhoneNumberEt.getText().toString(),
                         binding.registerEmailEt.getText().toString(),
-                        binding.registerPasswordEt.getText().toString());
+                        Encryption.encrypt(binding.registerPasswordEt.getText().toString()));
                 opDB.createUserInDB(user);
             }
         }).start());
