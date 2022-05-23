@@ -16,7 +16,7 @@ public class UserContainer {
         this.users.add(user);
     }
 
-    public static ArrayList<User> getEmployeesByName() {
+    public static ArrayList<User> getUserByName() {
         return users;
     }
 

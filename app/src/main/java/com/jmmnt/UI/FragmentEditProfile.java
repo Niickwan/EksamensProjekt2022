@@ -7,6 +7,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import com.jmmnt.Entities.LoggedInUser;
 import com.jmmnt.Entities.User;
 import com.jmmnt.R;
@@ -39,7 +40,7 @@ public class FragmentEditProfile extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding.saveProfileBtn.setOnClickListener(v -> new Thread(() -> {
-                popupMenuEditProfile(); //TODO DER SKAL LAVES VALIDERING PÅ INPUTSFELTER
+                popupMenuEditProfile(); //TODO DER SKAL LAVES VALIDERING PÅ INPUTSFELTER - PASSWORD MÅ IKKE VÆRE TOMT
         }).start());
         binding.editFirstNameEt.setText(loggedInUser.getFirstname());
         binding.editSurnameEt.setText(loggedInUser.getSurname());
@@ -69,7 +70,16 @@ public class FragmentEditProfile extends Fragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        TextView profileFirstname, profileSurname;
+                        profileFirstname = getActivity().findViewById(R.id.profile_firstname_tv);
+                        profileSurname = getActivity().findViewById(R.id.profile_surname_tv);
+                        profileFirstname.setText(LoggedInUser.getInstance().getUser().getFirstname());
+                        profileSurname.setText(LoggedInUser.getInstance().getUser().getSurname());
+                        //Change fragment
                         NavHostFragment.findNavController(FragmentEditProfile.this).navigate(R.id.action_fragmentEditProfile_to_FragmentAdminHome);
+                        //Show toastAlert - visual confirm for user
+                        Thread toast = new Thread(() -> gUC.toastAlert(getActivity(), getString(R.string.popup_menu_edit_profile_confirm_update)));
+                        toast.start();
                     }
                 });
             }

@@ -34,7 +34,7 @@
     <string name="fragment_admin_menu_button_edit_user">Rediger Bruger</string>
 
     <!-- ADMIN CREATE ORDER -->
-    <string name="fragment_admin_create_order_info_title">Order Info</string>
+    <string name="fragment_admin_create_order_info_title">Ordre Info</string>
     <string name="fragment_admin_create_order_number">Ordrenummer</string>
     <string name="fragment_admin_create_order_customer_info">Kunde Info</string>
     <string name="fragment_admin_create_order_customer_name">Kundenavn</string>
@@ -44,10 +44,14 @@
     <string name="fragment_admin_create_choose_user">Vælg medarbejder</string>
     <string name="fragment_admin_create_button">Opret</string>
 
+    <!-- ADMIN CREATE ORDER SPINNER -->
+    <string name="fragment_admin_create_spinner_default">Afvent eller vælg medarbejder</string>
+
     <!-- EMPLOYEE FRAGMENTS -->
     <string name="title_activity_user">USER</string>
     <string name="fragment_user_home_label">UserHome</string>
     <string name="fragment_user_not_in_use_label">UserNotInUse</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
@@ -55,9 +59,6 @@
     <string name="popup_menu_edit_profile">Rediger profil</string>
     <string name="popup_menu_about">Om</string>
     <string name="popup_menu_logout">Log ud</string>
-
-    <!-- POPUP MENU EDIT PROFILE -->
-
 
     <!-- POPUP MENU EDIT PROFILE -->
     <string name="popup_menu_edit_profile_edit">Rediger profil</string>
@@ -73,6 +74,8 @@
     <string name="fragment_login_wrong_input">Forkert login</string>
     <string name="fragment_login_fill_out_fields">Udfyld felter</string>
     <string name="popup_menu_password_not_matching">Password matcher ikke</string>
+    <string name="popup_menu_edit_profile_confirm_update">Bruger opdateret</string>
+
 
     <!-- APP VERSION -->
     <string name="app_build_version">App Version</string>
