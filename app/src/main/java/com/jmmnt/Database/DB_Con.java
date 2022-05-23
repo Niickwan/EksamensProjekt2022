@@ -1,8 +1,9 @@
 package com.jmmnt.Database;
 
-import com.jmmnt.Entities.LoggedInUser;
-import com.jmmnt.Entities.User;
 
+import com.jmmnt.Entities.LoggedInUser;
+import com.jmmnt.Entities.Assignment;
+import com.jmmnt.Entities.User;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -102,7 +103,7 @@ public class DB_Con {
 
             return uploadMySQLCall(userInfo);
     }
-    //disse kunne potential blive lavet til ÉN general--------------------------------
+  
     public boolean isPhonenumberOccupied(String phoneNumber) {
         boolean isPhoneNumberAvailable = false;
         String MySQL = "SELECT * FROM User WHERE Phonenumber = '" + phoneNumber + "'";
@@ -137,10 +138,10 @@ public class DB_Con {
 
         return isEmailAvailable;
     }
-    //disse kunne potential blive lavet til ÉN general--------------------------------
+   
 
     public boolean updateUser(User user) {
-        boolean isUpdatede = false;
+        connection = connection();
         String updateUser = "UPDATE User " +
                 "SET Email = '"+user.getEmail()+"', " +
                 "Password = '"+user.getPassword()+"', " +
@@ -148,19 +149,20 @@ public class DB_Con {
                 "Surname = '"+user.getSurname()+"', " +
                 "Phonenumber = '"+user.getPhoneNumber()+"' " +
                 "WHERE User_ID = "+LoggedInUser.getInstance().getUser().getUserID()+"";
-        try {
-            connection = connection();
-            preStmt = connection.prepareStatement(updateUser);
-            int updateValue = preStmt.executeUpdate();
-            if (updateValue == 1)
-                isUpdatede = true;
-            connection.close();
-            preStmt.close();
-            rs.close();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return isUpdatede;
+        return uploadMySQLCall(updateUser);
     }
+  
+    public boolean createNewAssignment(Assignment assignment) {
+        connection = connection();
+        String userInfo = "INSERT INTO Assignment (Foreman_ID, Address, Postal_Code, Status, Order_Number, Customer_Name) "
+                + "VALUES ('"
+                + assignment.getForemanId() + "', '"
+                + assignment.getAddress() + "', '"
+                + assignment.getPostalCode() + "', '"
+                + assignment.getStatus() + "', '"
+                + assignment.getOrderNumber() + "', '"
+                + assignment.getCustomerName() + "')";
+        return uploadMySQLCall(userInfo);
+    }
+   
 }
