@@ -19,7 +19,7 @@ public class ActivityUser extends AppCompatActivity {
         binding = ActivityUserBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        binding.profileFirstnameTv.setText(user.getFirstName());
+        binding.profileFirstnameTv.setText(user.getFirstname());
         binding.profileSurnameTv.setText(user.getSurname());
 
         binding.profilePictureImg2.setOnClickListener(new View.OnClickListener() {

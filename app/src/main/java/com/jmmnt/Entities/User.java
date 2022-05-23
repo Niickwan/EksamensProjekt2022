@@ -3,33 +3,33 @@ package com.jmmnt.Entities;
 public class User {
     private String email;
     private String password;
-    private String firstName;
-    private String surName;
-    private String phoneNumber;
+    private String firstname;
+    private String surname;
+    private String phonenumber;
     private int userID;
     private int userRights;
 
     //general-use user constructor, not consisting potential confidential information
     public User(String firstName, String surName, String email) {
-        this.firstName = firstName;
-        this.surName = surName;
+        this.firstname = firstName;
+        this.surname = surName;
         this.email = email;
     }
 
     public User(String email, String firstName, String surName, String phoneNumber, int userID, int userRights) {
         this.email = email;
-        this.firstName = firstName;
-        this.surName = surName;
-        this.phoneNumber = phoneNumber;
+        this.firstname = firstName;
+        this.surname = surName;
+        this.phonenumber = phoneNumber;
         this.userID = userID;
         this.userRights = userRights;
     }
 
     //user constructor for creation of username, password and user rights.
     public User(String firstName, String surname, String phoneNumber, String email, String password, int userID, int userRights) {
-        this.firstName = firstName;
-        this.surName = surname;
-        this.phoneNumber = phoneNumber;
+        this.firstname = firstName;
+        this.surname = surname;
+        this.phonenumber = phoneNumber;
         this.email = email;
         this.password = password;
         this.userID = userID;
@@ -37,12 +37,19 @@ public class User {
     }
 
     public User(String firstName, String surname, String phoneNumber, String email, String password, int userRights) {
-        this.firstName = firstName;
-        this.surName = surname;
-        this.phoneNumber = phoneNumber;
+        this.firstname = firstName;
+        this.surname = surname;
+        this.phonenumber = phoneNumber;
         this.email = email;
         this.password = password;
         this.userRights = userRights;
+    }
+
+    public User(String firstName, String surname, String phoneNumber, int userID) {
+        this.firstname = firstName;
+        this.surname = surname;
+        this.phonenumber = phoneNumber;
+        this.userID = userID;
     }
 
     @Override
@@ -50,16 +57,16 @@ public class User {
         return "User{" +
                 "email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", surName='" + surName + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
+                ", firstName='" + firstname + '\'' +
+                ", surName='" + surname + '\'' +
+                ", phoneNumber='" + phonenumber + '\'' +
                 ", userID=" + userID +
                 ", userRights=" + userRights +
                 '}';
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getPhonenumber() {
+        return phonenumber;
     }
 
     public String getEmail() {
@@ -67,7 +74,7 @@ public class User {
     }
 
     public String getFullName() {
-        return firstName + " " + surName;
+        return firstname + " " + surname;
     }
 
     public String getPassword() {
@@ -78,16 +85,12 @@ public class User {
         return userRights;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getFirstname() {
+        return firstname;
     }
 
     public String getSurname() {
-        return surName;
-    }
-
-    public String getSurName() {
-        return surName;
+        return surname;
     }
 
     public int getUserID() {

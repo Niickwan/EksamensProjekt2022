@@ -7,10 +7,14 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
+
+import com.jmmnt.Database.DB_Con;
 import com.jmmnt.Entities.LoggedInUser;
 import com.jmmnt.Entities.User;
 import com.jmmnt.R;
 import com.jmmnt.databinding.FragmentAdminHomeBinding;
+
+import java.sql.SQLException;
 
 public class FragmentAdminHome extends Fragment {
 
@@ -26,8 +30,22 @@ public class FragmentAdminHome extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        binding.createNewAssignmentBtn.setOnClickListener(view1 -> NavHostFragment.findNavController(FragmentAdminHome.this)
-                .navigate(R.id.action_FragmentAdminHome_to_fragmentCreateOrder));
+        binding.createNewAssignmentBtn.setOnClickListener(view1 -> {
+            NavHostFragment.findNavController(FragmentAdminHome.this)
+                    .navigate(R.id.action_FragmentAdminHome_to_fragmentCreateOrder);
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        System.out.println("RUN RUN RUN");
+                        DB_Con.getInstance().fillUserContainer();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+        });
     }
 
     @Override

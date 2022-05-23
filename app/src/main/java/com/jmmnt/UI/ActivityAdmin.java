@@ -19,7 +19,7 @@ public class ActivityAdmin extends AppCompatActivity {
         binding = ActivityAdminBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        binding.profileFirstnameTv.setText(user.getFirstName());
+        binding.profileFirstnameTv.setText(user.getFirstname());
         binding.profileSurnameTv.setText(user.getSurname());
 
         binding.profilePictureImg.setOnClickListener(new View.OnClickListener() {

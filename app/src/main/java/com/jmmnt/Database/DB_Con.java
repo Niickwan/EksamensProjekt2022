@@ -4,6 +4,8 @@ package com.jmmnt.Database;
 import com.jmmnt.Entities.LoggedInUser;
 import com.jmmnt.Entities.Assignment;
 import com.jmmnt.Entities.User;
+import com.jmmnt.Entities.UserContainer;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -62,6 +64,24 @@ public class DB_Con {
             return dbCon;
     }
 
+    public void fillUserContainer() throws SQLException {
+        UserContainer userContainer = UserContainer.getInstance();
+        if (!UserContainer.getUsers().isEmpty()) UserContainer.getUsers().clear();
+        String mySQL = "SELECT * FROM User ORDER BY Firstname";
+        connection = connection();
+        stmt = connection.createStatement();
+        rs = stmt.executeQuery(mySQL);
+        while (rs.next()) {
+            userContainer.addUserToContainer(new User(rs.getString("Firstname"),
+                    rs.getString("Surname"),
+                    rs.getString("Phonenumber"),
+                    rs.getInt("User_ID")));
+        }
+        connection.close();
+        stmt.close();
+        rs.close();
+    }
+
 
     public User validateLogin(String email, String password) {
         User user = null;
@@ -96,10 +116,10 @@ public class DB_Con {
                     + "VALUES ('"
                     + user.getEmail() + "', '"
                     + user.getPassword() + "', '"
-                    + user.getFirstName() + "', '"
+                    + user.getFirstname() + "', '"
                     + user.getSurname() + "', '"
                     + user.getUserRights() + "', '"
-                    + user.getPhoneNumber() + "')";
+                    + user.getPhonenumber() + "')";
 
             return uploadMySQLCall(userInfo);
     }
@@ -145,9 +165,9 @@ public class DB_Con {
         String updateUser = "UPDATE User " +
                 "SET Email = '"+user.getEmail()+"', " +
                 "Password = '"+user.getPassword()+"', " +
-                "Firstname = '"+user.getFirstName()+"', " +
+                "Firstname = '"+user.getFirstname()+"', " +
                 "Surname = '"+user.getSurname()+"', " +
-                "Phonenumber = '"+user.getPhoneNumber()+"' " +
+                "Phonenumber = '"+user.getPhonenumber()+"' " +
                 "WHERE User_ID = "+LoggedInUser.getInstance().getUser().getUserID()+"";
         return uploadMySQLCall(updateUser);
     }

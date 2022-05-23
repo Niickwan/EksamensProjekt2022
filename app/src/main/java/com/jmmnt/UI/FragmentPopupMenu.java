@@ -41,7 +41,7 @@ public class FragmentPopupMenu extends Fragment {
         phone = pw.getContentView().findViewById(R.id.popupMenuPhone_tv);
         username.setText(LoggedInUser.getInstance().getUser().getFullName());
         email.setText(LoggedInUser.getInstance().getUser().getEmail());
-        phone.setText(LoggedInUser.getInstance().getUser().getPhoneNumber());
+        phone.setText(LoggedInUser.getInstance().getUser().getPhonenumber());
 
         View.OnClickListener pwMenuItemClicked = new View.OnClickListener() {
             @Override
