@@ -2,7 +2,18 @@ package com.jmmnt.UseCase;
 
 
 
+import android.os.Environment;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.FormulaEvaluator;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -79,6 +90,34 @@ public class OperateAssignment {
             e.printStackTrace();
         }
         return isFolderCreated;
+    }
+
+    public ArrayList<String> getExcelArrayList(String excelFilePath) {
+        ArrayList<String> arr = new ArrayList<>();
+        File file = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS + excelFilePath + ".excel");
+        FileInputStream fis = null;
+        try {
+            fis = new FileInputStream(file);
+            XSSFWorkbook wb = new XSSFWorkbook(fis);
+            XSSFSheet sheet = wb.getSheetAt(0);
+
+            Row getRow = sheet.getRow(sheet.getLastRowNum());
+            Cell getCell = getRow.getCell(1);
+
+            FormulaEvaluator fv = wb.getCreationHelper().createFormulaEvaluator();
+            for (Row row : sheet) {
+                for (Cell cell : row) {
+                    if (fv.evaluateInCell(cell).getCellType().equals(CellType.NUMERIC)) {
+                        arr.add(String.valueOf(cell.getNumericCellValue()));
+                    } else if (fv.evaluateInCell(cell).getCellType().equals(CellType.STRING)) {
+                        arr.add(cell.getStringCellValue());
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return arr;
     }
 
 
