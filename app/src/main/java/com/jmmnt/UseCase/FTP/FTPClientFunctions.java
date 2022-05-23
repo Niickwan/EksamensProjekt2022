@@ -86,7 +86,6 @@ public class FTPClientFunctions extends AppCompatActivity{
     public void ftpDownload(String remotePath, String phoneFileName){
         new Thread(() -> {
             ftpConnect(host, username, password, port);
-            boolean status;
             try {
                 mFTPClient.setFileType(FTP.BINARY_FILE_TYPE);
                 File phoneDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
