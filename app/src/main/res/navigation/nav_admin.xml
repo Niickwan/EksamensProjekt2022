@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_FragmentAdminHome_to_fragmentPopupMenu"
             app:destination="@id/fragmentPopupMenu" />
+        <action
+            android:id="@+id/action_FragmentAdminHome_to_fragmentCreateOrder"
+            app:destination="@id/fragmentCreateOrder" />
     </fragment>
     <fragment
         android:id="@+id/FragmentAdminNotInUse"
@@ -40,5 +43,14 @@
         <action
             android:id="@+id/action_fragmentPopupMenu_to_fragmentEditProfile"
             app:destination="@id/adminFragmentEditProfile" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentCreateOrder"
+        android:name="com.jmmnt.UI.FragmentCreateOrder"
+        android:label="fragment_create_order"
+        tools:layout="@layout/fragment_admin_create_order" >
+        <action
+            android:id="@+id/action_fragmentCreateOrder_to_FragmentAdminHome"
+            app:destination="@id/FragmentAdminHome" />
     </fragment>
 </navigation>

@@ -1,8 +1,9 @@
 package com.jmmnt.Database;
 
+
+import com.jmmnt.Entities.LoggedInUser;
 import com.jmmnt.Entities.Assignment;
 import com.jmmnt.Entities.User;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -102,7 +103,7 @@ public class DB_Con {
 
             return uploadMySQLCall(userInfo);
     }
-    //disse kunne potential blive lavet til ÉN general--------------------------------
+  
     public boolean isPhonenumberOccupied(String phoneNumber) {
         boolean isPhoneNumberAvailable = false;
         String MySQL = "SELECT * FROM User WHERE Phonenumber = '" + phoneNumber + "'";
@@ -137,14 +138,20 @@ public class DB_Con {
 
         return isEmailAvailable;
     }
+   
 
     public boolean updateUser(User user) {
-
-        System.out.println("OPDATER BRUGER");
-
-        return false;
+        connection = connection();
+        String updateUser = "UPDATE User " +
+                "SET Email = '"+user.getEmail()+"', " +
+                "Password = '"+user.getPassword()+"', " +
+                "Firstname = '"+user.getFirstName()+"', " +
+                "Surname = '"+user.getSurname()+"', " +
+                "Phonenumber = '"+user.getPhoneNumber()+"' " +
+                "WHERE User_ID = "+LoggedInUser.getInstance().getUser().getUserID()+"";
+        return uploadMySQLCall(updateUser);
     }
-
+  
     public boolean createNewAssignment(Assignment assignment) {
         connection = connection();
         String userInfo = "INSERT INTO Assignment (Foreman_ID, Address, Postal_Code, Status, Order_Number, Customer_Name) "
@@ -155,8 +162,7 @@ public class DB_Con {
                 + assignment.getStatus() + "', '"
                 + assignment.getOrderNumber() + "', '"
                 + assignment.getCustomerName() + "')";
-
         return uploadMySQLCall(userInfo);
     }
-    //disse kunne potential blive lavet til ÉN general--------------------------------
+   
 }

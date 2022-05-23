@@ -3,6 +3,8 @@ package com.jmmnt.UI;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +12,7 @@ import android.view.ViewGroup;
 import com.jmmnt.Entities.LoggedInUser;
 import com.jmmnt.Entities.User;
 import com.jmmnt.R;
+import com.jmmnt.UseCase.Encryption;
 import com.jmmnt.UseCase.GeneralUseCase;
 import com.jmmnt.UseCase.OperateDB;
 import com.jmmnt.databinding.FragmentEditProfileBinding;
@@ -37,12 +40,9 @@ public class FragmentEditProfile extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        binding.saveProfileBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                popupMenuEditProfile();
-            }
-        });
+        binding.saveProfileBtn.setOnClickListener(v -> new Thread(() -> {
+                popupMenuEditProfile(); //TODO DER SKAL LAVES VALIDERING PÅ INPUTSFELTER
+        }).start());
         binding.editFirstNameEt.setText(loggedInUser.getFirstName());
         binding.editSurnameEt.setText(loggedInUser.getSurname());
         binding.editPhoneNumberEt.setText(loggedInUser.getPhoneNumber());
@@ -55,24 +55,28 @@ public class FragmentEditProfile extends Fragment {
     }
 
     public void popupMenuEditProfile() {
-
-        NavHostFragment.findNavController(FragmentEditProfile.this).navigate(R.id.action_fragmentEditProfile_to_FragmentAdminHome);
-        /*user = null;
+        user = null;
         boolean isMatching = generalUseCase.isInputMatching(binding.editPasswordEt.getText().toString(),(binding.editConfirmPasswordEt.getText().toString()));
         if (isMatching){
             user = new User(binding.editFirstNameEt.getText().toString(),
                     binding.editSurnameEt.getText().toString(),
                     binding.editPhoneNumberEt.getText().toString(),
                     binding.editEmailEt.getText().toString(),
-                    binding.editPasswordEt.getText().toString(),
-                    loggedInUser.getUserRights());
+                    Encryption.encrypt(binding.editPasswordEt.getText().toString()),
+                    LoggedInUser.getInstance().getUser().getUserID(),
+                    LoggedInUser.getInstance().getUser().getUserRights());
             boolean isProfileUpdated = operateDB.updateUserInDB(user);
             if (isProfileUpdated){
-                loggedInUser = user;
-                NavHostFragment.findNavController(FragmentEditProfile.this).navigate(R.id.action_fragmentPopupMenu_to_FragmentAdminHome);
+                LoggedInUser.getInstance().setUser(user);
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        NavHostFragment.findNavController(FragmentEditProfile.this).navigate(R.id.action_fragmentEditProfile_to_FragmentAdminHome);
+                    }
+                });
             }
         }else
-            gUC.toastAlert(getActivity(), getString(R.string.popup_menu_password_not_matching));*/
+            gUC.toastAlert(getActivity(), getString(R.string.popup_menu_password_not_matching));
     }
 
 }
