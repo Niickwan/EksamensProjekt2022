@@ -23,7 +23,7 @@
     <!-- ADMIN FRAGMENTS -->
     <string name="title_activity_admin">ADMIN</string>
     <string name="fragment_admin_home_label">AdminHome</string>
-    <string name="fragment_admin_not_in_use_label">AdminNotInUse</string>
+    <string name="fragment_admin_checklist_label">AdminNotInUse</string>
     <string name="fragment_admin_profile_icon_name">Admin</string>
 
     <!-- ADMIN MENU -->
