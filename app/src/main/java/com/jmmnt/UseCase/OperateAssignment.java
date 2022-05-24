@@ -2,23 +2,18 @@ package com.jmmnt.UseCase;
 
 
 
-import android.os.Environment;
-
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.ss.usermodel.FormulaEvaluator;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Reader;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class OperateAssignment {
     private GeneralUseCase gUC = GeneralUseCase.getInstance();
@@ -91,36 +86,37 @@ public class OperateAssignment {
         }
         return isFolderCreated;
     }
-
-    public ArrayList<String> getExcelArrayList(String excelFilePath) {
-        ArrayList<String> arr = new ArrayList<>();
-        File file = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS + excelFilePath + ".excel");
-        FileInputStream fis = null;
-        try {
-            fis = new FileInputStream(file);
-            XSSFWorkbook wb = new XSSFWorkbook(fis);
-            XSSFSheet sheet = wb.getSheetAt(0);
-
-            Row getRow = sheet.getRow(sheet.getLastRowNum());
-            Cell getCell = getRow.getCell(1);
-
-            FormulaEvaluator fv = wb.getCreationHelper().createFormulaEvaluator();
-            for (Row row : sheet) {
-                for (Cell cell : row) {
-                    if (fv.evaluateInCell(cell).getCellType().equals(CellType.NUMERIC)) {
-                        arr.add(String.valueOf(cell.getNumericCellValue()));
-                    } else if (fv.evaluateInCell(cell).getCellType().equals(CellType.STRING)) {
-                        arr.add(cell.getStringCellValue());
-                    }
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return arr;
-    }
-
-
     //SEARCHING METHODS------------------------------------------------------
 
+    //json methods-----------------------------------------------------
+    private String readAll(Reader bufferedReader) throws IOException {
+        StringBuilder stringBuilder = new StringBuilder();
+        int currentChar;
+        while ((currentChar = bufferedReader.read()) != -1) {
+            stringBuilder.append((char) currentChar);
+        }
+        return stringBuilder.toString();
+    }
+
+    private JSONObject readJsonUrl(String url) throws IOException, JSONException {
+        InputStream inputStream = new URL(url).openStream();
+
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, Charset.forName("UTF-8")));
+        String jsonText = readAll(bufferedReader);
+        JSONObject json = new JSONObject(jsonText);
+        inputStream.close();
+        return json;
+    }
+
+    public String getCityMatchingZipCode(String url, String zipCode){
+        try {
+            JSONObject jsonObject = readJsonUrl(url + "/" + zipCode);
+            return jsonObject.get("navn").toString();
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    //json methods-----------------------------------------------------
 }

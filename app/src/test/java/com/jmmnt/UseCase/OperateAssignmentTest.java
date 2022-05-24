@@ -80,6 +80,13 @@ public class OperateAssignmentTest {
         assertNotEquals(expected5,res5);
 
          */
+    }
 
+    @Test
+    public void getCityMatchingZipCode(){
+        String url = "https://api.dataforsyningen.dk/postnumre/";
+        String zipCode = "4700";
+        String rs = ea.getCityMatchingZipCode(url, zipCode);
+        assertEquals(rs, "Næstved");
     }
 }
