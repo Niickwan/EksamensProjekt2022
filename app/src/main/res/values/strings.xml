@@ -71,11 +71,17 @@
     <string name="popup_menu_edit_profile_save_button">Gem</string>
 
     <!-- TOAST ALERTS -->
+    <!-- Login -->
     <string name="fragment_login_wrong_input">Forkert login</string>
     <string name="fragment_login_fill_out_fields">Udfyld felter</string>
-    <string name="popup_menu_password_not_matching">Password matcher ikke</string>
+    <!-- Popup menu edit profile -->
+    <string name="popup_menu_edit_password_not_matching">Password matcher ikke</string>
     <string name="popup_menu_edit_profile_confirm_update">Bruger opdateret</string>
-
+    <string name="popup_menu_edit_profile_fields_empty">Udfyld felter</string>
+    <string name="popup_menu_edit_profile_email_not_valid">Ugyldig email</string>
+    <string name="popup_menu_edit_profile_phone_not_valid">Ugyldig telefonnummer</string>
+    <string name="popup_menu_edit_profile_eamil_and_phone_is_empty">Udfyld email eller telefonnummer</string>
+    <string name="popup_menu_edit_profile_update_faield">Redigering fejlede</string>
 
     <!-- APP VERSION -->
     <string name="app_build_version">App Version</string>

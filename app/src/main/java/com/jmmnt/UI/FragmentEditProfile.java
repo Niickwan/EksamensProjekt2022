@@ -4,10 +4,13 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
+
 import com.jmmnt.Entities.LoggedInUser;
 import com.jmmnt.Entities.User;
 import com.jmmnt.R;
@@ -40,12 +43,13 @@ public class FragmentEditProfile extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding.saveProfileBtn.setOnClickListener(v -> new Thread(() -> {
-                popupMenuEditProfile(); //TODO DER SKAL LAVES VALIDERING PÅ INPUTSFELTER - PASSWORD MÅ IKKE VÆRE TOMT
+                popupMenuEditProfile();
         }).start());
         binding.editFirstNameEt.setText(loggedInUser.getFirstname());
         binding.editSurnameEt.setText(loggedInUser.getSurname());
         binding.editPhoneNumberEt.setText(loggedInUser.getPhonenumber());
         binding.editEmailEt.setText(loggedInUser.getEmail());
+
     }
 
     @Override
@@ -53,10 +57,20 @@ public class FragmentEditProfile extends Fragment {
         super.onDestroyView();
     }
 
+
     public void popupMenuEditProfile() {
         user = null;
+        boolean isEmpty = gUC.isFieldsEmpty(new EditText[] {
+                binding.editFirstNameEt,
+                binding.editSurnameEt,
+                binding.editPasswordEt,
+                binding.editConfirmPasswordEt});
         boolean isMatching = generalUseCase.isInputMatching(binding.editPasswordEt.getText().toString(),(binding.editConfirmPasswordEt.getText().toString()));
-        if (isMatching){
+        boolean isFirstnameValid = gUC.checkIfLetters(binding.editFirstNameEt.getText().toString());
+        boolean isSurnameValid = gUC.checkIfLetters(binding.editSurnameEt.getText().toString());
+        boolean isEmailValid = gUC.checkIfEmail(binding.editEmailEt.getText().toString());
+        boolean isPhoneNumbValid = gUC.checkIfNumber(binding.editPhoneNumberEt.getText().toString(),8);
+        if (!isEmpty && isMatching && isFirstnameValid && isSurnameValid && (isEmailValid || isPhoneNumbValid)){
             user = new User(binding.editFirstNameEt.getText().toString(),
                     binding.editSurnameEt.getText().toString(),
                     binding.editPhoneNumberEt.getText().toString(),
@@ -82,9 +96,16 @@ public class FragmentEditProfile extends Fragment {
                         toast.start();
                     }
                 });
-            }
-        }else
-            gUC.toastAlert(getActivity(), getString(R.string.popup_menu_password_not_matching));
+            }else
+                gUC.toastAlert(getActivity(),getString(R.string.fragment_admin_not_in_use_label));
+        }else {
+            if (isEmpty) gUC.toastAlert(getActivity(), getString(R.string.popup_menu_edit_profile_fields_empty));
+            else if (!isMatching) gUC.toastAlert(getActivity(), getString(R.string.popup_menu_edit_password_not_matching));
+            else if (!isEmailValid && !isPhoneNumbValid) gUC.toastAlert(getActivity(), getString(R.string.popup_menu_edit_profile_eamil_and_phone_is_empty));
+            else if (!isEmailValid) gUC.toastAlert(getActivity(), getString(R.string.popup_menu_edit_profile_email_not_valid));
+            else if (!isPhoneNumbValid) gUC.toastAlert(getActivity(), getString(R.string.popup_menu_edit_profile_phone_not_valid));
+        }
+
     }
 
 }

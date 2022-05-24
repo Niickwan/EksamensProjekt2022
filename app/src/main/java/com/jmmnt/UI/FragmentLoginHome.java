@@ -51,7 +51,6 @@ public class FragmentLoginHome extends Fragment {
                 gUC.toastAlert(getActivity(), getString(R.string.fragment_login_fill_out_fields));
             }
         }).start());
-
         binding.registerBtn.setOnClickListener(view1 -> {
             NavHostFragment.findNavController(FragmentLoginHome.this).navigate(R.id.action_FragmentLoginHome_to_FragmentLoginRegister);
         });
