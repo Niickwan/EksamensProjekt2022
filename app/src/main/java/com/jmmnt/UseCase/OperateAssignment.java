@@ -2,10 +2,17 @@ package com.jmmnt.UseCase;
 
 
 
+import android.os.Environment;
+
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.Reader;
 import java.net.URL;
 import java.nio.charset.Charset;
@@ -14,6 +21,12 @@ import java.util.List;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import jxl.Cell;
+import jxl.CellType;
+import jxl.Sheet;
+import jxl.Workbook;
+import jxl.read.biff.BiffException;
 
 public class OperateAssignment {
     private GeneralUseCase gUC = GeneralUseCase.getInstance();
@@ -119,4 +132,37 @@ public class OperateAssignment {
     }
 
     //json methods-----------------------------------------------------
+
+    //EXCEL Methods
+    public ArrayList<String> getExcelAsArrayList (String fileName) {
+        ArrayList<String> arr = new ArrayList<>();
+        File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+        File inputWorkbook = new File(path, fileName);
+        Workbook w;
+        try {
+            w = Workbook.getWorkbook(inputWorkbook);
+            // Get the first sheet
+            Sheet sheet = w.getSheet(0);
+            // Loop over first 10 column and lines
+
+            for (int j = 0; j < sheet.getRows(); j++) {
+                for (int i = 0; i < sheet.getColumns(); i++) {
+                    Cell cell = sheet.getCell(i, j);
+                    CellType type = cell.getType();
+                    if (cell.getType() == CellType.LABEL) {
+                        arr.add(cell.getContents());
+                    }
+
+                    if (cell.getType() == CellType.NUMBER) {
+                        arr.add(String.valueOf(cell.getCellFeatures()));
+                    }
+
+                }
+            }
+        } catch (BiffException | IOException e) {
+            e.printStackTrace();
+        }
+        arr.forEach(System.out::println);
+        return arr;
+    }
 }

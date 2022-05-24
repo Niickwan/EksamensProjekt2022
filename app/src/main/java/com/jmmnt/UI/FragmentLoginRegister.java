@@ -2,9 +2,7 @@ package com.jmmnt.UI;
 
 import static android.app.Activity.RESULT_OK;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -17,20 +15,20 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import com.jmmnt.Entities.User;
 import com.jmmnt.UseCase.Encryption;
 import com.jmmnt.UseCase.FTP.FTPClientFunctions;
 import com.jmmnt.R;
 import com.jmmnt.UseCase.GeneralUseCase;
+import com.jmmnt.UseCase.OperateAssignment;
 import com.jmmnt.UseCase.OperateDB;
 import com.jmmnt.UseCase.OperateUser;
 import com.jmmnt.databinding.FragmentLoginRegisterBinding;
 
 public class FragmentLoginRegister extends Fragment{
 
+    private OperateAssignment oAs = new OperateAssignment();
     private OperateDB opDB = OperateDB.getInstance();
     private OperateUser opUsr = new OperateUser();
     private GeneralUseCase gUC = GeneralUseCase.getInstance();
@@ -61,16 +59,24 @@ public class FragmentLoginRegister extends Fragment{
         });
 
         //TODO skal flyttes til det fragment, hvor der bliver taget billeder
-        binding.TrykForBillede.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.CAMERA}, 101);
-                }
-                if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) { //TODO fix så der ikke skal klikkes to gange for at åbne cam
-                    openCamera();
-                }
-            }
+//        binding.TrykForBillede.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+//                    ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.CAMERA}, 101);
+//                }
+//                if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) { //TODO fix så der ikke skal klikkes to gange for at åbne cam
+//                    openCamera();
+//                }
+//            }
+//        });
+
+        binding.FTPButton.setOnClickListener(v -> new Thread(() -> {
+            ftpMethodClass.ftpDownload("/TjekListeNy.xls", "TjekListeNy.xls");
+        }).start());
+
+        binding.TrykForBillede.setOnClickListener(v -> {
+            oAs.getExcelAsArrayList("TjekListeNy.xls");
         });
 
 
