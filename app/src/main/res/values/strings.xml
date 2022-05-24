@@ -81,7 +81,7 @@
     <string name="popup_menu_edit_profile_email_not_valid">Ugyldig email</string>
     <string name="popup_menu_edit_profile_phone_not_valid">Ugyldig telefonnummer</string>
     <string name="popup_menu_edit_profile_eamil_and_phone_is_empty">Udfyld email eller telefonnummer</string>
-    <string name="popup_menu_edit_profile_update_faield">Redigering fejlede</string>
+    <string name="popup_menu_edit_profile_update_failed">Redigering fejlede</string>
 
     <!-- APP VERSION -->
     <string name="app_build_version">App Version</string>
