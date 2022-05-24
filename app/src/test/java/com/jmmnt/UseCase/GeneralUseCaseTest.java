@@ -2,10 +2,20 @@ package com.jmmnt.UseCase;
 
 import static org.junit.Assert.*;
 
+import android.app.Activity;
+import android.widget.EditText;
+
+import com.jmmnt.R;
+import com.jmmnt.UI.ActivityAdmin;
+import com.jmmnt.UI.FragmentEditProfile;
+
 import org.junit.Test;
 
-public class GeneralUseCaseTest {
-    GeneralUseCase gUC = new GeneralUseCase();
+public class GeneralUseCaseTest extends Activity {
+
+    GeneralUseCase gUC = GeneralUseCase.getInstance();
+
+
     @Test
     public void checkIfStringMatchesInput() {
         boolean res1 = gUC.checkIfStringMatchesInput("Hans","an");
@@ -20,5 +30,38 @@ public class GeneralUseCaseTest {
         assertFalse(res5);
         boolean res6 = gUC.checkIfStringMatchesInput("Hans", "4");
         assertFalse(res6);
+    }
+
+    @Test
+    public void testIsInputMatchingTrue() {
+        boolean test = gUC.isInputMatching("123","123");
+        assertTrue(test);
+    }
+
+    @Test
+    public void testIsInputMatchingFalse() {
+        boolean test = gUC.isInputMatching("John","123");
+        assertFalse(test);
+    }
+
+    @Test
+    public void testIsFieldsEmpty() { //TODO FROSÆT HER
+        EditText firstname = findViewById(R.id.editFirstName_et);
+        EditText surname = findViewById(R.id.editSurname_et);
+        EditText phone = findViewById(R.id.editPhoneNumber_et);
+
+        firstname.setText("Arne");
+        surname.setText("John");
+        phone.setText("44332211");
+
+        EditText[] editText = new EditText[3];
+        editText[0] = firstname;
+        editText[1] = surname;
+        editText[2] = phone;
+
+        boolean test = gUC.isFieldsEmpty(editText);
+
+        assertFalse(test);
+
     }
 }

@@ -38,7 +38,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
-                    android:id="@+id/editSearchBtn"
+                    android:id="@+id/searchBtn"
                     android:layout_width="290dp"
                     android:layout_height="48dp"
                     android:layout_marginTop="32dp"
@@ -57,7 +57,7 @@
                     android:text="@string/fragment_admin_menu_button_edit_checklist"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/editSearchBtn" />
+                    app:layout_constraintTop_toBottomOf="@+id/searchBtn" />
 
                 <Button
                     android:id="@+id/editUserProfileBtn"
