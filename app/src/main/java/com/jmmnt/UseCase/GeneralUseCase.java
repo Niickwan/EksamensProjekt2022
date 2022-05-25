@@ -3,8 +3,10 @@ package com.jmmnt.UseCase;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Looper;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,8 +15,9 @@ import android.widget.Toast;
 import com.jmmnt.R;
 import com.jmmnt.databinding.ActivityUserBinding;
 
-public class GeneralUseCase extends Activity {
+import java.util.ArrayList;
 
+public class GeneralUseCase extends Activity {
 
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private static Toast toast = null;
@@ -85,6 +88,25 @@ public class GeneralUseCase extends Activity {
         return false;
     }
 
+    public ArrayList<String> getSplittedString(ArrayList<String> arr, String splitBy, int splitIndex) {
+        ArrayList<String> split = new ArrayList<>();
+        for (int i = 0; i < arr.size(); i++) {
+            String[] parts = arr.get(i).split(splitBy);
+            split.add(parts[splitIndex]);
+        }
+        return split;
+    }
 
+    public View createBtnForHSV(String name, Activity activity, int height, int width) {
+        Button b = new Button(activity);
+        b.setText(name);
+        b.setHeight(height);
+        b.setWidth(width);
+        return b;
+    }
+
+//    public ArrayList<String> getAssignmentStructure(String orderNr) {
+//
+//    }
 
 }

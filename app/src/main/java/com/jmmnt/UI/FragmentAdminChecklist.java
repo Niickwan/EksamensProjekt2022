@@ -1,5 +1,6 @@
 package com.jmmnt.UI;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.renderscript.ScriptGroup;
 import android.transition.AutoTransition;
@@ -7,6 +8,7 @@ import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -16,7 +18,9 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import com.jmmnt.R;
+import com.jmmnt.UseCase.GeneralUseCase;
 import com.jmmnt.UseCase.OperateAssignment;
+import com.jmmnt.UseCase.OperateDB;
 import com.jmmnt.databinding.FragmentAdminChecklistBinding;
 
 import org.apache.poi.ss.formula.functions.T;
@@ -29,6 +33,8 @@ public class FragmentAdminChecklist extends Fragment {
 
     private FragmentAdminChecklistBinding binding;
     private OperateAssignment opa = new OperateAssignment();
+    private OperateDB oDB = OperateDB.getInstance();
+    private GeneralUseCase gUC = GeneralUseCase.getInstance();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -38,6 +44,31 @@ public class FragmentAdminChecklist extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+    binding.hsvFloor.setHorizontalScrollBarEnabled(false);
+    LinearLayout floorLinearLayout = new LinearLayout(getActivity());
+    floorLinearLayout.setOrientation(LinearLayout.HORIZONTAL);
+
+    binding.hsvRoom.setHorizontalScrollBarEnabled(false);
+    LinearLayout roomLinearLayout = new LinearLayout(getActivity());
+    roomLinearLayout.setOrientation(LinearLayout.HORIZONTAL);
+
+    ArrayList<String> hsvStructure = oDB.getAssignmentStructure("8888");
+
+    ArrayList<String> floors = gUC.getSplittedString(hsvStructure, "/", 2);
+    ArrayList<String> rooms = gUC.getSplittedString(hsvStructure, "/", 3);
+
+    for (int i = 0; i < floors.size(); i++) {
+        floorLinearLayout.addView(gUC.createBtnForHSV(floors.get(i), getActivity(), 175, 175));
+    }
+
+    for (int i = 0; i < rooms.size(); i++) {
+        roomLinearLayout.addView(gUC.createBtnForHSV(rooms.get(i), getActivity(), 175, 175));
+    }
+
+    binding.hsvFloor.addView(floorLinearLayout);
+    binding.hsvRoom.addView(roomLinearLayout);
+
 
 //---------------------------------------------------------------------------------------------------------
 //        /**

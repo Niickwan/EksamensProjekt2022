@@ -6,12 +6,17 @@ import com.jmmnt.Entities.Assignment;
 import com.jmmnt.Entities.User;
 import com.jmmnt.Entities.UserContainer;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class DB_Con {
     private Connection connection;
@@ -183,6 +188,20 @@ public class DB_Con {
                 + assignment.getOrderNumber() + "', '"
                 + assignment.getCustomerName() + "')";
         return uploadMySQLCall(userInfo);
+    }
+
+    public ArrayList<String> getAssignmentStructure(String orderNr) {
+        ArrayList<String> arr = new ArrayList<>();
+        try {
+            java.net.URL url = new URL("https://dat32.dk/getAssignmentStructure.php?orderNr=" + orderNr);
+            BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
+            for (String line = in.readLine(); line != null; line = in.readLine()) {
+                arr.add(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return arr;
     }
    
 }
