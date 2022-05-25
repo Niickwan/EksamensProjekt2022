@@ -4,6 +4,8 @@ import com.jmmnt.Database.DB_Con;
 import com.jmmnt.Entities.Assignment;
 import com.jmmnt.Entities.User;
 
+import java.util.ArrayList;
+
 public class OperateDB {
 
     private DB_Con db_con = DB_Con.getInstance();
@@ -42,5 +44,9 @@ public class OperateDB {
 
     public boolean createNewAssignment(Assignment assignment) {
         return db_con.createNewAssignment(assignment);
+    }
+
+    public ArrayList<String> getAssignmentStructure(String orderNr) {
+        return db_con.getAssignmentStructure(orderNr);
     }
 }

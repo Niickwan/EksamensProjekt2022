@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
 
+import com.jmmnt.Database.DB_Con;
 import com.jmmnt.R;
 
 import java.io.BufferedOutputStream;
@@ -28,6 +29,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.Reader;
 import java.lang.reflect.Array;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -45,8 +47,7 @@ import jxl.read.biff.BiffException;
 public class OperateAssignment {
     private GeneralUseCase gUC = GeneralUseCase.getInstance();
     private OperateAssignment opa = new OperateAssignment();
-
-
+    private DB_Con db_con = DB_Con.getInstance();
 
     //Create folder on server
     public boolean createFolderOnServer(String orderNr, String floor, String room) {
