@@ -28,7 +28,7 @@ import com.jmmnt.databinding.FragmentLoginRegisterBinding;
 
 public class FragmentLoginRegister extends Fragment{
 
-    private OperateAssignment oAs = new OperateAssignment();
+   // private OperateAssignment oAs = new OperateAssignment();
     private OperateDB opDB = OperateDB.getInstance();
     private OperateUser opUsr = new OperateUser();
     private GeneralUseCase gUC = GeneralUseCase.getInstance();
@@ -76,7 +76,7 @@ public class FragmentLoginRegister extends Fragment{
         }).start());
 
         binding.TrykForBillede.setOnClickListener(v -> {
-            oAs.getExcelAsArrayList("TjekListeNy.xls");
+           // oAs.getExcelAsArrayList("TjekListeNy.xls");
         });
 
 

@@ -44,9 +44,6 @@ import jxl.read.biff.BiffException;
 
 public class OperateAssignment {
     private GeneralUseCase gUC = GeneralUseCase.getInstance();
-    private OperateAssignment opa = new OperateAssignment();
-
-
 
     //Create folder on server
     public boolean createFolderOnServer(String orderNr, String floor, String room) {
@@ -199,7 +196,7 @@ public class OperateAssignment {
         int headlineSecond = 0;
         List<String> excelCardView;
         ArrayList<CardView> headlineCardViews = new ArrayList<>();
-        ArrayList<String> excelChecklist = opa.getExcelAsArrayList(checklistName);
+        ArrayList<String> excelChecklist = getExcelAsArrayList(checklistName);
         for (int i = 0; i < excelChecklist.size(); i++) {
             if (excelChecklist.get(i).equals("<Headline>")) {
                 headlineSecond = i;

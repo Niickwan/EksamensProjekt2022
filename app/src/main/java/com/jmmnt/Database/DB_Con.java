@@ -47,7 +47,6 @@ public class DB_Con {
     }
 
     private Connection connection() {
-        connection = null;
         try {
             connection = DriverManager.getConnection(URL, "dat32_dk", "9hkdpBFtAg34");
         } catch (SQLException e) {
