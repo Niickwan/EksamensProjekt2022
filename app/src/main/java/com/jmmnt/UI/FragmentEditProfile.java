@@ -7,6 +7,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 import com.jmmnt.Entities.LoggedInUser;
 import com.jmmnt.Entities.User;
@@ -21,7 +22,6 @@ public class FragmentEditProfile extends Fragment {
     private FragmentEditProfileBinding binding;
     private User loggedInUser = LoggedInUser.getInstance().getUser();
     private User user;
-    private GeneralUseCase generalUseCase = GeneralUseCase.getInstance();
     private OperateDB operateDB = OperateDB.getInstance();
     private GeneralUseCase gUC = GeneralUseCase.getInstance();
 
@@ -40,12 +40,14 @@ public class FragmentEditProfile extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding.saveProfileBtn.setOnClickListener(v -> new Thread(() -> {
-                popupMenuEditProfile(); //TODO DER SKAL LAVES VALIDERING PÅ INPUTSFELTER - PASSWORD MÅ IKKE VÆRE TOMT
+                user = validateUserProfileChanges();
+                if (user != null) updateUserProfile(user);
         }).start());
         binding.editFirstNameEt.setText(loggedInUser.getFirstname());
         binding.editSurnameEt.setText(loggedInUser.getSurname());
         binding.editPhoneNumberEt.setText(loggedInUser.getPhonenumber());
         binding.editEmailEt.setText(loggedInUser.getEmail());
+
     }
 
     @Override
@@ -53,38 +55,64 @@ public class FragmentEditProfile extends Fragment {
         super.onDestroyView();
     }
 
-    public void popupMenuEditProfile() {
+    public User validateUserProfileChanges() {
         user = null;
-        boolean isMatching = generalUseCase.isInputMatching(binding.editPasswordEt.getText().toString(),(binding.editConfirmPasswordEt.getText().toString()));
-        if (isMatching){
-            user = new User(binding.editFirstNameEt.getText().toString(),
+        boolean isEmpty = gUC.isFieldsEmpty(new EditText[] {
+                binding.editFirstNameEt,
+                binding.editSurnameEt,
+                binding.editPasswordEt,
+                binding.editConfirmPasswordEt});
+        boolean isPasswordsMatching = gUC.isInputMatching(binding.editPasswordEt.getText().toString(),(binding.editConfirmPasswordEt.getText().toString()));
+        boolean isFirstnameValid = gUC.checkIfLetters(binding.editFirstNameEt.getText().toString());
+        boolean isSurnameValid = gUC.checkIfLetters(binding.editSurnameEt.getText().toString());
+        boolean isEmailValid = gUC.checkIfEmail(binding.editEmailEt.getText().toString());
+        boolean isPhoneNumbValid = gUC.checkIfNumber(binding.editPhoneNumberEt.getText().toString(),8);
+
+        if (!isEmpty && isPasswordsMatching && isFirstnameValid && isSurnameValid && (isEmailValid || isPhoneNumbValid)){
+            user = new User(
+                    binding.editFirstNameEt.getText().toString(),
                     binding.editSurnameEt.getText().toString(),
                     binding.editPhoneNumberEt.getText().toString(),
                     binding.editEmailEt.getText().toString(),
                     Encryption.encrypt(binding.editPasswordEt.getText().toString()),
                     LoggedInUser.getInstance().getUser().getUserID(),
                     LoggedInUser.getInstance().getUser().getUserRights());
-            boolean isProfileUpdated = operateDB.updateUserInDB(user);
-            if (isProfileUpdated){
-                LoggedInUser.getInstance().setUser(user);
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        TextView profileFirstname, profileSurname;
-                        profileFirstname = getActivity().findViewById(R.id.profile_firstname_tv);
-                        profileSurname = getActivity().findViewById(R.id.profile_surname_tv);
-                        profileFirstname.setText(LoggedInUser.getInstance().getUser().getFirstname());
-                        profileSurname.setText(LoggedInUser.getInstance().getUser().getSurname());
-                        //Change fragment
-                        NavHostFragment.findNavController(FragmentEditProfile.this).navigate(R.id.action_fragmentEditProfile_to_FragmentAdminHome);
-                        //Show toastAlert - visual confirm for user
-                        Thread toast = new Thread(() -> gUC.toastAlert(getActivity(), getString(R.string.popup_menu_edit_profile_confirm_update)));
-                        toast.start();
-                    }
-                });
-            }
+        } else {
+            if (isEmpty)
+                gUC.toastAlert(getActivity(), getString(R.string.popup_menu_edit_profile_fields_empty));
+            else if (!isPasswordsMatching)
+                gUC.toastAlert(getActivity(), getString(R.string.popup_menu_edit_password_not_matching));
+            else if (!isEmailValid && !isPhoneNumbValid)
+                gUC.toastAlert(getActivity(), getString(R.string.popup_menu_edit_profile_eamil_and_phone_is_empty));
+            else if (!isEmailValid)
+                gUC.toastAlert(getActivity(), getString(R.string.popup_menu_edit_profile_email_not_valid));
+            else if (!isPhoneNumbValid)
+                gUC.toastAlert(getActivity(), getString(R.string.popup_menu_edit_profile_phone_not_valid));
+        }
+        return user;
+    }
+
+    public void updateUserProfile(User user) {
+        boolean isProfileUpdated = operateDB.updateUserInDB(user);
+        if (isProfileUpdated){
+            LoggedInUser.getInstance().setUser(user);
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    TextView profileFirstname, profileSurname;
+                    profileFirstname = getActivity().findViewById(R.id.profile_firstname_tv);
+                    profileSurname = getActivity().findViewById(R.id.profile_surname_tv);
+                    profileFirstname.setText(LoggedInUser.getInstance().getUser().getFirstname());
+                    profileSurname.setText(LoggedInUser.getInstance().getUser().getSurname());
+                    //Change fragment
+                    NavHostFragment.findNavController(FragmentEditProfile.this).navigate(R.id.action_fragmentEditProfile_to_FragmentAdminHome);
+                    //Show toastAlert - visual confirmation for user
+                    Thread toast = new Thread(() -> gUC.toastAlert(getActivity(), getString(R.string.popup_menu_edit_profile_confirm_update)));
+                    toast.start();
+                }
+            });
         }else
-            gUC.toastAlert(getActivity(), getString(R.string.popup_menu_password_not_matching));
+            gUC.toastAlert(getActivity(),getString(R.string.popup_menu_edit_profile_update_failed));
     }
 
 }

@@ -76,7 +76,6 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="25dp"
                     android:theme="@style/EditTextTheme"
-                    android:background="@drawable/design_edittext"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/customerName_et">
@@ -85,8 +84,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/fragment_admin_create_order_address"
-                        android:inputType="textPersonName"
-                        />
+                        android:inputType="textPersonName" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -97,7 +95,6 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="25dp"
                     android:theme="@style/EditTextTheme"
-                    android:background="@drawable/design_edittext"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/orderInfo_tv">
@@ -106,7 +103,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/fragment_admin_create_order_number"
-                        android:inputType="number"/>
+                        android:inputType="number" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -117,7 +114,6 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="25dp"
                     android:theme="@style/EditTextTheme"
-                    android:background="@drawable/design_edittext"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/customerInfo_tv">
@@ -126,7 +122,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/fragment_admin_create_order_customer_name"
-                        android:inputType="textPersonName"/>
+                        android:inputType="textPersonName" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -137,7 +133,6 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="25dp"
                     android:theme="@style/EditTextTheme"
-                    android:background="@drawable/design_edittext"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/postalCode_et">
@@ -146,7 +141,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/fragment_admin_create_order_city"
-                        android:inputType="textPersonName"/>
+                        android:inputType="textPersonName" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <Button
@@ -171,7 +166,6 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="25dp"
                     android:theme="@style/EditTextTheme"
-                    android:background="@drawable/design_edittext"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/address_et">
@@ -180,7 +174,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/fragment_admin_create_order_postal_code"
-                        android:inputType="textPostalAddress"/>
+                        android:inputType="textPostalAddress" />
                 </com.google.android.material.textfield.TextInputLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
