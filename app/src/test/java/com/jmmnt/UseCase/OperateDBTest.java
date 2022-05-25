@@ -5,5 +5,6 @@ import junit.framework.TestCase;
 import java.sql.SQLException;
 
 public class OperateDBTest extends TestCase {
-    OperateDB db = OperateDB.getInstance();
+   // OperateDB db = new OperateDB();
+
 }

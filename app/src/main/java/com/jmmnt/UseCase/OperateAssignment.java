@@ -2,7 +2,20 @@ package com.jmmnt.UseCase;
 
 
 
+import android.app.Activity;
+import android.content.res.Resources;
+import android.graphics.Typeface;
 import android.os.Environment;
+import android.transition.AutoTransition;
+import android.transition.TransitionManager;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import androidx.cardview.widget.CardView;
+
+import com.jmmnt.R;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -14,6 +27,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.Reader;
+import java.lang.reflect.Array;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -30,6 +44,8 @@ import jxl.read.biff.BiffException;
 
 public class OperateAssignment {
     private GeneralUseCase gUC = GeneralUseCase.getInstance();
+    private OperateAssignment opa = new OperateAssignment();
+
 
 
     //Create folder on server
@@ -171,5 +187,73 @@ public class OperateAssignment {
         }
         arr.forEach(System.out::println);
         return arr;
+    }
+//---------------------------------------------------------------------------------------------
+    //---------------------------------------------------------------------------------------------------------
+    /**
+     * returner liste af cardviews som indeholder alle questions under én headline.
+     * parametre: Activity activtity, Resources resources
+     */
+    public ArrayList<CardView> genereteCardviewArray (Activity activity, Resources resources, String checklistName) {
+        int headlineFirst = 0;
+        int headlineSecond = 0;
+        List<String> excelCardView;
+        ArrayList<CardView> headlineCardViews = new ArrayList<>();
+        ArrayList<String> excelChecklist = opa.getExcelAsArrayList(checklistName);
+        for (int i = 0; i < excelChecklist.size(); i++) {
+            if (excelChecklist.get(i).equals("<Headline>")) {
+                headlineSecond = i;
+                if (headlineSecond > headlineFirst) {
+                    excelCardView = excelChecklist.subList(headlineFirst + 1, headlineSecond - 1);
+                    headlineCardViews.add(genereteCardView(excelCardView, activity, resources));
+                    headlineFirst = headlineSecond;
+                }
+            }
+        }
+        return headlineCardViews;
+    }
+
+    public CardView genereteCardView(List<String> excelCardView, Activity activity, Resources resources){
+        CardView cardView = new CardView(activity);
+
+        LinearLayout cardviewLinearLayout = new LinearLayout(activity);
+
+        LinearLayout linearLayoutHeadlineCardview = new LinearLayout(activity);
+        TextView headline = new TextView(activity);
+
+
+        LinearLayout linearLayoutBodyCardview = new LinearLayout(activity);
+
+        cardView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+        cardviewLinearLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        cardviewLinearLayout.setOrientation(LinearLayout.VERTICAL);
+
+        linearLayoutHeadlineCardview.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        headline.setTextColor(resources.getColor(R.color.black, activity.getTheme()));
+        headline.setText(excelCardView.get(0));
+        headline.setTextSize(20);
+        headline.setTypeface(null, Typeface.BOLD);
+
+        linearLayoutBodyCardview.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        linearLayoutHeadlineCardview.addView(headline);
+
+        linearLayoutHeadlineCardview.setOnClickListener(v -> {
+            if (linearLayoutBodyCardview.getVisibility() == View.GONE){
+                TransitionManager.beginDelayedTransition(cardView,new AutoTransition());
+                linearLayoutBodyCardview.setVisibility(View.VISIBLE);
+            }
+            else {
+                TransitionManager.beginDelayedTransition(cardView,new AutoTransition());
+                linearLayoutBodyCardview.setVisibility(View.GONE);
+            }
+        });
+
+        cardviewLinearLayout.addView(linearLayoutHeadlineCardview);
+        cardviewLinearLayout.addView(linearLayoutBodyCardview);
+        cardView.addView(cardviewLinearLayout);
+
+        return cardView;
+
     }
 }
