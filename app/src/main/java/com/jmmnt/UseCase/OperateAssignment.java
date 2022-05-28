@@ -17,6 +17,7 @@ import androidx.cardview.widget.CardView;
 
 import com.jmmnt.Database.DB_Con;
 import com.jmmnt.R;
+import com.mysql.jdbc.StringUtils;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -32,6 +33,7 @@ import java.lang.reflect.Array;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,13 +44,31 @@ import jxl.Cell;
 import jxl.CellType;
 import jxl.Sheet;
 import jxl.Workbook;
+import jxl.WorkbookSettings;
 import jxl.read.biff.BiffException;
 
 public class OperateAssignment {
     private GeneralUseCase gUC = GeneralUseCase.getInstance();
     private DB_Con db_con = DB_Con.getInstance();
 
-    //Create folder on server
+    //SERVER------------------------------------------------------------------------------------
+    public boolean renameFolderOnServer(String orderNr, String oldName, String newName) {
+        boolean isFolderCreated = false;
+        try {
+            URL url = new URL("https://dat32.dk/renameFolder.php?" +
+                    "oldName=" + oldName +
+                    "&newName=" + newName +
+                    "&orderNr=" + orderNr);
+            BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
+            String isSuccessful = in.readLine();
+            in.close();
+            isFolderCreated = isSuccessful.equalsIgnoreCase("True");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return isFolderCreated;
+    }
+
     public boolean createFolderOnServer(String orderNr, String floor, String room) {
         boolean isFolderCreated = false;
         try {
@@ -65,6 +85,7 @@ public class OperateAssignment {
         }
         return isFolderCreated;
     }
+    //END SERVER------------------------------------------------------------------------------------
 
     //TODO lave en ekstra funktion der tjekker status (aktiv, ikke aktiv) sådan at man kan
     //TODO søge KUN på aktive eller KUN på ikke aktive
@@ -162,8 +183,10 @@ public class OperateAssignment {
         File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
         File inputWorkbook = new File(path, fileName);
         Workbook w;
+        WorkbookSettings ws = new WorkbookSettings();
+        ws.setEncoding("Cp1252");
         try {
-            w = Workbook.getWorkbook(inputWorkbook);
+            w = Workbook.getWorkbook(inputWorkbook, ws);
             // Get the first sheet
             Sheet sheet = w.getSheet(0);
             // Loop over first 10 column and lines
@@ -171,13 +194,12 @@ public class OperateAssignment {
             for (int j = 0; j < sheet.getRows(); j++) {
                 for (int i = 0; i < sheet.getColumns(); i++) {
                     Cell cell = sheet.getCell(i, j);
-                    CellType type = cell.getType();
                     if (cell.getType() == CellType.LABEL) {
                         arr.add(cell.getContents());
                     }
 
                     if (cell.getType() == CellType.NUMBER) {
-                        arr.add(String.valueOf(cell.getCellFeatures()));
+                        arr.add(String.valueOf(cell.getContents()));
                     }
 
                 }

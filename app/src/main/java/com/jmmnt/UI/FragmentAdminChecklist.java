@@ -1,6 +1,5 @@
 package com.jmmnt.UI;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -11,7 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.LinearLayoutCompat;
@@ -60,7 +61,7 @@ public class FragmentAdminChecklist extends Fragment {
     addFloorBtn = gUC.createBtnForHSV("+", getActivity(), 150, 300);
     addFloorBtn.setBackground(unSelectedFloor);
     addFloorBtn.setTextColor(Color.GREEN);
-    addFloorBtn.setOnClickListener(v -> popupAddFloor(getActivity()));
+    addFloorBtn.setOnClickListener(v -> popupAddFloor());
 
     binding.hsvFloor.setHorizontalScrollBarEnabled(false);
     floorLinearLayout = new LinearLayout(getActivity());
@@ -122,7 +123,7 @@ public class FragmentAdminChecklist extends Fragment {
                 changeSelectedMenuButton();
             });
             b.setOnLongClickListener(v -> {
-                editOrDeleteRoom();
+                popupEditOrDeleteFloor(b.getText().toString());
                 return true;
             });
             floorButtons.add(b);
@@ -138,12 +139,14 @@ public class FragmentAdminChecklist extends Fragment {
          */
     }
 
-    public void popupAddFloor(Activity activity) {
-        Dialog dialog = new Dialog(activity);
+    // TODO Gøres til generelle metoder
+    // TODO man får ikke fejl hvis man opretter flere af samme navn RET!
+    public void popupAddFloor() {
+        Dialog dialog = new Dialog(getActivity());
         dialog.setContentView(R.layout.popup_add_floor);
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        TextInputLayout newFloorName = dialog.getWindow().findViewById(R.id.new_floor_et);
-        dialog.getWindow().findViewById(R.id.create_new_floor_btn).setOnClickListener(v -> new Thread(() -> {
+        TextInputLayout newFloorName = dialog.getWindow().findViewById(R.id.floor_et);
+        dialog.getWindow().findViewById(R.id.rename_floor_btn).setOnClickListener(v -> new Thread(() -> {
             opa.createFolderOnServer(orderNr, newFloorName.getEditText().getText().toString(), "");
             getActivity().runOnUiThread(() -> {
                 floors.add(newFloorName.getEditText().getText().toString());
@@ -152,7 +155,55 @@ public class FragmentAdminChecklist extends Fragment {
                 dialog.dismiss();
             });
         }).start());
-        dialog.getWindow().findViewById(R.id.cancel_new_floor_btn).setOnClickListener(v -> {
+        dialog.getWindow().findViewById(R.id.cancel_btn).setOnClickListener(v -> {
+            dialog.dismiss();
+        });
+        dialog.show();
+    }
+
+    public void popupEditOrDeleteFloor(String oldName) {
+        Dialog dialog = new Dialog(getActivity());
+        dialog.setContentView(R.layout.popup_edit_or_delete_floor);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        Button deleteBtn = dialog.getWindow().findViewById(R.id.delete_floor_btn);
+        TextInputLayout floorName = dialog.getWindow().findViewById(R.id.floor_et);
+        floorName.getEditText().setText(selectedFloorName);
+        dialog.getWindow().findViewById(R.id.rename_floor_btn).setOnClickListener(v -> new Thread(() -> {
+            if (opa.renameFolderOnServer(orderNr, oldName, floorName.getEditText().getText().toString())) {
+                getActivity().runOnUiThread(() -> {
+                    for (int i = 0; i < floorButtons.size(); i++) {
+                        if (floorButtons.get(i).getText().equals(oldName)) {
+                            floorButtons.get(i).setText(floorName.getEditText().getText().toString());
+                            selectedFloorName = floorName.getEditText().getText().toString();
+                        }
+                        deleteBtn.setVisibility(View.GONE);
+                        dialog.dismiss();
+                    }
+                });
+            } else {
+                getActivity().runOnUiThread(() -> {
+                    TextView error = dialog.getWindow().findViewById(R.id.error_message);
+                    error.setText("Fejl prøv igen");
+                });
+            }
+        }).start());
+        dialog.getWindow().findViewById(R.id.enable_delete_switch).setOnClickListener(v -> {
+            if(deleteBtn.getVisibility() == View.VISIBLE) {
+                deleteBtn.setVisibility(View.GONE);
+            } else {
+                deleteBtn.setVisibility(View.VISIBLE);
+            }
+        });
+        dialog.getWindow().findViewById(R.id.delete_floor_btn).setOnClickListener(v -> new Thread(() -> {
+            // TODO Remove from server
+            getActivity().runOnUiThread(() -> {
+                // TODO remove from list and set new name instance variable
+                deleteBtn.setVisibility(View.GONE);
+                dialog.dismiss();
+            });
+        }).start());
+        dialog.getWindow().findViewById(R.id.cancel_btn).setOnClickListener(v -> {
+            deleteBtn.setVisibility(View.GONE);
             dialog.dismiss();
         });
         dialog.show();
@@ -172,10 +223,10 @@ public class FragmentAdminChecklist extends Fragment {
         GradientDrawable borderSelected = new GradientDrawable();
         borderSelected.setColor(getResources().getColor(R.color.purple_700, getActivity().getTheme()));
         borderSelected.setAlpha(150);
+        borderSelected.setStroke(7, Color.BLACK);
         borderSelected.setShape(GradientDrawable.RECTANGLE);
-        LayerDrawable bSelected = new LayerDrawable(new Drawable[]{borderSelected});
-//        bSelected.setLayerInset(0, 0, 7, 0, 5);
-        return bSelected;
+        //        bSelected.setLayerInset(0, 0, 7, 0, 5);
+        return new LayerDrawable(new Drawable[]{borderSelected});
     }
 
     private LayerDrawable floorIsNotSelected() {
@@ -183,9 +234,8 @@ public class FragmentAdminChecklist extends Fragment {
         borderNotSelected.setColor(getResources().getColor(R.color.purple_700, getActivity().getTheme()));
         borderNotSelected.setShape(GradientDrawable.RECTANGLE);
         borderNotSelected.setAlpha(220);
-        LayerDrawable bNotSelected = new LayerDrawable(new Drawable[]{borderNotSelected});
-//        bNotSelected.setLayerInset(0, 0, 0, 0, 0);
-        return bNotSelected;
+        //        bNotSelected.setLayerInset(0, 0, 0, 0, 0);
+        return new LayerDrawable(new Drawable[]{borderNotSelected});
     }
 
     @Override
