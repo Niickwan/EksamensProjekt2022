@@ -8,7 +8,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/floor_et"
-        android:layout_width="250dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:textColorHint="#AAAAAA"
         android:theme="@style/TextInputLayoutBottomLine"
@@ -31,12 +31,23 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
+        android:id="@+id/delete_floor_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/design_button_red"
+        android:text="SLET ETAGE"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cancel_btn" />
+
+    <Button
         android:id="@+id/cancel_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/design_button"
         android:text="Annuller"
-        app:layout_constraintStart_toStartOf="@+id/floor_et"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/floor_et" />
 
     <Button
@@ -44,7 +55,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/design_button"
-        android:text="Opret"
+        android:text="Omdøb"
         app:layout_constraintEnd_toEndOf="@+id/floor_et"
         app:layout_constraintTop_toBottomOf="@+id/floor_et" />
+
+    <Switch
+        android:id="@+id/enable_delete_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Slet etage"
+        android:textColor="#FD0202"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/error_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FF0000"
+        app:layout_constraintBottom_toBottomOf="@+id/cancel_btn"
+        app:layout_constraintEnd_toStartOf="@+id/rename_floor_btn"
+        app:layout_constraintStart_toEndOf="@+id/cancel_btn"
+        app:layout_constraintTop_toTopOf="@+id/cancel_btn" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
