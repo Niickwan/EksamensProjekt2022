@@ -43,6 +43,10 @@ public class GeneralUseCase extends Activity {
         return text.matches("[0-9]+") && text.length() == lengthOfNumber;
     }
 
+    public boolean checkIfNumber(String text) {
+        return text.matches("[0-9]+");
+    }
+
     public boolean checkIfLetters(String text){
         return !text.matches(".*[0-9].*");
     }
@@ -88,21 +92,44 @@ public class GeneralUseCase extends Activity {
         return false;
     }
 
-    public ArrayList<String> getSplittedString(ArrayList<String> arr, String splitBy, int splitIndex) {
+    public ArrayList<String> getSplittedString(ArrayList<String> arr, String orderNr, String splitBy) {
         ArrayList<String> split = new ArrayList<>();
+        String[] parts = new String[0];
         for (int i = 0; i < arr.size(); i++) {
-            String[] parts = arr.get(i).split(splitBy);
-            split.add(parts[splitIndex]);
+            parts = arr.get(i).split("[" + splitBy + "]");
+        }
+
+        for (int i = 0; i < parts.length; i++) {
+            if (parts[i].equals(orderNr)) {
+                split.add(parts[i+1]);
+            }
         }
         return split;
     }
 
-    public View createBtnForHSV(String name, Activity activity, int height, int width) {
+    public Button createBtnForHSV(String name, Activity activity, int height, int width) {
         Button b = new Button(activity);
         b.setText(name);
         b.setHeight(height);
         b.setWidth(width);
         return b;
+    }
+
+    public ArrayList<String> sortStringBeforeNumbers(ArrayList<String> arr) {
+        ArrayList<String> numbers = new ArrayList<>();
+        ArrayList<String> strings = new ArrayList<>();
+        for (int i = 0; i < arr.size(); i++) {
+            if (checkIfNumber(arr.get(i).substring(0, 1))) {
+                numbers.add(arr.get(i));
+            } else {
+                strings.add(arr.get(i));
+            }
+        }
+        numbers.sort(String::compareTo);
+        strings.sort(String::compareTo);
+        ArrayList<String> sortedList = new ArrayList<>(strings);
+        sortedList.addAll(numbers);
+        return sortedList;
     }
 
 //    public ArrayList<String> getAssignmentStructure(String orderNr) {

@@ -39,10 +39,10 @@ public class FragmentLoginHome extends Fragment {
                 if (user != null) {
                     if (user.getUserRights() == 1) {
                         gUC.switchScene(getActivity(), ActivityAdmin.class);
-                        clearInputFields();
+                        getActivity().runOnUiThread(this::clearInputFields);
                     } else if (user.getUserRights() == 2) {
                         gUC.switchScene(getActivity(), ActivityUser.class);
-                        clearInputFields();
+                        getActivity().runOnUiThread(this::clearInputFields);
                     }
                 } else {
                     gUC.toastAlert(getActivity(), getString(R.string.fragment_login_wrong_input));
@@ -63,10 +63,8 @@ public class FragmentLoginHome extends Fragment {
     }
 
     private void clearInputFields() {
-        Looper.prepare();
         binding.emailEt.getEditText().getText().clear();
         binding.passwordEt.getEditText().getText().clear();
-        Looper.loop();
     }
 
 
