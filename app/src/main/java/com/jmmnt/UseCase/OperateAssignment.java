@@ -46,7 +46,6 @@ import jxl.read.biff.BiffException;
 
 public class OperateAssignment {
     private GeneralUseCase gUC = GeneralUseCase.getInstance();
-    private OperateAssignment opa = new OperateAssignment();
     private DB_Con db_con = DB_Con.getInstance();
 
     //Create folder on server
