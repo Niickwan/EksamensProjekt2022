@@ -1,7 +1,6 @@
-package com.jmmnt.UI;
+package com.jmmnt.Controller.UI;
 
 import android.os.Bundle;
-import android.os.Looper;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;

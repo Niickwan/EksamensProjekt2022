@@ -1,4 +1,4 @@
-package com.jmmnt.UI;
+package com.jmmnt.Controller.UI;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
-import com.jmmnt.Database.DB_Con;
+import com.jmmnt.Controller.Database.DB_Con;
 import com.jmmnt.Entities.LoggedInUser;
 import com.jmmnt.Entities.User;
 import com.jmmnt.R;

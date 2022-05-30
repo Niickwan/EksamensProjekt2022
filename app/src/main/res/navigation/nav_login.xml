@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/FragmentLoginHome"
-        android:name="com.jmmnt.UI.FragmentLoginHome"
+        android:name="com.jmmnt.Controller.UI.FragmentLoginHome"
         android:label="@string/fragment_login_home_label"
         tools:layout="@layout/fragment_login_home">
         <action
@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/FragmentLoginRegister"
-        android:name="com.jmmnt.UI.FragmentLoginRegister"
+        android:name="com.jmmnt.Controller.UI.FragmentLoginRegister"
         android:label="@string/fragment_login_register_label"
         tools:layout="@layout/fragment_login_register" />
 </navigation>

@@ -1,4 +1,4 @@
-package com.jmmnt.UI;
+package com.jmmnt.Controller.UI;
 
 import static android.app.Activity.RESULT_OK;
 

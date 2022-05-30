@@ -15,25 +15,17 @@ import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
 
-import com.jmmnt.Database.DB_Con;
+import com.jmmnt.Controller.Database.DB_Con;
 import com.jmmnt.R;
-import com.mysql.jdbc.StringUtils;
 
-import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.Reader;
-import java.lang.reflect.Array;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 

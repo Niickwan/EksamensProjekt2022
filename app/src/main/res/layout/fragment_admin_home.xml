@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/background_color_zealand"
     android:orientation="vertical"
-    tools:context=".UI.FragmentAdminHome">
+    tools:context=".Controller.UI.FragmentAdminHome">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"

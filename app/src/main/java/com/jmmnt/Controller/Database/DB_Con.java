@@ -1,4 +1,4 @@
-package com.jmmnt.Database;
+package com.jmmnt.Controller.Database;
 
 
 import com.jmmnt.Entities.LoggedInUser;
