@@ -2,7 +2,9 @@ package com.jmmnt.UI;
 
 import static android.app.Activity.RESULT_OK;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -15,7 +17,11 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+
+import com.jmmnt.Entities.Assignment;
 import com.jmmnt.Entities.User;
 import com.jmmnt.UseCase.Encryption;
 import com.jmmnt.UseCase.FTP.FTPClientFunctions;
@@ -24,11 +30,16 @@ import com.jmmnt.UseCase.GeneralUseCase;
 import com.jmmnt.UseCase.OperateAssignment;
 import com.jmmnt.UseCase.OperateDB;
 import com.jmmnt.UseCase.OperateUser;
+import com.jmmnt.UseCase.PDFGeneration.PDFGenerator;
 import com.jmmnt.databinding.FragmentLoginRegisterBinding;
+
+import org.apache.commons.net.ntp.TimeStamp;
+
+import java.io.FileNotFoundException;
 
 public class FragmentLoginRegister extends Fragment{
 
-    private OperateAssignment oAs = new OperateAssignment();
+    //private OperateAssignment oAs = new OperateAssignment();
     private OperateDB opDB = OperateDB.getInstance();
     private OperateUser opUsr = new OperateUser();
     private GeneralUseCase gUC = GeneralUseCase.getInstance();
@@ -36,6 +47,9 @@ public class FragmentLoginRegister extends Fragment{
     private FragmentLoginRegisterBinding binding;
     private ActivityResultLauncher<Intent> activityResultLauncher;
     private FTPClientFunctions ftpMethodClass = new FTPClientFunctions();
+    //TODO pdfGenerator skal tage det assignment som brugeren er inde på.
+    //TODO SKAL INDSÆTTES I DEN RIGTIGE KLASSE
+    private PDFGenerator pdfG = new PDFGenerator(new Assignment(1,1,"snerlevej 191", "4700", "aktiv","gh459", TimeStamp.getCurrentTime(),"Super Brugsen"));
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -72,11 +86,24 @@ public class FragmentLoginRegister extends Fragment{
 //        });
 
         binding.FTPButton.setOnClickListener(v -> new Thread(() -> {
-            ftpMethodClass.ftpDownload("/TjekListeNy.xls", "TjekListeNy.xls");
+            //ftpMethodClass.ftpDownload("/testl.xls", "lllll.xls");
+            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 101);
+            }
+            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                try {
+                    pdfG.createPDF(getContext());
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+
+                }
+            }
+
         }).start());
 
         binding.TrykForBillede.setOnClickListener(v -> {
-            oAs.getExcelAsArrayList("TjekListeNy.xls");
+            //oAs.getExcelAsArrayList("TjekListeNy.xls");
+
         });
 
 

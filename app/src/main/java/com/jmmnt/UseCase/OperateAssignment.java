@@ -46,8 +46,6 @@ import jxl.read.biff.BiffException;
 
 public class OperateAssignment {
     private GeneralUseCase gUC = GeneralUseCase.getInstance();
-    private OperateAssignment opa = new OperateAssignment();
-    private DB_Con db_con = DB_Con.getInstance();
 
     //Create folder on server
     public boolean createFolderOnServer(String orderNr, String floor, String room) {
@@ -145,6 +143,7 @@ public class OperateAssignment {
         return json;
     }
 
+    //https://api.dataforsyningen.dk/postnumre/ --- USABLE URL FOR ZIPCODES
     public String getCityMatchingZipCode(String url, String zipCode){
         try {
             JSONObject jsonObject = readJsonUrl(url + "/" + zipCode);
@@ -178,7 +177,7 @@ public class OperateAssignment {
                     }
 
                     if (cell.getType() == CellType.NUMBER) {
-                        arr.add(String.valueOf(cell.getCellFeatures()));
+                        arr.add(String.valueOf(cell.getContents()));
                     }
 
                 }
