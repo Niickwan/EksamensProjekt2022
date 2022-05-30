@@ -1,14 +1,16 @@
 package com.jmmnt.UI;
 
+import android.app.Dialog;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
-import android.renderscript.ScriptGroup;
-import android.transition.AutoTransition;
-import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -17,17 +19,14 @@ import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.jmmnt.R;
 import com.jmmnt.UseCase.GeneralUseCase;
 import com.jmmnt.UseCase.OperateAssignment;
 import com.jmmnt.UseCase.OperateDB;
 import com.jmmnt.databinding.FragmentAdminChecklistBinding;
 
-import org.apache.poi.ss.formula.functions.T;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
 
 public class FragmentAdminChecklist extends Fragment {
 
@@ -35,6 +34,17 @@ public class FragmentAdminChecklist extends Fragment {
     private OperateAssignment opa = new OperateAssignment();
     private OperateDB oDB = OperateDB.getInstance();
     private GeneralUseCase gUC = GeneralUseCase.getInstance();
+
+    private Button addFloorBtn;
+    private LayerDrawable selectedFloor;
+    private LayerDrawable unSelectedFloor;
+    private ArrayList<String> floors = new ArrayList<>();
+    private ArrayList<Button> floorButtons = new ArrayList<>();
+
+    // TODO SKAL VÆRE VÆRDIER FRA SERVER/DB
+    private String orderNr = "8888";
+    private LinearLayout floorLinearLayout;
+    private String selectedFloorName = "";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -45,75 +55,41 @@ public class FragmentAdminChecklist extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+    selectedFloor = floorIsSelected();
+    unSelectedFloor = floorIsNotSelected();
+
+    addFloorBtn = gUC.createBtnForHSV("+", getActivity(), 150, 300);
+    addFloorBtn.setBackground(unSelectedFloor);
+    addFloorBtn.setTextColor(Color.GREEN);
+    addFloorBtn.setOnClickListener(v -> popupAddFloor());
+
     binding.hsvFloor.setHorizontalScrollBarEnabled(false);
-    LinearLayout floorLinearLayout = new LinearLayout(getActivity());
+    floorLinearLayout = new LinearLayout(getActivity());
     floorLinearLayout.setOrientation(LinearLayout.HORIZONTAL);
+    floorLinearLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
     binding.hsvRoom.setHorizontalScrollBarEnabled(false);
     LinearLayout roomLinearLayout = new LinearLayout(getActivity());
     roomLinearLayout.setOrientation(LinearLayout.HORIZONTAL);
 
-    ArrayList<String> hsvStructure = oDB.getAssignmentStructure("8888");
+        Thread t = new Thread(() -> {
+            ArrayList<String> hsvStructure = new ArrayList<>();
+            try {
+                hsvStructure = oDB.getAssignmentStructure(orderNr);
+            } finally {
+                floors = gUC.sortStringBeforeNumbers(gUC.getSplittedString(hsvStructure, orderNr, "/<"));
+                selectedFloorName = floors.get(0);
+                setHorizontalFloorBar(floors);
 
-    ArrayList<String> floors = gUC.getSplittedString(hsvStructure, "/", 2);
-    ArrayList<String> rooms = gUC.getSplittedString(hsvStructure, "/", 3);
+                getActivity().runOnUiThread(() -> {
+                    binding.hsvFloor.addView(floorLinearLayout);
+//                        binding.hsvRoom.addView(roomLinearLayout);
+                    binding.hsvRoom.setVisibility(View.GONE);
+                });
+            }
+        });
+        t.start();
 
-    for (int i = 0; i < floors.size(); i++) {
-        floorLinearLayout.addView(gUC.createBtnForHSV(floors.get(i), getActivity(), 175, 175));
-    }
-
-    for (int i = 0; i < rooms.size(); i++) {
-        roomLinearLayout.addView(gUC.createBtnForHSV(rooms.get(i), getActivity(), 175, 175));
-    }
-
-    binding.hsvFloor.addView(floorLinearLayout);
-    binding.hsvRoom.addView(roomLinearLayout);
-
-
-//---------------------------------------------------------------------------------------------------------
-//        /**
-//         * returner liste af cardviews som indeholder alle questions under én headline.
-//         * parametre: Activity activtity, Resources resources
-//         */
-//        int headlineFirst = 0;
-//        int headlineSecond = 0;
-//        List<String> excelCardView;
-//        ArrayList<CardView> headlineCardViews = new ArrayList<>();
-//        ArrayList<String> excelChecklist = opa.getExcelAsArrayList("TjekListeNy.xls");
-//        for (int i = 0; i < excelChecklist.size(); i++) {
-//            if (excelChecklist.get(i).equals("<Headline>")) {
-//                headlineSecond = i;
-//                if (headlineSecond > headlineFirst) {
-//                    excelCardView = excelChecklist.subList(headlineFirst + 1, headlineSecond - 1);
-//                    headlineCardViews.add(genereteCardview(excelCardView, activity));
-//                    headlineFirst = headlineSecond;
-//                }
-//            }
-//        }
-//        /**
-//         * returner et cardview (generateCardView)
-//         * parametre
-//         */
-//        public CardView genereteCardView(List<String> excelCardView, Activity activity){
-//            CardView cardView = new CardView(activity);
-//            LinearLayout cardviewLinearLayout = new LinearLayout(activity);
-//            LinearLayout linearLayoutHeadlineCardview = new LinearLayout(activity);
-//            LinearLayout linearLayoutBodyCardview = new LinearLayout(activity);
-//
-//            cardView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-//
-//            cardviewLinearLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-//            cardviewLinearLayout.setOrientation(LinearLayout.VERTICAL);
-//
-//            linearLayoutHeadlineCardview.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-//
-//            linearLayoutBodyCardview.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-//            linearLayoutBodyCardview.setTag(text);
-//
-//            linearLayoutHeadlineCardview.setOnClickListener();
-//
-//        }
-//-----------------------------------------------------------------------------
         ArrayList<LinearLayout> expandableLayout = new ArrayList<>();
 
         LinearLayoutCompat nsvLinearLayout = new LinearLayoutCompat(getActivity());
@@ -122,56 +98,6 @@ public class FragmentAdminChecklist extends Fragment {
         LinearLayout linearLayoutDropdownHolder = new LinearLayout(getActivity());
         linearLayoutDropdownHolder.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         linearLayoutDropdownHolder.setOrientation(LinearLayout.VERTICAL);
-
-//        CardView cardView = new CardView(getActivity());
-//        cardView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-
-//        LinearLayout cardviewLinearLayout = new LinearLayout(getActivity());
-//        cardviewLinearLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-//        cardviewLinearLayout.setOrientation(LinearLayout.VERTICAL);
-
-//        LinearLayout linearLayoutHeadlineCardview = new LinearLayout(getActivity());
-//        linearLayoutHeadlineCardview.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-
-//        String text = "1. Generelt";
-
-//        TextView headline = new TextView(getActivity());
-//        headline.setTextColor(getResources().getColor(R.color.black, getActivity().getTheme()));
-//        headline.setText(text);
-//        headline.setOnClickListener(v -> {
-//            for (int i = 0; i < expandableLayout.size(); i++) {
-//                if (expandableLayout.get(i).getTag().equals(headline.getText())) {
-//                    if (expandableLayout.get(i).getVisibility() == view.GONE) {
-//                        TransitionManager.beginDelayedTransition(cardView,new AutoTransition());
-//                        expandableLayout.get(i).setVisibility(View.VISIBLE);
-//                    } else {
-//                        TransitionManager.beginDelayedTransition(cardView,new AutoTransition());
-//                        expandableLayout.get(i).setVisibility(View.GONE);
-//                    }
-//                }
-//            }
-//        });
-//        linearLayoutHeadlineCardview.addView(headline);
-//
-//        LinearLayout linearLayoutBodyCardview = new LinearLayout(getActivity());
-//        linearLayoutBodyCardview.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-//        linearLayoutBodyCardview.setTag(text);
-//
-//        TextView body = new TextView(getActivity());
-//        body.setTextColor(getResources().getColor(R.color.black, getActivity().getTheme()));
-//        body.setText("body");
-
-//        linearLayoutBodyCardview.addView(body);
-//
-//        expandableLayout.add(linearLayoutBodyCardview);
-//
-//        //linearLayoutDropdownHolder.addView(tv, 0);
-//        //linearLayoutDropdownHolder.addView(tv1, 1);
-//
-//        cardviewLinearLayout.addView(linearLayoutHeadlineCardview,0);
-//        cardviewLinearLayout.addView(linearLayoutBodyCardview,1);
-//        cardView.addView(cardviewLinearLayout);
-
 
         ArrayList<CardView> ra = opa.genereteCardviewArray(getActivity(),getResources(),"TjekListeNy.xls");
         for (int i = 0; i < ra.size(); i++) {
@@ -184,6 +110,132 @@ public class FragmentAdminChecklist extends Fragment {
 
         binding.ChecklistNestedScrollView.addView(nsvLinearLayout);
 
+    }
+
+    private void setHorizontalFloorBar(ArrayList<String> floors) {
+        floorLinearLayout.removeAllViews();
+        floorButtons.clear();
+        for (int i = 0; i < floors.size(); i++) {
+            Button b = gUC.createBtnForHSV(floors.get(i), getActivity(), 150, 300);
+            b.setBackgroundColor(getResources().getColor(R.color.purple_700, getActivity().getTheme()));
+            b.setOnClickListener(v -> {
+                selectedFloorName = b.getText().toString();
+                changeSelectedMenuButton();
+            });
+            b.setOnLongClickListener(v -> {
+                popupEditOrDeleteFloor(b.getText().toString());
+                return true;
+            });
+            floorButtons.add(b);
+            floorLinearLayout.addView(b);
+            changeSelectedMenuButton();
+        }
+        floorLinearLayout.addView(addFloorBtn);
+    }
+
+    private void editOrDeleteRoom() {
+        /**
+         * GØR SÅ MAN KAN REDIGERE NAVNET PÅ ETAGEN ELLER SLETTE EN ETAGE
+         */
+    }
+
+    // TODO Gøres til generelle metoder
+    // TODO man får ikke fejl hvis man opretter flere af samme navn RET!
+    public void popupAddFloor() {
+        Dialog dialog = new Dialog(getActivity());
+        dialog.setContentView(R.layout.popup_add_floor);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        TextInputLayout newFloorName = dialog.getWindow().findViewById(R.id.floor_et);
+        dialog.getWindow().findViewById(R.id.rename_floor_btn).setOnClickListener(v -> new Thread(() -> {
+            opa.createFolderOnServer(orderNr, newFloorName.getEditText().getText().toString(), "");
+            getActivity().runOnUiThread(() -> {
+                floors.add(newFloorName.getEditText().getText().toString());
+                selectedFloorName = newFloorName.getEditText().getText().toString();
+                setHorizontalFloorBar(floors);
+                dialog.dismiss();
+            });
+        }).start());
+        dialog.getWindow().findViewById(R.id.cancel_btn).setOnClickListener(v -> {
+            dialog.dismiss();
+        });
+        dialog.show();
+    }
+
+    public void popupEditOrDeleteFloor(String oldName) {
+        Dialog dialog = new Dialog(getActivity());
+        dialog.setContentView(R.layout.popup_edit_or_delete_floor);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        Button deleteBtn = dialog.getWindow().findViewById(R.id.delete_floor_btn);
+        TextInputLayout floorName = dialog.getWindow().findViewById(R.id.floor_et);
+        floorName.getEditText().setText(selectedFloorName);
+        dialog.getWindow().findViewById(R.id.rename_floor_btn).setOnClickListener(v -> new Thread(() -> {
+            if (opa.renameFolderOnServer(orderNr, oldName, floorName.getEditText().getText().toString())) {
+                getActivity().runOnUiThread(() -> {
+                    for (int i = 0; i < floorButtons.size(); i++) {
+                        if (floorButtons.get(i).getText().equals(oldName)) {
+                            floorButtons.get(i).setText(floorName.getEditText().getText().toString());
+                            selectedFloorName = floorName.getEditText().getText().toString();
+                        }
+                        deleteBtn.setVisibility(View.GONE);
+                        dialog.dismiss();
+                    }
+                });
+            } else {
+                getActivity().runOnUiThread(() -> {
+                    TextView error = dialog.getWindow().findViewById(R.id.error_message);
+                    error.setText("Fejl prøv igen");
+                });
+            }
+        }).start());
+        dialog.getWindow().findViewById(R.id.enable_delete_switch).setOnClickListener(v -> {
+            if(deleteBtn.getVisibility() == View.VISIBLE) {
+                deleteBtn.setVisibility(View.GONE);
+            } else {
+                deleteBtn.setVisibility(View.VISIBLE);
+            }
+        });
+        dialog.getWindow().findViewById(R.id.delete_floor_btn).setOnClickListener(v -> new Thread(() -> {
+            // TODO Remove from server
+            getActivity().runOnUiThread(() -> {
+                // TODO remove from list and set new name instance variable
+                deleteBtn.setVisibility(View.GONE);
+                dialog.dismiss();
+            });
+        }).start());
+        dialog.getWindow().findViewById(R.id.cancel_btn).setOnClickListener(v -> {
+            deleteBtn.setVisibility(View.GONE);
+            dialog.dismiss();
+        });
+        dialog.show();
+    }
+
+    public void changeSelectedMenuButton() {
+        for (int i = 0; i < floorButtons.size(); i++) {
+            if (floorButtons.get(i).getText().equals(selectedFloorName)) {
+                floorButtons.get(i).setBackground(selectedFloor);
+            } else {
+                floorButtons.get(i).setBackground(unSelectedFloor);
+            }
+        }
+    }
+
+    private LayerDrawable floorIsSelected() {
+        GradientDrawable borderSelected = new GradientDrawable();
+        borderSelected.setColor(getResources().getColor(R.color.purple_700, getActivity().getTheme()));
+        borderSelected.setAlpha(150);
+        borderSelected.setStroke(7, Color.BLACK);
+        borderSelected.setShape(GradientDrawable.RECTANGLE);
+        //        bSelected.setLayerInset(0, 0, 7, 0, 5);
+        return new LayerDrawable(new Drawable[]{borderSelected});
+    }
+
+    private LayerDrawable floorIsNotSelected() {
+        GradientDrawable borderNotSelected = new GradientDrawable();
+        borderNotSelected.setColor(getResources().getColor(R.color.purple_700, getActivity().getTheme()));
+        borderNotSelected.setShape(GradientDrawable.RECTANGLE);
+        borderNotSelected.setAlpha(220);
+        //        bNotSelected.setLayerInset(0, 0, 0, 0, 0);
+        return new LayerDrawable(new Drawable[]{borderNotSelected});
     }
 
     @Override
