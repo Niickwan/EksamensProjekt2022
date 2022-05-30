@@ -165,6 +165,7 @@ public class OperateAssignment {
         return json;
     }
 
+    //https://api.dataforsyningen.dk/postnumre/ --- USABLE URL FOR ZIPCODES
     public String getCityMatchingZipCode(String url, String zipCode){
         try {
             JSONObject jsonObject = readJsonUrl(url + "/" + zipCode);
