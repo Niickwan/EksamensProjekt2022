@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +23,9 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.jmmnt.Entities.Assignment;
+import com.jmmnt.Entities.Questions;
 import com.jmmnt.Entities.User;
+import com.jmmnt.UseCase.CreateExcelFile;
 import com.jmmnt.UseCase.Encryption;
 import com.jmmnt.UseCase.FTP.FTPClientFunctions;
 import com.jmmnt.R;
@@ -36,6 +39,8 @@ import com.jmmnt.databinding.FragmentLoginRegisterBinding;
 import org.apache.commons.net.ntp.TimeStamp;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FragmentLoginRegister extends Fragment{
 
@@ -86,7 +91,7 @@ public class FragmentLoginRegister extends Fragment{
 //        });
 
         binding.FTPButton.setOnClickListener(v -> new Thread(() -> {
-            //ftpMethodClass.ftpDownload("/testl.xls", "lllll.xls");
+//            ftpMethodClass.ftpDownload("/TjekListeNy (7).xls", "TjeklisteTemplate.xls");
             if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 101);
             }
@@ -103,6 +108,58 @@ public class FragmentLoginRegister extends Fragment{
 
         binding.TrykForBillede.setOnClickListener(v -> {
             //oAs.getExcelAsArrayList("TjekListeNy.xls");
+
+        });
+
+        binding.writeExcelFile.setOnClickListener(v -> {
+            // VARIABLES FROM CURRENT FOLDER AND DOCUMENT
+            String fileName = "ExcelTest.xls";
+            String folder = "/public_html/assignments/8888/3. Sal/";
+
+
+            // TEST DATA //
+            ArrayList<List<Object>> samletListe = new ArrayList<>();
+
+            List<Object> general = new ArrayList<>();
+            general.add(new Questions("Tavlen", 2, "Hvad sker der?"));
+            general.add(new Questions("Elskab", 1, "Kom nu"));
+
+            List<Object> electricalPanel = new ArrayList<>();
+            electricalPanel.add(new Questions("El", 3, "Pas på"));
+            electricalPanel.add(new Questions("Test", 2, "Hallo"));
+
+            List<Object> installation = new ArrayList<>();
+            installation.add(new Questions("Installation", 3, "Pas på"));
+            installation.add(new Questions("Test Install", 3, "Hallo"));
+
+            List<Object> protection = new ArrayList<>();
+            protection.add(new Questions("Prot", 2, "Pas på"));
+            protection.add(new Questions("Test Prot", 2, "Hallo"));
+
+            List<Object> error = new ArrayList<>();
+            error.add(new Questions("Error", 1, "Pas på"));
+            error.add(new Questions("Test Error", 2, "Hallo"));
+
+            List<Object> section = new ArrayList<>();
+            section.add(new Questions("Section Section", 3, "Pas på"));
+            section.add(new Questions("Test Section", 1, "Hallo"));
+
+            samletListe.add(general);
+            samletListe.add(electricalPanel);
+            samletListe.add(installation);
+            samletListe.add(protection);
+            samletListe.add(error);
+            samletListe.add(section);
+
+            //END TEST DATA //
+
+
+            CreateExcelFile c = new CreateExcelFile();
+            c.createExcelSheet(fileName, samletListe);
+
+            FTPClientFunctions ftp = new FTPClientFunctions();
+            String uploadExcelToServerPath = folder + fileName;
+            ftp.ftpUpload(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/" + fileName, uploadExcelToServerPath);
 
         });
 
