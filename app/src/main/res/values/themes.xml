@@ -38,4 +38,9 @@
         <item name="colorControlHighlight">@color/white</item>
     </style>
 
+    <!-- Scrollbars -->
+    <style name="ViewWithScrollbars">
+        <item name="android:scrollbars">vertical</item>
+    </style>
+
 </resources>

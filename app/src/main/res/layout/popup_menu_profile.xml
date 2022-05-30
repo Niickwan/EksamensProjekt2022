@@ -6,7 +6,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@color/darkblue"
-    tools:context=".UI.FragmentPopupMenu">
+    tools:context=".Controller.UI.FragmentPopupMenu">
 
     <TextView
         android:id="@+id/popupMenuEditProfile_tv"

@@ -6,8 +6,6 @@ import android.app.Activity;
 import android.widget.EditText;
 
 import com.jmmnt.R;
-import com.jmmnt.UI.ActivityAdmin;
-import com.jmmnt.UI.FragmentEditProfile;
 
 import org.junit.Test;
 

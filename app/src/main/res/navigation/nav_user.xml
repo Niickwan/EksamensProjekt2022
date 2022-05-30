@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/FragmentUserHome"
-        android:name="com.jmmnt.UI.FragmentUserHome"
+        android:name="com.jmmnt.Controller.UI.FragmentUserHome"
         android:label="@string/fragment_user_home_label"
         tools:layout="@layout/fragment_user_home">
         <action
@@ -19,12 +19,12 @@
     </fragment>
     <fragment
         android:id="@+id/FragmentUserNotInUse"
-        android:name="com.jmmnt.UI.FragmentUserNotInUse"
+        android:name="com.jmmnt.Controller.UI.FragmentUserNotInUse"
         android:label="@string/fragment_user_not_in_use_label"
         tools:layout="@layout/fragment_user_not_in_use"/>
     <fragment
         android:id="@+id/userFragmentEditProfile"
-        android:name="com.jmmnt.UI.FragmentEditProfile"
+        android:name="com.jmmnt.Controller.UI.FragmentEditProfile"
         android:label="FragmentEditProfile"
         tools:layout="@layout/fragment_edit_profile"/>
 </navigation>
