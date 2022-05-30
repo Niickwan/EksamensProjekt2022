@@ -50,7 +50,7 @@ public class PDFGenerator {
     Assignment assignment;
     OperateAssignment opa = new OperateAssignment();
     Table table = null;
-
+    //TODO SLET DENNE BESKED MED DET SAMME.
     public PDFGenerator(Assignment assignment) {
         this.assignment = assignment;
     }
