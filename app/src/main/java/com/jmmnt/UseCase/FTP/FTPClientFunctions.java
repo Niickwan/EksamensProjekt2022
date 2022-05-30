@@ -22,13 +22,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-public class FTPClientFunctions extends AppCompatActivity{
+public class FTPClientFunctions extends AppCompatActivity {
     private final String host = "linux160.unoeuro.com";
     private final String username = "dat32.dk";
     private final String password = "9hkdpBFtAg34";
     private final int port = 21;
     private FTPClient mFTPClient;
     private OutputStream outputStream;
+    private boolean isUploadSuccessful = false;
 
     public boolean ftpConnect(String host, String username, String password, int port) {
         try {
@@ -66,24 +67,29 @@ public class FTPClientFunctions extends AppCompatActivity{
         return false;
     }
 
-    public boolean ftpUpload(String srcFilePath, String desFileName, String desDirectory, Context context) {
-        boolean status = false;
-        try {
-            FileInputStream srcFileStream = new FileInputStream(srcFilePath);
-            // change working directory to the destination directory
-            // if (ftpChangeDirectory(desDirectory)) {
-            status = mFTPClient.storeFile(desFileName, srcFileStream);
-            // }
-            srcFileStream.close();
-            return status;
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.d(TAG, "upload failed: " + e);
-        }
-        return status;
+    public boolean ftpUpload(String srcFilePath, String desFileName) {
+        isUploadSuccessful = false;
+        new Thread(() -> {
+            try {
+                boolean b = ftpConnect(host, username, password, port);
+                System.out.println(b);
+                FileInputStream srcFileStream = new FileInputStream(srcFilePath);
+                // change working directory to the destination directory
+                // if (ftpChangeDirectory(desDirectory)) {
+                isUploadSuccessful = mFTPClient.storeFile(desFileName, srcFileStream);
+                // }
+                System.out.println(isUploadSuccessful);
+                srcFileStream.close();
+                ftpDisconnect();
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.d(TAG, "upload failed: " + e);
+            }
+        }).start();
+        return isUploadSuccessful;
     }
 
-    public void ftpDownload(String remotePath, String phoneFileName){
+    public void ftpDownload(String remotePath, String phoneFileName) {
         new Thread(() -> {
             ftpConnect(host, username, password, port);
             try {
@@ -101,55 +107,46 @@ public class FTPClientFunctions extends AppCompatActivity{
         }).start();
     }
 
-    public void sendPicToFTP(Bitmap bitmap, String filename,String directory, Context context) {
+    public void sendPicToFTP(Bitmap bitmap, String filename, String directory, Context context) {
         new Thread(() -> {
-            boolean status;
-
-            status = ftpConnect(host, username, password, port);
-            if (status) {
-                Log.d(TAG, "Connection Success");
-
-                File filepath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-                File file = new File(filepath, filename);
-
-                try {
-                    outputStream = new FileOutputStream(file);
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
-                    outputStream.flush();
-                    outputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                createDirectory(mFTPClient, directory+"/pictures");
-
-                ftpUpload(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-                        + "/pics/" + filename, filename, directory+"/pictures", null);
-
-                file.delete();
-
-                ftpDisconnect();
-            }
-        }).start();
-    }
-
-    public void createDirectory(FTPClient client, String directory){
-        boolean doesDirectoryExist = false;
+            File filepath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+            File file = new File(filepath, filename);
 
             try {
-                doesDirectoryExist = client.changeWorkingDirectory(directory);
-                System.out.println("created");
+                outputStream = new FileOutputStream(file);
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+                outputStream.flush();
+                outputStream.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            if(!doesDirectoryExist){
-                try {
-                    client.makeDirectory(directory);
-                    client.changeWorkingDirectory(directory);
-                    System.out.println("already exists");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            createDirectory(mFTPClient, directory + "/pictures");
+
+            ftpUpload(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+                    + "/pics/" + filename, filename);
+
+            file.delete();
+        }).start();
+    }
+
+    public void createDirectory(FTPClient client, String directory) {
+        boolean doesDirectoryExist = false;
+
+        try {
+            doesDirectoryExist = client.changeWorkingDirectory(directory);
+            System.out.println("created");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (!doesDirectoryExist) {
+            try {
+                client.makeDirectory(directory);
+                client.changeWorkingDirectory(directory);
+                System.out.println("already exists");
+            } catch (IOException e) {
+                e.printStackTrace();
             }
+        }
 
     }
 
