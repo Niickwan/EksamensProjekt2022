@@ -92,6 +92,16 @@
     <string name="circuit_details_isolation">Isolation</string>
     <string name="circuit_details_button_delete">X</string>
 
+    <!-- Short-circuit current and voltage drop -->
+    <string name="short_circuit_group_title">Kortslutningsstrøm</string>
+    <string name="short_circuit_group_name">Gruppe</string>
+    <string name="short_circuit_lk">lk</string>
+    <string name="short_circuit_measurement_on_spot">Målt i punkt</string>
+    <string name="short_circuit_group_title_voltage_drop">Spændingsfald</string>
+    <string name="short_circuit_group_name_voltage_drop">Gruppe</string>
+    <string name="short_circuit_delta_voltage">ΔU</string>
+    <string name="short_circuit_measurement_on_location">Målt i punkt</string>
+
     <!-- RCD -->
     <string name="rcd_name">RCD</string>
     <string name="rcd_groupname">Gruppe</string>

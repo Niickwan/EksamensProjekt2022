@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="261dp">
+
+            <TextView
+                android:id="@+id/checkbox_finished_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="25dp"
+                android:text="Afsluttet"
+                android:textColor="#000000"
+                app:layout_constraintStart_toEndOf="@+id/checkbox_waiting_tv"
+                app:layout_constraintTop_toBottomOf="@+id/editTextSearchCase_tv" />
+
+            <CheckBox
+                android:id="@+id/searchFinishedCases_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="@+id/checkbox_finished_tv"
+                app:layout_constraintHorizontal_bias="00"
+                app:layout_constraintStart_toStartOf="@+id/checkbox_finished_tv"
+                app:layout_constraintTop_toBottomOf="@+id/checkbox_finished_tv"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <EditText
+                android:id="@+id/editTextSearchCase_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:layout_marginBottom="120dp"
+                android:editable="true"
+                android:ems="10"
+                android:inputType="text"
+                android:text="Søg efter sag"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <TextView
+                android:id="@+id/checkbox_active_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="Aktiv"
+                android:textColor="#000000"
+                app:layout_constraintStart_toStartOf="@+id/editTextSearchCase_tv"
+                app:layout_constraintTop_toBottomOf="@+id/editTextSearchCase_tv" />
+
+            <TextView
+                android:id="@+id/checkbox_waiting_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="25dp"
+                android:text="Afvent"
+                android:textColor="#000000"
+                app:layout_constraintStart_toEndOf="@+id/checkbox_active_tv"
+                app:layout_constraintTop_toBottomOf="@+id/editTextSearchCase_tv" />
+
+            <CheckBox
+                android:id="@+id/searchActiveCases_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="@+id/checkbox_active_tv"
+                app:layout_constraintStart_toStartOf="@+id/checkbox_active_tv"
+                app:layout_constraintTop_toBottomOf="@+id/checkbox_active_tv"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <CheckBox
+                android:id="@+id/searchWaitingCases_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="@+id/checkbox_waiting_tv"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/checkbox_waiting_tv"
+                app:layout_constraintTop_toBottomOf="@+id/checkbox_waiting_tv"
+                tools:ignore="TouchTargetSizeCheck" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="409dp"
+        android:layout_height="889dp"
+        android:layout_marginTop="250dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/caseInfo_tv1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/case_info_tv2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
