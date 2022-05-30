@@ -40,7 +40,7 @@ public class FragmentAdminHome extends Fragment {
         }).start());
 
         binding.searchBtn.setOnClickListener(view1 -> {
-            NavHostFragment.findNavController(FragmentAdminHome.this).navigate(R.id.action_FragmentAdminHome_to_FragmentAdminChecklist);
+            NavHostFragment.findNavController(FragmentAdminHome.this).navigate(R.id.action_FragmentAdminHome_to_fragmentSearchCase);
         });
     }
 
