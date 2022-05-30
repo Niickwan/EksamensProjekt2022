@@ -11,14 +11,14 @@
         android:label="@string/fragment_admin_home_label"
         tools:layout="@layout/fragment_admin_home">
         <action
-            android:id="@+id/action_FragmentAdminHome_to_FragmentAdminChecklist"
-            app:destination="@id/FragmentAdminChecklist" />
-        <action
             android:id="@+id/action_FragmentAdminHome_to_fragmentPopupMenu"
             app:destination="@id/fragmentPopupMenu" />
         <action
             android:id="@+id/action_FragmentAdminHome_to_fragmentCreateOrder"
             app:destination="@id/fragmentCreateOrder" />
+        <action
+            android:id="@+id/action_FragmentAdminHome_to_fragmentSearchCase"
+            app:destination="@id/fragmentSearchCase" />
     </fragment>
     <fragment
         android:id="@+id/FragmentAdminChecklist"
@@ -52,5 +52,14 @@
         <action
             android:id="@+id/action_fragmentCreateOrder_to_FragmentAdminHome"
             app:destination="@id/FragmentAdminHome" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentSearchCase"
+        android:name="com.jmmnt.Controller.UI.FragmentSearchCase"
+        android:label="FragmentSearchCase"
+        tools:layout="@layout/fragment_admin_search_case">
+        <action
+            android:id="@+id/action_fragmentSearchCase_to_FragmentAdminChecklist"
+            app:destination="@id/FragmentAdminChecklist" />
     </fragment>
 </navigation>
