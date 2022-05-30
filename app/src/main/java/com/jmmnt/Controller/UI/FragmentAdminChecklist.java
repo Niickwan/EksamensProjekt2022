@@ -32,6 +32,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.textfield.TextInputLayout;
 import com.jmmnt.Entities.CircuitDetails;
 import com.jmmnt.Entities.Questions;
+import com.jmmnt.Entities.ShortCircuitCurrentAndVoltageDrop;
 import com.jmmnt.Entities.TestingRCD;
 import com.jmmnt.R;
 import com.jmmnt.UseCase.Adapters.AdapterFactory;

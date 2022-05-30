@@ -2,6 +2,7 @@ package com.jmmnt.UseCase.Adapters;
 
 import com.jmmnt.Entities.CircuitDetails;
 import com.jmmnt.Entities.Questions;
+import com.jmmnt.Entities.ShortCircuitCurrentAndVoltageDrop;
 import com.jmmnt.Entities.TestingRCD;
 
 import java.util.List;

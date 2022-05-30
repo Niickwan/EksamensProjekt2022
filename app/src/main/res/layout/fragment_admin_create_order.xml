@@ -31,6 +31,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="25dp"
                     android:layout_marginTop="16dp"
+                    android:editable="false"
                     android:text="@string/fragment_admin_create_order_customer_info"
                     android:textColor="@color/darkblue"
                     android:textSize="34sp"
