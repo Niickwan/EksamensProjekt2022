@@ -107,6 +107,12 @@ public class GeneralUseCase extends Activity {
         return split;
     }
 
+    public String[] splitStringBy(String str, String splitBy) {
+        String[] parts = new String[0];
+        parts = str.split("[" + splitBy + "]");
+        return parts;
+    }
+
     public Button createBtnForHSV(String name, Activity activity, int height, int width) {
         Button b = new Button(activity);
         b.setText(name);

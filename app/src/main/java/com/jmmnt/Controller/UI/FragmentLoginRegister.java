@@ -23,7 +23,11 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.jmmnt.Entities.Assignment;
+import com.jmmnt.Entities.CircuitDetails;
 import com.jmmnt.Entities.Questions;
+import com.jmmnt.Entities.ShortCircuitCurrentAndVoltageDrop;
+import com.jmmnt.Entities.TestingRCD;
+import com.jmmnt.Entities.TransitionResistance;
 import com.jmmnt.Entities.User;
 import com.jmmnt.UseCase.CreateExcelFile;
 import com.jmmnt.UseCase.Encryption;
@@ -40,6 +44,7 @@ import org.apache.commons.net.ntp.TimeStamp;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class FragmentLoginRegister extends Fragment{
@@ -91,18 +96,18 @@ public class FragmentLoginRegister extends Fragment{
 //        });
 
         binding.FTPButton.setOnClickListener(v -> new Thread(() -> {
-//            ftpMethodClass.ftpDownload("/TjekListeNy (7).xls", "TjeklisteTemplate.xls");
-            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 101);
-            }
-            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                try {
-                    pdfG.createPDF(getContext());
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-
-                }
-            }
+            ftpMethodClass.ftpDownload("/TjekListeNy (7).xls", "TjeklisteTemplate.xls");
+//            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+//                ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 101);
+//            }
+//            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+//                try {
+//                    pdfG.createPDF(getContext());
+//                } catch (FileNotFoundException e) {
+//                    e.printStackTrace();
+//
+//                }
+//            }
 
         }).start());
 
@@ -144,12 +149,31 @@ public class FragmentLoginRegister extends Fragment{
             section.add(new Questions("Section Section", 3, "Pas på"));
             section.add(new Questions("Test Section", 1, "Hallo"));
 
+            List<Object> circuitDetailsResults = new ArrayList<>();
+            circuitDetailsResults.add(new CircuitDetails("Tavlen", "400", "Lampe", "6", "500", 1, "340", "20"));
+            circuitDetailsResults.add(new CircuitDetails("Stik", "40", "kontakt", "3", "300", 2, "34", "2"));
+
+            List<Object> resistance = new ArrayList<>();
+            resistance.add(new TransitionResistance(5.2));
+
+            List<Object> voltageDropResults = new ArrayList<>();
+            voltageDropResults.add(new ShortCircuitCurrentAndVoltageDrop("Elskab", "lk", "Kælderen", "1.sal", "560", "Kælderen"));
+            voltageDropResults.add(new ShortCircuitCurrentAndVoltageDrop("Fryser", "lk", "Stue", "4.sal", "60", "Stue"));
+
+            List<Object> testingRCDResults = new ArrayList<>();
+            testingRCDResults.add(new TestingRCD("Test",1,"res1","res2","res3","res4","res5","res6"));
+            testingRCDResults.add(new TestingRCD("Test",1,"res1","res2","res3","res4","res5","res6"));
+
             samletListe.add(general);
             samletListe.add(electricalPanel);
             samletListe.add(installation);
             samletListe.add(protection);
             samletListe.add(error);
             samletListe.add(section);
+            samletListe.add(circuitDetailsResults);
+            samletListe.add(resistance);
+            samletListe.add(voltageDropResults);
+            samletListe.add(testingRCDResults);
 
             //END TEST DATA //
 

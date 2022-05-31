@@ -4,6 +4,7 @@ import com.jmmnt.Entities.CircuitDetails;
 import com.jmmnt.Entities.Questions;
 import com.jmmnt.Entities.ShortCircuitCurrentAndVoltageDrop;
 import com.jmmnt.Entities.TestingRCD;
+import com.jmmnt.Entities.TransitionResistance;
 
 import java.util.List;
 
