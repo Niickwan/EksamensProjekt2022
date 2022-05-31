@@ -74,6 +74,14 @@
     <!-- Login -->
     <string name="fragment_login_wrong_input">Forkert login</string>
     <string name="fragment_login_fill_out_fields">Udfyld felter</string>
+    <!-- create Order -->
+    <string name="create_order_wrong_postalcode">Ugyldig postnummer</string>
+    <string name="create_order_empty_fields">Udfyld alle felter</string>
+    <string name="create_order_invalid_customername">Kundenavn må kun indeholde bogstaver</string>
+    <string name="create_order_invalid_cityname">By må kun indeholde bogstaver</string>
+    <!-- checklist -->
+    <string name="adding_new_question_failed" />
+
     <!-- Popup menu edit profile -->
     <string name="popup_menu_edit_password_not_matching">Password matcher ikke</string>
     <string name="popup_menu_edit_profile_confirm_update">Bruger opdateret</string>
@@ -135,7 +143,7 @@
     <string name="question_question_answer_yes">Ja</string>
     <string name="question_answer_not_relevant">Ikke Relevant</string>
 
-    <!-- Add new question diaolog popup -->
+    <!-- Add new question dialog popup -->
     <string name="add_question_edittext_field_hint">Indtast spørgsmål</string>
     <string name="add_question_cancel_button">Annuller</string>
     <string name="add_question_create_button">Opret</string>
@@ -151,8 +159,20 @@
     <string name="dropdown_question_protective_conductors_and_compensating_connections">Beskyttelsesledere og udligningsforbindelser</string>
     <string name="dropdown_question_fault_protection_and_supplementary_protection">Fejlbeskyttles / supplerende beskyttelse</string>
 
+    <!-- Search cases -->
+    <string name="search_case_searchbar">Søg efter sag</string>
+    <string name="search_case_active">Aktiv</string>
+    <string name="search_case_waiting">Afventer</string>
+    <string name="search_case_finished">Afsluttet</string>
+    <string name="search_case_user_checkbox">Mine sager</string>
+
+    <!-- item search cases -->
+    <string name="item_cases_customername">Mine sager</string>
+
+
     <!-- APP VERSION -->
     <string name="app_build_version">App Version</string>
+
 
 </resources>
 

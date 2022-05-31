@@ -153,12 +153,11 @@ public class FragmentAdminChecklist extends Fragment {
 
 
         //Dropdown titles
-        String searchTag = "question";
-        String searchTag2 = "circuitDetails";
-        String searchTag3 = "RCD";
-        String searchTag4 = "ShortCircuitCurrent";
-
-        //TODO SE HER
+        String objectTag = "question";
+        String objectTag2 = "circuitDetails";
+        String objectTag3 = "RCD";
+        String objectTag4 = "ShortCircuitCurrent";
+        //TODO tags for adapterfactory
 
         //TODO SLUT - KUN FOR TESTING------------------------------------------------------------------------------------------------------------------------
 
@@ -168,14 +167,13 @@ public class FragmentAdminChecklist extends Fragment {
         parentLLH = getActivity().findViewById(R.id.parentLLH);
 
 
-
         //Building dropdowns
-        buildDropdownDynamically("Generelt", general, searchTag, "vertical");
-        buildDropdownDynamically("Tavlen", electricalPanel, searchTag, "vertical");
-        buildDropdownDynamically("Installation", installation, searchTag, "vertical");
-        buildDropdownDynamically("Indbygningsarmaturer", protection, searchTag, "vertical");
-        buildDropdownDynamically("Beskyttelsesledere og udligningsforbindelser", error, searchTag, "vertical");
-        buildDropdownDynamically("Fejlbeskyttelse / Supplerende beskyttelse", section, searchTag, "vertical");
+        buildDropdownDynamically("Generelt", general, objectTag, "vertical");
+        buildDropdownDynamically("Tavlen", electricalPanel, objectTag, "vertical");
+        buildDropdownDynamically("Installation", installation, objectTag, "vertical");
+        buildDropdownDynamically("Indbygningsarmaturer", protection, objectTag, "vertical");
+        buildDropdownDynamically("Beskyttelsesledere og udligningsforbindelser", error, objectTag, "vertical");
+        buildDropdownDynamically("Fejlbeskyttelse / Supplerende beskyttelse", section, objectTag, "vertical");
 
         //Adding textview
         TextView testResultsTitle = new TextView(getActivity());
@@ -195,8 +193,8 @@ public class FragmentAdminChecklist extends Fragment {
         parentLLH.addView(testResultsTitle);
 
         //Building dropdowns
-        buildDropdownDynamically("Kredsdetaljer", circuitDetailsResults, searchTag2, "horizontal");
-        buildDropdownDynamically("Afprøvning af RCD'er", testingRCDResults, searchTag3, "horizontal");
+        buildDropdownDynamically("Kredsdetaljer", circuitDetailsResults, objectTag2, "horizontal");
+        buildDropdownDynamically("Afprøvning af RCD'er", testingRCDResults, objectTag3, "horizontal");
 
         //Adding textview
         TextView groundElectrodeTv = new TextView(getActivity());
@@ -236,7 +234,7 @@ public class FragmentAdminChecklist extends Fragment {
         parentLLH.addView(groundElectrodeResultEt);
 
         //Building dropdown
-        buildDropdownDynamically("Kortslutningsstrøm / Spændingsfald", voltageDropResults, searchTag4, "horizontal");
+        buildDropdownDynamically("Kortslutningsstrøm / Spændingsfald", voltageDropResults, objectTag4, "horizontal");
 
         //Adding edittext with multiple lines
         ContextThemeWrapper ctw = new ContextThemeWrapper(getActivity(), R.style.ViewWithScrollbars);
@@ -285,7 +283,7 @@ public class FragmentAdminChecklist extends Fragment {
         finishCaseBtn.setLayoutParams(paramsFCB);
         finishCaseBtn.setText(getString(R.string.checklist_finish));
         finishCaseBtn.setTextColor(getActivity().getColor(R.color.white));
-        finishCaseBtn.setBackground(getActivity().getDrawable(R.drawable.design_button));
+        finishCaseBtn.setBackground(getActivity().getDrawable(R.drawable.design_button_darkblue));
 
         //Adding button for sending the case
         Button sendCaseBtn = new Button(getActivity());
@@ -297,7 +295,7 @@ public class FragmentAdminChecklist extends Fragment {
         sendCaseBtn.setLayoutParams(paramsSCB);
         sendCaseBtn.setText(getString(R.string.checklist_send));
         sendCaseBtn.setTextColor(getActivity().getColor(R.color.white));
-        sendCaseBtn.setBackground(getActivity().getDrawable(R.drawable.design_button));
+        sendCaseBtn.setBackground(getActivity().getDrawable(R.drawable.design_button_darkblue));
 
         //Adding a constraint layout
         ConstraintLayout cl = new ConstraintLayout(getActivity());
@@ -461,7 +459,7 @@ public class FragmentAdminChecklist extends Fragment {
     /**
      *
      * @param title - the name for the dropdown
-     * @param dataList - is the items for the dropdowm
+     * @param dataList - is the items for the dropdown
      * @param objectTag - used for adapterFactory
      * @param orientation - used for defining the view orientation (vertical/horizontal)
      */
@@ -583,7 +581,7 @@ public class FragmentAdminChecklist extends Fragment {
         else if (orientation.equalsIgnoreCase("horizontal"))
             recyclerViewOrientation = LinearLayoutManager.HORIZONTAL;
 
-        //Setting the adapter
+        //Setting up the adapter
         setAdapter(rv, addBtn, dataList, recyclerViewOrientation, objectTag);
     }
 
@@ -622,7 +620,7 @@ public class FragmentAdminChecklist extends Fragment {
                 ((RecyclerView.Adapter<?>) adapter).notifyItemInserted(dataList.size() - 1);
                 dialog.dismiss();
             }else
-                System.out.println("TOAST HERE"); //TODO sout
+                gUC.toastAlert(getActivity(), getString(R.string.adding_new_question_failed));
 
         });
         dialog.getWindow().findViewById(R.id.cancel_btn).setOnClickListener(v -> {

@@ -18,6 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
+            android:background="@drawable/design_black_bottom_line"
             android:orientation="vertical">
 
             <TextView
@@ -29,7 +30,8 @@
                 android:layout_marginRight="10dp"
                 android:text="Kundenavn"
                 android:textColor="#000"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/caseAddress_tv"
@@ -67,7 +69,8 @@
                     android:layout_marginRight="10dp"
                     android:text="Dato"
                     android:textColor="#000"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:textStyle="italic" />
 
                 <TextView
                     android:id="@+id/caseStatus_tv"
@@ -80,7 +83,8 @@
                     android:text="Status"
                     android:textAlignment="textEnd"
                     android:textColor="#000"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:textStyle="bold|italic" />
 
             </LinearLayout>
 
