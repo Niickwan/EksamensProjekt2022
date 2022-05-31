@@ -43,6 +43,7 @@ import com.jmmnt.databinding.FragmentLoginRegisterBinding;
 import org.apache.commons.net.ntp.TimeStamp;
 
 import java.io.FileNotFoundException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -59,7 +60,7 @@ public class FragmentLoginRegister extends Fragment{
     private FTPClientFunctions ftpMethodClass = new FTPClientFunctions();
     //TODO pdfGenerator skal tage det assignment som brugeren er inde på.
     //TODO SKAL INDSÆTTES I DEN RIGTIGE KLASSE
-    private PDFGenerator pdfG = new PDFGenerator(new Assignment(1,1,"snerlevej 191", "4700", "aktiv","gh459", TimeStamp.getCurrentTime(),"Super Brugsen"));
+    private PDFGenerator pdfG = new PDFGenerator(new Assignment(1,1,"snerlevej 191", "4700", "aktiv","gh459", LocalDate.now(),"Super Brugsen"));
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

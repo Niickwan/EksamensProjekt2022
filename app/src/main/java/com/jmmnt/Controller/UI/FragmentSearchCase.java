@@ -1,9 +1,13 @@
 package com.jmmnt.Controller.UI;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,7 +25,7 @@ import java.util.List;
 public class FragmentSearchCase extends Fragment {
 
     private FragmentAdminSearchCaseBinding binding;
-    private RecyclerView caseListView;
+    private RecyclerView recyclerView;
     private List<Assignment> assignments;
     private GeneralUseCase gUC = GeneralUseCase.getInstance();
     private OperateAssignment operateAssignment = OperateAssignment.getInstance();
@@ -37,12 +41,7 @@ public class FragmentSearchCase extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         //TODO START - TESTER HER --------------------------------------------------------------------
-        ArrayList<String> caseListTest = new ArrayList<>();
-        caseListTest.add("Hejsa");
-        caseListTest.add("Jeg vil hjem!!!");
-        //TODO SLUT - TESTER HER --------------------------------------------------------------------
-
-        //TODO START - TESTER HER --------------------------------------------------------------------
+        //TODO DETTE SKAL SÆTTES OP MED EN CONTAINER
         assignments = new ArrayList<>();
         assignments.add(new Assignment(123, "Havnegade 19", "4700", "active", "223AJ2K33L8", LocalDate.now(), "HusCompagniet", 12));
         assignments.add(new Assignment(111, "Femøvej 1", "4700", "active", "12312414", LocalDate.of(2022,7,23), "Brugsen", 2));
@@ -68,21 +67,18 @@ public class FragmentSearchCase extends Fragment {
         //Sorting assignment by date and if checkbox is checked
         sortAssignments(assignments);
 
-        caseListView = getActivity().findViewById(R.id.caseListView);
+        recyclerView = getActivity().findViewById(R.id.caseListView);
         SearchCaseViewAdapter[] sva = {new SearchCaseViewAdapter(assignmentsSorted, this)};
-        caseListView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        caseListView.setAdapter(sva[0]);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        recyclerView.setAdapter(sva[0]);
         sva[0].notifyItemInserted(assignmentsSorted.size() - 1);
-
-
-
 
         View.OnClickListener clicked = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 assignmentsSorted = sortAssignments(assignments);
                 sva[0] = new SearchCaseViewAdapter(assignmentsSorted, FragmentSearchCase.this);
-                caseListView.setAdapter(sva[0]);
+                recyclerView.setAdapter(sva[0]);
                 sva[0].notifyItemInserted(assignmentsSorted.size() - 1);
             }
         };
@@ -92,6 +88,18 @@ public class FragmentSearchCase extends Fragment {
         binding.checkBoxSearchFinishedCases.setOnClickListener(clicked);
         binding.checkBoxSearchUserCases.setOnClickListener(clicked);
 
+        //This binding is for filtering the item list with cases when using the searchbar.
+        binding.searchBarSv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+            @Override
+            public boolean onQueryTextChange(String searchText) {
+                sva[0].getFilter().filter(searchText);
+                return false;
+            }
+        });
     }
 
     private List sortAssignments(List<Assignment> assignments) {
@@ -107,10 +115,11 @@ public class FragmentSearchCase extends Fragment {
         return assignmentsSorted;
     }
 
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
     }
+
+
 }

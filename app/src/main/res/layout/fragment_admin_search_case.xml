@@ -19,24 +19,45 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <SearchView
+                android:id="@+id/searchBar_sv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/design_black_bottom_line"
+                android:iconifiedByDefault="false"
+                android:inputType="textPersonName"
+                android:queryHint="@string/search_case_searchbar"
+                android:theme="@style/EditTextTheme"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <TextView
                 android:id="@+id/userCases_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Mine sager"
+                android:text="@string/search_case_user_checkbox"
                 android:textColor="#000000"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@+id/checkBoxSearchUserCases"
                 app:layout_constraintStart_toStartOf="@+id/checkBoxSearchUserCases"
-                app:layout_constraintTop_toBottomOf="@+id/editTextSearchCase_tv" />
+                app:layout_constraintTop_toBottomOf="@+id/searchBar_sv" />
 
             <CheckBox
                 android:id="@+id/checkBoxSearchUserCases"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginEnd="32dp"
-                app:layout_constraintEnd_toEndOf="@+id/editTextSearchCase_tv"
+                android:layout_marginBottom="8dp"
+                android:buttonTint="#000000"
+                android:theme="@style/EditTextTheme"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/searchBar_sv"
                 app:layout_constraintTop_toBottomOf="@+id/userCases_tv"
                 tools:ignore="TouchTargetSizeCheck" />
 
@@ -45,36 +66,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Afsluttet"
+                android:text="@string/search_case_finished"
                 android:textColor="#000000"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@+id/checkBoxSearchFinishedCases"
                 app:layout_constraintStart_toStartOf="@+id/checkBoxSearchFinishedCases"
-                app:layout_constraintTop_toBottomOf="@+id/editTextSearchCase_tv" />
+                app:layout_constraintTop_toBottomOf="@+id/searchBar_sv" />
 
             <CheckBox
                 android:id="@+id/checkBoxSearchFinishedCases"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="8dp"
+                android:buttonTint="#000000"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/checkBoxSearchWaitingCases"
                 app:layout_constraintTop_toBottomOf="@+id/finishedCases_tv"
-                tools:ignore="TouchTargetSizeCheck" />
-
-            <EditText
-                android:id="@+id/editTextSearchCase_tv"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="32dp"
-                android:layout_marginRight="10dp"
-                android:editable="true"
-                android:ems="10"
-                android:inputType="text"
-                android:text="Søg efter sag"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="TouchTargetSizeCheck" />
 
             <TextView
@@ -82,30 +91,35 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Aktiv"
+                android:text="@string/search_case_active"
                 android:textColor="#000000"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@+id/checkBoxSearchActiveCases"
                 app:layout_constraintStart_toStartOf="@+id/checkBoxSearchActiveCases"
-                app:layout_constraintTop_toBottomOf="@+id/editTextSearchCase_tv" />
+                app:layout_constraintTop_toBottomOf="@+id/searchBar_sv" />
 
             <TextView
                 android:id="@+id/waitingCases_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Afvent"
+                android:text="@string/search_case_waiting"
                 android:textColor="#000000"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@+id/checkBoxSearchWaitingCases"
                 app:layout_constraintStart_toStartOf="@+id/checkBoxSearchWaitingCases"
-                app:layout_constraintTop_toBottomOf="@+id/editTextSearchCase_tv" />
+                app:layout_constraintTop_toBottomOf="@+id/searchBar_sv" />
 
             <CheckBox
                 android:id="@+id/checkBoxSearchActiveCases"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="10dp"
-                app:layout_constraintStart_toStartOf="@+id/editTextSearchCase_tv"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="8dp"
+                android:buttonTint="#000000"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/searchBar_sv"
                 app:layout_constraintTop_toBottomOf="@+id/activeCases_tv"
                 tools:ignore="TouchTargetSizeCheck" />
 
@@ -114,7 +128,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="8dp"
+                android:buttonTint="#000000"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/checkBoxSearchActiveCases"
                 app:layout_constraintTop_toBottomOf="@+id/waitingCases_tv"
                 tools:ignore="TouchTargetSizeCheck" />
