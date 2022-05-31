@@ -12,10 +12,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.jmmnt.R;
 import com.jmmnt.databinding.ActivityUserBinding;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class GeneralUseCase extends Activity {
 
@@ -91,6 +96,16 @@ public class GeneralUseCase extends Activity {
         }
         return false;
     }
+    public boolean isFieldsEmpty(TextInputLayout[] fields){
+        for(int i = 0; i < fields.length; i++){
+            TextInputLayout currentField = fields[i];
+            if(currentField.getEditText().getText().toString().length() <= 0){
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     public ArrayList<String> getSplittedString(ArrayList<String> arr, String orderNr, String splitBy) {
         ArrayList<String> split = new ArrayList<>();
@@ -131,6 +146,17 @@ public class GeneralUseCase extends Activity {
         sortedList.addAll(numbers);
         return sortedList;
     }
+
+    public void clearList(List<?> list) {
+        if (!list.isEmpty()) {
+            list.clear();
+        }
+    }
+
+    public String formatDate(LocalDate date) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return date.format(formatter);
+    };
 
 //    public ArrayList<String> getAssignmentStructure(String orderNr) {
 //

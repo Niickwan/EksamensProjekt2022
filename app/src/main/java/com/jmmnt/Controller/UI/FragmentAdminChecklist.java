@@ -48,7 +48,7 @@ import java.util.List;
 public class FragmentAdminChecklist extends Fragment {
 
     private FragmentAdminChecklistBinding binding;
-    private OperateAssignment opa = new OperateAssignment();
+    private OperateAssignment opa = OperateAssignment.getInstance();
     private OperateDB oDB = OperateDB.getInstance();
     private GeneralUseCase gUC = GeneralUseCase.getInstance();
 
@@ -166,6 +166,7 @@ public class FragmentAdminChecklist extends Fragment {
         //Build UI Dynamically
         //Setting parent layout for the UI
         parentLLH = getActivity().findViewById(R.id.parentLLH);
+
 
 
         //Building dropdowns

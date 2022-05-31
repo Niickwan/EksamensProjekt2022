@@ -16,7 +16,7 @@ import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 
 public class CreateExcelFile {
-    private OperateAssignment oA = new OperateAssignment();
+    private OperateAssignment oA = OperateAssignment.getInstance();
     AdapterFactory apFac = new AdapterFactory();
     private WritableWorkbook workbook;
 

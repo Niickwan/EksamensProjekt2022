@@ -7,7 +7,7 @@
     android:background="@color/background_color_zealand">
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -129,17 +129,12 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+        app:layout_constraintTop_toBottomOf="@+id/layout">
 
-        <ListView
-            android:id="@+id/simpleListView"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/caseListView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/submit"
-            android:layout_marginTop="218dp"
-            android:layout_marginBottom="-19dp"
-            android:divider="@color/material_blue_grey_800"
-            android:dividerHeight="1dp"
-            android:footerDividersEnabled="false" />
+            android:layout_height="match_parent" />
     </androidx.core.widget.NestedScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

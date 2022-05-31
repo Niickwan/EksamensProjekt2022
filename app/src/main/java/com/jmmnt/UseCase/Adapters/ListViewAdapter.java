@@ -8,11 +8,6 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
-
-import com.jmmnt.Controller.UI.FragmentSearchCase;
 import com.jmmnt.R;
 
 import java.util.ArrayList;
@@ -23,8 +18,10 @@ public class ListViewAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private TextView customerName, caseAddress, orderNumber, statusDate, statusCase;
     private LinearLayout caseBtn;
+    private Context context;
 
     public ListViewAdapter(Context applicationContext, ArrayList<String> questionsList) {
+        this.context = applicationContext;
         this.caseList = questionsList;
         inflater = (LayoutInflater.from(applicationContext));
     }
@@ -54,8 +51,10 @@ public class ListViewAdapter extends BaseAdapter {
         statusDate = view.findViewById(R.id.statusDate_tv);
         statusCase = view.findViewById(R.id.caseStatus_tv);
 
-        caseBtn = view.findViewById(R.id.caseBtn);
+        caseBtn = view.findViewById(R.id.openCaseBtn);
         caseBtn.setOnClickListener(view1 -> {
+            System.out.println("HER HER ");
+
         });
 
         return view;

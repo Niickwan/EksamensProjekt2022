@@ -181,7 +181,7 @@ public class DB_Con {
         connection = connection();
         String userInfo = "INSERT INTO Assignment (Foreman_ID, Address, Postal_Code, Status, Order_Number, Customer_Name) "
                 + "VALUES ('"
-                + assignment.getForemanId() + "', '"
+                + assignment.getUserID() + "', '"
                 + assignment.getAddress() + "', '"
                 + assignment.getPostalCode() + "', '"
                 + assignment.getStatus() + "', '"
