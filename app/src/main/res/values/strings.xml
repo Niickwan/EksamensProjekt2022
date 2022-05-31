@@ -169,6 +169,14 @@
     <!-- item search cases -->
     <string name="item_cases_customername">Mine sager</string>
 
+    <!-- item assignment info -->
+    <string name="item_assignment_info_customername">Kundenavn:</string>
+    <string name="item_assignment_info_address">Adresse:</string>
+    <string name="item_assignment_info_order_number">Ordrenummer:</string>
+    <string name="item_assignment_info_identification_of_installation">Identifikation af installation:</string>
+    <string name="item_assignment_info_installed_by">Udført af:</string>
+    <string name="item_assignment_info_verified_by">Verificeret af:</string>
+    <string name="item_assignment_info_date">Dato:</string>
 
     <!-- APP VERSION -->
     <string name="app_build_version">App Version</string>
