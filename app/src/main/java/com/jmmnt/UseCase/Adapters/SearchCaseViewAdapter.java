@@ -28,13 +28,11 @@ public class SearchCaseViewAdapter extends RecyclerView.Adapter<SearchCaseViewHo
     private GeneralUseCase gUC = GeneralUseCase.getInstance();
     private OperateAssignment oA = OperateAssignment.getInstance();
 
-
     public SearchCaseViewAdapter(List<Assignment> items, FragmentSearchCase fragmentSearchCase) {
         this.fragment = fragmentSearchCase;
         this.itemList = items;
         itemsFilterable = new ArrayList<>(items);
     }
-
 
     @NonNull
     @Override
@@ -47,7 +45,7 @@ public class SearchCaseViewAdapter extends RecyclerView.Adapter<SearchCaseViewHo
     public void onBindViewHolder(@NonNull SearchCaseViewHolder holder, int position) {
         customerName_tv = holder.itemView.findViewById(R.id.customerName_tv);
         address_tv = holder.itemView.findViewById(R.id.caseAddress_tv);
-        orderNumber_tv = holder.itemView.findViewById(R.id.orderNumber_tv);
+        orderNumber_tv = holder.itemView.findViewById(R.id.orderNumber);
         statusDate_tv = holder.itemView.findViewById(R.id.statusDate_tv);
         statusCase_tv = holder.itemView.findViewById(R.id.caseStatus_tv);
 
@@ -129,7 +127,6 @@ class SearchCaseViewHolder extends RecyclerView.ViewHolder {
 
     private SearchCaseViewAdapter adapter;
     private LinearLayout openCaseBtn;
-
 
     public SearchCaseViewHolder(@NonNull View itemView) {
         super(itemView);

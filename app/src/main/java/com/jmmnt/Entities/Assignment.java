@@ -1,12 +1,9 @@
 package com.jmmnt.Entities;
 
-import android.icu.util.LocaleData;
-
-import org.apache.commons.net.ntp.TimeStamp;
-
 import java.time.LocalDate;
 
 public class Assignment {
+
     private int assignmentId;
     private int userID;
     private String address;
@@ -16,6 +13,10 @@ public class Assignment {
     private String orderNumber;
     private String customerName;
     private LocalDate statusDate;
+
+    private String installedBy;
+    private String verifiedBy;
+    private String identificationOfInstallation;
 
     public Assignment(int assignmentId, int foremanId, String address, String postalCode,
                       String status, String orderNumber,LocalDate statusDate, String customerName) {
@@ -136,5 +137,29 @@ public class Assignment {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public String getInstalledBy() {
+        return installedBy;
+    }
+
+    public void setInstalledBy(String installedBy) {
+        this.installedBy = installedBy;
+    }
+
+    public String getVerifiedBy() {
+        return verifiedBy;
+    }
+
+    public void setVerifiedBy(String verifiedBy) {
+        this.verifiedBy = verifiedBy;
+    }
+
+    public String getIdentificationOfInstallation() {
+        return identificationOfInstallation;
+    }
+
+    public void setIdentificationOfInstallation(String identificationOfInstallation) {
+        this.identificationOfInstallation = identificationOfInstallation;
     }
 }

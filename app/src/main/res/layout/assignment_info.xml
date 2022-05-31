@@ -17,7 +17,7 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/cutomerName_tv"
+                android:id="@+id/cutomerName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -30,7 +30,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/cutomerName_et"
+                android:id="@+id/cutomerFullName_tv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -40,7 +40,7 @@
                 android:textColor="#000"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/cutomerName_tv"
+                app:layout_constraintStart_toEndOf="@+id/cutomerName"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -55,8 +55,8 @@
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/address_tv"
-                app:layout_constraintTop_toBottomOf="@+id/cutomerName_et" />
+                app:layout_constraintStart_toEndOf="@+id/address"
+                app:layout_constraintTop_toBottomOf="@+id/cutomerFullName_tv" />
 
             <TextView
                 android:id="@+id/orderNumber_et"
@@ -70,11 +70,11 @@
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/orderNumber_tv"
+                app:layout_constraintStart_toEndOf="@+id/orderNumber"
                 app:layout_constraintTop_toBottomOf="@+id/address_et" />
 
             <TextView
-                android:id="@+id/identification_et"
+                android:id="@+id/identification_tv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -85,11 +85,11 @@
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/identification_tv"
+                app:layout_constraintStart_toEndOf="@+id/identification"
                 app:layout_constraintTop_toBottomOf="@+id/orderNumber_et" />
 
             <TextView
-                android:id="@+id/cutomerName_tv6"
+                android:id="@+id/date_tv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -100,11 +100,11 @@
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/date_tv"
-                app:layout_constraintTop_toTopOf="@+id/date_tv" />
+                app:layout_constraintStart_toEndOf="@+id/date"
+                app:layout_constraintTop_toTopOf="@+id/date" />
 
             <TextView
-                android:id="@+id/address_tv"
+                android:id="@+id/address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -114,10 +114,10 @@
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cutomerName_tv" />
+                app:layout_constraintTop_toBottomOf="@+id/cutomerName" />
 
             <TextView
-                android:id="@+id/orderNumber_tv"
+                android:id="@+id/orderNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -127,10 +127,10 @@
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/address_tv" />
+                app:layout_constraintTop_toBottomOf="@+id/address" />
 
             <TextView
-                android:id="@+id/identification_tv"
+                android:id="@+id/identification"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -140,10 +140,10 @@
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/orderNumber_tv" />
+                app:layout_constraintTop_toBottomOf="@+id/orderNumber" />
 
             <TextView
-                android:id="@+id/identification_tv2"
+                android:id="@+id/installedBy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -154,10 +154,10 @@
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/orderNumber_tv" />
+                app:layout_constraintTop_toBottomOf="@+id/orderNumber" />
 
             <TextView
-                android:id="@+id/identification_tv3"
+                android:id="@+id/verifiedBy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -167,7 +167,7 @@
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/identification_tv2" />
+                app:layout_constraintTop_toBottomOf="@+id/installedBy" />
 
             <Spinner
                 android:id="@+id/installedBy_spinner"
@@ -175,10 +175,10 @@
                 android:layout_height="25dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                app:layout_constraintBottom_toBottomOf="@+id/identification_tv2"
+                app:layout_constraintBottom_toBottomOf="@+id/installedBy"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/identification_tv2"
-                app:layout_constraintTop_toTopOf="@+id/identification_tv2" />
+                app:layout_constraintStart_toEndOf="@+id/installedBy"
+                app:layout_constraintTop_toTopOf="@+id/installedBy" />
 
             <Spinner
                 android:id="@+id/verifiedBy_spinner"
@@ -186,13 +186,13 @@
                 android:layout_height="25dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                app:layout_constraintBottom_toBottomOf="@+id/identification_tv3"
+                app:layout_constraintBottom_toBottomOf="@+id/verifiedBy"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/identification_tv3"
-                app:layout_constraintTop_toBottomOf="@+id/identification_tv2" />
+                app:layout_constraintStart_toEndOf="@+id/verifiedBy"
+                app:layout_constraintTop_toBottomOf="@+id/installedBy" />
 
             <TextView
-                android:id="@+id/date_tv"
+                android:id="@+id/date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -202,7 +202,7 @@
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/identification_tv3" />
+                app:layout_constraintTop_toBottomOf="@+id/verifiedBy" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

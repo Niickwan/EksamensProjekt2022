@@ -35,7 +35,7 @@ public class QuestionsViewAdapter extends RecyclerView.Adapter<QuestionsViewHold
 
     @Override
     public void onBindViewHolder(@NonNull QuestionsViewHolder holder, int position) {
-        question = holder.itemView.findViewById(R.id.cutomerName_tv);
+        question = holder.itemView.findViewById(R.id.cutomerName);
         checkBoxYes = holder.itemView.findViewById(R.id.yesCheckBox);
         checkBoxNo = holder.itemView.findViewById(R.id.noCheckBox);
         checkBoxNotRelevant = holder.itemView.findViewById(R.id.notReleventCheckBox);
