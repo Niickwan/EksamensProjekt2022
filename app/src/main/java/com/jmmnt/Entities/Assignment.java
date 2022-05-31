@@ -2,26 +2,40 @@ package com.jmmnt.Entities;
 
 import org.apache.commons.net.ntp.TimeStamp;
 
+import java.time.LocalDate;
+
 public class Assignment {
     private int assignmentId;
-    private int foremanId;
+    private int userID;
     private String address;
     private String postalCode;
     private String status;
     private String orderNumber;
     private TimeStamp finishedOn;
     private String customerName;
+    private LocalDate statusDate;
 
     public Assignment(int assignmentId, int foremanId, String address, String postalCode,
                       String status, String orderNumber, TimeStamp finishedOn, String customerName) {
         this.assignmentId = assignmentId;
-        this.foremanId = foremanId;
+        this.userID = foremanId;
         this.address = address;
         this.postalCode = postalCode;
         this.status = status;
         this.orderNumber = orderNumber;
         this.finishedOn = finishedOn;
         this.customerName = customerName;
+    }
+
+    public Assignment(int assignmentId, String address, String postalCode, String status, String orderNumber, LocalDate statusDate, String customerName, int userID) {
+        this.assignmentId = assignmentId;
+        this.address = address;
+        this.postalCode = postalCode;
+        this.status = status;
+        this.orderNumber = orderNumber;
+        this.statusDate = statusDate;
+        this.customerName = customerName;
+        this.userID = userID;
     }
 
     public int getAssignmentId() {
@@ -32,12 +46,12 @@ public class Assignment {
         this.assignmentId = assignmentId;
     }
 
-    public int getForemanId() {
-        return foremanId;
+    public int getUserID() {
+        return userID;
     }
 
-    public void setForemanId(int foremanId) {
-        this.foremanId = foremanId;
+    public void setUserID(int userID) {
+        this.userID = userID;
     }
 
     public String getAddress() {
@@ -86,5 +100,13 @@ public class Assignment {
 
     public void setCustomerName(String customerName) {
         this.customerName = customerName;
+    }
+
+    public LocalDate getStatusDate() {
+        return statusDate;
+    }
+
+    public void setStatusDate(LocalDate statusDate) {
+        this.statusDate = statusDate;
     }
 }

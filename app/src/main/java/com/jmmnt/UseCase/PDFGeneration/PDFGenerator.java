@@ -48,7 +48,7 @@ import java.util.Arrays;
 
 public class PDFGenerator {
     Assignment assignment;
-    OperateAssignment opa = new OperateAssignment();
+    OperateAssignment opa = OperateAssignment.getInstance();
     Table table = null;
     //TODO SLET DENNE BESKED MED DET SAMME.
     public PDFGenerator(Assignment assignment) {
@@ -56,7 +56,7 @@ public class PDFGenerator {
     }
 
     public void createPDF(Context context) throws FileNotFoundException {
-        OperateAssignment oPA = new OperateAssignment();
+        OperateAssignment oPA = OperateAssignment.getInstance();
         ArrayList<String> excel = oPA.getExcelAsArrayList("lllll.xls");
 
         File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
@@ -167,8 +167,7 @@ public class PDFGenerator {
                 (new Paragraph("Post nr.: " + assignment.getPostalCode())));
 
         table.addCell(new Cell().add
-                (new Paragraph("By: " + opa.getCityMatchingZipCode("https://api.dataforsyningen.dk/postnumre/"
-                        ,assignment.getPostalCode()))));
+                (new Paragraph("By: " + opa.getCityMatchingZipCode(assignment.getPostalCode()))));
 
         table.addCell(new Cell().add
                 (new Paragraph("Ordrenummer: " + assignment.getOrderNumber())));
