@@ -1,15 +1,19 @@
 package com.jmmnt.Entities;
 
+import java.util.ArrayList;
+
 public class Questions {
 
     private String question;
     private int answer;
     private String comment;
+    private ArrayList<String> images;
 
     public Questions(String question, int answer, String comment) {
         this.question = question;
         this.answer = answer;
         this.comment = comment;
+        this.images = new ArrayList<>();
     }
 
     public Questions() {
@@ -46,5 +50,13 @@ public class Questions {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public ArrayList<String> getImages() {
+        return images;
+    }
+
+    public void setImages(String imagePath) {
+        this.images.add(imagePath);
     }
 }

@@ -2,6 +2,7 @@ package com.jmmnt.UseCase;
 
 import android.os.Environment;
 
+import com.jmmnt.Entities.CircuitDetails;
 import com.jmmnt.Entities.Questions;
 import com.jmmnt.UseCase.Adapters.AdapterFactory;
 
@@ -16,7 +17,10 @@ import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 
 public class CreateExcelFile {
+
     private OperateAssignment oA = OperateAssignment.getInstance();
+    private GeneralUseCase gUc = GeneralUseCase.getInstance();
+
     AdapterFactory apFac = new AdapterFactory();
     private WritableWorkbook workbook;
 
@@ -43,68 +47,141 @@ public class CreateExcelFile {
             int rowCount = 0;
             int columnCount = 0;
             int getList = 0;
+            ArrayList<String> skipHeadline = new ArrayList<>();
+            StringBuilder headlineString;
+            ArrayList<String> headlines = new ArrayList<>();
             WritableSheet sheet = workbook.createSheet("Ark1", 0);
+
+            // Get headlines from excel
             for (int i = 0; i < excelTemplate.size(); i++) {
                 if (excelTemplate.get(i).equalsIgnoreCase("<Headline>")) {
+                    headlineString = new StringBuilder();
+                    headlineString.append(excelTemplate.get(i));
+                    headlineString.append("?");
                     int tempI = i;
-                    while (!excelTemplate.get(tempI).equalsIgnoreCase("<Question>")) {
-                        sheet.addCell(new Label(rowCount, columnCount, excelTemplate.get(tempI)));
-                        rowCount++;
+                    while (!excelTemplate.get(tempI).equalsIgnoreCase("<QuestionOptionsEnd>")) {
                         tempI++;
+                        headlineString.append(excelTemplate.get(tempI));
+                        headlineString.append("?");
                     }
-                    columnCount++;
-                    rowCount = 0;
-                    while (!excelTemplate.get(tempI).equalsIgnoreCase("<HeadlineEnd>")) {
-//                        if (excelTemplate.get(tempI).equalsIgnoreCase("<inputGroup>")) return; // TODO FEJLSIKRING
-                        for (int j = 0; j < list.get(getList).size(); j++) {
-                            System.out.println(list.get(getList).get(j));
-                            sheet.addCell(new Label(rowCount, columnCount, excelTemplate.get(tempI)));
-                            rowCount++;
-                            tempI++;
-                        }
-
-                        if (excelTemplate.get(tempI).equalsIgnoreCase("<Question>")) {
-                            columnCount++;
-                            rowCount = 0;
-                        }
-                    }
+                    headlines.add(headlineString.toString());
                     i = tempI;
-                    columnCount++;
-                    rowCount = 0;
                 }
-//                for (int j = 0; j < list.size(); j++) {
-//                    sheet.addCell(new Label(rowCount, columnCount, ));
-//                    for (int k = 0; k < list.get(i).size(); k++) {
-//
+//                if (excelTemplate.get(i).equalsIgnoreCase("<InputHeadline>")) {
+//                    int tempI = i;
+//                    headlineString = new StringBuilder();
+//                    while (!excelTemplate.get(tempI).equalsIgnoreCase("<inputGroup>")) {
+//                        headlineString.append(excelTemplate.get(tempI));
+//                        headlineString.append("?");
+//                        tempI++;
 //                    }
+//                    headlines.add(headlineString.toString());
+//                    i = tempI;
 //                }
+//                if (excelTemplate.get(i).equalsIgnoreCase("<inputGroup>")) {
+//                    int tempI = i;
+//                    headlineString = new StringBuilder();
+//                    while (!excelTemplate.get(tempI).equalsIgnoreCase("<inputAnswer>")) {
+//                        headlineString.append(excelTemplate.get(tempI));
+//                        headlineString.append("?");
+//                        tempI++;
+//                    }
+//                    headlines.add(headlineString.toString());
+//                    i = tempI;
+//                }
+            }
+            headlines.forEach(System.out::println);
+            double questionSection;
+            int anwser;
+
+            // Print Headlines
+            for (int i = 0; i < headlines.size(); i++) {
+                String[] splittedHeadline = gUc.splitStringBy(headlines.get(i), "?");
+                for (int j = 0; j < splittedHeadline.length; j++) {
+                    sheet.addCell(new Label(columnCount, rowCount, splittedHeadline[j]));
+                    columnCount++;
+                }
+                if (splittedHeadline[0].equalsIgnoreCase("<InputHeadline>")) {
+                    headlines.remove(i);
+                    i = i-1;
+                }
+                columnCount = 0;
+                rowCount++;
+
+                questionSection = i+1;
+                for (int j = 0; j < list.get(i).size(); j++) {
+                    if (list.get(getList).get(j) instanceof Questions) {
+                        anwser = ((Questions) list.get(getList).get(j)).getAnswer();
+                        questionSection = questionSection + 0.1;
+                        sheet.addCell(new Label(columnCount, rowCount, "<Question>"));
+                        columnCount++;
+                        sheet.addCell(new Label(columnCount, rowCount, String.valueOf(round(questionSection, 1))));
+                        columnCount++;
+                        sheet.addCell(new Label(columnCount, rowCount, ((Questions) list.get(getList).get(j)).getQuestion()));
+                        columnCount++;
+                        sheet.addCell(new Label(columnCount, rowCount, "<QuestionAnwsered>"));
+                        columnCount++;
+                        sheet.addCell(new Label(columnCount, rowCount, (String.valueOf(anwser))));
+                        columnCount++;
+                        sheet.addCell(new Label(columnCount, rowCount, "<Note>"));
+                        columnCount++;
+                        sheet.addCell(new Label(columnCount, rowCount, ((Questions) list.get(getList).get(j)).getComment()));
+                        columnCount++;
+                        sheet.addCell(new Label(columnCount, rowCount, "<Images>"));
+                        columnCount++;
+                        if (((Questions) list.get(getList).get(j)).getImages().size() > 0) {
+                            for (int k = 0; k < ((Questions) list.get(getList).get(j)).getImages().size(); k++) {
+                                sheet.addCell(new Label(columnCount, rowCount, ((Questions) list.get(getList).get(j)).getImages().get(k)));
+                                columnCount++;
+                            }
+                        } else {
+                            sheet.addCell(new Label(columnCount, rowCount, "-1"));
+                            columnCount++;
+                        }
+                        sheet.addCell(new Label(columnCount, rowCount, "<ImagesEnd>"));
+                        sheet.addCell(new Label(columnCount, rowCount, "<QuestionEnd>"));
+                        columnCount = 0;
+                        rowCount ++;
+                    }
+                    if (list.get(getList).get(j) instanceof CircuitDetails) {
+                        sheet.addCell(new Label(columnCount, rowCount, "<inputAnswer>"));
+                        columnCount++;
+                        sheet.addCell(new Label(columnCount, rowCount, ((CircuitDetails) list.get(getList).get(j)).getOb()));
+                        columnCount++;
+                        sheet.addCell(new Label(columnCount, rowCount, ((CircuitDetails) list.get(getList).get(j)).getCharacteristics()));
+                        columnCount++;
+                        sheet.addCell(new Label(columnCount, rowCount, ((CircuitDetails) list.get(getList).get(j)).getCrossSection()));
+                        columnCount++;
+                        sheet.addCell(new Label(columnCount, rowCount, ((CircuitDetails) list.get(getList).get(j)).getMaxOB()));
+                        columnCount++;
+                        int checkBox = ((CircuitDetails) list.get(getList).get(j)).getCheckbox();
+                        if (checkBox == 1) {
+                            sheet.addCell(new Label(columnCount, rowCount, "1"));
+                            columnCount++;
+                            sheet.addCell(new Label(columnCount, rowCount, "2"));
+                            columnCount++;
+                        } else {
+                            sheet.addCell(new Label(columnCount, rowCount, "2"));
+                            columnCount++;
+                            sheet.addCell(new Label(columnCount, rowCount, "1"));
+                            columnCount++;
+                        }
+                        sheet.addCell(new Label(columnCount, rowCount, ((CircuitDetails) list.get(getList).get(j)).getMegaOmega()));
+                        columnCount++;
+                    }
+                    if (splittedHeadline[0].equalsIgnoreCase("<Headline>")) {
+                        sheet.addCell(new Label(columnCount, rowCount, "<HeadlineEnd>"));
+                    }
+                }
+                getList++;
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
 
-//        try {
-//            List<Bean> listdata = new ArrayList();
-//
-//            listdata.add(new Bean("mr","firstName1","middleName1","lastName1"));
-//            listdata.add(new Bean("mr","firstName1","middleName1","lastName1"));
-//            listdata.add(new Bean("mr","firstName1","middleName1","lastName1"));
-//            //Excel sheet name. 0 (number)represents first sheet
-//            WritableSheet sheet = workbook.createSheet("Ark1", 0);
-//            // column and row title
-//            sheet.addCell(new Label(0, 0, "NameInitial"));
-//            sheet.addCell(new Label(1, 0, "firstName"));
-//            sheet.addCell(new Label(2, 0, "middleName"));
-//            sheet.addCell(new Label(3, 0, "lastName"));
-//
-//            for (int i = 0; i < listdata.size(); i++) {
-//                sheet.addCell(new Label(0, i + 1, listdata.get(i).getInitial()));
-//                sheet.addCell(new Label(1, i + 1, listdata.get(i).getFirstName()));
-//                sheet.addCell(new Label(2, i + 1, listdata.get(i).getMiddleName()));
-//                sheet.addCell(new Label(3, i + 1, listdata.get(i).getLastName()));
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+    private static double round (double value, int precision) {
+        int scale = (int) Math.pow(10, precision);
+        return (double) Math.round(value * scale) / scale;
     }
 }

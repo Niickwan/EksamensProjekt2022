@@ -217,7 +217,7 @@ public class OperateAssignment {
         } catch (BiffException | IOException e) {
             e.printStackTrace();
         }
-        arr.forEach(System.out::println);
+//        arr.forEach(System.out::println);
         return arr;
     }
 //---------------------------------------------------------------------------------------------
