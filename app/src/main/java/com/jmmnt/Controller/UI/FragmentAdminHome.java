@@ -42,10 +42,7 @@ public class FragmentAdminHome extends Fragment {
 
         binding.searchBtn.setOnClickListener(view1 -> new Thread(() -> {
             try {
-                DB_Con.getInstance().fillAssignmentContainer();
-                System.out.println("jeg er det rigtige sted" + AssignmentContainer.getInstance().getAssignments());
-            } catch (SQLException e) {
-                e.printStackTrace();
+                oDB.fillAssignmentContainer();
             } finally {
                 getActivity().runOnUiThread(() -> NavHostFragment.findNavController(FragmentAdminHome.this).navigate(R.id.action_FragmentAdminHome_to_fragmentSearchCase));
             }

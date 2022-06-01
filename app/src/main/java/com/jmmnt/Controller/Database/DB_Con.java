@@ -95,33 +95,37 @@ public class DB_Con {
 
     }
 
-    public boolean fillAssignmentContainer() throws SQLException {
+    public boolean fillAssignmentContainer() {
         LocalDate localDate;
         boolean isUsed = false;
         AssignmentContainer assignmentContainer = AssignmentContainer.getInstance();
         if (!assignmentContainer.getAssignments().isEmpty())
             assignmentContainer.getAssignments().clear();
         String fill = "SELECT Assignment_ID, Customer_Name, Order_number, Address, Postal_Code, City, Status, Status_Date FROM Assignment";
-        connection = connection();
-        stmt = connection.createStatement();
-        rs = stmt.executeQuery(fill);
-        while (rs.next()) {
-            isUsed = true;
-            localDate = LocalDate.parse(rs.getDate("Status_Date").toString());
-            assignmentContainer.addAssignmentsToContainer(new Assignment(
-                    rs.getInt("Assignment_ID"),
-                    rs.getString("Customer_Name"),
-                    rs.getString("Order_Number"),
-                    rs.getString("Address"),
-                    rs.getString("Postal_Code"),
-                    rs.getString("City"),
-                    rs.getString("Status"),
-                    localDate));
-            System.out.println(localDate);
+        try {
+            connection = connection();
+            stmt = connection.createStatement();
+            rs = stmt.executeQuery(fill);
+            while (rs.next()) {
+                isUsed = true;
+                localDate = LocalDate.parse(rs.getDate("Status_Date").toString());
+                assignmentContainer.addAssignmentsToContainer(new Assignment(
+                        rs.getInt("Assignment_ID"),
+                        rs.getString("Customer_Name"),
+                        rs.getString("Order_Number"),
+                        rs.getString("Address"),
+                        rs.getString("Postal_Code"),
+                        rs.getString("City"),
+                        localDate,
+                        rs.getString("Status")));
+            }
+            connection.close();
+            stmt.close();
+            rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        connection.close();
-        stmt.close();
-        rs.close();
+
         return isUsed;
     }
 
@@ -230,8 +234,8 @@ public class DB_Con {
         return uploadMySQLCall(userInfo);
     }
 
-    public boolean createNewAssignment(Assignment assignment, int ID) {  //TODO INSERT INTO SKAL RETTES TIL DEET NYE ASSIGMNET OBJEKT
-        connection = connection();
+    public boolean createNewAssignment(Assignment assignment, int userID) {  //TODO INSERT INTO SKAL RETTES TIL DEET NYE ASSIGMNET OBJEKT
+        int isUpdated;
         String userInfo = "INSERT INTO Assignment (Address, Postal_Code, City, Status, Order_Number, Status_Date, Customer_Name) "
                 + "VALUES ('"
                 + assignment.getAddress() + "', '"
@@ -241,22 +245,22 @@ public class DB_Con {
                 + assignment.getOrderNumber() + "', '"
                 + assignment.getStatusDate() + "', '"
                 + assignment.getCustomerName() + "')";
-
-        if (uploadMySQLCall(userInfo)){
-            String getAssignmentID = "SELECT LAST_INSERT_ID()";
-            try {
-                preStmt = connection.prepareStatement(getAssignmentID);
-                rs = preStmt.executeQuery();
+        try {
+            connection = connection();
+            preStmt = connection.prepareStatement(userInfo);
+            isUpdated = preStmt.executeUpdate();
+            if (isUpdated == 1) {
+                String getLatestAssignmentID = "SELECT LAST_INSERT_ID()";
+                stmt = connection.createStatement();
+                rs = stmt.executeQuery(getLatestAssignmentID);
                 if (rs.next()){
                     String insertIntoUserAssignment = "INSERT INTO User_Assignment (User_ID, Assignment_ID)"
-                            + "VALUES ("
-                            + ID + ", "
-                            + rs.getInt("LAST_INSERT_ID()") + ")";
+                            + "VALUES (" + userID + ", " + rs.getInt("LAST_INSERT_ID()") + ")";
                     return (uploadMySQLCall(insertIntoUserAssignment));
                 }
-            } catch (SQLException e) {
-                e.printStackTrace();
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return false;
     }

@@ -1,14 +1,18 @@
 package com.jmmnt.UseCase.Adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.jmmnt.Entities.Assignment;
+import com.jmmnt.Entities.AssignmentContainer;
+import com.jmmnt.Entities.User;
 import com.jmmnt.Entities.UserContainer;
 import com.jmmnt.R;
 
@@ -18,14 +22,14 @@ import java.util.List;
 public class OrderViewAdapter extends RecyclerView.Adapter<OrderViewHolder> {
 
     private List<Assignment> itemList;
-    private TextView customerName_tv, address_tv, orderNumber_tv, identification_tv, date_tv;
-    private Spinner installedBy_spinner, verifiedBy_spinner;
+    private TextView customerFullName_tv, address_tv, orderNumber_tv, identification_et, date_tv, installedBy_tv;
+    private Spinner verifiedBy_spinner;
+    private Context context;
 
-
-    public OrderViewAdapter(List<Assignment> items) {
+    public OrderViewAdapter(List<Assignment> items, Context context) {
         this.itemList = items;
+        this.context = context;
     }
-
 
     @NonNull
     @Override
@@ -36,37 +40,37 @@ public class OrderViewAdapter extends RecyclerView.Adapter<OrderViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull OrderViewHolder holder, int position) {
-        customerName_tv = holder.itemView.findViewById(R.id.customerName_tv);
+        customerFullName_tv = holder.itemView.findViewById(R.id.customerName_tv);
         address_tv = holder.itemView.findViewById(R.id.address_et);
         orderNumber_tv = holder.itemView.findViewById(R.id.orderNumber_et);
-        identification_tv = holder.itemView.findViewById(R.id.identification_tv);
+        identification_et = holder.itemView.findViewById(R.id.identification_et);
         date_tv = holder.itemView.findViewById(R.id.date_tv);
-        installedBy_spinner = holder.itemView.findViewById(R.id.installedBy_spinner);
+        installedBy_tv = holder.itemView.findViewById(R.id.installedBy_tv);
         verifiedBy_spinner = holder.itemView.findViewById(R.id.verifiedBy_spinner);
 
-        if (position < itemList.size()) {
-            if (itemList.get(position) != null) {
-                customerName_tv.setText(itemList.get(position).getCustomerName());
-                address_tv.setText(itemList.get(position).getAddress());
-                orderNumber_tv.setText(itemList.get(position).getOrderNumber());
-                identification_tv.setText(itemList.get(position).getIdentificationOfInstallation());
-                //installedBy_spinner.set
-                //TODO ARBEJD VIDERE HER
-            }
-        }
+        int lastIndex = AssignmentContainer.getInstance().getAssignments().size()-1;
+        System.out.println("COTAINER "+ AssignmentContainer.getInstance().getAssignments().get(lastIndex));
 
-        /*List<String> spinnerArray = new ArrayList<>();
-        spinnerArray.add(); //Default value //TODO kan den bruges til som afventer value?
-        for (int i = 1; i < UserContainer.getUsers().size(); i++) {
-            if (UserContainer.getUsers().get(i).getPhonenumber() != null)
-                spinnerArray.add(UserContainer.getUsers().get(i).getFullName() + " " + UserContainer.getUsers().get(i).getPhonenumber());
-            else
-                spinnerArray.add(UserContainer.getUsers().get(i).getFullName());
-        }
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, spinnerArray);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        Spinner spinner = binding.chooseUserSpinner;
-        spinner.setAdapter(adapter);*/
+//        if (position < itemList.size()) {
+//            if (itemList.get(position) != null) {
+//                customerFullName_tv.setText(itemList.get(position).getCustomerName());
+//                address_tv.setText(itemList.get(position).getAddress());
+//                orderNumber_tv.setText(itemList.get(position).getOrderNumber());
+//
+//
+//            }
+//        }
+
+        SpinnerAdapter adapter = new SpinnerAdapter(context, android.R.layout.simple_spinner_item, UserContainer.getUsers());
+        verifiedBy_spinner.setAdapter(adapter);
+        verifiedBy_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                User verifiedBy = (User) adapterView.getAdapter().getItem(position);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapter) {  }
+        });
     }
 
     @Override
