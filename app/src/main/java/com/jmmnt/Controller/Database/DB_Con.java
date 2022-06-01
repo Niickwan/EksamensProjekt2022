@@ -1,6 +1,7 @@
 package com.jmmnt.Controller.Database;
 
 
+import com.jmmnt.Entities.AssignmentContainer;
 import com.jmmnt.Entities.LoggedInUser;
 import com.jmmnt.Entities.Assignment;
 import com.jmmnt.Entities.User;
@@ -16,7 +17,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.sql.Date;
 
 public class DB_Con {
     private Connection connection;
@@ -85,6 +88,36 @@ public class DB_Con {
         connection.close();
         stmt.close();
         rs.close();
+    }
+
+    public boolean fillAssignmentContainer() throws SQLException {
+        Date sqlDate;
+        LocalDate localDate;
+        boolean isUsed = false;
+        AssignmentContainer assignmentContainer = AssignmentContainer.getInstance();
+        if (!assignmentContainer.getAssignments().isEmpty()) assignmentContainer.getAssignments().clear();
+        String fill = "SELECT Assignment_ID, Customer_Name, Order_number, Address, Postal_Code, City, Status, Status_Date FROM Assignment ORDER BY Assignment_ID";
+        connection = connection();
+        stmt = connection.createStatement();
+        rs = stmt.executeQuery(fill);
+        while (rs.next()) {
+            isUsed = true;
+            sqlDate = Date.valueOf(rs.getDate("Status_Date").toString());
+            localDate = LocalDate.parse(rs.getDate("Status_Date").toString());
+            assignmentContainer.addAssignmentsToContainer(new Assignment(
+                    rs.getInt("Assignment_ID"),
+                    rs.getString("Customer_Name"),
+                    rs.getString("Order_Number"),
+                    rs.getString("Address"),
+                    rs.getString("Postal_Code"),
+                    rs.getString("City"),
+                    rs.getString("Status"),
+                    localDate));
+        }
+        connection.close();
+        stmt.close();
+        rs.close();
+        return isUsed;
     }
 
 
