@@ -1,26 +1,20 @@
 package com.jmmnt.UseCase;
 
-
-
 import android.app.Activity;
 import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Environment;
-import android.os.StatFs;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import androidx.cardview.widget.CardView;
-
 import com.jmmnt.Controller.Database.DB_Con;
 import com.jmmnt.Entities.Assignment;
 import com.jmmnt.Entities.LoggedInUser;
 import com.jmmnt.R;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -31,10 +25,8 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import jxl.Cell;
 import jxl.CellType;
 import jxl.Sheet;

@@ -167,6 +167,8 @@ public class FragmentAdminChecklist extends Fragment {
 
         }
 
+        List<String> template = opa.getExcelAsArrayList("TjeklisteTemplate.xls");
+
 
 
 
@@ -185,15 +187,42 @@ public class FragmentAdminChecklist extends Fragment {
         //Setting parent layout for the UI
         parentLLH = getActivity().findViewById(R.id.parentLLH);
 
-
         //Building dropdowns
         buildDropdownDynamically("Ordre", assignmentContainer, objectTag5, "vertical");
-        buildDropdownDynamically("Generelt", general, objectTag, "vertical");
-        buildDropdownDynamically("Tavlen", electricalPanel, objectTag, "vertical");
-        buildDropdownDynamically("Installation", installation, objectTag, "vertical");
-        buildDropdownDynamically("Indbygningsarmaturer", protection, objectTag, "vertical");
-        buildDropdownDynamically("Beskyttelsesledere og udligningsforbindelser", error, objectTag, "vertical");
-        buildDropdownDynamically("Fejlbeskyttelse / Supplerende beskyttelse", section, objectTag, "vertical");
+
+        int headlineCounter = 0;
+        for (int i = 0; i < template.size(); i++) {
+            if (template.get(i).equalsIgnoreCase("<Headline>")){
+                if (headlineCounter == 0){
+                    buildDropdownDynamically(template.get(i+1), general, objectTag, "vertical");
+                    headlineCounter++;
+                }
+                else if (headlineCounter == 1){
+                    buildDropdownDynamically(template.get(i+1), electricalPanel, objectTag, "vertical");
+                    headlineCounter++;
+                }
+                else if (headlineCounter == 2){
+                    buildDropdownDynamically(template.get(i+1), installation, objectTag, "vertical");
+                    headlineCounter++;
+                }
+                else if (headlineCounter == 3){
+                    buildDropdownDynamically(template.get(i+1), protection, objectTag, "vertical");
+                    headlineCounter++;
+                }
+                else if (headlineCounter == 4){
+                    buildDropdownDynamically(template.get(i+1), error, objectTag, "vertical");
+                    headlineCounter++;
+                }
+                else if (headlineCounter == 5){
+                    buildDropdownDynamically(template.get(i+1), section, objectTag, "vertical");
+                    headlineCounter++;
+                }
+            }
+        }
+
+
+
+
 
         //Adding textview
         TextView testResultsTitle = new TextView(getActivity());

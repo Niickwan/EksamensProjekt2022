@@ -43,6 +43,7 @@ public class FragmentAdminHome extends Fragment {
         binding.searchBtn.setOnClickListener(view1 -> new Thread(() -> {
             try {
                 oDB.fillAssignmentContainer();
+                oDB.fillUserContainer();
             } finally {
                 getActivity().runOnUiThread(() -> NavHostFragment.findNavController(FragmentAdminHome.this).navigate(R.id.action_FragmentAdminHome_to_fragmentSearchCase));
             }

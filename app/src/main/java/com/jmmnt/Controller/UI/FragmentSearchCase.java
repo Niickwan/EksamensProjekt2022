@@ -1,13 +1,10 @@
 package com.jmmnt.Controller.UI;
 
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,7 +16,6 @@ import com.jmmnt.UseCase.Adapters.SearchCaseViewAdapter;
 import com.jmmnt.UseCase.GeneralUseCase;
 import com.jmmnt.UseCase.OperateAssignment;
 import com.jmmnt.databinding.FragmentAdminSearchCaseBinding;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +23,6 @@ public class FragmentSearchCase extends Fragment {
 
     private FragmentAdminSearchCaseBinding binding;
     private RecyclerView recyclerView;
-    private List<Assignment> assignments;
     private AssignmentContainer assignmentContainer = AssignmentContainer.getInstance();
     private GeneralUseCase gUC = GeneralUseCase.getInstance();
     private OperateAssignment operateAssignment = OperateAssignment.getInstance();
@@ -41,30 +36,6 @@ public class FragmentSearchCase extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        //TODO START - TESTER HER --------------------------------------------------------------------
-        //TODO DETTE SKAL SÆTTES OP MED EN CONTAINER
-        assignments = new ArrayList<>();
-        assignments.add(new Assignment(123, "223AJ2K33L8", "HusCompagniet", "Havnegade 19", "4700", "Næstved", LocalDate.now(), "active"));
-        assignments.add(new Assignment(412, "1651653", "Fakta", "Andersgade 21", "1111", "Næstved", LocalDate.now(), "active"));
-        assignments.add(new Assignment(23, "6549584464", "Netto", "Femøvej 1", "2730", "Næstved", LocalDate.now(), "waiting"));
-        assignments.add(new Assignment(1254, "641659684161", "Hardi", "Gaden 9", "4700", "Næstved", LocalDate.now(), "active"));
-        assignments.add(new Assignment(5436, "65461949651", "SD", "Vejen 22", "4700", "Næstved", LocalDate.now(), "active"));
-        assignments.add(new Assignment(75, "32132656", "AK", "Gladsaxevej 59", "4800", "Næstved", LocalDate.now(), "waiting"));
-        assignments.add(new Assignment(6, "987941623", "Zealand", "Køgevej 34", "4700", "Næstved", LocalDate.now(), "finished"));
-        assignments.add(new Assignment(86, "ASDWW65465", "HM", "Vejen 99", "4950", "Næstved", LocalDate.now(), "waiting"));
-        assignments.add(new Assignment(97, "WW6546546", "Arne Pedersen", "Skyttemarksvej 99", "4200", "Næstved", LocalDate.now(), "finished"));
-        assignments.add(new Assignment(679, "223AJ2K33L8", "AO Tæpper", "Havnegade 19", "2600", "Næstved", LocalDate.now(), "active"));
-        assignments.add(new Assignment(7, "9875964S98654S", "Arkolit", "Krejbjergvej 8", "4700", "Næstved", LocalDate.now(), "finished"));
-        assignments.add(new Assignment(67, "S132LKHS21", "Stark", "Aprilvej 2", "4900", "Næstved", LocalDate.now(), "finished"));
-        assignments.add(new Assignment(45, "GEWG65465FSA", "LM", "Novembervej 76", "2900", "Næstved", LocalDate.now(), "active"));
-        assignments.add(new Assignment(67, "123289DSA", "Mærsk", "Oktobervej 4", "4700", "Næstved", LocalDate.now(), "waiting"));
-        assignments.add(new Assignment(123, "879845663", "Tiger", "Vildtbanevej 11", "4700", "Næstved", LocalDate.now(), "waiting"));
-        assignments.add(new Assignment(65, "3214987913", "Nordea", "Svingkærvej 334", "4733", "Næstved", LocalDate.now(), "waiting"));
-        assignments.add(new Assignment(88, "65149878452361", "Mercedes", "Gaderne 23", "4600", "Næstved", LocalDate.now(), "active"));
-        assignments.add(new Assignment(5, "3218956", "SKAT", "Udevej 998", "5500", "Næstved", LocalDate.now(), "finished"));
-        //TODO SLUT - TESTER HER --------------------------------------------------------------------
-
         binding.checkBoxSearchActiveCases.setChecked(true);
         binding.checkBoxSearchWaitingCases.setChecked(true);
         binding.checkBoxSearchUserCases.setChecked(true);
@@ -113,7 +84,6 @@ public class FragmentSearchCase extends Fragment {
         boolean waitingCase = binding.checkBoxSearchWaitingCases.isChecked();
         boolean finishedCase = binding.checkBoxSearchFinishedCases.isChecked();
         boolean userCase = binding.checkBoxSearchUserCases.isChecked();
-
         assignmentsSorted = operateAssignment.sortAssignmentsByCheckboxIsChecked(assignments, activeCase, waitingCase, finishedCase, userCase);
         assignmentsSorted = operateAssignment.bubbleSortAssignmentsByDate(assignmentsSorted);
 
@@ -125,6 +95,7 @@ public class FragmentSearchCase extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
 
 
 }
