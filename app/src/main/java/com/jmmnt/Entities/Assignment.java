@@ -18,8 +18,18 @@ public class Assignment {
     private String verifiedBy;
     private String identificationOfInstallation;
 
+
+    public Assignment(String address, String postalCode, String city, String status, String orderNumber, String customerName) {
+        this.address = address;
+        this.postalCode = postalCode;
+        this.city = city;
+        this.status = status;
+        this.orderNumber = orderNumber;
+        this.customerName = customerName;
+    }
+
     public Assignment(int assignmentId, int foremanId, String address, String postalCode,
-                      String status, String orderNumber,LocalDate statusDate, String customerName) {
+                      String status, String orderNumber, LocalDate statusDate, String customerName) {
         this.assignmentId = assignmentId;
         this.userID = foremanId;
         this.address = address;

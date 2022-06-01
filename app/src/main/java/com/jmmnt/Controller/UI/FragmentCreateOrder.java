@@ -58,12 +58,20 @@ public class FragmentCreateOrder extends Fragment {
                 String city = binding.cityEt.getEditText().getText().toString();
                 String status;
                 int userPicked = binding.chooseUserSpinner.getSelectedItemPosition();
-
-                if (userPicked == 0) status = "waiting";
-                else status = "active";
+                //TODO userPicked skal fjernes - bliver instansvariable
+                if (userPicked == 0){
+                    status = "waiting";
+                    createNewAssignment = new Assignment(address,postalCode,city,status,orderNumber,customerName);
+                    operateDB.createNewAssignment(createNewAssignment);
+                }
+                else{
+                    status = "active";
+                    createNewAssignment = new Assignment(address,postalCode,city,status,orderNumber,customerName);
+                    operateDB.createNewAssignment(createNewAssignment, userPicked);
+                }
 
                 createNewAssignment = new Assignment(orderNumber, customerName, address, postalCode, city, LocalDate.now(), status, employeePicked);
-                operateDB.createNewAssignment(createNewAssignment); //TODO
+                operateDB.createNewAssignment(createNewAssignment);
             }
         }).start());
 
