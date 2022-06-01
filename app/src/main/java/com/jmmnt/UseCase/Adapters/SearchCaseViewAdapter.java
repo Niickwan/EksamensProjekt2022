@@ -96,7 +96,7 @@ public class SearchCaseViewAdapter extends RecyclerView.Adapter<SearchCaseViewHo
 
             if (charSequence == null || charSequence.length() == 0) {
                 filteredItemList.addAll(itemsFilterable);
-            }else{
+            } else {
                 String filterPattern = charSequence.toString().toLowerCase().trim();
                 for (Assignment item : itemsFilterable) {
                     if (item.getCustomerName().toLowerCase().contains(filterPattern)
