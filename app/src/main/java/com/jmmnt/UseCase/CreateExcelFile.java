@@ -21,8 +21,10 @@ import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
 
 public class CreateExcelFile {
-    private OperateAssignment oA = new OperateAssignment();
+
+    private OperateAssignment oA = OperateAssignment.getInstance();
     private GeneralUseCase gUc = GeneralUseCase.getInstance();
+
     AdapterFactory apFac = new AdapterFactory();
     WritableSheet sheet;
     private WritableWorkbook workbook;

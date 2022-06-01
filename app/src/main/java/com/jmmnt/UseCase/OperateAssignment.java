@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Environment;
+import android.os.StatFs;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
 import android.view.View;
@@ -16,6 +17,8 @@ import android.widget.TextView;
 import androidx.cardview.widget.CardView;
 
 import com.jmmnt.Controller.Database.DB_Con;
+import com.jmmnt.Entities.Assignment;
+import com.jmmnt.Entities.LoggedInUser;
 import com.jmmnt.R;
 
 import java.io.BufferedReader;
@@ -40,8 +43,20 @@ import jxl.WorkbookSettings;
 import jxl.read.biff.BiffException;
 
 public class OperateAssignment {
+
     private GeneralUseCase gUC = GeneralUseCase.getInstance();
     private DB_Con db_con = DB_Con.getInstance();
+    private static OperateAssignment oA;
+
+    private OperateAssignment(){
+    }
+
+    public static OperateAssignment getInstance(){
+        if (oA == null){
+            return oA = new OperateAssignment();
+        }else
+            return oA;
+    }
 
     //SERVER------------------------------------------------------------------------------------
     public boolean renameFolderOnServer(String orderNr, String oldName, String newName) {
@@ -102,6 +117,7 @@ public class OperateAssignment {
         return multipleStringSearchArray;
     }
 
+
     public List<Object> sortObjectsByindex(List<Object> objects, List<Integer> indexList){
         ArrayList<Object> sortedObjects = new ArrayList<>();
         for (Integer integer : indexList) {
@@ -158,9 +174,10 @@ public class OperateAssignment {
     }
 
     //https://api.dataforsyningen.dk/postnumre/ --- USABLE URL FOR ZIPCODES
-    public String getCityMatchingZipCode(String url, String zipCode){
+    public String getCityMatchingZipCode(String zipCode){
         try {
-            JSONObject jsonObject = readJsonUrl(url + "/" + zipCode);
+            final String URL = "https://api.dataforsyningen.dk/postnumre/";
+            JSONObject jsonObject = readJsonUrl(URL + zipCode);
             return jsonObject.get("navn").toString();
         } catch (IOException | JSONException e) {
             e.printStackTrace();
@@ -197,6 +214,7 @@ public class OperateAssignment {
 
                 }
             }
+            w.close();
         } catch (BiffException | IOException e) {
             e.printStackTrace();
         }
@@ -269,6 +287,39 @@ public class OperateAssignment {
         cardView.addView(cardviewLinearLayout);
 
         return cardView;
+    }
 
+    public List sortAssignmentsByCheckboxIsChecked(List<Assignment> list, boolean activeCase, boolean waitingCase, boolean finishedCase, boolean userCase){
+        List<Assignment> sortedList = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            if (userCase && list.get(i).getUserID() == LoggedInUser.getInstance().getUser().getUserID()) {
+                if (activeCase && list.get(i).getStatus().equalsIgnoreCase("active"))
+                    sortedList.add(list.get(i));
+                if (waitingCase && list.get(i).getStatus().equalsIgnoreCase("waiting"))
+                    sortedList.add(list.get(i));
+                if (finishedCase && list.get(i).getStatus().equalsIgnoreCase("finished"))
+                    sortedList.add(list.get(i));
+            } else if (activeCase && list.get(i).getStatus().equalsIgnoreCase("active") && !userCase)
+                sortedList.add(list.get(i));
+            else if (waitingCase && list.get(i).getStatus().equalsIgnoreCase("waiting"))
+                sortedList.add(list.get(i));
+            else if (finishedCase && list.get(i).getStatus().equalsIgnoreCase("finished") && !userCase)
+                sortedList.add(list.get(i));
+        }
+        return sortedList;
+    }
+
+    public List bubbleSortAssignmentsByDate(List<Assignment> list) {
+        Assignment temp;
+        for (int i = 0; i < list.size() - 1; i++) {
+            for (int j = i + 1; j < list.size(); j++) {
+                if (list.get(i).getStatusDate().compareTo(list.get(j).getStatusDate()) > 0) {
+                    temp = list.get(i);
+                    list.set(i, list.get(j));
+                    list.set(j, temp);
+                }
+            }
+        }
+        return list;
     }
 }

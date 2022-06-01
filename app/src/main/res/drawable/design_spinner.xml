@@ -9,16 +9,18 @@
                     <padding
                         android:right="5dp"
                         android:left="12dp"/>
-                    <corners android:radius="10dp"/>
+                    <corners android:radius="5dp"/>
                     <stroke
                         android:width="1dip"
-                        android:color="@color/darkblue" />
+                        android:color="@color/black" />
                 </shape>
             </item>
 
             <item
                 android:drawable="@drawable/ic_spinner_arrow"
                 android:gravity="end"/>
+
+
         </layer-list>
     </item>
 </selector>

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OperateAssignmentTest {
-    OperateAssignment ea = new OperateAssignment();
+    OperateAssignment ea = OperateAssignment.getInstance();
 
     @Test
     public void sortCasesByindex() {
@@ -84,9 +84,8 @@ public class OperateAssignmentTest {
 
     @Test
     public void getCityMatchingZipCode(){
-        String url = "https://api.dataforsyningen.dk/postnumre/";
         String zipCode = "4700";
-        String rs = ea.getCityMatchingZipCode(url, zipCode);
+        String rs = ea.getCityMatchingZipCode( zipCode);
         assertEquals(rs, "Næstved");
     }
 }

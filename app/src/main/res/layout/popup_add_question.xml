@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/design_button">
+    android:background="@drawable/design_button_darkblue">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/question_et"
@@ -38,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:background="@drawable/design_button"
+        android:background="@drawable/design_button_darkblue"
         android:text="@string/add_question_create_button"
         app:layout_constraintEnd_toEndOf="@+id/question_et"
         app:layout_constraintTop_toBottomOf="@+id/question_et" />
@@ -48,7 +48,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:background="@drawable/design_button"
+        android:background="@drawable/design_button_darkblue"
         android:text="@string/add_question_cancel_button"
         app:layout_constraintStart_toStartOf="@+id/question_et"
         app:layout_constraintTop_toBottomOf="@+id/question_et" />

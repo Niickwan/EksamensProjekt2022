@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,13 +22,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.jmmnt.Entities.Assignment;
-import com.jmmnt.Entities.CircuitDetails;
-import com.jmmnt.Entities.Questions;
-import com.jmmnt.Entities.ShortCircuitCurrentAndVoltageDrop;
-import com.jmmnt.Entities.TestingRCD;
-import com.jmmnt.Entities.TransitionResistance;
 import com.jmmnt.Entities.User;
-import com.jmmnt.UseCase.CreateExcelFile;
 import com.jmmnt.UseCase.Encryption;
 import com.jmmnt.UseCase.FTP.FTPClientFunctions;
 import com.jmmnt.R;
@@ -43,6 +36,8 @@ import com.jmmnt.databinding.FragmentLoginRegisterBinding;
 import org.apache.commons.net.ntp.TimeStamp;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -57,9 +52,9 @@ public class FragmentLoginRegister extends Fragment{
     private FragmentLoginRegisterBinding binding;
     private ActivityResultLauncher<Intent> activityResultLauncher;
     private FTPClientFunctions ftpMethodClass = new FTPClientFunctions();
+    private PDFGenerator pdfg = new PDFGenerator(new Assignment(1,1,"s","4700","s","s", LocalDate.now(),"s"));
     //TODO pdfGenerator skal tage det assignment som brugeren er inde på.
     //TODO SKAL INDSÆTTES I DEN RIGTIGE KLASSE
-    private PDFGenerator pdfG = new PDFGenerator(new Assignment(1,1,"snerlevej 191", "4700", "aktiv","gh459", TimeStamp.getCurrentTime(),"Super Brugsen"));
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -96,18 +91,18 @@ public class FragmentLoginRegister extends Fragment{
 //        });
 
         binding.FTPButton.setOnClickListener(v -> new Thread(() -> {
-            ftpMethodClass.ftpDownload("/TjekListeNy (7).xls", "TjeklisteTemplate.xls");
-//            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-//                ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 101);
-//            }
-//            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-//                try {
-//                    pdfG.createPDF(getContext());
-//                } catch (FileNotFoundException e) {
-//                    e.printStackTrace();
-//
-//                }
-//            }
+            ftpMethodClass.ftpDownload("/public_html/assignments/8888/3. Sal/ExcelTest.xls", "sl.xls");
+            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 101);
+            }
+            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                try {
+                    pdfg.createPDF(getContext());
+                } catch (IOException e) {
+                    e.printStackTrace();
+
+                }
+            }
 
         }).start());
 
@@ -186,7 +181,6 @@ public class FragmentLoginRegister extends Fragment{
             ftp.ftpUpload(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/" + fileName, uploadExcelToServerPath);
 
         });
-
 
 
         //METODER TIL KAMERA------------------------------------------------------------

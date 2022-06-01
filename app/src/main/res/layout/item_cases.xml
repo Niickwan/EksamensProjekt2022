@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/caseListItemCaseBtn"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -13,11 +13,12 @@
         android:fillViewport="true">
 
         <LinearLayout
-            android:id="@+id/caseBtn"
+            android:id="@+id/openCaseBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
+            android:background="@drawable/design_black_bottom_line"
             android:orientation="vertical">
 
             <TextView
@@ -29,7 +30,8 @@
                 android:layout_marginRight="10dp"
                 android:text="Kundenavn"
                 android:textColor="#000"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/caseAddress_tv"
@@ -43,7 +45,7 @@
                 android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/orderNumber_tv"
+                android:id="@+id/orderNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -67,7 +69,8 @@
                     android:layout_marginRight="10dp"
                     android:text="Dato"
                     android:textColor="#000"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:textStyle="italic" />
 
                 <TextView
                     android:id="@+id/caseStatus_tv"
@@ -80,7 +83,8 @@
                     android:text="Status"
                     android:textAlignment="textEnd"
                     android:textColor="#000"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:textStyle="bold|italic" />
 
             </LinearLayout>
 

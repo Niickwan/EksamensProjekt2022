@@ -1,23 +1,47 @@
 package com.jmmnt.Controller.UI;
 
+import static android.view.KeyEvent.ACTION_DOWN;
+import static android.view.KeyEvent.KEYCODE_ENTER;
+
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+
+import com.google.android.material.textfield.TextInputLayout;
+import com.jmmnt.Entities.Assignment;
+import com.jmmnt.Entities.User;
 import com.jmmnt.Entities.UserContainer;
 import com.jmmnt.R;
+import com.jmmnt.UseCase.Adapters.SpinnerAdapter;
+import com.jmmnt.UseCase.GeneralUseCase;
+import com.jmmnt.UseCase.OperateAssignment;
+import com.jmmnt.UseCase.OperateDB;
 import com.jmmnt.databinding.FragmentAdminCreateOrderBinding;
+
+import org.apache.commons.net.examples.Main;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FragmentCreateOrder extends Fragment implements AdapterView.OnItemSelectedListener {
+public class FragmentCreateOrder extends Fragment {
 
     private FragmentAdminCreateOrderBinding binding;
+    private OperateAssignment oA = OperateAssignment.getInstance();
+    private String findCity = "";
+    private GeneralUseCase gUC = GeneralUseCase.getInstance();
+    private Assignment createNewAssignment;
+    private int userPicked;
+    private OperateDB operateDB = OperateDB.getInstance();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -28,21 +52,85 @@ public class FragmentCreateOrder extends Fragment implements AdapterView.OnItemS
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.createOrderBtn.setOnClickListener(v -> {
-            System.out.println("OPRET SAG"); //TODO sout
+        binding.createOrderBtn.setOnClickListener(v -> new Thread(() -> {
+            boolean isCaseInformationValid = isCreateNewCaseInformationValid();
+            if (isCaseInformationValid){
+                String orderNumber = binding.orderNumberEt.getEditText().getText().toString();
+                String customerName = binding.customerNameEt.getEditText().getText().toString();
+                String address = binding.addressEt.getEditText().getText().toString();
+                String postalCode = binding.postalCodeEt.getEditText().getText().toString();
+                String city = binding.cityEt.getEditText().getText().toString();
+                String status;
+
+                int userPicked = binding.chooseUserSpinner.getSelectedItemPosition();
+                //TODO userPicked skal fjernes - bliver instansvariable
+                if (userPicked == 0){
+                    status = "waiting";
+                    createNewAssignment = new Assignment(address,postalCode,city,status,orderNumber,customerName);
+                    operateDB.createNewAssignment(createNewAssignment);
+                }
+                else{
+                    status = "active";
+                    createNewAssignment = new Assignment(address,postalCode,city,status,orderNumber,customerName);
+                    operateDB.createNewAssignment(createNewAssignment, userPicked);
+                }
+
+                createNewAssignment = new Assignment(orderNumber, customerName, address, postalCode, city, LocalDate.now(), status, employeePicked);
+                operateDB.createNewAssignment(createNewAssignment);
+            }
+        }).start());
+
+        binding.postalCodeInnerEt.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                if (i == KEYCODE_ENTER && keyEvent.getAction() == ACTION_DOWN) {
+                    Thread t = new Thread(() -> {
+                        findCity = oA.getCityMatchingZipCode(binding.postalCodeEt.getEditText().getText().toString());
+                        if (!findCity.isEmpty()) {
+                            binding.cityEt.getEditText().setText(findCity);
+                        } else {
+                            gUC.toastAlert(getActivity(), getString(R.string.create_order_wrong_postalcode));
+                        }
+                    });
+                    t.start();
+                }
+                return false;
+            }
         });
 
-        List<String> spinnerArray =  new ArrayList<>();
-        spinnerArray.add(getString(R.string.fragment_admin_create_spinner_default)); //Default value //TODO kan den bruges til som afventer value?
-        for (int i = 1; i < UserContainer.getUsers().size(); i++) {
-            spinnerArray.add(UserContainer.getUsers().get(i).getFullName() + " " + UserContainer.getUsers().get(i).getPhonenumber());
-        }
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, spinnerArray);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        SpinnerAdapter adapter = new SpinnerAdapter(getContext(), android.R.layout.simple_spinner_item, UserContainer.getUsers());
         Spinner spinner = binding.chooseUserSpinner;
         spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(this);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                User user = (User) adapterView.getAdapter().getItem(position);
+                userPicked = user.getUserID();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapter) {  }
+        });
+    }
 
+    private boolean isCreateNewCaseInformationValid() {
+        boolean isCustomerNameValid = gUC.checkIfLetters(binding.customerNameEt.getEditText().getText().toString());
+        boolean isCityNameValid = gUC.checkIfLetters(binding.cityEt.getEditText().getText().toString());
+        boolean isInputFieldsEmpty = gUC.isFieldsEmpty(new TextInputLayout[]{
+                binding.orderNumberEt,
+                binding.customerNameEt,
+                binding.addressEt,
+                binding.postalCodeEt,
+                binding.cityEt});
+        if (isInputFieldsEmpty) {
+            gUC.toastAlert(getActivity(), getString(R.string.create_order_empty_fields));
+        } else if (!isCustomerNameValid) {
+            gUC.toastAlert(getActivity(), getString(R.string.create_order_invalid_customername));
+        } else if (!isCityNameValid) {
+            gUC.toastAlert(getActivity(), getString(R.string.create_order_invalid_cityname));
+        }
+        if (isCustomerNameValid && isCityNameValid && !isInputFieldsEmpty) return true;
+        return false;
     }
 
     @Override
@@ -51,13 +139,4 @@ public class FragmentCreateOrder extends Fragment implements AdapterView.OnItemS
         binding = null;
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        System.out.println("MEDARBEJDER VALGT: "+adapterView.getSelectedItem().toString()); //TODO sout
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
-    }
 }

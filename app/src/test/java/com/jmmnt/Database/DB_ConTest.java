@@ -2,6 +2,7 @@ package com.jmmnt.Database;
 
 import static org.junit.Assert.*;
 
+import com.jmmnt.Controller.Database.DB_Con;
 import com.jmmnt.Entities.User;
 
 import org.junit.Test;
@@ -35,5 +36,10 @@ public class DB_ConTest {
         assertTrue(db.isPhonenumberOccupied("44332211"));
     }
 
+
+    @Test
+    public void fillAssignmentContainer() throws SQLException {
+        assertTrue(db.fillAssignmentContainer());
+    }
 
 }

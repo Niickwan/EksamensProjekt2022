@@ -8,9 +8,11 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 import com.jmmnt.Controller.Database.DB_Con;
+import com.jmmnt.Entities.AssignmentContainer;
 import com.jmmnt.Entities.LoggedInUser;
 import com.jmmnt.Entities.User;
 import com.jmmnt.R;
+import com.jmmnt.UseCase.OperateDB;
 import com.jmmnt.databinding.FragmentAdminHomeBinding;
 import java.sql.SQLException;
 
@@ -19,6 +21,7 @@ public class FragmentAdminHome extends Fragment {
     private FragmentAdminHomeBinding binding;
     private FragmentPopupMenu fpm = FragmentPopupMenu.getInstance();
     private User user = LoggedInUser.getInstance().getUser();
+    private OperateDB oDB = OperateDB.getInstance();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -31,17 +34,23 @@ public class FragmentAdminHome extends Fragment {
 
         binding.createNewAssignmentBtn.setOnClickListener(view1 -> new Thread(() -> {
             try {
-                DB_Con.getInstance().fillUserContainer();
-            } catch (SQLException e) {
-                e.printStackTrace();
+                oDB.fillUserContainer();
             } finally {
                 getActivity().runOnUiThread(() -> NavHostFragment.findNavController(FragmentAdminHome.this).navigate(R.id.action_FragmentAdminHome_to_fragmentCreateOrder));
             }
         }).start());
 
-        binding.searchBtn.setOnClickListener(view1 -> {
-            NavHostFragment.findNavController(FragmentAdminHome.this).navigate(R.id.action_FragmentAdminHome_to_fragmentSearchCase);
-        });
+        binding.searchBtn.setOnClickListener(view1 -> new Thread(() -> {
+            try {
+                DB_Con.getInstance().fillAssignmentContainer();
+                System.out.println("jeg er det rigtige sted" + AssignmentContainer.getInstance().getAssignments());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                getActivity().runOnUiThread(() -> NavHostFragment.findNavController(FragmentAdminHome.this).navigate(R.id.action_FragmentAdminHome_to_fragmentSearchCase));
+            }
+
+        }).start());
     }
 
     @Override

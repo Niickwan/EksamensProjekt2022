@@ -14,7 +14,9 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp">
 
             <TextView
                 android:id="@+id/cutomerName"
@@ -22,7 +24,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:paddingLeft="5dp"
-                android:text="Kundenavn:"
+                android:text="@string/item_assignment_info_customername"
                 android:textColor="#000"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -109,7 +111,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:paddingLeft="5dp"
-                android:text="Adresse:"
+                android:text="@string/item_assignment_info_address"
                 android:textColor="#000"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -122,7 +124,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:paddingLeft="5dp"
-                android:text="Ordrenummer:"
+                android:text="@string/item_assignment_info_order_number"
                 android:textColor="#000"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -135,7 +137,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:paddingLeft="5dp"
-                android:text="Identifikation af installation:"
+                android:text="@string/item_assignment_info_identification_of_installation"
                 android:textColor="#000"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -147,14 +149,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="24dp"
                 android:paddingLeft="5dp"
-                android:text="Udført Af:"
+                android:text="@string/item_assignment_info_installed_by"
                 android:textColor="#000"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/orderNumber" />
+                app:layout_constraintTop_toBottomOf="@+id/identification" />
 
             <TextView
                 android:id="@+id/verifiedBy"
@@ -162,7 +163,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:paddingLeft="5dp"
-                android:text="Verificeret Af:"
+                android:text="@string/item_assignment_info_verified_by"
                 android:textColor="#000"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -173,6 +174,7 @@
                 android:id="@+id/installedBy_spinner"
                 android:layout_width="0dp"
                 android:layout_height="25dp"
+                android:background="@drawable/design_spinner"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 app:layout_constraintBottom_toBottomOf="@+id/installedBy"
@@ -184,6 +186,7 @@
                 android:id="@+id/verifiedBy_spinner"
                 android:layout_width="0dp"
                 android:layout_height="25dp"
+                android:background="@drawable/design_spinner"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 app:layout_constraintBottom_toBottomOf="@+id/verifiedBy"
@@ -197,7 +200,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:paddingLeft="5dp"
-                android:text="Dato:"
+                android:text="@string/item_assignment_info_date"
                 android:textColor="#000"
                 android:textSize="18sp"
                 android:textStyle="bold"

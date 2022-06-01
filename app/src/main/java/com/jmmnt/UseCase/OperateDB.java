@@ -2,8 +2,11 @@ package com.jmmnt.UseCase;
 
 import com.jmmnt.Controller.Database.DB_Con;
 import com.jmmnt.Entities.Assignment;
+import com.jmmnt.Entities.AssignmentContainer;
 import com.jmmnt.Entities.User;
+import com.jmmnt.Entities.UserContainer;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class OperateDB {
@@ -41,6 +44,9 @@ public class OperateDB {
     public boolean updateUserInDB(User user) {
         return db_con.updateUser(user);
     }
+    public boolean createNewAssignment(Assignment assignment, int ID) {
+        return db_con.createNewAssignment(assignment, ID);
+    }
 
     public boolean createNewAssignment(Assignment assignment) {
         return db_con.createNewAssignment(assignment);
@@ -48,5 +54,10 @@ public class OperateDB {
 
     public ArrayList<String> getAssignmentStructure(String orderNr) {
         return db_con.getAssignmentStructure(orderNr);
+    }
+
+    public void fillUserContainer(){
+        db_con.fillUserContainer();
+        UserContainer.getUsers().set(0, new User());
     }
 }
