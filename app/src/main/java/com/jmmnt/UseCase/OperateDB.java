@@ -4,6 +4,7 @@ import com.jmmnt.Controller.Database.DB_Con;
 import com.jmmnt.Entities.Assignment;
 import com.jmmnt.Entities.AssignmentContainer;
 import com.jmmnt.Entities.User;
+import com.jmmnt.Entities.UserContainer;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -52,8 +53,8 @@ public class OperateDB {
         return db_con.getAssignmentStructure(orderNr);
     }
 
-    public void fillAssignmentContainer() throws SQLException {
-        db_con.fillAssignmentContainer();
+    public void fillUserContainer(){
+        db_con.fillUserContainer();
+        UserContainer.getUsers().set(0, new User());
     }
-
 }

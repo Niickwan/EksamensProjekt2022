@@ -12,6 +12,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
@@ -20,10 +21,13 @@ import com.jmmnt.Entities.Assignment;
 import com.jmmnt.Entities.User;
 import com.jmmnt.Entities.UserContainer;
 import com.jmmnt.R;
+import com.jmmnt.UseCase.Adapters.SpinnerAdapter;
 import com.jmmnt.UseCase.GeneralUseCase;
 import com.jmmnt.UseCase.OperateAssignment;
 import com.jmmnt.UseCase.OperateDB;
 import com.jmmnt.databinding.FragmentAdminCreateOrderBinding;
+
+import org.apache.commons.net.examples.Main;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -36,7 +40,7 @@ public class FragmentCreateOrder extends Fragment {
     private String findCity = "";
     private GeneralUseCase gUC = GeneralUseCase.getInstance();
     private Assignment createNewAssignment;
-    private int employeePicked;
+    private int userPicked;
     private OperateDB operateDB = OperateDB.getInstance();
 
     @Override
@@ -57,13 +61,12 @@ public class FragmentCreateOrder extends Fragment {
                 String postalCode = binding.postalCodeEt.getEditText().getText().toString();
                 String city = binding.cityEt.getEditText().getText().toString();
                 String status;
-                int userPicked = binding.chooseUserSpinner.getSelectedItemPosition();
 
-                if (userPicked == 0) status = "waiting";
+                if (userPicked == -1) status = "waiting";
                 else status = "active";
 
-                createNewAssignment = new Assignment(orderNumber, customerName, address, postalCode, city, LocalDate.now(), status, employeePicked);
-                operateDB.createNewAssignment(createNewAssignment); //TODO
+                createNewAssignment = new Assignment(orderNumber, customerName, address, postalCode, city, LocalDate.now(), status, userPicked);
+                operateDB.createNewAssignment(createNewAssignment);
             }
         }).start());
 
@@ -85,18 +88,19 @@ public class FragmentCreateOrder extends Fragment {
             }
         });
 
-        List<String> spinnerArray = new ArrayList<>();
-        spinnerArray.add(getString(R.string.fragment_admin_create_spinner_default)); //Default value //TODO kan den bruges til som afventer value?
-        for (int i = 1; i < UserContainer.getUsers().size(); i++) {
-            if (UserContainer.getUsers().get(i).getPhonenumber() != null)
-                spinnerArray.add(UserContainer.getUsers().get(i).getFullName() + " " + UserContainer.getUsers().get(i).getPhonenumber());
-            else
-                spinnerArray.add(UserContainer.getUsers().get(i).getFullName());
-        }
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, spinnerArray);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        SpinnerAdapter adapter = new SpinnerAdapter(getContext(), android.R.layout.simple_spinner_item, UserContainer.getUsers());
         Spinner spinner = binding.chooseUserSpinner;
         spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                User user = (User) adapterView.getAdapter().getItem(position);
+                userPicked = user.getUserID();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapter) {  }
+        });
     }
 
     private boolean isCreateNewCaseInformationValid() {

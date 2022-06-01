@@ -53,6 +53,14 @@ public class User {
         this.userID = userID;
     }
 
+    public User() {
+        this.firstname = "Afvent eller vælg medarbejder";
+        this.surname = "";
+        this.phonenumber = "";
+        this.email = "";
+        this.userID = -1;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -96,5 +104,13 @@ public class User {
 
     public int getUserID() {
         return userID;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public void setUserID(int userID) {
+        this.userID = userID;
     }
 }
