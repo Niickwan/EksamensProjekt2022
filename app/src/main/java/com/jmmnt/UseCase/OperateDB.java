@@ -2,8 +2,10 @@ package com.jmmnt.UseCase;
 
 import com.jmmnt.Controller.Database.DB_Con;
 import com.jmmnt.Entities.Assignment;
+import com.jmmnt.Entities.AssignmentContainer;
 import com.jmmnt.Entities.User;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class OperateDB {
@@ -49,4 +51,9 @@ public class OperateDB {
     public ArrayList<String> getAssignmentStructure(String orderNr) {
         return db_con.getAssignmentStructure(orderNr);
     }
+
+    public void fillAssignmentContainer() throws SQLException {
+        db_con.fillAssignmentContainer();
+    }
+
 }

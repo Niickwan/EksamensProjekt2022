@@ -39,9 +39,16 @@ public class FragmentAdminHome extends Fragment {
             }
         }).start());
 
-        binding.searchBtn.setOnClickListener(view1 -> {
-            NavHostFragment.findNavController(FragmentAdminHome.this).navigate(R.id.action_FragmentAdminHome_to_fragmentSearchCase);
-        });
+        binding.searchBtn.setOnClickListener(view1 -> new Thread(() -> {
+            try {
+                DB_Con.getInstance().fillAssignmentContainer();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                getActivity().runOnUiThread(() -> NavHostFragment.findNavController(FragmentAdminHome.this).navigate(R.id.action_FragmentAdminHome_to_fragmentSearchCase));
+            }
+
+        }).start());
     }
 
     @Override
