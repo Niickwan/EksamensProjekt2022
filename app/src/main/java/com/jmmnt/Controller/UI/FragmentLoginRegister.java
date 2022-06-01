@@ -1,4 +1,4 @@
-package com.jmmnt.UI;
+package com.jmmnt.Controller.UI;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -52,9 +52,9 @@ public class FragmentLoginRegister extends Fragment{
     private FragmentLoginRegisterBinding binding;
     private ActivityResultLauncher<Intent> activityResultLauncher;
     private FTPClientFunctions ftpMethodClass = new FTPClientFunctions();
+    private PDFGenerator pdfg = new PDFGenerator(new Assignment(1,1,"s","4700","s","s", LocalDate.now(),"s"));
     //TODO pdfGenerator skal tage det assignment som brugeren er inde på.
     //TODO SKAL INDSÆTTES I DEN RIGTIGE KLASSE
-    private PDFGenerator pdfG = new PDFGenerator(new Assignment(1,1,"snerlevej 191", "4700", "aktiv","gh459", TimeStamp.getCurrentTime(),"Super Brugsen"));
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -91,13 +91,13 @@ public class FragmentLoginRegister extends Fragment{
 //        });
 
         binding.FTPButton.setOnClickListener(v -> new Thread(() -> {
-            ftpMethodClass.ftpDownload("/TjekListeNy (7).xls", "sl.xls");
+            ftpMethodClass.ftpDownload("/public_html/assignments/8888/3. Sal/ExcelTest.xls", "sl.xls");
             if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 101);
             }
             if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                 try {
-                    pdfG.createPDF(getContext());
+                    pdfg.createPDF(getContext());
                 } catch (IOException e) {
                     e.printStackTrace();
 

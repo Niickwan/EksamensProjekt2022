@@ -67,8 +67,8 @@ public class FTPClientFunctions extends AppCompatActivity{
     }
 
     public boolean ftpUpload(String srcFilePath, String desFileName) {
-        isUploadSuccessful = false;
-        new Thread(() -> {
+        boolean isUploadSuccessful = false;
+
             try {
                 boolean b = ftpConnect(host, username, password, port);
                 System.out.println(b);
@@ -84,7 +84,7 @@ public class FTPClientFunctions extends AppCompatActivity{
                 e.printStackTrace();
                 Log.d(TAG, "upload failed: " + e);
             }
-        }).start();
+
         return isUploadSuccessful;
     }
 
