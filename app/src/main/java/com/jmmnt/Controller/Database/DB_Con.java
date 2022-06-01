@@ -31,7 +31,7 @@ public class DB_Con {
     private final String format = "yyyy-MM-dd";
 
 
-    private boolean uploadMySQLCall(String sqlString){
+    private boolean uploadMySQLCall(String sqlString) {
         int SQLCallSucceded = 0;
         try {
             connection = connection();
@@ -43,9 +43,9 @@ public class DB_Con {
             closeConnection(connection);
         }
         return SQLCallSucceded == 1;
-     }
+    }
 
-    private void closeConnection(Connection connection){
+    private void closeConnection(Connection connection) {
         try {
             preStmt.close();
             connection.close();
@@ -91,18 +91,17 @@ public class DB_Con {
     }
 
     public boolean fillAssignmentContainer() throws SQLException {
-        Date sqlDate;
         LocalDate localDate;
         boolean isUsed = false;
         AssignmentContainer assignmentContainer = AssignmentContainer.getInstance();
-        if (!assignmentContainer.getAssignments().isEmpty()) assignmentContainer.getAssignments().clear();
+        if (!assignmentContainer.getAssignments().isEmpty())
+            assignmentContainer.getAssignments().clear();
         String fill = "SELECT Assignment_ID, Customer_Name, Order_number, Address, Postal_Code, City, Status, Status_Date FROM Assignment ORDER BY Assignment_ID";
         connection = connection();
         stmt = connection.createStatement();
         rs = stmt.executeQuery(fill);
         while (rs.next()) {
             isUsed = true;
-            sqlDate = Date.valueOf(rs.getDate("Status_Date").toString());
             localDate = LocalDate.parse(rs.getDate("Status_Date").toString());
             assignmentContainer.addAssignmentsToContainer(new Assignment(
                     rs.getInt("Assignment_ID"),
@@ -149,19 +148,19 @@ public class DB_Con {
     }
 
     public boolean createNewUser(User user) {
-            connection = connection();
-            String userInfo = "INSERT INTO User (Email, Password, Firstname, Surname, User_Rights, Phonenumber) "
-                    + "VALUES ('"
-                    + user.getEmail() + "', '"
-                    + user.getPassword() + "', '"
-                    + user.getFirstname() + "', '"
-                    + user.getSurname() + "', '"
-                    + user.getUserRights() + "', '"
-                    + user.getPhonenumber() + "')";
+        connection = connection();
+        String userInfo = "INSERT INTO User (Email, Password, Firstname, Surname, User_Rights, Phonenumber) "
+                + "VALUES ('"
+                + user.getEmail() + "', '"
+                + user.getPassword() + "', '"
+                + user.getFirstname() + "', '"
+                + user.getSurname() + "', '"
+                + user.getUserRights() + "', '"
+                + user.getPhonenumber() + "')";
 
-            return uploadMySQLCall(userInfo);
+        return uploadMySQLCall(userInfo);
     }
-  
+
     public boolean isPhonenumberOccupied(String phoneNumber) {
         boolean isPhoneNumberAvailable = false;
         String MySQL = "SELECT * FROM User WHERE Phonenumber = '" + phoneNumber + "'";
@@ -179,6 +178,7 @@ public class DB_Con {
 
         return isPhoneNumberAvailable;
     }
+
     public boolean isEmailOccupied(String email) {
         boolean isEmailAvailable = false;
         String MySQL = "SELECT * FROM User WHERE Email = '" + email + "'";
@@ -196,20 +196,20 @@ public class DB_Con {
 
         return isEmailAvailable;
     }
-   
+
 
     public boolean updateUser(User user) {
         connection = connection();
         String updateUser = "UPDATE User " +
-                "SET Email = '"+user.getEmail()+"', " +
-                "Password = '"+user.getPassword()+"', " +
-                "Firstname = '"+user.getFirstname()+"', " +
-                "Surname = '"+user.getSurname()+"', " +
-                "Phonenumber = '"+user.getPhonenumber()+"' " +
-                "WHERE User_ID = "+LoggedInUser.getInstance().getUser().getUserID()+"";
+                "SET Email = '" + user.getEmail() + "', " +
+                "Password = '" + user.getPassword() + "', " +
+                "Firstname = '" + user.getFirstname() + "', " +
+                "Surname = '" + user.getSurname() + "', " +
+                "Phonenumber = '" + user.getPhonenumber() + "' " +
+                "WHERE User_ID = " + LoggedInUser.getInstance().getUser().getUserID() + "";
         return uploadMySQLCall(updateUser);
     }
-  
+
     public boolean createNewAssignment(Assignment assignment) {  //TODO INSERT INTO SKAL RETTES TIL DEET NYE ASSIGMNET OBJEKT
         connection = connection();
         String userInfo = "INSERT INTO Assignment (Foreman_ID, Address, Postal_Code, Status, Order_Number, Customer_Name) "
@@ -236,5 +236,5 @@ public class DB_Con {
         }
         return arr;
     }
-   
+
 }

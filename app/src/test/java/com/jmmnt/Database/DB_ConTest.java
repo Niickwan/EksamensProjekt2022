@@ -36,11 +36,10 @@ public class DB_ConTest {
         assertTrue(db.isPhonenumberOccupied("44332211"));
     }
 
-    /*
+
     @Test
     public void fillAssignmentContainer() throws SQLException {
-        assertTrue(db.fillAssignmentContainer);
+        assertTrue(db.fillAssignmentContainer());
     }
-     */
 
 }
