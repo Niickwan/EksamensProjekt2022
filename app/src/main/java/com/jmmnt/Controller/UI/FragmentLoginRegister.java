@@ -111,6 +111,76 @@ public class FragmentLoginRegister extends Fragment{
 
         });
 
+        binding.writeExcelFile.setOnClickListener(v -> {
+            // VARIABLES FROM CURRENT FOLDER AND DOCUMENT
+            String fileName = "ExcelTest.xls";
+            String folder = "/public_html/assignments/8888/3. Sal/";
+
+
+            // TEST DATA //
+            ArrayList<List<Object>> samletListe = new ArrayList<>();
+
+            List<Object> general = new ArrayList<>();
+            general.add(new Questions("Tavlen", 2, "Hvad sker der?"));
+            general.add(new Questions("Elskab", 1, "Kom nu"));
+
+            List<Object> electricalPanel = new ArrayList<>();
+            electricalPanel.add(new Questions("El", 3, "Pas på"));
+            electricalPanel.add(new Questions("Test", 2, "Hallo"));
+
+            List<Object> installation = new ArrayList<>();
+            installation.add(new Questions("Installation", 3, "Pas på"));
+            installation.add(new Questions("Test Install", 3, "Hallo"));
+
+            List<Object> protection = new ArrayList<>();
+            protection.add(new Questions("Prot", 2, "Pas på"));
+            protection.add(new Questions("Test Prot", 2, "Hallo"));
+
+            List<Object> error = new ArrayList<>();
+            error.add(new Questions("Error", 1, "Pas på"));
+            error.add(new Questions("Test Error", 2, "Hallo"));
+
+            List<Object> section = new ArrayList<>();
+            section.add(new Questions("Section Section", 3, "Pas på"));
+            section.add(new Questions("Test Section", 1, "Hallo"));
+
+            List<Object> circuitDetailsResults = new ArrayList<>();
+            circuitDetailsResults.add(new CircuitDetails("Tavlen", "400", "Lampe", "6", "500", 1, "340", "20"));
+            circuitDetailsResults.add(new CircuitDetails("Stik", "40", "kontakt", "3", "300", 2, "34", "2"));
+
+            List<Object> resistance = new ArrayList<>();
+            resistance.add(new TransitionResistance(5.2));
+
+            List<Object> voltageDropResults = new ArrayList<>();
+            voltageDropResults.add(new ShortCircuitCurrentAndVoltageDrop("Elskab", "lk", "Kælderen", "1.sal", "560", "Kælderen"));
+            voltageDropResults.add(new ShortCircuitCurrentAndVoltageDrop("Fryser", "lk", "Stue", "4.sal", "60", "Stue"));
+
+            List<Object> testingRCDResults = new ArrayList<>();
+            testingRCDResults.add(new TestingRCD("Test",1,"res1","res2","res3","res4","res5","res6"));
+            testingRCDResults.add(new TestingRCD("Test",1,"res1","res2","res3","res4","res5","res6"));
+
+            samletListe.add(general);
+            samletListe.add(electricalPanel);
+            samletListe.add(installation);
+            samletListe.add(protection);
+            samletListe.add(error);
+            samletListe.add(section);
+            samletListe.add(circuitDetailsResults);
+            samletListe.add(resistance);
+            samletListe.add(testingRCDResults);
+            samletListe.add(voltageDropResults);
+
+            //END TEST DATA //
+
+
+            CreateExcelFile c = new CreateExcelFile();
+            c.createExcelSheet(fileName, samletListe,"idfjiofdjgodjfoi");
+
+            FTPClientFunctions ftp = new FTPClientFunctions();
+            String uploadExcelToServerPath = folder + fileName;
+            ftp.ftpUpload(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/" + fileName, uploadExcelToServerPath);
+
+        });
 
 
         //METODER TIL KAMERA------------------------------------------------------------
