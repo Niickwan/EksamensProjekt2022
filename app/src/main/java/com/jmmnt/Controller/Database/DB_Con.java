@@ -101,7 +101,7 @@ public class DB_Con {
         AssignmentContainer assignmentContainer = AssignmentContainer.getInstance();
         if (!assignmentContainer.getAssignments().isEmpty())
             assignmentContainer.getAssignments().clear();
-        String fill = "SELECT Assignment_ID, Customer_Name, Order_number, Address, Postal_Code, City, Status, Status_Date FROM Assignment ORDER BY Assignment_ID";
+        String fill = "SELECT Assignment_ID, Customer_Name, Order_number, Address, Postal_Code, City, Status, Status_Date FROM Assignment";
         connection = connection();
         stmt = connection.createStatement();
         rs = stmt.executeQuery(fill);
@@ -117,6 +117,7 @@ public class DB_Con {
                     rs.getString("City"),
                     rs.getString("Status"),
                     localDate));
+            System.out.println(localDate);
         }
         connection.close();
         stmt.close();

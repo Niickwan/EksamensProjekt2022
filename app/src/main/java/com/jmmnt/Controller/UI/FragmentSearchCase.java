@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.jmmnt.Entities.Assignment;
+import com.jmmnt.Entities.AssignmentContainer;
 import com.jmmnt.R;
 import com.jmmnt.UseCase.Adapters.SearchCaseViewAdapter;
 import com.jmmnt.UseCase.GeneralUseCase;
@@ -27,6 +28,7 @@ public class FragmentSearchCase extends Fragment {
     private FragmentAdminSearchCaseBinding binding;
     private RecyclerView recyclerView;
     private List<Assignment> assignments;
+    private AssignmentContainer assignmentContainer = AssignmentContainer.getInstance();
     private GeneralUseCase gUC = GeneralUseCase.getInstance();
     private OperateAssignment operateAssignment = OperateAssignment.getInstance();
     private static List<Assignment> assignmentsSorted = new ArrayList<>();
@@ -65,7 +67,7 @@ public class FragmentSearchCase extends Fragment {
         binding.checkBoxSearchUserCases.setChecked(true);
 
         //Sorting assignment by date and if checkbox is checked
-        sortAssignments(assignments);
+        sortAssignments(assignmentContainer.getAssignments());
 
         recyclerView = getActivity().findViewById(R.id.caseListView);
         SearchCaseViewAdapter[] sva = {new SearchCaseViewAdapter(assignmentsSorted, this)};
@@ -76,7 +78,7 @@ public class FragmentSearchCase extends Fragment {
         View.OnClickListener clicked = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                assignmentsSorted = sortAssignments(assignments);
+                assignmentsSorted = sortAssignments(assignmentContainer.getAssignments());
                 sva[0] = new SearchCaseViewAdapter(assignmentsSorted, FragmentSearchCase.this);
                 recyclerView.setAdapter(sva[0]);
                 sva[0].notifyItemInserted(assignmentsSorted.size() - 1);

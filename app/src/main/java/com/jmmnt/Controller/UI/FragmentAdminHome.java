@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 import com.jmmnt.Controller.Database.DB_Con;
+import com.jmmnt.Entities.AssignmentContainer;
 import com.jmmnt.Entities.LoggedInUser;
 import com.jmmnt.Entities.User;
 import com.jmmnt.R;
@@ -42,6 +43,7 @@ public class FragmentAdminHome extends Fragment {
         binding.searchBtn.setOnClickListener(view1 -> new Thread(() -> {
             try {
                 DB_Con.getInstance().fillAssignmentContainer();
+                System.out.println("jeg er det rigtige sted" + AssignmentContainer.getInstance().getAssignments());
             } catch (SQLException e) {
                 e.printStackTrace();
             } finally {
