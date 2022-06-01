@@ -36,6 +36,7 @@ import com.jmmnt.databinding.FragmentLoginRegisterBinding;
 import org.apache.commons.net.ntp.TimeStamp;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class FragmentLoginRegister extends Fragment{
 
@@ -86,14 +87,14 @@ public class FragmentLoginRegister extends Fragment{
 //        });
 
         binding.FTPButton.setOnClickListener(v -> new Thread(() -> {
-            //ftpMethodClass.ftpDownload("/testl.xls", "lllll.xls");
+            ftpMethodClass.ftpDownload("/TjekListeNy (7).xls", "sl.xls");
             if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 101);
             }
             if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                 try {
                     pdfG.createPDF(getContext());
-                } catch (FileNotFoundException e) {
+                } catch (IOException e) {
                     e.printStackTrace();
 
                 }

@@ -66,7 +66,7 @@ public class FTPClientFunctions extends AppCompatActivity{
         return false;
     }
 
-    public boolean ftpUpload(String srcFilePath, String desFileName, String desDirectory, Context context) {
+    public boolean ftpUpload(String srcFilePath, String desFileName) {
         boolean status = false;
         try {
             FileInputStream srcFileStream = new FileInputStream(srcFilePath);
@@ -123,7 +123,7 @@ public class FTPClientFunctions extends AppCompatActivity{
                 createDirectory(mFTPClient, directory+"/pictures");
 
                 ftpUpload(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-                        + "/pics/" + filename, filename, directory+"/pictures", null);
+                        + "/pics/" + filename, filename);
 
                 file.delete();
 

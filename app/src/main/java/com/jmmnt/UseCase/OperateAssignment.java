@@ -42,6 +42,7 @@ import jxl.Cell;
 import jxl.CellType;
 import jxl.Sheet;
 import jxl.Workbook;
+import jxl.WorkbookSettings;
 import jxl.read.biff.BiffException;
 
 public class OperateAssignment {
@@ -162,8 +163,10 @@ public class OperateAssignment {
         File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
         File inputWorkbook = new File(path, fileName);
         Workbook w;
+        WorkbookSettings ws = new WorkbookSettings();
+        ws.setEncoding("Cp1252");
         try {
-            w = Workbook.getWorkbook(inputWorkbook);
+            w = Workbook.getWorkbook(inputWorkbook, ws);
             // Get the first sheet
             Sheet sheet = w.getSheet(0);
             // Loop over first 10 column and lines
@@ -182,6 +185,7 @@ public class OperateAssignment {
 
                 }
             }
+            w.close();
         } catch (BiffException | IOException e) {
             e.printStackTrace();
         }
