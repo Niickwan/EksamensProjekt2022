@@ -5,10 +5,35 @@ import java.util.ArrayList;
 public class AssignmentContainer {
     private ArrayList<Assignment> assignmentList = new ArrayList<>();
 
-    public ArrayList<Assignment> getAssignmentList() {
-        return assignmentList;
+    private ArrayList<Assignment> assignments;
+    private static AssignmentContainer as;
+    private static int created = 0;
+
+    private AssignmentContainer() {
+        assignments = new ArrayList<>();
     }
 
+    public void addAssignmentsToContainer(Assignment assignment) {
+        this.assignmentList.add(assignment);
+    }
+
+    public ArrayList<Assignment> getAssignments() {
+        return assignments;
+    }
+
+    public static AssignmentContainer getInstance() {
+        if (created == 0) {
+            created = 1;
+            as = new AssignmentContainer();
+            return as;
+        } else
+            return as;
+    }
+
+    /*public ArrayList<Assignment> getAssignmentList() {
+        return assignmentList;
+    }
+     */
     //TODO skal slettes, bruges til test
 //    public AssignmentContainer(){
 //        assignmentList.add(new Assignment(new Customer("lars sørensen"),
