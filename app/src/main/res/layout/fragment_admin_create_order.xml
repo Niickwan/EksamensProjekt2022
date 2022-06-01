@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_color_zealand"
-    tools:context=".UI.FragmentCreateOrder">
+    tools:context=".Controller.UI.FragmentCreateOrder">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -31,6 +31,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="25dp"
                     android:layout_marginTop="16dp"
+                    android:editable="false"
                     android:text="@string/fragment_admin_create_order_customer_info"
                     android:textColor="@color/darkblue"
                     android:textSize="34sp"
@@ -150,7 +151,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="32dp"
                     android:layout_marginBottom="50dp"
-                    android:background="@drawable/design_button"
+                    android:background="@drawable/design_button_darkblue"
                     android:text="@string/fragment_admin_create_button"
                     android:theme="@style/EditTextTheme"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -171,10 +172,11 @@
                     app:layout_constraintTop_toBottomOf="@+id/address_et">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/postalCode_inner_et"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/fragment_admin_create_order_postal_code"
-                        android:inputType="textPostalAddress" />
+                        android:inputType="number" />
                 </com.google.android.material.textfield.TextInputLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>

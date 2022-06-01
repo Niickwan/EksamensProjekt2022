@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/design_button">
+    android:background="@drawable/design_button_darkblue">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/floor_et"
@@ -34,7 +34,7 @@
         android:id="@+id/cancel_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/design_button"
+        android:background="@drawable/design_button_darkblue"
         android:text="Annuller"
         app:layout_constraintStart_toStartOf="@+id/floor_et"
         app:layout_constraintTop_toBottomOf="@+id/floor_et" />
@@ -43,7 +43,7 @@
         android:id="@+id/rename_floor_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/design_button"
+        android:background="@drawable/design_button_darkblue"
         android:text="Opret"
         app:layout_constraintEnd_toEndOf="@+id/floor_et"
         app:layout_constraintTop_toBottomOf="@+id/floor_et" />

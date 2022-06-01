@@ -1,27 +1,70 @@
 package com.jmmnt.Entities;
 
-import org.apache.commons.net.ntp.TimeStamp;
+import java.time.LocalDate;
 
 public class Assignment {
+
     private int assignmentId;
-    private int foremanId;
+    private int userID;
     private String address;
     private String postalCode;
+    private String city;
     private String status;
     private String orderNumber;
-    private TimeStamp finishedOn;
     private String customerName;
+    private LocalDate statusDate;
+
+    private String installedBy;
+    private String verifiedBy;
+    private String identificationOfInstallation;
 
     public Assignment(int assignmentId, int foremanId, String address, String postalCode,
-                      String status, String orderNumber, TimeStamp finishedOn, String customerName) {
+                      String status, String orderNumber,LocalDate statusDate, String customerName) {
         this.assignmentId = assignmentId;
-        this.foremanId = foremanId;
+        this.userID = foremanId;
         this.address = address;
         this.postalCode = postalCode;
         this.status = status;
         this.orderNumber = orderNumber;
-        this.finishedOn = finishedOn;
         this.customerName = customerName;
+        this.statusDate = statusDate;
+    }
+
+    public Assignment(int assignmentId, String address, String postalCode, String status, String orderNumber, LocalDate statusDate, String customerName, int userID) {
+        this.assignmentId = assignmentId;
+        this.address = address;
+        this.postalCode = postalCode;
+        this.status = status;
+        this.orderNumber = orderNumber;
+        this.statusDate = statusDate;
+        this.customerName = customerName;
+        this.userID = userID;
+    }
+
+    public Assignment(String orderNumber, String customerName, String address, String postalCode, String city, LocalDate statusDate, String status, int userID) {
+        this.orderNumber = orderNumber;
+        this.customerName = customerName;
+        this.address = address;
+        this.postalCode = postalCode;
+        this.city = city;
+        this.statusDate = statusDate;
+        this.status = status;
+        this.userID = userID;
+    }
+
+    @Override
+    public String toString() {
+        return "Assignment{" +
+                "assignmentId=" + assignmentId +
+                ", userID=" + userID +
+                ", address='" + address + '\'' +
+                ", postalCode='" + postalCode + '\'' +
+                ", city='" + city + '\'' +
+                ", status='" + status + '\'' +
+                ", orderNumber='" + orderNumber + '\'' +
+                ", customerName='" + customerName + '\'' +
+                ", statusDate=" + statusDate +
+                '}';
     }
 
     public int getAssignmentId() {
@@ -32,12 +75,12 @@ public class Assignment {
         this.assignmentId = assignmentId;
     }
 
-    public int getForemanId() {
-        return foremanId;
+    public int getUserID() {
+        return userID;
     }
 
-    public void setForemanId(int foremanId) {
-        this.foremanId = foremanId;
+    public void setUserID(int userID) {
+        this.userID = userID;
     }
 
     public String getAddress() {
@@ -72,19 +115,51 @@ public class Assignment {
         this.orderNumber = orderNumber;
     }
 
-    public TimeStamp getFinishedOn() {
-        return finishedOn;
-    }
-
-    public void setFinishedOn(TimeStamp finishedOn) {
-        this.finishedOn = finishedOn;
-    }
-
     public String getCustomerName() {
         return customerName;
     }
 
     public void setCustomerName(String customerName) {
         this.customerName = customerName;
+    }
+
+    public LocalDate getStatusDate() {
+        return statusDate;
+    }
+
+    public void setStatusDate(LocalDate statusDate) {
+        this.statusDate = statusDate;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getInstalledBy() {
+        return installedBy;
+    }
+
+    public void setInstalledBy(String installedBy) {
+        this.installedBy = installedBy;
+    }
+
+    public String getVerifiedBy() {
+        return verifiedBy;
+    }
+
+    public void setVerifiedBy(String verifiedBy) {
+        this.verifiedBy = verifiedBy;
+    }
+
+    public String getIdentificationOfInstallation() {
+        return identificationOfInstallation;
+    }
+
+    public void setIdentificationOfInstallation(String identificationOfInstallation) {
+        this.identificationOfInstallation = identificationOfInstallation;
     }
 }

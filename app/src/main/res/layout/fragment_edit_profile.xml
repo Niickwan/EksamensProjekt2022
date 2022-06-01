@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_color_zealand"
-    tools:context=".UI.FragmentPopupMenu">
+    tools:context=".Controller.UI.FragmentPopupMenu">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -132,7 +132,7 @@
                     android:layout_marginStart="161dp"
                     android:layout_marginTop="32dp"
                     android:layout_marginEnd="162dp"
-                    android:background="@drawable/design_button"
+                    android:background="@drawable/design_button_darkblue"
                     android:text="@string/popup_menu_edit_profile_save_button"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

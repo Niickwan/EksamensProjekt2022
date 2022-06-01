@@ -37,6 +37,10 @@ import org.apache.commons.net.ntp.TimeStamp;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 public class FragmentLoginRegister extends Fragment{
 

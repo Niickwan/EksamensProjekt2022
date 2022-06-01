@@ -1,6 +1,6 @@
 package com.jmmnt.UseCase;
 
-import com.jmmnt.Database.DB_Con;
+import com.jmmnt.Controller.Database.DB_Con;
 import com.jmmnt.Entities.Assignment;
 import com.jmmnt.Entities.User;
 

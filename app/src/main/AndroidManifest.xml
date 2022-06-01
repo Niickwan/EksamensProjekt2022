@@ -15,19 +15,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EksamensProjekt2022">
         <activity
-            android:name=".UI.ActivityUser"
+            android:name=".Controller.UI.ActivityUser"
             android:screenOrientation="portrait"
             android:exported="false"
             android:label="@string/title_activity_user"
             android:theme="@style/Theme.EksamensProjekt2022.NoActionBar" />
         <activity
-            android:name=".UI.ActivityAdmin"
+            android:name=".Controller.UI.ActivityAdmin"
             android:screenOrientation="portrait"
             android:exported="false"
             android:label="@string/title_activity_admin"
             android:theme="@style/Theme.EksamensProjekt2022.NoActionBar" />
         <activity
-            android:name=".UI.ActivityLogin"
+            android:name=".Controller.UI.ActivityLogin"
             android:screenOrientation="portrait"
             android:exported="true"
             android:label="@string/app_icon_name"

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_color_zealand"
-    tools:context=".UI.FragmentLoginHome">
+    tools:context=".Controller.UI.FragmentLoginHome">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/email_Et"
@@ -78,7 +78,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
-        android:background="@drawable/design_button"
+        android:background="@drawable/design_button_darkblue"
         android:text="@string/fragment_login_Login_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"

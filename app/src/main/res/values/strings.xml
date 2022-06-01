@@ -74,6 +74,14 @@
     <!-- Login -->
     <string name="fragment_login_wrong_input">Forkert login</string>
     <string name="fragment_login_fill_out_fields">Udfyld felter</string>
+    <!-- create Order -->
+    <string name="create_order_wrong_postalcode">Ugyldig postnummer</string>
+    <string name="create_order_empty_fields">Udfyld alle felter</string>
+    <string name="create_order_invalid_customername">Kundenavn må kun indeholde bogstaver</string>
+    <string name="create_order_invalid_cityname">By må kun indeholde bogstaver</string>
+    <!-- checklist -->
+    <string name="adding_new_question_failed" />
+
     <!-- Popup menu edit profile -->
     <string name="popup_menu_edit_password_not_matching">Password matcher ikke</string>
     <string name="popup_menu_edit_profile_confirm_update">Bruger opdateret</string>
@@ -83,8 +91,96 @@
     <string name="popup_menu_edit_profile_eamil_and_phone_is_empty">Udfyld email eller telefonnummer</string>
     <string name="popup_menu_edit_profile_update_failed">Redigering fejlede</string>
 
+    <!-- Circuit Details - Dropdown -->
+    <string name="circuit_details_group">Gruppe</string>
+    <string name="circuit_details_ob">OB (ln)</string>
+    <string name="circuit_details_characteristics">Karakteristik</string>
+    <string name="circuit_details_cross_section">Tværsnit</string>
+    <string name="circuit_details_max_ob">Maks. OB</string>
+    <string name="circuit_details_isolation">Isolation</string>
+    <string name="circuit_details_button_delete">X</string>
+
+    <!-- Short-circuit current and voltage drop -->
+    <string name="short_circuit_group_title">Kortslutningsstrøm</string>
+    <string name="short_circuit_group_name">Gruppe</string>
+    <string name="short_circuit_lk">lk</string>
+    <string name="short_circuit_measurement_on_spot">Målt i punkt</string>
+    <string name="short_circuit_group_title_voltage_drop">Spændingsfald</string>
+    <string name="short_circuit_group_name_voltage_drop">Gruppe</string>
+    <string name="short_circuit_delta_voltage">ΔU</string>
+    <string name="short_circuit_measurement_on_location">Målt i punkt</string>
+
+    <!-- RCD -->
+    <string name="rcd_name">RCD</string>
+    <string name="rcd_groupname">Gruppe</string>
+    <string name="rcd_test_OK_checkbox">Prøve-knap - OK</string>
+    <string name="rcd_group_one_title">Sinus (Type A og AC)</string>
+    <string name="rcd_measurement_one">0°1xlΔn</string>
+    <string name="rcd_measurement_two">180°1xlΔn</string>
+    <string name="rcd_measurement_three">0°5xlΔn</string>
+    <string name="rcd_measurement_four">5°½xlΔn</string>
+    <string name="rcd_group_two_title">Pulserende overlejret på 6mA d.c. (Type-A)</string>
+    <string name="rcd_measurement_five">0°1xlΔn</string>
+    <string name="rcd_measurement_six">180°1xlΔn</string>
+
+    <!-- Testing results title -->
+    <string name="test_results_title_name">Måleresultater</string>
+
+    <!-- GroundElectrode -->
+    <string name="ground_electrode_name">Overgangsmodstand for jordingsleder og jordelektrode R:</string>
+
+    <!-- Comments -->
+    <string name="comment">Bemærkning</string>
+
+    <!-- Buttons -->
+    <string name="checklist_finish">Afslut sag</string>
+    <string name="checklist_send">Send</string>
+
+    <!-- Questions -->
+    <string name="question_camera">Kamera</string>
+    <string name="question_comment">Kommentar</string>
+    <string name="question_question_answer_no">Nej</string>
+    <string name="question_question_answer_yes">Ja</string>
+    <string name="question_answer_not_relevant">Ikke Relevant</string>
+
+    <!-- Add new question dialog popup -->
+    <string name="add_question_edittext_field_hint">Indtast spørgsmål</string>
+    <string name="add_question_cancel_button">Annuller</string>
+    <string name="add_question_create_button">Opret</string>
+
+    <!-- Dropdown titles -->
+    <string name="dropdown_circuit_details_title">Kredsdetaljer</string>
+    <string name="dropdown_short_circuit_current_and_voltage_drop_title">Kortslutningsstrøm / Spændingsfald</string>
+    <string name="ropdown_rcd_title">Afprøvning af RCDer</string>
+    <string name="dropdown_question_general">Generelt</string>
+    <string name="dropdown_question_electrical_panel">Tavlen</string>
+    <string name="dropdown_question_installation">Installation</string>
+    <string name="dropdown_question_recessed_luminaires">Indbygningsarmaturer</string>
+    <string name="dropdown_question_protective_conductors_and_compensating_connections">Beskyttelsesledere og udligningsforbindelser</string>
+    <string name="dropdown_question_fault_protection_and_supplementary_protection">Fejlbeskyttles / supplerende beskyttelse</string>
+
+    <!-- Search cases -->
+    <string name="search_case_searchbar">Søg efter sag</string>
+    <string name="search_case_active">Aktiv</string>
+    <string name="search_case_waiting">Afventer</string>
+    <string name="search_case_finished">Afsluttet</string>
+    <string name="search_case_user_checkbox">Mine sager</string>
+
+    <!-- item search cases -->
+    <string name="item_cases_customername">Mine sager</string>
+
+    <!-- item assignment info -->
+    <string name="item_assignment_info_customername">Kundenavn:</string>
+    <string name="item_assignment_info_address">Adresse:</string>
+    <string name="item_assignment_info_order_number">Ordrenummer:</string>
+    <string name="item_assignment_info_identification_of_installation">Identifikation af installation:</string>
+    <string name="item_assignment_info_installed_by">Udført af:</string>
+    <string name="item_assignment_info_verified_by">Verificeret af:</string>
+    <string name="item_assignment_info_date">Dato:</string>
+
     <!-- APP VERSION -->
     <string name="app_build_version">App Version</string>
+
 
 </resources>
 

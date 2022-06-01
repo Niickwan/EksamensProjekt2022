@@ -67,20 +67,25 @@ public class FTPClientFunctions extends AppCompatActivity{
     }
 
     public boolean ftpUpload(String srcFilePath, String desFileName) {
-        boolean status = false;
-        try {
-            FileInputStream srcFileStream = new FileInputStream(srcFilePath);
-            // change working directory to the destination directory
-            // if (ftpChangeDirectory(desDirectory)) {
-            status = mFTPClient.storeFile(desFileName, srcFileStream);
-            // }
-            srcFileStream.close();
-            return status;
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.d(TAG, "upload failed: " + e);
-        }
-        return status;
+        isUploadSuccessful = false;
+        new Thread(() -> {
+            try {
+                boolean b = ftpConnect(host, username, password, port);
+                System.out.println(b);
+                FileInputStream srcFileStream = new FileInputStream(srcFilePath);
+                // change working directory to the destination directory
+                // if (ftpChangeDirectory(desDirectory)) {
+                isUploadSuccessful = mFTPClient.storeFile(desFileName, srcFileStream);
+                // }
+                System.out.println(isUploadSuccessful);
+                srcFileStream.close();
+                ftpDisconnect();
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.d(TAG, "upload failed: " + e);
+            }
+        }).start();
+        return isUploadSuccessful;
     }
 
     public void ftpDownload(String remotePath, String phoneFileName){
@@ -122,8 +127,8 @@ public class FTPClientFunctions extends AppCompatActivity{
                 }
                 createDirectory(mFTPClient, directory+"/pictures");
 
-                ftpUpload(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-                        + "/pics/" + filename, filename);
+            ftpUpload(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+                    + "/pics/" + filename, filename);
 
                 file.delete();
 

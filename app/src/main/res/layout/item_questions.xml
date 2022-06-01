@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFF482"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/cutomerName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:textColor="#000"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <CheckBox
+                android:id="@+id/yesCheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:layout_weight="1"
+                android:buttonTint="@color/black"
+                android:gravity="top"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/yes_tv"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <CheckBox
+                android:id="@+id/notReleventCheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="4dp"
+                android:layout_weight="5"
+                android:buttonTint="@color/black"
+                android:gravity="top"
+                app:layout_constraintStart_toEndOf="@+id/noCheckBox"
+                app:layout_constraintTop_toBottomOf="@+id/notRelevant_tv" />
+
+            <TextView
+                android:id="@+id/notRelevant_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/question_answer_not_relevant"
+                android:textColor="#000000"
+                app:layout_constraintEnd_toEndOf="@+id/notReleventCheckBox"
+                app:layout_constraintStart_toStartOf="@+id/notReleventCheckBox"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/no_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/question_question_answer_no"
+                android:textColor="#000000"
+                app:layout_constraintEnd_toEndOf="@+id/noCheckBox"
+                app:layout_constraintStart_toStartOf="@+id/noCheckBox"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/yes_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/question_question_answer_yes"
+                android:textColor="#000000"
+                app:layout_constraintEnd_toEndOf="@+id/yesCheckBox"
+                app:layout_constraintHorizontal_bias="0.515"
+                app:layout_constraintStart_toStartOf="@+id/yesCheckBox"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <CheckBox
+                android:id="@+id/noCheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="4dp"
+                android:layout_weight="1"
+                android:buttonTint="@color/black"
+                android:gravity="top"
+                app:layout_constraintStart_toEndOf="@+id/yesCheckBox"
+                app:layout_constraintTop_toBottomOf="@+id/no_tv" />
+
+            <TextView
+                android:id="@+id/camera_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/question_camera"
+                android:textColor="#000000"
+                app:layout_constraintEnd_toEndOf="@+id/cameraBtn"
+                app:layout_constraintStart_toStartOf="@+id/cameraBtn"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/cameraBtn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_weight="1"
+                android:background="@drawable/questions_camera_icon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/camera_tv"
+                tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+            <Button
+                android:id="@+id/commentBtn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="32dp"
+                android:layout_weight="1"
+                android:background="@drawable/questions_comment_icon"
+                android:backgroundTint="#000000"
+                app:layout_constraintEnd_toStartOf="@+id/cameraBtn"
+                app:layout_constraintTop_toBottomOf="@+id/comment_tv"
+                tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+            <TextView
+                android:id="@+id/comment_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/question_comment"
+                android:textColor="#000000"
+                app:layout_constraintEnd_toEndOf="@+id/commentBtn"
+                app:layout_constraintStart_toStartOf="@+id/commentBtn"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

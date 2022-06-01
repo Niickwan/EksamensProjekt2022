@@ -1,4 +1,4 @@
-package com.jmmnt.UI;
+package com.jmmnt.Controller.UI;
 
 import android.os.Bundle;
 import androidx.annotation.NonNull;

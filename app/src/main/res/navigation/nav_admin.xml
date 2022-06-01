@@ -7,27 +7,27 @@
 
     <fragment
         android:id="@+id/FragmentAdminHome"
-        android:name="com.jmmnt.UI.FragmentAdminHome"
+        android:name="com.jmmnt.Controller.UI.FragmentAdminHome"
         android:label="@string/fragment_admin_home_label"
         tools:layout="@layout/fragment_admin_home">
-        <action
-            android:id="@+id/action_FragmentAdminHome_to_FragmentAdminChecklist"
-            app:destination="@id/FragmentAdminChecklist" />
         <action
             android:id="@+id/action_FragmentAdminHome_to_fragmentPopupMenu"
             app:destination="@id/fragmentPopupMenu" />
         <action
             android:id="@+id/action_FragmentAdminHome_to_fragmentCreateOrder"
             app:destination="@id/fragmentCreateOrder" />
+        <action
+            android:id="@+id/action_FragmentAdminHome_to_fragmentSearchCase"
+            app:destination="@id/fragmentSearchCase" />
     </fragment>
     <fragment
         android:id="@+id/FragmentAdminChecklist"
-        android:name="com.jmmnt.UI.FragmentAdminChecklist"
+        android:name="com.jmmnt.Controller.UI.FragmentAdminChecklist"
         android:label="@string/fragment_admin_checklist_label"
         tools:layout="@layout/fragment_admin_checklist" />
     <fragment
         android:id="@+id/adminFragmentEditProfile"
-        android:name="com.jmmnt.UI.FragmentEditProfile"
+        android:name="com.jmmnt.Controller.UI.FragmentEditProfile"
         android:label="FragmentEditProfile"
         tools:layout="@layout/fragment_edit_profile" >
         <action
@@ -37,7 +37,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentPopupMenu"
-        android:name="com.jmmnt.UI.FragmentPopupMenu"
+        android:name="com.jmmnt.Controller.UI.FragmentPopupMenu"
         android:label="popup_menu_profile"
         tools:layout="@layout/popup_menu_profile" >
         <action
@@ -46,11 +46,20 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentCreateOrder"
-        android:name="com.jmmnt.UI.FragmentCreateOrder"
+        android:name="com.jmmnt.Controller.UI.FragmentCreateOrder"
         android:label="fragment_create_order"
         tools:layout="@layout/fragment_admin_create_order" >
         <action
             android:id="@+id/action_fragmentCreateOrder_to_FragmentAdminHome"
             app:destination="@id/FragmentAdminHome" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentSearchCase"
+        android:name="com.jmmnt.Controller.UI.FragmentSearchCase"
+        android:label="FragmentSearchCase"
+        tools:layout="@layout/fragment_admin_search_case">
+        <action
+            android:id="@+id/action_fragmentSearchCase_to_FragmentAdminChecklist"
+            app:destination="@id/FragmentAdminChecklist" />
     </fragment>
 </navigation>

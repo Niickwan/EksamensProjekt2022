@@ -1,4 +1,4 @@
-package com.jmmnt.Database;
+package com.jmmnt.Controller.Database;
 
 
 import com.jmmnt.Entities.LoggedInUser;
@@ -177,11 +177,11 @@ public class DB_Con {
         return uploadMySQLCall(updateUser);
     }
   
-    public boolean createNewAssignment(Assignment assignment) {
+    public boolean createNewAssignment(Assignment assignment) {  //TODO INSERT INTO SKAL RETTES TIL DEET NYE ASSIGMNET OBJEKT
         connection = connection();
         String userInfo = "INSERT INTO Assignment (Foreman_ID, Address, Postal_Code, Status, Order_Number, Customer_Name) "
                 + "VALUES ('"
-                + assignment.getForemanId() + "', '"
+                + assignment.getUserID() + "', '"
                 + assignment.getAddress() + "', '"
                 + assignment.getPostalCode() + "', '"
                 + assignment.getStatus() + "', '"

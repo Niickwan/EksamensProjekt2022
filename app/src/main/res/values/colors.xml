@@ -8,6 +8,8 @@
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
     <color name="darkgrey">#24242C</color>
+    <color name="darkgreen">#118800</color>
+    <color name="darkred">#A30000</color>
 
     <!-- Buttons -->
     <color name="darkblue">#171E29</color>
