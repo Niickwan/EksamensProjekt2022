@@ -214,6 +214,7 @@ public class OperateAssignment {
 
                 }
             }
+            w.close();
         } catch (BiffException | IOException e) {
             e.printStackTrace();
         }
