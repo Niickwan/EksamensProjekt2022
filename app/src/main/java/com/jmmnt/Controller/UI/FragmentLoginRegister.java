@@ -51,7 +51,7 @@ import java.util.List;
 
 public class FragmentLoginRegister extends Fragment{
 
-    //private OperateAssignment oAs = new OperateAssignment();
+    private OperateAssignment oAs = OperateAssignment.getInstance();
     private OperateDB opDB = OperateDB.getInstance();
     private OperateUser opUsr = new OperateUser();
     private GeneralUseCase gUC = GeneralUseCase.getInstance();
@@ -97,24 +97,26 @@ public class FragmentLoginRegister extends Fragment{
 //            }
 //        });
 
-        binding.FTPButton.setOnClickListener(v -> new Thread(() -> {
-            ftpMethodClass.ftpDownload("/public_html/assignments/8888/3. Sal/ExcelTest.xls", "sl.xls");
-            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 101);
-            }
-            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                try {
-                    pdfg.createPDF(getContext());
-                } catch (IOException e) {
-                    e.printStackTrace();
 
-                }
-            }
+        binding.FTPButton.setOnClickListener(v -> new Thread(() -> {
+            ftpMethodClass.ftpDownload("/TjekListeNy (7).xls", "TjeklisteTemplate.xls");
+            //ftpMethodClass.ftpDownload("/public_html/assignments/8888/3. Sal/ExcelTest.xls", "sl.xls");
+//            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+//                ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 101);
+//            }
+//            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+//                try {
+//                    pdfg.createPDF(getContext());
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//
+//                }
+//            } //TODO UDKOMMENTERET
 
         }).start());
 
         binding.TrykForBillede.setOnClickListener(v -> {
-            //oAs.getExcelAsArrayList("TjekListeNy.xls");
+            oAs.getExcelAsArrayList("TjeklisteTemplate.xls");
 
         });
 
