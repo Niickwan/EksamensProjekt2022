@@ -44,7 +44,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="25dp"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="16dp"
                     android:text="@string/fragment_admin_create_order_info_title"
                     android:textColor="@color/darkblue"
                     android:textSize="34sp"

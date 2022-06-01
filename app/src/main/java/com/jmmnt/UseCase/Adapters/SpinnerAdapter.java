@@ -53,7 +53,6 @@ public class SpinnerAdapter extends ArrayAdapter {
         outerLabel.setTypeface(Typeface.DEFAULT_BOLD);
         outerLabel.setLayoutParams(params);
         outerLabel.setTextColor(Color.WHITE);
-        System.out.println("PHONE NUMB "+container.get(position).getPhonenumber());
         boolean isPhoneNumberEmpty = isPhoneNumberEmpty(container, position);
         if (isPhoneNumberEmpty)
             outerLabel.setText(container.get(position).getFullName() + " "

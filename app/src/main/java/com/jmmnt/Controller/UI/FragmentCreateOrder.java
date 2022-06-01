@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import android.widget.Spinner;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.jmmnt.Entities.Assignment;
+import com.jmmnt.Entities.AssignmentContainer;
 import com.jmmnt.Entities.User;
 import com.jmmnt.Entities.UserContainer;
 import com.jmmnt.R;
@@ -62,21 +64,23 @@ public class FragmentCreateOrder extends Fragment {
                 String city = binding.cityEt.getEditText().getText().toString();
                 String status;
 
-                int userPicked = binding.chooseUserSpinner.getSelectedItemPosition();
-                //TODO userPicked skal fjernes - bliver instansvariable
-                if (userPicked == 0){
+                boolean isUpdated;
+                if (userPicked == -1){
                     status = "waiting";
-                    createNewAssignment = new Assignment(address,postalCode,city,status,orderNumber,customerName);
-                    operateDB.createNewAssignment(createNewAssignment);
+                    createNewAssignment = new Assignment(orderNumber, customerName, address, postalCode, city, "", userPicked, 26, LocalDate.now(), status);
+                    isUpdated = operateDB.createNewAssignment(createNewAssignment);
                 }
                 else{
                     status = "active";
-                    createNewAssignment = new Assignment(address,postalCode,city,status,orderNumber,customerName);
-                    operateDB.createNewAssignment(createNewAssignment, userPicked);
+                    createNewAssignment = new Assignment(orderNumber, customerName, address, postalCode, city, "", userPicked, 26, LocalDate.now(), status);
+                    isUpdated = operateDB.createNewAssignment(createNewAssignment, userPicked);
                 }
-
-                createNewAssignment = new Assignment(orderNumber, customerName, address, postalCode, city, LocalDate.now(), status, employeePicked);
-                operateDB.createNewAssignment(createNewAssignment);
+                if (isUpdated) {
+                    AssignmentContainer.getInstance().addAssignmentsToContainer(createNewAssignment);
+                    getActivity().runOnUiThread(() -> {
+                        NavHostFragment.findNavController(FragmentCreateOrder.this).navigate(R.id.action_fragmentCreateOrder_to_FragmentAdminChecklist);
+                    });
+                }
             }
         }).start());
 
@@ -107,6 +111,7 @@ public class FragmentCreateOrder extends Fragment {
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
                 User user = (User) adapterView.getAdapter().getItem(position);
                 userPicked = user.getUserID();
+                System.out.println("USER PICKED - USER ID "+ userPicked);
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapter) {  }

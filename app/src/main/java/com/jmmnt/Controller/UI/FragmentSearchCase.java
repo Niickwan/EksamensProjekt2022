@@ -45,21 +45,24 @@ public class FragmentSearchCase extends Fragment {
         //TODO START - TESTER HER --------------------------------------------------------------------
         //TODO DETTE SKAL SÆTTES OP MED EN CONTAINER
         assignments = new ArrayList<>();
-        assignments.add(new Assignment(123, "Havnegade 19", "4700", "active", "223AJ2K33L8", LocalDate.now(), "HusCompagniet", 12));
-        assignments.add(new Assignment(111, "Femøvej 1", "4700", "active", "12312414", LocalDate.of(2022,7,23), "Brugsen", 2));
-        assignments.add(new Assignment(222, "Andersgade 21", "4700", "finished", "6787976867", LocalDate.of(2022,5,22), "Fakta", 3));
-        assignments.add(new Assignment(333, "Gaden 9", "4700", "active", "234232ASD123", LocalDate.of(2022,3,23), "Netto", 4));
-        assignments.add(new Assignment(555, "Vejen 22", "4760", "active", "223AJ2K33L8", LocalDate.of(2022,7,26), "Hardi", 5));
-        assignments.add(new Assignment(777, "Gladsaxevej 5", "4700", "waiting", "223AJ2K33L8", LocalDate.of(2022,8,3), "SD", 6));
-        assignments.add(new Assignment(77, "Køgevej 34", "4700", "waiting", "223AJ2K33L8", LocalDate.of(2022,5,2), "AK", 7));
-        assignments.add(new Assignment(54, "Vejen 99", "4700", "finished", "223AJ2K33L8", LocalDate.of(2022,4,11), "Zealand", 7));
-        assignments.add(new Assignment(32, "Skyttemarksvej 99", "4700", "waiting", "223AJ2K33L8", LocalDate.of(2022,5,9), "HusCompagniet", 7));
-        assignments.add(new Assignment(553, "Havnegade 19", "4700", "active", "223AJ2K33L8", LocalDate.of(2022,7,21), "HusCompagniet", 8));
-        assignments.add(new Assignment(211, "Havnegade 19", "4700", "waiting", "223AJ2K33L8", LocalDate.of(2022,7,27), "HusCompagniet", 9));
-        assignments.add(new Assignment(2, "Havnegade 19", "4700", "active", "223AJ2K33L8", LocalDate.of(2022,7,15), "HusCompagniet", 99));
-        assignments.add(new Assignment(45, "Havnegade 19", "4700", "active", "223AJ2K33L8", LocalDate.of(2022,7,4), "HusCompagniet", 26));
-        assignments.add(new Assignment(87, "Havnegade 19", "4700", "finished", "223AJ2K33L8", LocalDate.of(2022,6,7), "HusCompagniet", 26));
-        assignments.add(new Assignment(561, "Havnegade 19", "4700", "active", "223AJ2K33L8", LocalDate.of(2022,7,17), "HusCompagniet", 26));
+        assignments.add(new Assignment(123, "223AJ2K33L8", "HusCompagniet", "Havnegade 19", "4700", "Næstved", LocalDate.now(), "active"));
+        assignments.add(new Assignment(412, "1651653", "Fakta", "Andersgade 21", "1111", "Næstved", LocalDate.now(), "active"));
+        assignments.add(new Assignment(23, "6549584464", "Netto", "Femøvej 1", "2730", "Næstved", LocalDate.now(), "waiting"));
+        assignments.add(new Assignment(1254, "641659684161", "Hardi", "Gaden 9", "4700", "Næstved", LocalDate.now(), "active"));
+        assignments.add(new Assignment(5436, "65461949651", "SD", "Vejen 22", "4700", "Næstved", LocalDate.now(), "active"));
+        assignments.add(new Assignment(75, "32132656", "AK", "Gladsaxevej 59", "4800", "Næstved", LocalDate.now(), "waiting"));
+        assignments.add(new Assignment(6, "987941623", "Zealand", "Køgevej 34", "4700", "Næstved", LocalDate.now(), "finished"));
+        assignments.add(new Assignment(86, "ASDWW65465", "HM", "Vejen 99", "4950", "Næstved", LocalDate.now(), "waiting"));
+        assignments.add(new Assignment(97, "WW6546546", "Arne Pedersen", "Skyttemarksvej 99", "4200", "Næstved", LocalDate.now(), "finished"));
+        assignments.add(new Assignment(679, "223AJ2K33L8", "AO Tæpper", "Havnegade 19", "2600", "Næstved", LocalDate.now(), "active"));
+        assignments.add(new Assignment(7, "9875964S98654S", "Arkolit", "Krejbjergvej 8", "4700", "Næstved", LocalDate.now(), "finished"));
+        assignments.add(new Assignment(67, "S132LKHS21", "Stark", "Aprilvej 2", "4900", "Næstved", LocalDate.now(), "finished"));
+        assignments.add(new Assignment(45, "GEWG65465FSA", "LM", "Novembervej 76", "2900", "Næstved", LocalDate.now(), "active"));
+        assignments.add(new Assignment(67, "123289DSA", "Mærsk", "Oktobervej 4", "4700", "Næstved", LocalDate.now(), "waiting"));
+        assignments.add(new Assignment(123, "879845663", "Tiger", "Vildtbanevej 11", "4700", "Næstved", LocalDate.now(), "waiting"));
+        assignments.add(new Assignment(65, "3214987913", "Nordea", "Svingkærvej 334", "4733", "Næstved", LocalDate.now(), "waiting"));
+        assignments.add(new Assignment(88, "65149878452361", "Mercedes", "Gaderne 23", "4600", "Næstved", LocalDate.now(), "active"));
+        assignments.add(new Assignment(5, "3218956", "SKAT", "Udevej 998", "5500", "Næstved", LocalDate.now(), "finished"));
         //TODO SLUT - TESTER HER --------------------------------------------------------------------
 
         binding.checkBoxSearchActiveCases.setChecked(true);

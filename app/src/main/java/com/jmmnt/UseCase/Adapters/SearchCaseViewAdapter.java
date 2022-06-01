@@ -48,7 +48,6 @@ public class SearchCaseViewAdapter extends RecyclerView.Adapter<SearchCaseViewHo
         orderNumber_tv = holder.itemView.findViewById(R.id.orderNumber);
         statusDate_tv = holder.itemView.findViewById(R.id.statusDate_tv);
         statusCase_tv = holder.itemView.findViewById(R.id.caseStatus_tv);
-
         if (position < itemList.size()) {
             if (itemList.get(position) != null) {
                 customerName_tv.setText(itemList.get(position).getCustomerName());

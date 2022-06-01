@@ -23,6 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginTop="5dp"
                 android:paddingLeft="5dp"
                 android:text="@string/item_assignment_info_customername"
                 android:textColor="#000"
@@ -32,7 +33,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/cutomerFullName_tv"
+                android:id="@+id/customerFullName_tv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -41,24 +42,27 @@
                 android:text="Arne"
                 android:textColor="#000"
                 android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@+id/cutomerName"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/cutomerName"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/cutomerName"
+                app:layout_constraintVertical_bias="0.0" />
 
             <TextView
-                android:id="@+id/address_et"
+                android:id="@+id/address_tv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:text="Pedersen"
+                android:text="Køgevej 2"
                 android:textColor="#000"
                 android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@+id/address"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/address"
-                app:layout_constraintTop_toBottomOf="@+id/cutomerFullName_tv" />
+                app:layout_constraintTop_toTopOf="@+id/address" />
 
             <TextView
                 android:id="@+id/orderNumber_et"
@@ -70,25 +74,26 @@
                 android:text="84JK32A2"
                 android:textColor="#000"
                 android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@+id/orderNumber"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/orderNumber"
-                app:layout_constraintTop_toBottomOf="@+id/address_et" />
+                app:layout_constraintTop_toTopOf="@+id/orderNumber" />
 
             <TextView
-                android:id="@+id/identification_tv"
+                android:id="@+id/installedBy_tv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:text="Tavle"
+                android:text="Johnny Hansen"
                 android:textColor="#000"
                 android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@+id/installedBy"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/identification"
-                app:layout_constraintTop_toBottomOf="@+id/orderNumber_et" />
+                app:layout_constraintStart_toEndOf="@+id/installedBy"
+                app:layout_constraintTop_toTopOf="@+id/installedBy" />
 
             <TextView
                 android:id="@+id/date_tv"
@@ -100,7 +105,7 @@
                 android:text="10/05-2022"
                 android:textColor="#000"
                 android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/date"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/date"
                 app:layout_constraintTop_toTopOf="@+id/date" />
@@ -110,11 +115,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
                 android:paddingLeft="5dp"
                 android:text="@string/item_assignment_info_address"
                 android:textColor="#000"
                 android:textSize="18sp"
                 android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/orderNumber"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cutomerName" />
 
@@ -123,11 +131,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
                 android:paddingLeft="5dp"
                 android:text="@string/item_assignment_info_order_number"
                 android:textColor="#000"
                 android:textSize="18sp"
                 android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/identification"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/address" />
 
@@ -136,11 +147,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
                 android:paddingLeft="5dp"
                 android:text="@string/item_assignment_info_identification_of_installation"
                 android:textColor="#000"
                 android:textSize="18sp"
                 android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/installedBy"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/orderNumber" />
 
@@ -149,11 +163,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
                 android:paddingLeft="5dp"
                 android:text="@string/item_assignment_info_installed_by"
                 android:textColor="#000"
                 android:textSize="18sp"
                 android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/verifiedBy"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/identification" />
 
@@ -162,50 +179,61 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
                 android:paddingLeft="5dp"
                 android:text="@string/item_assignment_info_verified_by"
                 android:textColor="#000"
                 android:textSize="18sp"
                 android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/date_tv"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/installedBy" />
-
-            <Spinner
-                android:id="@+id/installedBy_spinner"
-                android:layout_width="0dp"
-                android:layout_height="25dp"
-                android:background="@drawable/design_spinner"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                app:layout_constraintBottom_toBottomOf="@+id/installedBy"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/installedBy"
-                app:layout_constraintTop_toTopOf="@+id/installedBy" />
 
             <Spinner
                 android:id="@+id/verifiedBy_spinner"
                 android:layout_width="0dp"
                 android:layout_height="25dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
                 android:background="@drawable/design_spinner"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
+                android:popupBackground="@color/darkblue"
                 app:layout_constraintBottom_toBottomOf="@+id/verifiedBy"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/verifiedBy"
-                app:layout_constraintTop_toBottomOf="@+id/installedBy" />
+                app:layout_constraintTop_toTopOf="@+id/verifiedBy" />
 
             <TextView
                 android:id="@+id/date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginTop="5dp"
                 android:paddingLeft="5dp"
                 android:text="@string/item_assignment_info_date"
                 android:textColor="#000"
                 android:textSize="18sp"
                 android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/verifiedBy" />
+
+            <EditText
+                android:id="@+id/identification_et"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/design_edittext"
+                android:ems="10"
+                android:inputType="textPersonName"
+                app:layout_constraintBottom_toBottomOf="@+id/identification"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/identification"
+                app:layout_constraintTop_toTopOf="@+id/identification"
+                app:layout_constraintVertical_bias="0.523" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

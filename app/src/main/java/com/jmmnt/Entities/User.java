@@ -53,6 +53,7 @@ public class User {
         this.userID = userID;
     }
 
+    //default user
     public User() {
         this.firstname = "Afvent eller vælg medarbejder";
         this.surname = "";

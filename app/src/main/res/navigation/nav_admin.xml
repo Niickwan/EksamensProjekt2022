@@ -50,8 +50,8 @@
         android:label="fragment_create_order"
         tools:layout="@layout/fragment_admin_create_order" >
         <action
-            android:id="@+id/action_fragmentCreateOrder_to_FragmentAdminHome"
-            app:destination="@id/FragmentAdminHome" />
+            android:id="@+id/action_fragmentCreateOrder_to_FragmentAdminChecklist"
+            app:destination="@id/FragmentAdminChecklist" />
     </fragment>
     <fragment
         android:id="@+id/fragmentSearchCase"

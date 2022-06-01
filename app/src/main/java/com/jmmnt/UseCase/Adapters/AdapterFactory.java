@@ -1,5 +1,8 @@
 package com.jmmnt.UseCase.Adapters;
 
+import android.content.Context;
+
+import com.jmmnt.Entities.Assignment;
 import com.jmmnt.Entities.CircuitDetails;
 import com.jmmnt.Entities.Questions;
 import com.jmmnt.Entities.ShortCircuitCurrentAndVoltageDrop;
@@ -10,7 +13,7 @@ import java.util.List;
 
 public class AdapterFactory {
 
-    public Object setAdapterType(String tag, List<?> dataList) {
+    public Object setAdapterType(String tag, List<?> dataList, Context context) {
 
         if (dataList == null || tag.isEmpty())
             return null;
@@ -22,6 +25,8 @@ public class AdapterFactory {
             return new RCDViewAdapter((List<TestingRCD>)dataList);
         if (tag.equalsIgnoreCase("ShortCircuitCurrent"))
             return new ShortCircuitCurrentAndVoltageDropViewAdapter((List<ShortCircuitCurrentAndVoltageDrop>) dataList);
+        if (tag.equalsIgnoreCase("Assignment"))
+            return new OrderViewAdapter((List<Assignment>)dataList, context);
         return null;
     }
 
@@ -36,6 +41,8 @@ public class AdapterFactory {
             return new TestingRCD();
         if (tag.equalsIgnoreCase("ShortCircuitCurrent"))
             return new ShortCircuitCurrentAndVoltageDrop();
+        if (tag.equalsIgnoreCase("Assignment"))
+            return new Assignment();
         return null;
     }
 }

@@ -30,6 +30,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.jmmnt.Entities.Assignment;
+import com.jmmnt.Entities.AssignmentContainer;
 import com.jmmnt.Entities.CircuitDetails;
 import com.jmmnt.Entities.Questions;
 import com.jmmnt.Entities.ShortCircuitCurrentAndVoltageDrop;
@@ -41,7 +43,9 @@ import com.jmmnt.UseCase.OperateAssignment;
 import com.jmmnt.UseCase.OperateDB;
 import com.jmmnt.databinding.FragmentAdminChecklistBinding;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -58,6 +62,7 @@ public class FragmentAdminChecklist extends Fragment {
     private ArrayList<String> floors = new ArrayList<>();
     private ArrayList<Button> floorButtons = new ArrayList<>();
 
+    private List<Object> assignment;
     private List<Object> circuitDetailsResults;
     private List<Object> voltageDropResults;
     private List<Object> testingRCDResults;
@@ -151,12 +156,17 @@ public class FragmentAdminChecklist extends Fragment {
         testingRCDResults.add(new TestingRCD("Test",1,"res1","res2","res3","res4","res5","res6"));
         testingRCDResults.add(new TestingRCD("Test",1,"res1","res2","res3","res4","res5","res6"));
 
+        assignment = new ArrayList<>();
+        assignment.add(new Assignment("123ASD123SD34", "Arne Pedersen", "Køgevej 2", "4700", "123984", "Lampe", 26, 26, LocalDate.now(), "active"));
+
+        ArrayList<Assignment> lll = AssignmentContainer.getInstance().getAssignments();
 
         //Dropdown titles
         String objectTag = "question";
         String objectTag2 = "circuitDetails";
         String objectTag3 = "RCD";
         String objectTag4 = "ShortCircuitCurrent";
+        String objectTag5 = "Assignment";
         //TODO tags for adapterfactory
 
         //TODO SLUT - KUN FOR TESTING------------------------------------------------------------------------------------------------------------------------
@@ -168,6 +178,7 @@ public class FragmentAdminChecklist extends Fragment {
 
 
         //Building dropdowns
+        buildDropdownDynamically("Ordre", Collections.singletonList(lll), objectTag5, "vertical");
         buildDropdownDynamically("Generelt", general, objectTag, "vertical");
         buildDropdownDynamically("Tavlen", electricalPanel, objectTag, "vertical");
         buildDropdownDynamically("Installation", installation, objectTag, "vertical");
@@ -547,7 +558,7 @@ public class FragmentAdminChecklist extends Fragment {
         RecyclerView.LayoutParams rvlp = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         rv.setLayoutParams(rvlp);
         ViewGroup.MarginLayoutParams vMLP = (ViewGroup.MarginLayoutParams) rv.getLayoutParams();
-        vMLP.setMargins(5, 0, 5, 0);
+        vMLP.setMargins(5, 0, 5, 10);
         rv.setHorizontalScrollBarEnabled(true);
         rv.setVisibility(View.GONE);
 
@@ -570,7 +581,9 @@ public class FragmentAdminChecklist extends Fragment {
         //Adding the different layouts to each other
         llv.addView(cl);
         llv.addView(rv);
-        llv.addView(addBtn);
+        if (!objectTag.equalsIgnoreCase("assignment")) {
+            llv.addView(addBtn);
+        }
         cv.addView(llv);
         parentLLH.addView(cv);
 
@@ -582,13 +595,16 @@ public class FragmentAdminChecklist extends Fragment {
             recyclerViewOrientation = LinearLayoutManager.HORIZONTAL;
 
         //Setting up the adapter
-        setAdapter(rv, addBtn, dataList, recyclerViewOrientation, objectTag);
+        if (objectTag.equalsIgnoreCase("Assignment"))
+            setAdapter(rv, dataList, recyclerViewOrientation, objectTag);
+        else
+            setAdapter(rv, addBtn, dataList, recyclerViewOrientation, objectTag);
     }
 
     public void setAdapter(RecyclerView rv, Button addBtn, List<Object> dataList, int orientation, String objectTag) {
         AdapterFactory adapterFactory = new AdapterFactory();
-        adapterFactory.setAdapterType(objectTag, dataList);
-        Object adapter = adapterFactory.setAdapterType(objectTag, dataList);
+        adapterFactory.setAdapterType(objectTag, dataList, getContext());
+        Object adapter = adapterFactory.setAdapterType(objectTag, dataList, getContext());
 
         rv.setLayoutManager(new LinearLayoutManager(getActivity(), orientation, false));
         rv.setAdapter((RecyclerView.Adapter) adapter);
@@ -603,6 +619,14 @@ public class FragmentAdminChecklist extends Fragment {
                 ((RecyclerView.Adapter<?>) adapter).notifyItemInserted(dataList.size() - 1);
             }
         });
+    }
+
+    public void setAdapter(RecyclerView rv, List<Object> dataList, int orientation, String objectTag) {
+        AdapterFactory adapterFactory = new AdapterFactory();
+        adapterFactory.setAdapterType(objectTag, dataList, getContext());
+        Object adapter = adapterFactory.setAdapterType(objectTag, dataList, getContext());
+        rv.setLayoutManager(new LinearLayoutManager(getActivity(), orientation, false));
+        rv.setAdapter((RecyclerView.Adapter) adapter);
     }
 
     public void addQuestion(List<Object> dataList, RecyclerView rv, Object adapter) {
