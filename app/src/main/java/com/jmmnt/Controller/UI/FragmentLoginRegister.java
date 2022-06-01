@@ -172,14 +172,14 @@ public class FragmentLoginRegister extends Fragment{
             samletListe.add(section);
             samletListe.add(circuitDetailsResults);
             samletListe.add(resistance);
-            samletListe.add(voltageDropResults);
             samletListe.add(testingRCDResults);
+            samletListe.add(voltageDropResults);
 
             //END TEST DATA //
 
 
             CreateExcelFile c = new CreateExcelFile();
-            c.createExcelSheet(fileName, samletListe);
+            c.createExcelSheet(fileName, samletListe,"idfjiofdjgodjfoi");
 
             FTPClientFunctions ftp = new FTPClientFunctions();
             String uploadExcelToServerPath = folder + fileName;
