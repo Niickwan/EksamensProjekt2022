@@ -217,16 +217,49 @@ public class DB_Con {
 
     public boolean createNewAssignment(Assignment assignment) {  //TODO INSERT INTO SKAL RETTES TIL DEET NYE ASSIGMNET OBJEKT
         connection = connection();
-        String userInfo = "INSERT INTO Assignment (Foreman_ID, Address, Postal_Code, Status, Order_Number, Customer_Name) "
+        String userInfo = "INSERT INTO Assignment (Address, Postal_Code, City, Status, Order_Number, Status_Date, Customer_Name) "
                 + "VALUES ('"
-                + assignment.getUserID() + "', '"
                 + assignment.getAddress() + "', '"
                 + assignment.getPostalCode() + "', '"
+                + assignment.getCity() + "', '"
                 + assignment.getStatus() + "', '"
                 + assignment.getOrderNumber() + "', '"
+                + assignment.getStatusDate() + "', '"
                 + assignment.getCustomerName() + "')";
         return uploadMySQLCall(userInfo);
     }
+
+    public boolean createNewAssignment(Assignment assignment, int ID) {  //TODO INSERT INTO SKAL RETTES TIL DEET NYE ASSIGMNET OBJEKT
+        connection = connection();
+        String userInfo = "INSERT INTO Assignment (Address, Postal_Code, City, Status, Order_Number, Status_Date, Customer_Name) "
+                + "VALUES ('"
+                + assignment.getAddress() + "', '"
+                + assignment.getPostalCode() + "', '"
+                + assignment.getCity() + "', '"
+                + assignment.getStatus() + "', '"
+                + assignment.getOrderNumber() + "', '"
+                + assignment.getStatusDate() + "', '"
+                + assignment.getCustomerName() + "')";
+
+        if (uploadMySQLCall(userInfo)){
+            String getAssignmentID = "SELECT LAST_INSERT_ID()";
+            try {
+                preStmt = connection.prepareStatement(getAssignmentID);
+                rs = preStmt.executeQuery();
+                if (rs.next()){
+                    String insertIntoUserAssignment = "INSERT INTO User_Assignment (User_ID, Assignment_ID)"
+                            + "VALUES ("
+                            + ID + ", "
+                            + rs.getInt("LAST_INSERT_ID()") + ")";
+                    return (uploadMySQLCall(insertIntoUserAssignment));
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
+
 
     public ArrayList<String> getAssignmentStructure(String orderNr) {
         ArrayList<String> arr = new ArrayList<>();

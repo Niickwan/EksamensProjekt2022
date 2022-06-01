@@ -44,6 +44,9 @@ public class OperateDB {
     public boolean updateUserInDB(User user) {
         return db_con.updateUser(user);
     }
+    public boolean createNewAssignment(Assignment assignment, int ID) {
+        return db_con.createNewAssignment(assignment, ID);
+    }
 
     public boolean createNewAssignment(Assignment assignment) {
         return db_con.createNewAssignment(assignment);
