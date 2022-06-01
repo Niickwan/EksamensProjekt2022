@@ -14,7 +14,6 @@ import java.util.List;
 public class AdapterFactory {
 
     public Object setAdapterType(String tag, List<?> dataList, Context context) {
-
         if (dataList == null || tag.isEmpty())
             return null;
         if (tag.equalsIgnoreCase("question"))

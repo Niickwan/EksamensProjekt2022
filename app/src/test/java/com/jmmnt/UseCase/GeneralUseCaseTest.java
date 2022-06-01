@@ -13,7 +13,6 @@ public class GeneralUseCaseTest extends Activity {
 
     GeneralUseCase gUC = GeneralUseCase.getInstance();
 
-
     @Test
     public void checkIfStringMatchesInput() {
         boolean res1 = gUC.checkIfStringMatchesInput("Hans","an");
@@ -61,5 +60,14 @@ public class GeneralUseCaseTest extends Activity {
 
         assertFalse(test);
 
+    }
+
+    @Test
+    public void round() {
+        double d1 = 2.334636;
+        assertEquals(2.3, gUC.round(d1,1), 0.005);
+        assertEquals(2.33, gUC.round(d1,2), 0.005);
+        assertEquals(2.335, gUC.round(d1,3), 0.005);
+        assertEquals(2.3346, gUC.round(d1,4), 0.005);
     }
 }

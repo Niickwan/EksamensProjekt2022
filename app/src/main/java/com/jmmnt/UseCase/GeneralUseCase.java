@@ -162,10 +162,12 @@ public class GeneralUseCase extends Activity {
     public String formatDate(LocalDate date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return date.format(formatter);
-    };
+    }
 
-//    public ArrayList<String> getAssignmentStructure(String orderNr) {
-//
-//    }
+    public double round (double value, int precision) {
+        int scale = (int) Math.pow(10, precision);
+        return (double) Math.round(value * scale) / scale;
+    }
+
 
 }

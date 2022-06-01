@@ -77,6 +77,7 @@ public class FragmentCreateOrder extends Fragment {
                 }
                 if (isUpdated) {
                     AssignmentContainer.getInstance().addAssignmentsToContainer(createNewAssignment);
+
                     getActivity().runOnUiThread(() -> {
                         NavHostFragment.findNavController(FragmentCreateOrder.this).navigate(R.id.action_fragmentCreateOrder_to_FragmentAdminChecklist);
                     });

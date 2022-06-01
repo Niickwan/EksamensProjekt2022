@@ -55,6 +55,7 @@ public class FragmentAdminChecklist extends Fragment {
     private OperateAssignment opa = OperateAssignment.getInstance();
     private OperateDB oDB = OperateDB.getInstance();
     private GeneralUseCase gUC = GeneralUseCase.getInstance();
+    private boolean isNewAssignment;
 
     private Button addFloorBtn;
     private LayerDrawable selectedFloor;
@@ -82,22 +83,22 @@ public class FragmentAdminChecklist extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-    selectedFloor = floorIsSelected();
-    unSelectedFloor = floorIsNotSelected();
+        selectedFloor = floorIsSelected();
+        unSelectedFloor = floorIsNotSelected();
 
-    addFloorBtn = gUC.createBtnForHSV("+", getActivity(), 150, 300);
-    addFloorBtn.setBackground(unSelectedFloor);
-    addFloorBtn.setTextColor(Color.GREEN);
-    addFloorBtn.setOnClickListener(v -> popupAddFloor());
+        addFloorBtn = gUC.createBtnForHSV("+", getActivity(), 150, 300);
+        addFloorBtn.setBackground(unSelectedFloor);
+        addFloorBtn.setTextColor(Color.GREEN);
+        addFloorBtn.setOnClickListener(v -> popupAddFloor());
 
-    binding.hsvFloor.setHorizontalScrollBarEnabled(false);
-    floorLinearLayout = new LinearLayout(getActivity());
-    floorLinearLayout.setOrientation(LinearLayout.HORIZONTAL);
-    floorLinearLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        binding.hsvFloor.setHorizontalScrollBarEnabled(false);
+        floorLinearLayout = new LinearLayout(getActivity());
+        floorLinearLayout.setOrientation(LinearLayout.HORIZONTAL);
+        floorLinearLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
-    binding.hsvRoom.setHorizontalScrollBarEnabled(false);
-    LinearLayout roomLinearLayout = new LinearLayout(getActivity());
-    roomLinearLayout.setOrientation(LinearLayout.HORIZONTAL);
+        binding.hsvRoom.setHorizontalScrollBarEnabled(false);
+        LinearLayout roomLinearLayout = new LinearLayout(getActivity());
+        roomLinearLayout.setOrientation(LinearLayout.HORIZONTAL);
 
         Thread t = new Thread(() -> {
             ArrayList<String> hsvStructure = new ArrayList<>();
@@ -153,13 +154,21 @@ public class FragmentAdminChecklist extends Fragment {
         voltageDropResults.add(new ShortCircuitCurrentAndVoltageDrop("Fryser", "lk", "Stue", "4.sal", "60", "Stue"));
 
         testingRCDResults = new LinkedList<>();
-        testingRCDResults.add(new TestingRCD("Test",1,"res1","res2","res3","res4","res5","res6"));
-        testingRCDResults.add(new TestingRCD("Test",1,"res1","res2","res3","res4","res5","res6"));
+        testingRCDResults.add(new TestingRCD("Test", 1, "res1", "res2", "res3", "res4", "res5", "res6"));
+        testingRCDResults.add(new TestingRCD("Test", 1, "res1", "res2", "res3", "res4", "res5", "res6"));
 
         assignment = new ArrayList<>();
         assignment.add(new Assignment("123ASD123SD34", "Arne Pedersen", "Køgevej 2", "4700", "123984", "Lampe", 26, 26, LocalDate.now(), "active"));
 
-        ArrayList<Assignment> lll = AssignmentContainer.getInstance().getAssignments();
+
+        ArrayList<Assignment> assignmentContainer = AssignmentContainer.getInstance().getAssignments();
+
+        if (isNewAssignment) {
+
+        }
+
+
+
 
         //Dropdown titles
         String objectTag = "question";
@@ -178,7 +187,7 @@ public class FragmentAdminChecklist extends Fragment {
 
 
         //Building dropdowns
-        buildDropdownDynamically("Ordre", Collections.singletonList(lll), objectTag5, "vertical");
+        buildDropdownDynamically("Ordre", assignmentContainer, objectTag5, "vertical");
         buildDropdownDynamically("Generelt", general, objectTag, "vertical");
         buildDropdownDynamically("Tavlen", electricalPanel, objectTag, "vertical");
         buildDropdownDynamically("Installation", installation, objectTag, "vertical");
@@ -416,7 +425,7 @@ public class FragmentAdminChecklist extends Fragment {
             }
         }).start());
         dialog.getWindow().findViewById(R.id.enable_delete_switch).setOnClickListener(v -> {
-            if(deleteBtn.getVisibility() == View.VISIBLE) {
+            if (deleteBtn.getVisibility() == View.VISIBLE) {
                 deleteBtn.setVisibility(View.GONE);
             } else {
                 deleteBtn.setVisibility(View.VISIBLE);
@@ -468,13 +477,12 @@ public class FragmentAdminChecklist extends Fragment {
 
 
     /**
-     *
-     * @param title - the name for the dropdown
-     * @param dataList - is the items for the dropdown
-     * @param objectTag - used for adapterFactory
+     * @param title       - the name for the dropdown
+     * @param dataList    - is the items for the dropdown
+     * @param objectTag   - used for adapterFactory
      * @param orientation - used for defining the view orientation (vertical/horizontal)
      */
-    public void buildDropdownDynamically(String title, List<Object> dataList, String objectTag, String orientation) {
+    public void buildDropdownDynamically(String title, List<?> dataList, String objectTag, String orientation) {
         ContextThemeWrapper ctw = new ContextThemeWrapper(getActivity(), R.style.ViewWithScrollbars);
         ImageView img = new ImageView(getActivity());
         RecyclerView rv = new RecyclerView(ctw);
@@ -542,7 +550,7 @@ public class FragmentAdminChecklist extends Fragment {
         constraintSetTitle.clone(cl);
         constraintSetTitle.connect(dropdownTitle.getId(), ConstraintSet.LEFT, cl.getId(), ConstraintSet.LEFT, 10);
         constraintSetTitle.connect(dropdownTitle.getId(), ConstraintSet.RIGHT, cl.getId(), ConstraintSet.RIGHT, 85);
-        constraintSetTitle.setHorizontalBias(dropdownTitle.getId(),0);
+        constraintSetTitle.setHorizontalBias(dropdownTitle.getId(), 0);
         constraintSetTitle.applyTo(cl);
 
         //Setting constraints for the arrow
@@ -550,7 +558,7 @@ public class FragmentAdminChecklist extends Fragment {
         constraintSetImg.clone(cl);
         constraintSetImg.connect(img.getId(), ConstraintSet.RIGHT, cl.getId(), ConstraintSet.RIGHT, 40);
         constraintSetImg.connect(img.getId(), ConstraintSet.TOP, cl.getId(), ConstraintSet.TOP, 25);
-        constraintSetImg.setHorizontalBias(img.getId(),100);
+        constraintSetImg.setHorizontalBias(img.getId(), 100);
         constraintSetImg.applyTo(cl);
 
         //Setting the recyclerview
@@ -596,9 +604,9 @@ public class FragmentAdminChecklist extends Fragment {
 
         //Setting up the adapter
         if (objectTag.equalsIgnoreCase("Assignment"))
-            setAdapter(rv, dataList, recyclerViewOrientation, objectTag);
+            setAdapter(rv, (List<Object>) dataList, recyclerViewOrientation, objectTag);
         else
-            setAdapter(rv, addBtn, dataList, recyclerViewOrientation, objectTag);
+            setAdapter(rv, addBtn, (List<Object>) dataList, recyclerViewOrientation, objectTag);
     }
 
     public void setAdapter(RecyclerView rv, Button addBtn, List<Object> dataList, int orientation, String objectTag) {
@@ -643,7 +651,7 @@ public class FragmentAdminChecklist extends Fragment {
                 rv.smoothScrollToPosition(dataList.size() - 1);
                 ((RecyclerView.Adapter<?>) adapter).notifyItemInserted(dataList.size() - 1);
                 dialog.dismiss();
-            }else
+            } else
                 gUC.toastAlert(getActivity(), getString(R.string.adding_new_question_failed));
 
         });
@@ -652,7 +660,6 @@ public class FragmentAdminChecklist extends Fragment {
         });
         dialog.show();
     }
-
 
 
     @Override

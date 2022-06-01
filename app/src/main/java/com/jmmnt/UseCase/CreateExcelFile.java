@@ -23,7 +23,7 @@ import jxl.write.WriteException;
 public class CreateExcelFile {
 
     private OperateAssignment oA = OperateAssignment.getInstance();
-    private GeneralUseCase gUc = GeneralUseCase.getInstance();
+    private GeneralUseCase gUC = GeneralUseCase.getInstance();
 
     AdapterFactory apFac = new AdapterFactory();
     WritableSheet sheet;
@@ -53,7 +53,6 @@ public class CreateExcelFile {
 //            createSecondSheet();
             workbook.write();
             workbook.close();
-            System.out.println("COMPLETE");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -61,14 +60,10 @@ public class CreateExcelFile {
 
     private void createFirstSheet(ArrayList<List<Object>> list) {
         try {
-            ArrayList<String> skipHeadline = new ArrayList<>();
-            StringBuilder headlineString;
-            ArrayList<String> headlines = new ArrayList<>();
             sheet = workbook.createSheet("Ark1", 0);
             for (int i = 0; i < excelTemplate.size(); i++) {
                 if (isHeadlineOrStartTag() == 1) {
                     if (isEndTag()) {
-                        System.out.println("Start: " + startPosition + " END: " + endPosition);
                         // HEADLINE
                         for (int j = startPosition; j <= endPosition; j++) {
                             sheet.addCell(new Label(columnCount, rowCount, excelTemplate.get(j)));
@@ -76,9 +71,6 @@ public class CreateExcelFile {
                         }
                         columnCount = 0;
                         rowCount++;
-                        System.out.print("List Size: " + list.size() + " Get List Nr: " + getList + " RESULT: ");
-                        System.out.println(list.size()-1 >= getList);
-                        System.out.println("INNER LIST SIZE: " + list.get(getList).size());
                         if (list.size() >getList && list.get(getList).size() > 0) {
                             if (list.get(getList).get(0) instanceof Questions) {
                                 writeQuestions(list, sheet);
@@ -87,18 +79,15 @@ public class CreateExcelFile {
                                 writeCircuitDetails(list, sheet);
                                 sheet.addCell(new Label(columnCount, rowCount, "<InputHeadlineEnd>"));
                             } else if (list.get(getList).get(0) instanceof ShortCircuitCurrentAndVoltageDrop) {
-                                writeShortCircuitCurrent(list, sheet); // TODO
+                                writeShortCircuitCurrent(list, sheet);
 
                                 for (int j = 0; j < 2; j++) {
                                     startPosition++;
                                     endPosition++;
                                     if (isHeadlineOrStartTag() == 1 || isHeadlineOrStartTag() == 2) {
-                                        System.out.println("FØRSTE LOOP?");
                                         if (isEndTag()) {
-                                            System.out.println("Start: " + startPosition + " END: " + endPosition);
                                             // HEADLINE
                                             for (int k = startPosition; k <= endPosition; k++) {
-                                                System.out.println("TEST TEST TEST");
                                                 sheet.addCell(new Label(columnCount, rowCount, excelTemplate.get(k)));
                                                 columnCount++;
                                             }
@@ -107,8 +96,6 @@ public class CreateExcelFile {
                                         }
                                     }
                                 }
-
-
                                 writeVoltageDrop(list, sheet);
                                 sheet.addCell(new Label(columnCount, rowCount, "<InputHeadlineEnd>"));
                             } else if (list.get(getList).get(0) instanceof TestingRCD) {
@@ -179,8 +166,6 @@ public class CreateExcelFile {
             e.printStackTrace();
         }
         getList++;
-        System.out.println(getList);
-        list.forEach(System.out::println);
     }
 
     private void writeVoltageDrop(ArrayList<List<Object>> list, WritableSheet sheet) {
@@ -287,7 +272,7 @@ public class CreateExcelFile {
                 questionSection = questionSection + 0.1;
                 sheet.addCell(new Label(columnCount, rowCount, "<Question>"));
                 columnCount++;
-                sheet.addCell(new Label(columnCount, rowCount, String.valueOf(round(questionSection, 1))));
+                sheet.addCell(new Label(columnCount, rowCount, String.valueOf(gUC.round(questionSection, 1))));
                 columnCount++;
                 sheet.addCell(new Label(columnCount, rowCount, ((Questions) list.get(getList).get(i)).getQuestion()));
                 columnCount++;
@@ -320,7 +305,7 @@ public class CreateExcelFile {
             e.printStackTrace();
         }
         getList++;
-        questionSection = round(questionSection, 0);
+        questionSection = gUC.round(questionSection, 0);
         questionSection++;
     }
 
@@ -381,8 +366,4 @@ public class CreateExcelFile {
         return false;
     }
 
-    private static double round (double value, int precision) {
-        int scale = (int) Math.pow(10, precision);
-        return (double) Math.round(value * scale) / scale;
-    }
 }

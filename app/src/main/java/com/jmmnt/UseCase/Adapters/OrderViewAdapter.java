@@ -47,9 +47,10 @@ public class OrderViewAdapter extends RecyclerView.Adapter<OrderViewHolder> {
         date_tv = holder.itemView.findViewById(R.id.date_tv);
         installedBy_tv = holder.itemView.findViewById(R.id.installedBy_tv);
         verifiedBy_spinner = holder.itemView.findViewById(R.id.verifiedBy_spinner);
+        verifiedBy_spinner.setSelection(2);
 
         int lastIndex = AssignmentContainer.getInstance().getAssignments().size()-1;
-        System.out.println("COTAINER "+ AssignmentContainer.getInstance().getAssignments().get(lastIndex));
+        System.out.println("CONTAINER "+ AssignmentContainer.getInstance().getAssignments().get(lastIndex));
 
 //        if (position < itemList.size()) {
 //            if (itemList.get(position) != null) {
