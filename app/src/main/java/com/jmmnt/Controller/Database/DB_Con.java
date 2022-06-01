@@ -68,23 +68,28 @@ public class DB_Con {
             return dbCon;
     }
 
-    public void fillUserContainer() throws SQLException {
+    public void fillUserContainer() {
         UserContainer userContainer = UserContainer.getInstance();
         if (!UserContainer.getUsers().isEmpty()) UserContainer.getUsers().clear();
         String fill = "SELECT Firstname, Surname, Phonenumber, User_ID FROM User ORDER BY Firstname";
-        connection = connection();
-        stmt = connection.createStatement();
-        rs = stmt.executeQuery(fill);
-        while (rs.next()) {
-            userContainer.addUserToContainer(new User(
-                    rs.getString("Firstname"),
-                    rs.getString("Surname"),
-                    rs.getString("Phonenumber"),
-                    rs.getInt("User_ID")));
+        try {
+            connection = connection();
+            stmt = connection.createStatement();
+            rs = stmt.executeQuery(fill);
+            while (rs.next()) {
+                userContainer.addUserToContainer(new User(
+                        rs.getString("Firstname"),
+                        rs.getString("Surname"),
+                        rs.getString("Phonenumber"),
+                        rs.getInt("User_ID")));
+            }
+            connection.close();
+            stmt.close();
+            rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        connection.close();
-        stmt.close();
-        rs.close();
+
     }
 
 
