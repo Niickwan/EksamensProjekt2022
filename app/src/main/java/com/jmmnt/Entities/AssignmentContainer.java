@@ -3,8 +3,6 @@ package com.jmmnt.Entities;
 import java.util.ArrayList;
 
 public class AssignmentContainer {
-    private ArrayList<Assignment> assignmentList = new ArrayList<>();
-
     private ArrayList<Assignment> assignments;
     private static AssignmentContainer as;
     private static int created = 0;
@@ -14,7 +12,7 @@ public class AssignmentContainer {
     }
 
     public void addAssignmentsToContainer(Assignment assignment) {
-        this.assignmentList.add(assignment);
+        this.assignments.add(assignment);
     }
 
     public ArrayList<Assignment> getAssignments() {
