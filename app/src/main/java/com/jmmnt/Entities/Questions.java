@@ -17,6 +17,7 @@ public class Questions {
     }
 
     public Questions() {
+        this.images = new ArrayList<>();
     }
 
     @Override

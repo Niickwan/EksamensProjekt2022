@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -30,6 +31,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.itextpdf.layout.borders.Border;
 import com.jmmnt.Entities.Assignment;
 import com.jmmnt.Entities.AssignmentContainer;
 import com.jmmnt.Entities.CircuitDetails;
@@ -106,9 +108,9 @@ public class FragmentAdminChecklist extends Fragment {
         //TODO START - KUN FOR TESTING------------------------------------------------------------------------------------------------------------------------
         //TODO DATABASE KALD - hent data
 
-        List<Object> general = new ArrayList<>();
-        general.add(new Questions("Tavlen", 2, "Hvad sker der?"));
-        general.add(new Questions("Elskab", 1, "Kom nu"));
+        //List<Object> general = new ArrayList<>();
+        //general.add(new Questions("Tavlen", 2, "Hvad sker der?"));
+        //general.add(new Questions("Elskab", 1, "Kom nu"));
 
         List<Object> electricalPanel = new ArrayList<>();
         electricalPanel.add(new Questions("El", 3, "Pas på"));
@@ -155,8 +157,6 @@ public class FragmentAdminChecklist extends Fragment {
         List<String> template = opa.getExcelAsArrayList("TjeklisteTemplate.xls");
 
 
-
-
         //Dropdown titles
         String objectTag = "question";
         String objectTag2 = "circuitDetails";
@@ -179,6 +179,8 @@ public class FragmentAdminChecklist extends Fragment {
         for (int i = 0; i < template.size(); i++) {
             if (template.get(i).equalsIgnoreCase("<Headline>")){
                 if (headlineCounter == 0){
+                    List<Object> general = new ArrayList<>();
+                    i = readQuestionFromExcel(template, i, general);
                     buildDropdownDynamically(template.get(i+1), general, objectTag, "vertical");
                     headlineCounter++;
                 }
@@ -363,6 +365,30 @@ public class FragmentAdminChecklist extends Fragment {
 
     }
 
+    private int readQuestionFromExcel(List<String> template, int i, List<Object> general) {
+        for (int j = i; j < template.size(); j++) {
+
+            if (template.get(j).equals("<Question>")){
+                Questions question = new Questions();
+                int answer = Integer.parseInt(template.get(j +4));
+                question.setQuestion(template.get(j +1) + " " + template.get(j +2));
+                question.setAnswer(answer);
+                question.setComment(template.get(j +6));
+                int excelRowCounter = 8;
+                while(!template.get(j + excelRowCounter).equals("<ImagesEnd>")) {
+                    question.getImages().add(template.get(j +excelRowCounter));
+                    excelRowCounter++;
+                }
+                general.add(question);
+            }
+            else if (template.get(j).equals("<HeadlineEnd>")){
+                i = j;
+                break;
+            }
+        }
+        return i;
+    }
+
     private void setFloorHorizontalScrollBar() {
         Thread t = new Thread(() -> {
             ArrayList<String> hsvStructure = new ArrayList<>();
@@ -464,7 +490,10 @@ public class FragmentAdminChecklist extends Fragment {
         }).start());
         dialog.getWindow().findViewById(R.id.enable_delete_switch).setOnClickListener(v -> {
             if(floorButtons.size() < 2) {
-                gUC.toastAlert(getActivity(), getString(R.string.checklist_unable_to_delete_floor));
+                Thread t = new Thread(() -> gUC.toastAlert(getActivity(), getString(R.string.checklist_unable_to_delete_floor)));
+                t.start();
+                Switch s = v.findViewById(R.id.enable_delete_switch);
+                s.setChecked(false);
             } else {
                 if (deleteBtn.getVisibility() == View.VISIBLE) {
                     deleteBtn.setVisibility(View.GONE);
