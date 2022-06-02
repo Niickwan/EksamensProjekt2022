@@ -5,22 +5,30 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.jmmnt.Controller.Database.DB_Con;
 import com.jmmnt.Entities.Assignment;
 import com.jmmnt.Entities.AssignmentContainer;
 import com.jmmnt.Entities.LoggedInUser;
+import com.jmmnt.Entities.UserAssignmentContainer;
 import com.jmmnt.R;
+import com.jmmnt.UseCase.Adapters.OrderViewAdapter;
 import com.jmmnt.UseCase.Adapters.SearchCaseViewAdapter;
 import com.jmmnt.UseCase.GeneralUseCase;
 import com.jmmnt.UseCase.OperateAssignment;
+import com.jmmnt.UseCase.OperateDB;
 import com.jmmnt.databinding.FragmentAdminSearchCaseBinding;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class FragmentSearchCase extends Fragment {
 
@@ -30,8 +38,8 @@ public class FragmentSearchCase extends Fragment {
     private GeneralUseCase gUC = GeneralUseCase.getInstance();
     private OperateAssignment operateAssignment = OperateAssignment.getInstance();
     private static List<Assignment> assignmentsSorted = new ArrayList<>();
-    private DB_Con db_con = DB_Con.getInstance();
-    private ArrayList<Assignment> userAssignments = new ArrayList<>();
+    private OperateDB oDB = OperateDB.getInstance();
+    private OrderViewAdapter orderViewAdapter = new OrderViewAdapter();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -41,41 +49,32 @@ public class FragmentSearchCase extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        binding.createNewAssignmentBtn2.setOnClickListener(view1 -> new Thread(() -> {
+            try {
+                oDB.fillUserContainer();
+            } finally {
+                getActivity().runOnUiThread(() -> NavHostFragment.findNavController(this).navigate(R.id.action_fragmentSearchCase_to_fragmentCreateOrder));
+            }
+        }).start());
+
         binding.checkBoxSearchActiveCases.setChecked(true);
         binding.checkBoxSearchWaitingCases.setChecked(true);
         binding.checkBoxSearchUserCases.setChecked(true);
 
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                userAssignments = db_con.findUserAssignments(LoggedInUser.getInstance().getUser().getUserID());
-            }
-        });
-        t.start();
-
-        System.out.println("SIZE "+ userAssignments.size());
-
-        for (int i = 0; i < userAssignments.size(); i++) {
-            System.out.println("USER ID "+ userAssignments.get(i).getUserID());
-            System.out.println("ASS ID "+ userAssignments.get(i).getAssignmentID());
-
-        }
-
-        sortAssignments(assignmentContainer.getAssignments(), userAssignments);
+        assignmentsSorted = sortAssignments();
 
         recyclerView = getActivity().findViewById(R.id.caseListView);
-        SearchCaseViewAdapter[] sva = {new SearchCaseViewAdapter(assignmentsSorted, this)};
+        SearchCaseViewAdapter sva = new SearchCaseViewAdapter(assignmentsSorted, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        recyclerView.setAdapter(sva[0]);
-        sva[0].notifyItemInserted(assignmentsSorted.size() - 1);
+        recyclerView.setAdapter(sva);
 
         View.OnClickListener clicked = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                assignmentsSorted = sortAssignments(assignmentContainer.getAssignments(), userAssignments);
-                sva[0] = new SearchCaseViewAdapter(assignmentsSorted, FragmentSearchCase.this);
-                recyclerView.setAdapter(sva[0]);
-                sva[0].notifyItemInserted(assignmentsSorted.size() - 1);
+                if (assignmentsSorted != null) assignmentsSorted.clear();
+                assignmentsSorted.addAll(sortAssignments());
+                sva.notifyDataSetChanged();
             }
         };
 
@@ -84,7 +83,7 @@ public class FragmentSearchCase extends Fragment {
         binding.checkBoxSearchFinishedCases.setOnClickListener(clicked);
         binding.checkBoxSearchUserCases.setOnClickListener(clicked);
 
-        //This binding is for filtering the item list with cases when using the searchbar.
+        //This binding is for filtering the item list with cases when using the search bar.
         binding.searchBarSv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -92,23 +91,44 @@ public class FragmentSearchCase extends Fragment {
             }
             @Override
             public boolean onQueryTextChange(String searchText) {
-                sva[0].getFilter().filter(searchText);
+                sva.getFilter().filter(searchText);
                 return false;
             }
         });
+
+        //This refreshes the two assignment containers when the listView is swiped from top towards the bottom
+        SwipeRefreshLayout sFL = binding.swipeRefreshLayout.findViewById(R.id.swipeRefreshLayout);
+        sFL.setOnRefreshListener(() -> {
+            Thread thread = new Thread(() -> {
+                oDB.fillAssignmentContainer();
+                oDB.fillUserAssignmentsIDs(LoggedInUser.getInstance().getUser().getUserID());
+            });
+            thread.start();
+            Timer delay = new Timer();
+            delay.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    getActivity().runOnUiThread(() -> {
+                        if (assignmentsSorted != null) assignmentsSorted.clear();
+                        assignmentsSorted.addAll(sortAssignments());
+                        sva.notifyDataSetChanged();
+                    });
+                    sFL.setRefreshing(false);
+                }
+            }, 1000);
+        });
     }
 
-    private List sortAssignments(List<Assignment> assignments, List<Assignment> userAssignments) {
-        gUC.clearList(assignmentsSorted);
+    private List sortAssignments() {
+        List<Assignment> sorted;
         boolean activeCase = binding.checkBoxSearchActiveCases.isChecked();
         boolean waitingCase = binding.checkBoxSearchWaitingCases.isChecked();
         boolean finishedCase = binding.checkBoxSearchFinishedCases.isChecked();
         boolean userCase = binding.checkBoxSearchUserCases.isChecked();
-
-        assignmentsSorted = operateAssignment.sortAssignmentsByCheckboxIsChecked(assignments, userAssignments, activeCase, waitingCase, finishedCase, userCase);
-        //assignmentsSorted = operateAssignment.bubbleSortAssignmentsByDate(assignmentsSorted);
-
-        return assignmentsSorted;
+        sorted = operateAssignment.sortAssignmentsByCheckboxIsChecked(assignmentContainer.getAssignments(),
+                UserAssignmentContainer.getInstance().getUserAssignments(), activeCase, waitingCase, finishedCase, userCase);
+        sorted = operateAssignment.bubbleSortAssignmentsByDate(sorted);
+        return sorted;
     }
 
     @Override
@@ -116,7 +136,5 @@ public class FragmentSearchCase extends Fragment {
         super.onDestroyView();
         binding = null;
     }
-
-
 
 }

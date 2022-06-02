@@ -61,5 +61,8 @@
         <action
             android:id="@+id/action_fragmentSearchCase_to_FragmentAdminChecklist"
             app:destination="@id/FragmentAdminChecklist" />
+        <action
+            android:id="@+id/action_fragmentSearchCase_to_fragmentCreateOrder"
+            app:destination="@id/fragmentCreateOrder" />
     </fragment>
 </navigation>

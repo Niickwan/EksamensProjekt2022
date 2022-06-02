@@ -59,11 +59,15 @@ public class OperateDB {
         UserContainer.getUsers().set(0, new User());
     }
 
-    public void fillAssignmentContainer() {
-        db_con.fillAssignmentContainer();
+    public boolean fillAssignmentContainer() {
+       return db_con.fillAssignmentContainer();
     }
 
     public boolean doesOrderNumberExist(String orderNumber) {
         return db_con.doesOrderNumberExist(orderNumber);
+    }
+
+    public void fillUserAssignmentsIDs(int userID) {
+        db_con.fillUserAssignmentsContainer(userID);
     }
 }

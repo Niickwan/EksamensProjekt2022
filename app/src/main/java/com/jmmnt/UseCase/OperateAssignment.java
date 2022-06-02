@@ -313,28 +313,26 @@ public class OperateAssignment {
         return cardView;
     }
 
-    public List sortAssignmentsByCheckboxIsChecked(List<Assignment> caseList, List<Assignment> userCaseList, boolean activeCase, boolean waitingCase, boolean finishedCase, boolean userCase){
+
+    public List sortAssignmentsByCheckboxIsChecked(List<Assignment> assignments, List<Assignment> userAssignmentIDs, boolean activeCase, boolean waitingCase, boolean finishedCase, boolean userCase){
         List<Assignment> sortedList = new ArrayList<>();
-        for (int i = 0; i < userCaseList.size(); i++) {
-            for (int j = 0; j < userCaseList.size(); j++) {
-                if (userCase && userCaseList.get(i).getUserID() == caseList.get(j).getUserID()
-                        && userCaseList.get(i).getAssignmentID() == caseList.get(j).getAssignmentID()) {
-                    if (activeCase && caseList.get(j).getStatus().equalsIgnoreCase("active"))
-                        sortedList.add(caseList.get(j));
-                    if (waitingCase && caseList.get(j).getStatus().equalsIgnoreCase("waiting"))
-                        sortedList.add(caseList.get(j));
-                    if (finishedCase && caseList.get(j).getStatus().equalsIgnoreCase("finished"))
-                        sortedList.add(caseList.get(j));
+        for (int i = 0; i < userAssignmentIDs.size(); i++) {
+            for (int j = 0; j < assignments.size(); j++) {
+                if (userCase && userAssignmentIDs.get(i).getAssignmentID() == assignments.get(j).getAssignmentID()) {
+                    if (activeCase && assignments.get(j).getStatus().equalsIgnoreCase("active"))
+                        sortedList.add(assignments.get(j));
+                    else if (finishedCase && assignments.get(j).getStatus().equalsIgnoreCase("finished"))
+                        sortedList.add(assignments.get(j));
                 }
             }
         }
-        for (int i = 0; i < caseList.size(); i++) {
-            if (activeCase && caseList.get(i).getStatus().equalsIgnoreCase("active") && !userCase)
-                sortedList.add(caseList.get(i));
-            else if (waitingCase && caseList.get(i).getStatus().equalsIgnoreCase("waiting"))
-                sortedList.add(caseList.get(i));
-            else if (finishedCase && caseList.get(i).getStatus().equalsIgnoreCase("finished") && !userCase)
-                sortedList.add(caseList.get(i));
+        for (int i = 0; i < assignments.size(); i++) {
+            if (activeCase && assignments.get(i).getStatus().equalsIgnoreCase("active") && !userCase)
+                sortedList.add(assignments.get(i));
+            else if (waitingCase && assignments.get(i).getStatus().equalsIgnoreCase("waiting"))
+                sortedList.add(assignments.get(i));
+            else if (finishedCase && assignments.get(i).getStatus().equalsIgnoreCase("finished") && !userCase)
+                sortedList.add(assignments.get(i));
         }
         return sortedList;
     }

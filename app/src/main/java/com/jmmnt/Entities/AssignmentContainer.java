@@ -12,6 +12,13 @@ public class AssignmentContainer {
         assignments = new ArrayList<>();
     }
 
+    public static AssignmentContainer getInstance() {
+        if (assignmentContainer == null) {
+            return assignmentContainer = new AssignmentContainer();
+        } else
+            return assignmentContainer;
+    }
+
     public void addAssignmentsToContainer(Assignment assignment) {
         this.assignments.add(assignment);
     }
@@ -28,11 +35,6 @@ public class AssignmentContainer {
         this.currentAssignment = currentAssignment;
     }
 
-    public static AssignmentContainer getInstance() {
-        if (assignmentContainer == null) {
-            return assignmentContainer = new AssignmentContainer();
-        } else
-            return assignmentContainer;
-    }
+
 
 }
