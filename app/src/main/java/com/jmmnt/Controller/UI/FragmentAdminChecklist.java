@@ -55,6 +55,7 @@ public class FragmentAdminChecklist extends Fragment {
     private OperateAssignment opa = OperateAssignment.getInstance();
     private OperateDB oDB = OperateDB.getInstance();
     private GeneralUseCase gUC = GeneralUseCase.getInstance();
+    private AssignmentContainer assignmentContainer = AssignmentContainer.getInstance();
     private boolean isNewAssignment;
 
     private Button addFloorBtn;
@@ -70,7 +71,7 @@ public class FragmentAdminChecklist extends Fragment {
     private LinearLayout parentLLH;
 
     // TODO SKAL VÆRE VÆRDIER FRA SERVER/DB
-    private String orderNr = "8888";
+    private String orderNr = assignmentContainer.getCurrentAssignment().getOrderNumber();
     private LinearLayout floorLinearLayout;
     private String selectedFloorName = "";
 
@@ -100,23 +101,7 @@ public class FragmentAdminChecklist extends Fragment {
         LinearLayout roomLinearLayout = new LinearLayout(getActivity());
         roomLinearLayout.setOrientation(LinearLayout.HORIZONTAL);
 
-        Thread t = new Thread(() -> {
-            ArrayList<String> hsvStructure = new ArrayList<>();
-            try {
-                hsvStructure = oDB.getAssignmentStructure(orderNr);
-            } finally {
-                floors = gUC.sortStringBeforeNumbers(gUC.getSplittedString(hsvStructure, orderNr, "/<"));
-                selectedFloorName = floors.get(0);
-                setHorizontalFloorBar(floors);
-
-                getActivity().runOnUiThread(() -> {
-                    binding.hsvFloor.addView(floorLinearLayout);
-//                        binding.hsvRoom.addView(roomLinearLayout);
-                    binding.hsvRoom.setVisibility(View.GONE);
-                });
-            }
-        });
-        t.start();
+        setFloorHorizontalScrollBar();
 
         //TODO START - KUN FOR TESTING------------------------------------------------------------------------------------------------------------------------
         //TODO DATABASE KALD - hent data
@@ -378,6 +363,28 @@ public class FragmentAdminChecklist extends Fragment {
 
     }
 
+    private void setFloorHorizontalScrollBar() {
+        Thread t = new Thread(() -> {
+            ArrayList<String> hsvStructure = new ArrayList<>();
+            try {
+                hsvStructure = oDB.getAssignmentStructure(orderNr);
+            } finally {
+                floors = gUC.sortStringBeforeNumbers(gUC.getSplittedString(hsvStructure, orderNr, "/<"));
+                selectedFloorName = floors.get(0);
+//                setHorizontalFloorBar(floors);
+
+                getActivity().runOnUiThread(() -> {
+                    binding.hsvFloor.removeAllViews();
+                    setHorizontalFloorBar(floors);
+                    binding.hsvFloor.addView(floorLinearLayout);
+//                        binding.hsvRoom.addView(roomLinearLayout);
+                    binding.hsvRoom.setVisibility(View.GONE);
+                });
+            }
+        });
+        t.start();
+    }
+
     private void setHorizontalFloorBar(ArrayList<String> floors) {
         floorLinearLayout.removeAllViews();
         floorButtons.clear();
@@ -413,7 +420,9 @@ public class FragmentAdminChecklist extends Fragment {
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         TextInputLayout newFloorName = dialog.getWindow().findViewById(R.id.floor_et);
         dialog.getWindow().findViewById(R.id.rename_floor_btn).setOnClickListener(v -> new Thread(() -> {
-            opa.createFolderOnServer(orderNr, newFloorName.getEditText().getText().toString(), "");
+            String createFloorName = newFloorName.getEditText().getText().toString();
+            opa.createFolderOnServer(orderNr, createFloorName, "");
+            opa.copyFilesOnServer("DefaultElectricianChecklist.xls", orderNr, createFloorName, orderNr + "_" + createFloorName + ".xls");
             getActivity().runOnUiThread(() -> {
                 floors.add(newFloorName.getEditText().getText().toString());
                 selectedFloorName = newFloorName.getEditText().getText().toString();
@@ -454,16 +463,25 @@ public class FragmentAdminChecklist extends Fragment {
             }
         }).start());
         dialog.getWindow().findViewById(R.id.enable_delete_switch).setOnClickListener(v -> {
-            if (deleteBtn.getVisibility() == View.VISIBLE) {
-                deleteBtn.setVisibility(View.GONE);
+            if(floorButtons.size() < 2) {
+                gUC.toastAlert(getActivity(), getString(R.string.checklist_unable_to_delete_floor));
             } else {
-                deleteBtn.setVisibility(View.VISIBLE);
+                if (deleteBtn.getVisibility() == View.VISIBLE) {
+                    deleteBtn.setVisibility(View.GONE);
+                } else {
+                    deleteBtn.setVisibility(View.VISIBLE);
+                }
             }
         });
         dialog.getWindow().findViewById(R.id.delete_floor_btn).setOnClickListener(v -> new Thread(() -> {
             // TODO Remove from server
+            String deleteDirLocation = orderNr + "/" + selectedFloorName;
+            opa.deleteDirectoryOnServer(deleteDirLocation);
             getActivity().runOnUiThread(() -> {
                 // TODO remove from list and set new name instance variable
+                for (int i = 0; i < floorButtons.size(); i++) {
+                    setFloorHorizontalScrollBar();
+                }
                 deleteBtn.setVisibility(View.GONE);
                 dialog.dismiss();
             });

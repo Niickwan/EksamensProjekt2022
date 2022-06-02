@@ -84,6 +84,39 @@ public class OperateAssignment {
         }
         return isFolderCreated;
     }
+
+    public boolean copyFilesOnServer(String templateFileName, String orderNumber, String floor, String fileName) {
+        String destination = "public_html/assignments/" + orderNumber + "/" + floor;
+        boolean isFolderCreated = false;
+        try {
+            URL url = new URL("https://dat32.dk/copyFileOnServer.php?"
+                    + "defaultLocation=public_html/TemplateChecklists/" + templateFileName + "&"
+                    + "destinationLocation=" + destination + "&"
+                    + "fileName=" + fileName);
+            BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
+            String isSuccessful = in.readLine();
+            in.close();
+            isFolderCreated = isSuccessful.equalsIgnoreCase("True");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return isFolderCreated;
+    }
+
+    public boolean deleteDirectoryOnServer(String directoryLocation) {
+        boolean isFolderCreated = false;
+
+        try {
+            URL url = new URL("https://dat32.dk/deleteDirectoryOnServer.php?dirLocation=public_html/assignments/" + directoryLocation);
+            BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
+            String isSuccessful = in.readLine();
+            in.close();
+            isFolderCreated = isSuccessful.equalsIgnoreCase("True");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return isFolderCreated;
+    }
     //END SERVER------------------------------------------------------------------------------------
 
     //TODO lave en ekstra funktion der tjekker status (aktiv, ikke aktiv) sådan at man kan

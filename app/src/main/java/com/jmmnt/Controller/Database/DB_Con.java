@@ -101,7 +101,7 @@ public class DB_Con {
         AssignmentContainer assignmentContainer = AssignmentContainer.getInstance();
         if (!assignmentContainer.getAssignments().isEmpty())
             assignmentContainer.getAssignments().clear();
-        String fill = "SELECT Assignment_ID, Customer_Name, Order_number, Address, Postal_Code, City, Status, Status_Date FROM Assignment";
+        String fill = "SELECT Assignment_ID, Customer_Name, Order_number, Address, Postal_Code, Status, Status_Date FROM Assignment";
         try {
             connection = connection();
             stmt = connection.createStatement();
@@ -111,11 +111,10 @@ public class DB_Con {
                 localDate = LocalDate.parse(rs.getDate("Status_Date").toString());
                 assignmentContainer.addAssignmentsToContainer(new Assignment(
                         rs.getInt("Assignment_ID"),
-                        rs.getString("Customer_Name"),
                         rs.getString("Order_Number"),
+                        rs.getString("Customer_Name"),
                         rs.getString("Address"),
                         rs.getString("Postal_Code"),
-                        rs.getString("City"),
                         localDate,
                         rs.getString("Status")));
             }
@@ -173,10 +172,10 @@ public class DB_Con {
 
     public boolean isPhonenumberOccupied(String phoneNumber) {
         boolean isPhoneNumberAvailable = false;
-        String MySQL = "SELECT * FROM User WHERE Phonenumber = '" + phoneNumber + "'";
+        String mySQL = "SELECT * FROM User WHERE Phonenumber = '" + phoneNumber + "'";
         try {
             connection = connection();
-            preStmt = connection.prepareStatement(MySQL);
+            preStmt = connection.prepareStatement(mySQL);
             rs = preStmt.executeQuery();
             if (rs.next()) isPhoneNumberAvailable = true;
             connection.close();
@@ -191,10 +190,10 @@ public class DB_Con {
 
     public boolean isEmailOccupied(String email) {
         boolean isEmailAvailable = false;
-        String MySQL = "SELECT * FROM User WHERE Email = '" + email + "'";
+        String mySQL = "SELECT * FROM User WHERE Email = '" + email + "'";
         try {
             connection = connection();
-            preStmt = connection.prepareStatement(MySQL);
+            preStmt = connection.prepareStatement(mySQL);
             rs = preStmt.executeQuery();
             if (rs.next()) isEmailAvailable = true;
             connection.close();
@@ -222,11 +221,10 @@ public class DB_Con {
 
     public boolean createNewAssignment(Assignment assignment) {  //TODO INSERT INTO SKAL RETTES TIL DEET NYE ASSIGMNET OBJEKT
         connection = connection();
-        String userInfo = "INSERT INTO Assignment (Address, Postal_Code, City, Status, Order_Number, Status_Date, Customer_Name) "
+        String userInfo = "INSERT INTO Assignment (Address, Postal_Code, Status, Order_Number, Status_Date, Customer_Name) "
                 + "VALUES ('"
                 + assignment.getAddress() + "', '"
                 + assignment.getPostalCode() + "', '"
-                + assignment.getCity() + "', '"
                 + assignment.getStatus() + "', '"
                 + assignment.getOrderNumber() + "', '"
                 + assignment.getStatusDate() + "', '"
@@ -236,11 +234,10 @@ public class DB_Con {
 
     public boolean createNewAssignment(Assignment assignment, int userID) {  //TODO INSERT INTO SKAL RETTES TIL DEET NYE ASSIGMNET OBJEKT
         int isUpdated;
-        String userInfo = "INSERT INTO Assignment (Address, Postal_Code, City, Status, Order_Number, Status_Date, Customer_Name) "
+        String userInfo = "INSERT INTO Assignment (Address, Postal_Code, Status, Order_Number, Status_Date, Customer_Name) "
                 + "VALUES ('"
                 + assignment.getAddress() + "', '"
                 + assignment.getPostalCode() + "', '"
-                + assignment.getCity() + "', '"
                 + assignment.getStatus() + "', '"
                 + assignment.getOrderNumber() + "', '"
                 + assignment.getStatusDate() + "', '"
@@ -280,4 +277,21 @@ public class DB_Con {
         return arr;
     }
 
+    public boolean doesOrderNumberExist(String orderNumber) {
+        boolean isOrderNumberAvailable = true;
+        String mySQL = "SELECT * FROM Assignment WHERE Order_Number = '" + orderNumber + "'";
+        try {
+            connection = connection();
+            preStmt = connection.prepareStatement(mySQL);
+            rs = preStmt.executeQuery();
+            if (rs.next()) isOrderNumberAvailable = false;
+            connection.close();
+            preStmt.close();
+            rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return isOrderNumberAvailable;
+    }
 }
