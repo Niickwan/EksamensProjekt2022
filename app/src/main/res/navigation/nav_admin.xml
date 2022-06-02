@@ -3,23 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FragmentAdminHome">
+    app:startDestination="@id/fragmentSearchCase">
 
-    <fragment
-        android:id="@+id/FragmentAdminHome"
-        android:name="com.jmmnt.Controller.UI.FragmentAdminHome"
-        android:label="@string/fragment_admin_home_label"
-        tools:layout="@layout/fragment_admin_home">
-        <action
-            android:id="@+id/action_FragmentAdminHome_to_fragmentPopupMenu"
-            app:destination="@id/fragmentPopupMenu" />
-        <action
-            android:id="@+id/action_FragmentAdminHome_to_fragmentCreateOrder"
-            app:destination="@id/fragmentCreateOrder" />
-        <action
-            android:id="@+id/action_FragmentAdminHome_to_fragmentSearchCase"
-            app:destination="@id/fragmentSearchCase" />
-    </fragment>
     <fragment
         android:id="@+id/FragmentAdminChecklist"
         android:name="com.jmmnt.Controller.UI.FragmentAdminChecklist"
@@ -31,9 +16,8 @@
         android:label="FragmentEditProfile"
         tools:layout="@layout/fragment_edit_profile" >
         <action
-            android:id="@+id/action_fragmentEditProfile_to_FragmentAdminHome"
-            app:destination="@id/FragmentAdminHome"
-            app:popUpTo="@id/nav_graph" />
+            android:id="@+id/action_adminFragmentEditProfile_to_fragmentSearchCase"
+            app:destination="@id/fragmentSearchCase" />
     </fragment>
     <fragment
         android:id="@+id/fragmentPopupMenu"
@@ -64,5 +48,8 @@
         <action
             android:id="@+id/action_fragmentSearchCase_to_fragmentCreateOrder"
             app:destination="@id/fragmentCreateOrder" />
+        <action
+            android:id="@+id/action_fragmentSearchCase_to_fragmentPopupMenu"
+            app:destination="@id/fragmentPopupMenu" />
     </fragment>
 </navigation>

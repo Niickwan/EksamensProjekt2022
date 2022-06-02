@@ -44,12 +44,12 @@ public class FragmentSearchCase extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentAdminSearchCaseBinding.inflate(inflater, container, false);
+
         return binding.getRoot();
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         binding.createNewAssignmentBtn2.setOnClickListener(view1 -> new Thread(() -> {
             try {
                 oDB.fillUserContainer();
@@ -64,8 +64,8 @@ public class FragmentSearchCase extends Fragment {
 
         assignmentsSorted = sortAssignments();
 
-        recyclerView = getActivity().findViewById(R.id.caseListView);
-        SearchCaseViewAdapter sva = new SearchCaseViewAdapter(assignmentsSorted, this);
+        recyclerView = binding.caseListView;
+        SearchCaseViewAdapter sva = new SearchCaseViewAdapter(assignmentsSorted, FragmentSearchCase.this);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(sva);
 
@@ -117,6 +117,8 @@ public class FragmentSearchCase extends Fragment {
                 }
             }, 1000);
         });
+
+
     }
 
     private List sortAssignments() {
