@@ -43,4 +43,11 @@
         <item name="android:scrollbars">vertical</item>
     </style>
 
+    <!-- Splashscreen -->
+    <style name="Splashscreen" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/background_splashscreen</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/darkblue</item>
+
+    </style>
+
 </resources>

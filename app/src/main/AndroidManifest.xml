@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-feature android:name="android.hardware.camera"
+
+    <uses-feature
+        android:name="android.hardware.camera"
         android:required="true" />
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <application
 
         android:allowBackup="true"
@@ -16,16 +20,23 @@
         android:theme="@style/Theme.EksamensProjekt2022">
         <activity
             android:name=".Controller.UI.ActivityAdmin"
-            android:screenOrientation="portrait"
             android:exported="false"
             android:label="@string/title_activity_admin"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.EksamensProjekt2022.NoActionBar" />
         <activity
             android:name=".Controller.UI.ActivityLogin"
-            android:screenOrientation="portrait"
             android:exported="true"
             android:label="@string/app_icon_name"
-            android:theme="@style/Theme.EksamensProjekt2022.NoActionBar">
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.EksamensProjekt2022.NoActionBar"/>
+
+
+            <activity
+                android:name=".Controller.UI.ActivitySplashscreen"
+                android:exported="true"
+                android:screenOrientation="portrait"
+                android:theme="@style/Splashscreen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
