@@ -50,7 +50,7 @@ public class FragmentSearchCase extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        binding.createNewAssignmentBtn2.setOnClickListener(view1 -> new Thread(() -> {
+        binding.createNewAssignmentBtn.setOnClickListener(view1 -> new Thread(() -> {
             try {
                 oDB.fillUserContainer();
             } finally {

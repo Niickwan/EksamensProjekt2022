@@ -20,7 +20,7 @@
             android:layout_height="wrap_content">
 
             <Button
-                android:id="@+id/createNewAssignmentBtn2"
+                android:id="@+id/createNewAssignmentBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
                 android:layout_marginEnd="16dp"
@@ -42,7 +42,7 @@
                 android:inputType="textPersonName"
                 android:queryHint="@string/search_case_searchbar"
                 android:theme="@style/EditTextTheme"
-                app:layout_constraintEnd_toStartOf="@+id/createNewAssignmentBtn2"
+                app:layout_constraintEnd_toStartOf="@+id/createNewAssignmentBtn"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -68,7 +68,7 @@
                 android:buttonTint="#000000"
                 android:theme="@style/EditTextTheme"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/createNewAssignmentBtn2"
+                app:layout_constraintEnd_toEndOf="@+id/createNewAssignmentBtn"
                 app:layout_constraintTop_toBottomOf="@+id/userCases_tv"
                 tools:ignore="TouchTargetSizeCheck" />
 
