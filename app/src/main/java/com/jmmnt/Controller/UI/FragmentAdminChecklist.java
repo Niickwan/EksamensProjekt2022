@@ -112,25 +112,25 @@ public class FragmentAdminChecklist extends Fragment {
         //general.add(new Questions("Tavlen", 2, "Hvad sker der?"));
         //general.add(new Questions("Elskab", 1, "Kom nu"));
 
-        List<Object> electricalPanel = new ArrayList<>();
-        electricalPanel.add(new Questions("El", 3, "Pas på"));
-        electricalPanel.add(new Questions("Test", 2, "Hallo"));
+        //List<Object> electricalPanel = new ArrayList<>();
+        //electricalPanel.add(new Questions("El", 3, "Pas på"));
+        //electricalPanel.add(new Questions("Test", 2, "Hallo"));
 
-        List<Object> installation = new ArrayList<>();
-        installation.add(new Questions("Installation", 3, "Pas på"));
-        installation.add(new Questions("Test Install", 3, "Hallo"));
+        //List<Object> installation = new ArrayList<>();
+        //installation.add(new Questions("Installation", 3, "Pas på"));
+        //installation.add(new Questions("Test Install", 3, "Hallo"));
 
-        List<Object> protection = new ArrayList<>();
-        protection.add(new Questions("Prot", 2, "Pas på"));
-        protection.add(new Questions("Test Prot", 2, "Hallo"));
+        //List<Object> protection = new ArrayList<>();
+        //protection.add(new Questions("Prot", 2, "Pas på"));
+       // protection.add(new Questions("Test Prot", 2, "Hallo"));
 
-        List<Object> error = new ArrayList<>();
-        error.add(new Questions("Error", 1, "Pas på"));
-        error.add(new Questions("Test Error", 2, "Hallo"));
+        //List<Object> error = new ArrayList<>();
+        //error.add(new Questions("Error", 1, "Pas på"));
+        //error.add(new Questions("Test Error", 2, "Hallo"));
 
-        List<Object> section = new ArrayList<>();
-        section.add(new Questions("Section Section", 3, "Pas på"));
-        section.add(new Questions("Test Section", 1, "Hallo"));
+        //List<Object> section = new ArrayList<>();
+        //section.add(new Questions("Section Section", 3, "Pas på"));
+        //section.add(new Questions("Test Section", 1, "Hallo"));
 
         circuitDetailsResults = new LinkedList<>();
         circuitDetailsResults.add(new CircuitDetails("Tavlen", "400", "Lampe", "6", "500", 1, "340", "20"));
@@ -176,33 +176,63 @@ public class FragmentAdminChecklist extends Fragment {
         buildDropdownDynamically("Ordre", assignmentContainer, objectTag5, "vertical");
 
         int headlineCounter = 0;
+        int inputHeadlineCounter = 0;
         for (int i = 0; i < template.size(); i++) {
             if (template.get(i).equalsIgnoreCase("<Headline>")){
                 if (headlineCounter == 0){
                     List<Object> general = new ArrayList<>();
+                    String headline = template.get(i+1);
                     i = readQuestionFromExcel(template, i, general);
-                    buildDropdownDynamically(template.get(i+1), general, objectTag, "vertical");
+                    buildDropdownDynamically(headline, general, objectTag, "vertical");
                     headlineCounter++;
                 }
                 else if (headlineCounter == 1){
-                    buildDropdownDynamically(template.get(i+1), electricalPanel, objectTag, "vertical");
+                    List<Object> electricalPanel = new ArrayList<>();
+                    String headline = template.get(i+1);
+                    i = readQuestionFromExcel(template, i, electricalPanel);
+                    buildDropdownDynamically(headline, electricalPanel, objectTag, "vertical");
                     headlineCounter++;
                 }
                 else if (headlineCounter == 2){
-                    buildDropdownDynamically(template.get(i+1), installation, objectTag, "vertical");
+                    List<Object> installation = new ArrayList<>();
+                    String headline = template.get(i+1);
+                    i = readQuestionFromExcel(template, i, installation);
+                    buildDropdownDynamically(headline, installation, objectTag, "vertical");
                     headlineCounter++;
                 }
                 else if (headlineCounter == 3){
-                    buildDropdownDynamically(template.get(i+1), protection, objectTag, "vertical");
+                    List<Object> protection = new ArrayList<>();
+                    String headline = template.get(i+1);
+                    i = readQuestionFromExcel(template, i, protection);
+                    buildDropdownDynamically(headline, protection, objectTag, "vertical");
                     headlineCounter++;
                 }
                 else if (headlineCounter == 4){
-                    buildDropdownDynamically(template.get(i+1), error, objectTag, "vertical");
+                    List<Object> error = new ArrayList<>();
+                    String headline = template.get(i+1);
+                    i = readQuestionFromExcel(template, i, error);
+                    buildDropdownDynamically(headline, error, objectTag, "vertical");
                     headlineCounter++;
                 }
                 else if (headlineCounter == 5){
-                    buildDropdownDynamically(template.get(i+1), section, objectTag, "vertical");
+                    List<Object> section = new ArrayList<>();
+                    String headline = template.get(i+1);
+                    i = readQuestionFromExcel(template, i, section);
+                    buildDropdownDynamically(headline, section, objectTag, "vertical");
                     headlineCounter++;
+                }
+            } else if (template.get(i).equalsIgnoreCase("<InputHeadline>")) {
+                if(inputHeadlineCounter == 0){
+                    for (int j = i; j < template.size(); j++) {
+
+                        if (template.get(j).equals("  ")){
+
+                        }
+                        else if (template.get(j).equals("<InputHeadlineEnd>")){
+                            i = j;
+                            break;
+                        }
+                    }
                 }
             }
         }
@@ -229,7 +259,6 @@ public class FragmentAdminChecklist extends Fragment {
         parentLLH.addView(testResultsTitle);
 
         //Building dropdowns
-        buildDropdownDynamically("Kredsdetaljer", circuitDetailsResults, objectTag2, "horizontal");
         buildDropdownDynamically("Afprøvning af RCD'er", testingRCDResults, objectTag3, "horizontal");
 
         //Adding textview
