@@ -38,16 +38,16 @@ public class OperateAssignment {
 
     private GeneralUseCase gUC = GeneralUseCase.getInstance();
     private DB_Con db_con = DB_Con.getInstance();
-    private static OperateAssignment oA;
+    private static OperateAssignment operateAssignment;
 
     private OperateAssignment(){
     }
 
     public static OperateAssignment getInstance(){
-        if (oA == null){
-            return oA = new OperateAssignment();
+        if (operateAssignment == null){
+            return operateAssignment = new OperateAssignment();
         }else
-            return oA;
+            return operateAssignment;
     }
 
     //SERVER------------------------------------------------------------------------------------
@@ -210,7 +210,7 @@ public class OperateAssignment {
         } catch (BiffException | IOException e) {
             e.printStackTrace();
         }
-        arr.forEach(System.out::println);
+        arr.forEach(System.out::println); //TODO sout
         return arr;
     }
 //---------------------------------------------------------------------------------------------
@@ -219,7 +219,7 @@ public class OperateAssignment {
      * returner liste af cardviews som indeholder alle questions under én headline.
      * parametre: Activity activtity, Resources resources
      */
-    public ArrayList<CardView> genereteCardviewArray (Activity activity, Resources resources, String checklistName) {
+    public ArrayList<CardView> genereteCardviewArray (Activity activity, Resources resources, String checklistName) { //TODO WhatToDo
         int headlineFirst = 0;
         int headlineSecond = 0;
         List<String> excelCardView;
@@ -245,7 +245,6 @@ public class OperateAssignment {
 
         LinearLayout linearLayoutHeadlineCardview = new LinearLayout(activity);
         TextView headline = new TextView(activity);
-
 
         LinearLayout linearLayoutBodyCardview = new LinearLayout(activity);
 
@@ -281,22 +280,28 @@ public class OperateAssignment {
         return cardView;
     }
 
-    public List sortAssignmentsByCheckboxIsChecked(List<Assignment> list, boolean activeCase, boolean waitingCase, boolean finishedCase, boolean userCase){
+    public List sortAssignmentsByCheckboxIsChecked(List<Assignment> caseList, List<Assignment> userCaseList, boolean activeCase, boolean waitingCase, boolean finishedCase, boolean userCase){
         List<Assignment> sortedList = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
-            if (userCase && list.get(i).getUserID() == LoggedInUser.getInstance().getUser().getUserID()) {
-                if (activeCase && list.get(i).getStatus().equalsIgnoreCase("active"))
-                    sortedList.add(list.get(i));
-                if (waitingCase && list.get(i).getStatus().equalsIgnoreCase("waiting"))
-                    sortedList.add(list.get(i));
-                if (finishedCase && list.get(i).getStatus().equalsIgnoreCase("finished"))
-                    sortedList.add(list.get(i));
-            } else if (activeCase && list.get(i).getStatus().equalsIgnoreCase("active") && !userCase)
-                sortedList.add(list.get(i));
-            else if (waitingCase && list.get(i).getStatus().equalsIgnoreCase("waiting"))
-                sortedList.add(list.get(i));
-            else if (finishedCase && list.get(i).getStatus().equalsIgnoreCase("finished") && !userCase)
-                sortedList.add(list.get(i));
+        for (int i = 0; i < userCaseList.size(); i++) {
+            for (int j = 0; j < userCaseList.size(); j++) {
+                if (userCase && userCaseList.get(i).getUserID() == caseList.get(j).getUserID()
+                        && userCaseList.get(i).getAssignmentID() == caseList.get(j).getAssignmentID()) {
+                    if (activeCase && caseList.get(j).getStatus().equalsIgnoreCase("active"))
+                        sortedList.add(caseList.get(j));
+                    if (waitingCase && caseList.get(j).getStatus().equalsIgnoreCase("waiting"))
+                        sortedList.add(caseList.get(j));
+                    if (finishedCase && caseList.get(j).getStatus().equalsIgnoreCase("finished"))
+                        sortedList.add(caseList.get(j));
+                }
+            }
+        }
+        for (int i = 0; i < caseList.size(); i++) {
+            if (activeCase && caseList.get(i).getStatus().equalsIgnoreCase("active") && !userCase)
+                sortedList.add(caseList.get(i));
+            else if (waitingCase && caseList.get(i).getStatus().equalsIgnoreCase("waiting"))
+                sortedList.add(caseList.get(i));
+            else if (finishedCase && caseList.get(i).getStatus().equalsIgnoreCase("finished") && !userCase)
+                sortedList.add(caseList.get(i));
         }
         return sortedList;
     }

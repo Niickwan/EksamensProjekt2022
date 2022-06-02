@@ -16,7 +16,6 @@ public class AdapterFactoryTest {
     public void setObjectType() {
         AdapterFactory af = new AdapterFactory();
         assertTrue(af.setObjectType("Assignment") instanceof Assignment);
-
         assertNull(af.setObjectType(""));
     }
 }

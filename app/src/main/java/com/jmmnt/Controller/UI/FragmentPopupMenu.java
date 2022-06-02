@@ -58,10 +58,6 @@ public class FragmentPopupMenu extends Fragment {
                         navHostFragmentContent = R.id.nav_host_fragment_content_admin;
                         navToFragment = R.id.adminFragmentEditProfile;
                     }
-                    else if (LoggedInUser.getInstance().getUser().getUserRights() == 2) {
-                        navHostFragmentContent = R.id.nav_host_fragment_content_user;
-                        navToFragment = R.id.userFragmentEditProfile;
-                    }
                     NavController navController = Navigation.findNavController(activity, navHostFragmentContent);
                     navController.navigateUp();
                     navController.navigate(navToFragment);

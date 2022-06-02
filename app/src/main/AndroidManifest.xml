@@ -15,12 +15,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EksamensProjekt2022">
         <activity
-            android:name=".Controller.UI.ActivityUser"
-            android:screenOrientation="portrait"
-            android:exported="false"
-            android:label="@string/title_activity_user"
-            android:theme="@style/Theme.EksamensProjekt2022.NoActionBar" />
-        <activity
             android:name=".Controller.UI.ActivityAdmin"
             android:screenOrientation="portrait"
             android:exported="false"

@@ -92,7 +92,6 @@ public class SearchCaseViewAdapter extends RecyclerView.Adapter<SearchCaseViewHo
         @Override
         protected FilterResults performFiltering(CharSequence charSequence) {
             List<Assignment> filteredItemList = new ArrayList<>();
-
             if (charSequence == null || charSequence.length() == 0) {
                 filteredItemList.addAll(itemsFilterable);
             } else {
@@ -106,10 +105,8 @@ public class SearchCaseViewAdapter extends RecyclerView.Adapter<SearchCaseViewHo
                         filteredItemList.add(item);
                 }
             }
-
             FilterResults results = new FilterResults();
             results.values = filteredItemList;
-
             return results;
         }
 
@@ -136,7 +133,6 @@ class SearchCaseViewHolder extends RecyclerView.ViewHolder {
         });
 
         //TODO Vi kan aflæse felter herfra
-
     }
 
     public SearchCaseViewHolder linkAdapter(SearchCaseViewAdapter searchCaseViewAdapter) {

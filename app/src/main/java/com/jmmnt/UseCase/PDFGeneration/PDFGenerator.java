@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Environment;
-
 import com.itextpdf.io.font.FontProgram;
 import com.itextpdf.io.font.FontProgramFactory;
 import com.itextpdf.io.font.PdfEncodings;
@@ -39,9 +38,7 @@ import com.itextpdf.layout.property.VerticalAlignment;
 import com.jmmnt.Entities.Assignment;
 import com.jmmnt.R;
 import com.jmmnt.UseCase.OperateAssignment;
-
 import org.apache.commons.io.IOUtils;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -50,10 +47,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class PDFGenerator {
-    Assignment assignment;
-    OperateAssignment opa = OperateAssignment.getInstance();
-    Table table;
-    Table noteTable;
+
+    private Assignment assignment;
+    private OperateAssignment opa = OperateAssignment.getInstance();
+    private Table table;
+    private Table noteTable;
     public PDFGenerator(Assignment assignment) {
         this.assignment = assignment;
     }
@@ -122,10 +120,10 @@ public class PDFGenerator {
 
     public void insertExcelDocumentNoteToNoteTable(ArrayList<String> excel){
         if(!excel.get(excel.size()-1).equals("-1")){
-            noteTable.addCell(createParagraph("General Bemærkning: \n" + excel.get(excel.size()-1)));
+            noteTable.addCell(createParagraph("General Bemærkning: \n" + excel.get(excel.size()-1))); //TODO string
         }
         else{
-            noteTable.addCell(createParagraph("General Bemærkning: \n"));
+            noteTable.addCell(createParagraph("General Bemærkning: \n")); //TODO string
         }
     }
 
@@ -184,7 +182,7 @@ public class PDFGenerator {
             int excelRowCounter = 8;
             int pictureCounter = 1;
             while(!excel.get(i + excelRowCounter).equals("<ImagesEnd>")) {
-                noteTable.addCell(createCell(excel.get(i +1) + ":\nBillede " + pictureCounter + ": " +
+                noteTable.addCell(createCell(excel.get(i +1) + ":\nBillede " + pictureCounter + ": " + //TODO string
                         excel.get(i +8), document,true).setBorderTop(Border.NO_BORDER).setBorderBottom(Border.NO_BORDER));
                 pictureCounter++;
                 excelRowCounter++;
@@ -241,7 +239,7 @@ public class PDFGenerator {
 
     //^^^^^^^^^^^^^^^^^^^^^^^INSERT HEADLINE TAG METHODS^^^^^^^^^^^^^^^^^^^^^^^^^
 
-    //↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓INSERT INPUTHEADLINE TAG METHODS ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+    //↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓INSERT INPUT HEADLINE TAG METHODS ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 
     public void insertExcelInputHeadlineAlgorithm(ArrayList<String> excel, Document document, PdfFont font) {
 
@@ -336,7 +334,7 @@ public class PDFGenerator {
         }
     }
 
-    //^^^^^^^^^^^^^^^^^^^^^^^^INSERT INPUTHEADLINE TAG METHODS^^^^^^^^^^^^^^^^^^^^^^^^^
+    //^^^^^^^^^^^^^^^^^^^^^^^^INSERT INPUT HEADLINE TAG METHODS^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
     public Paragraph createParagraph(String s){
@@ -383,10 +381,10 @@ public class PDFGenerator {
         Table table = new Table(getWidthMatchingPageSize(3,document)).useAllAvailableWidth();
 
         table.addCell(new Cell(2,1).add(logoImage));
-        table.addCell(new Cell(2,1).add(createParagraph("TJEKLISTE").setTextAlignment(TextAlignment.CENTER)
+        table.addCell(new Cell(2,1).add(createParagraph("TJEKLISTE").setTextAlignment(TextAlignment.CENTER) //TODO string
                 .setVerticalAlignment(VerticalAlignment.TOP).setFontColor(ColorConstants.ORANGE).setFontSize(25f)));
-        table.addCell(new Cell().add(createParagraph("side: " + pageNumber)));
-        table.addCell(new Cell().add(createParagraph("Elinstallation")));
+        table.addCell(new Cell().add(createParagraph("side: " + pageNumber))); //TODO string
+        table.addCell(new Cell().add(createParagraph("Elinstallation"))); //TODO string
         return table;
     }
 
@@ -402,19 +400,19 @@ public class PDFGenerator {
         Table table = new Table(getWidthMatchingPageSize(3,document)).useAllAvailableWidth();
 
         table.addCell(new Cell(1,3).add
-                (createParagraph("Kundenavn: " + assignment.getCustomerName())));
+                (createParagraph("Kundenavn: " + assignment.getCustomerName()))); //TODO string
 
         table.addCell(new Cell(1,3).add
-                (createParagraph("Adresse: " + assignment.getAddress())));
+                (createParagraph("Adresse: " + assignment.getAddress()))); //TODO string
 
         table.addCell(new Cell().add
-                (createParagraph("Post nr.: " + assignment.getPostalCode())));
+                (createParagraph("Post nr.: " + assignment.getPostalCode()))); //TODO string
 
         table.addCell(new Cell().add
-                (createParagraph("By: " + opa.getCityMatchingZipCode(assignment.getPostalCode()))));
+                (createParagraph("By: " + opa.getCityMatchingZipCode(assignment.getPostalCode())))); //TODO string
 
         table.addCell(new Cell().add
-                (createParagraph("Ordrenummer: " + assignment.getOrderNumber())));
+                (createParagraph("Ordrenummer: " + assignment.getOrderNumber()))); //TODO string
 
         return table;
     }

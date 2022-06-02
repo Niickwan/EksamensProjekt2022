@@ -14,9 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-
 import com.google.android.material.textfield.TextInputLayout;
 import com.jmmnt.Entities.Assignment;
 import com.jmmnt.Entities.AssignmentContainer;
@@ -28,12 +26,7 @@ import com.jmmnt.UseCase.GeneralUseCase;
 import com.jmmnt.UseCase.OperateAssignment;
 import com.jmmnt.UseCase.OperateDB;
 import com.jmmnt.databinding.FragmentAdminCreateOrderBinding;
-
-import org.apache.commons.net.examples.Main;
-
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 public class FragmentCreateOrder extends Fragment {
 
@@ -112,7 +105,7 @@ public class FragmentCreateOrder extends Fragment {
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
                 User user = (User) adapterView.getAdapter().getItem(position);
                 userPicked = user.getUserID();
-                System.out.println("USER PICKED - USER ID "+ userPicked);
+                System.out.println("USER PICKED - USER ID "+ userPicked); //TODO sout
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapter) {  }

@@ -35,7 +35,7 @@ public class Encryption {
                     .encodeToString(cipher.doFinal(strToEncrypt.getBytes(StandardCharsets.UTF_8)));
         } catch (InvalidAlgorithmParameterException | InvalidKeyException | NoSuchAlgorithmException |
                 InvalidKeySpecException | BadPaddingException | IllegalBlockSizeException | NoSuchPaddingException e) {
-            System.out.println("Error occured during encryption: " + e.toString());
+            System.out.println("Error occured during encryption: " + e.toString()); //TODO sout
         }
         return null;
     }
@@ -53,7 +53,7 @@ public class Encryption {
             return new String(cipher.doFinal(Base64.getDecoder().decode(strToDecrypt)));
         } catch (InvalidAlgorithmParameterException | InvalidKeyException | NoSuchAlgorithmException |
                 InvalidKeySpecException | BadPaddingException | IllegalBlockSizeException | NoSuchPaddingException e) {
-            System.out.println("Error occured during decryption: " + e.toString());
+            System.out.println("Error occured during decryption: " + e.toString()); //TODO sout
         }
         return null;
     }

@@ -59,7 +59,7 @@ public class FragmentLoginRegister extends Fragment{
     private FragmentLoginRegisterBinding binding;
     private ActivityResultLauncher<Intent> activityResultLauncher;
     private FTPClientFunctions ftpMethodClass = new FTPClientFunctions();
-    private PDFGenerator pdfg = new PDFGenerator(new Assignment(1,"1","s","4700","s","s", LocalDate.now(),"s"));
+    private PDFGenerator pdfg = new PDFGenerator(new Assignment(1,"1","s","4700","s", LocalDate.now(),"s"));
     //TODO pdfGenerator skal tage det assignment som brugeren er inde på.
     //TODO SKAL INDSÆTTES I DEN RIGTIGE KLASSE
 

@@ -63,7 +63,7 @@
                     android:overlapAnchor="false"
                     android:textColor="@color/black"
                     android:dropDownVerticalOffset="50dp"
-                    android:background="@drawable/design_spinner"
+                    android:background="@drawable/design_outer_spinner"
                     android:popupBackground="@color/darkblue"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

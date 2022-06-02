@@ -1,6 +1,9 @@
 package com.jmmnt.Controller.Database;
 
 
+import android.hardware.lights.LightState;
+
+import com.itextpdf.layout.element.List;
 import com.jmmnt.Entities.AssignmentContainer;
 import com.jmmnt.Entities.LoggedInUser;
 import com.jmmnt.Entities.Assignment;
@@ -101,7 +104,7 @@ public class DB_Con {
         AssignmentContainer assignmentContainer = AssignmentContainer.getInstance();
         if (!assignmentContainer.getAssignments().isEmpty())
             assignmentContainer.getAssignments().clear();
-        String fill = "SELECT Assignment_ID, Customer_Name, Order_number, Address, Postal_Code, City, Status, Status_Date FROM Assignment";
+        String fill = "SELECT Assignment_ID, Customer_Name, Order_number, Address, Postal_Code, Status, Status_Date FROM Assignment ORDER BY Status_Date";
         try {
             connection = connection();
             stmt = connection.createStatement();
@@ -111,11 +114,10 @@ public class DB_Con {
                 localDate = LocalDate.parse(rs.getDate("Status_Date").toString());
                 assignmentContainer.addAssignmentsToContainer(new Assignment(
                         rs.getInt("Assignment_ID"),
-                        rs.getString("Customer_Name"),
                         rs.getString("Order_Number"),
+                        rs.getString("Customer_Name"),
                         rs.getString("Address"),
                         rs.getString("Postal_Code"),
-                        rs.getString("City"),
                         localDate,
                         rs.getString("Status")));
             }
@@ -279,5 +281,30 @@ public class DB_Con {
         }
         return arr;
     }
+
+    public ArrayList findUserAssignments(int userID) {
+        ArrayList<Assignment> userAssignments = null;
+        String sql = "SELECT * " +
+                "FROM User_Assignment " +
+                "WHERE User_ID = "+userID+" ";
+        try {
+            connection = connection();
+            preStmt = connection.prepareStatement(sql);
+            rs = preStmt.executeQuery();
+            while (rs.next()){
+                userAssignments = new ArrayList<>();
+                userAssignments.add(new Assignment(rs.getInt("Assignment_ID"), rs.getInt("User_ID")));
+            }
+            connection.close();
+            preStmt.close();
+            rs.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return userAssignments;
+    }
+
 
 }

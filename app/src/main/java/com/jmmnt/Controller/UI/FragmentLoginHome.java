@@ -35,12 +35,10 @@ public class FragmentLoginHome extends Fragment {
             if (!TextUtils.isEmpty(binding.emailEt.getEditText().getText().toString()) && !TextUtils.isEmpty(binding.passwordEt.getEditText().getText().toString())){
                 opDB.validateLogin(binding.emailEt.getEditText().getText().toString(), Encryption.encrypt(binding.passwordEt.getEditText().getText().toString()));
                 user = LoggedInUser.getInstance().getUser();
+                System.out.println(user.getFirstname());
                 if (user != null) {
                     if (user.getUserRights() == 1) {
                         gUC.switchScene(getActivity(), ActivityAdmin.class);
-                        getActivity().runOnUiThread(this::clearInputFields);
-                    } else if (user.getUserRights() == 2) {
-                        gUC.switchScene(getActivity(), ActivityUser.class);
                         getActivity().runOnUiThread(this::clearInputFields);
                     }
                 } else {
@@ -65,6 +63,4 @@ public class FragmentLoginHome extends Fragment {
         binding.emailEt.getEditText().getText().clear();
         binding.passwordEt.getEditText().getText().clear();
     }
-
-
 }

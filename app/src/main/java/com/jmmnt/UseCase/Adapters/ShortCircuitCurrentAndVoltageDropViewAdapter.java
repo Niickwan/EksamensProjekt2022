@@ -5,13 +5,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.jmmnt.Entities.ShortCircuitCurrentAndVoltageDrop;
 import com.jmmnt.R;
-
 import java.util.List;
 
 public class ShortCircuitCurrentAndVoltageDropViewAdapter extends RecyclerView.Adapter<ShortCircuitAndVoltageDropViewHolder> {
@@ -25,7 +22,6 @@ public class ShortCircuitCurrentAndVoltageDropViewAdapter extends RecyclerView.A
     }
 
     public ShortCircuitCurrentAndVoltageDropViewAdapter() {
-
     }
 
     @NonNull

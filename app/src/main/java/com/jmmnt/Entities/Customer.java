@@ -5,4 +5,6 @@ public class Customer{
     public Customer(String customerName){
         this.companyName = customerName;
     }
+
+    //TODO SKAL DEN BRUGES?
 }
