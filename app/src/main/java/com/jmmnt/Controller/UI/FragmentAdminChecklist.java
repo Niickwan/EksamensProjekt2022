@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -30,6 +31,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.itextpdf.layout.borders.Border;
 import com.jmmnt.Entities.Assignment;
 import com.jmmnt.Entities.AssignmentContainer;
 import com.jmmnt.Entities.CircuitDetails;
@@ -55,6 +57,7 @@ public class FragmentAdminChecklist extends Fragment {
     private OperateAssignment opa = OperateAssignment.getInstance();
     private OperateDB oDB = OperateDB.getInstance();
     private GeneralUseCase gUC = GeneralUseCase.getInstance();
+    private AssignmentContainer assignmentContainer = AssignmentContainer.getInstance();
     private boolean isNewAssignment;
 
     private Button addFloorBtn;
@@ -70,7 +73,7 @@ public class FragmentAdminChecklist extends Fragment {
     private LinearLayout parentLLH;
 
     // TODO SKAL VÆRE VÆRDIER FRA SERVER/DB
-    private String orderNr = "8888";
+    private String orderNr = assignmentContainer.getCurrentAssignment().getOrderNumber();
     private LinearLayout floorLinearLayout;
     private String selectedFloorName = "";
 
@@ -100,50 +103,34 @@ public class FragmentAdminChecklist extends Fragment {
         LinearLayout roomLinearLayout = new LinearLayout(getActivity());
         roomLinearLayout.setOrientation(LinearLayout.HORIZONTAL);
 
-        Thread t = new Thread(() -> {
-            ArrayList<String> hsvStructure = new ArrayList<>();
-            try {
-                hsvStructure = oDB.getAssignmentStructure(orderNr);
-            } finally {
-                floors = gUC.sortStringBeforeNumbers(gUC.getSplittedString(hsvStructure, orderNr, "/<"));
-                selectedFloorName = floors.get(0);
-                setHorizontalFloorBar(floors);
-
-                getActivity().runOnUiThread(() -> {
-                    binding.hsvFloor.addView(floorLinearLayout);
-//                        binding.hsvRoom.addView(roomLinearLayout);
-                    binding.hsvRoom.setVisibility(View.GONE);
-                });
-            }
-        });
-        t.start();
+        setFloorHorizontalScrollBar();
 
         //TODO START - KUN FOR TESTING------------------------------------------------------------------------------------------------------------------------
         //TODO DATABASE KALD - hent data
 
-        List<Object> general = new ArrayList<>();
-        general.add(new Questions("Tavlen", 2, "Hvad sker der?"));
-        general.add(new Questions("Elskab", 1, "Kom nu"));
+        //List<Object> general = new ArrayList<>();
+        //general.add(new Questions("Tavlen", 2, "Hvad sker der?"));
+        //general.add(new Questions("Elskab", 1, "Kom nu"));
 
-        List<Object> electricalPanel = new ArrayList<>();
-        electricalPanel.add(new Questions("El", 3, "Pas på"));
-        electricalPanel.add(new Questions("Test", 2, "Hallo"));
+        //List<Object> electricalPanel = new ArrayList<>();
+        //electricalPanel.add(new Questions("El", 3, "Pas på"));
+        //electricalPanel.add(new Questions("Test", 2, "Hallo"));
 
-        List<Object> installation = new ArrayList<>();
-        installation.add(new Questions("Installation", 3, "Pas på"));
-        installation.add(new Questions("Test Install", 3, "Hallo"));
+        //List<Object> installation = new ArrayList<>();
+        //installation.add(new Questions("Installation", 3, "Pas på"));
+        //installation.add(new Questions("Test Install", 3, "Hallo"));
 
-        List<Object> protection = new ArrayList<>();
-        protection.add(new Questions("Prot", 2, "Pas på"));
-        protection.add(new Questions("Test Prot", 2, "Hallo"));
+        //List<Object> protection = new ArrayList<>();
+        //protection.add(new Questions("Prot", 2, "Pas på"));
+       // protection.add(new Questions("Test Prot", 2, "Hallo"));
 
-        List<Object> error = new ArrayList<>();
-        error.add(new Questions("Error", 1, "Pas på"));
-        error.add(new Questions("Test Error", 2, "Hallo"));
+        //List<Object> error = new ArrayList<>();
+        //error.add(new Questions("Error", 1, "Pas på"));
+        //error.add(new Questions("Test Error", 2, "Hallo"));
 
-        List<Object> section = new ArrayList<>();
-        section.add(new Questions("Section Section", 3, "Pas på"));
-        section.add(new Questions("Test Section", 1, "Hallo"));
+        //List<Object> section = new ArrayList<>();
+        //section.add(new Questions("Section Section", 3, "Pas på"));
+        //section.add(new Questions("Test Section", 1, "Hallo"));
 
         circuitDetailsResults = new LinkedList<>();
         circuitDetailsResults.add(new CircuitDetails("Tavlen", "400", "Lampe", "6", "500", 1, "340", "20"));
@@ -170,8 +157,6 @@ public class FragmentAdminChecklist extends Fragment {
         List<String> template = opa.getExcelAsArrayList("TjeklisteTemplate.xls");
 
 
-
-
         //Dropdown titles
         String objectTag = "question";
         String objectTag2 = "circuitDetails";
@@ -191,31 +176,63 @@ public class FragmentAdminChecklist extends Fragment {
         buildDropdownDynamically("Ordre", assignmentContainer, objectTag5, "vertical");
 
         int headlineCounter = 0;
+        int inputHeadlineCounter = 0;
         for (int i = 0; i < template.size(); i++) {
             if (template.get(i).equalsIgnoreCase("<Headline>")){
                 if (headlineCounter == 0){
-                    buildDropdownDynamically(template.get(i+1), general, objectTag, "vertical");
+                    List<Object> general = new ArrayList<>();
+                    String headline = template.get(i+1);
+                    i = readQuestionFromExcel(template, i, general);
+                    buildDropdownDynamically(headline, general, objectTag, "vertical");
                     headlineCounter++;
                 }
                 else if (headlineCounter == 1){
-                    buildDropdownDynamically(template.get(i+1), electricalPanel, objectTag, "vertical");
+                    List<Object> electricalPanel = new ArrayList<>();
+                    String headline = template.get(i+1);
+                    i = readQuestionFromExcel(template, i, electricalPanel);
+                    buildDropdownDynamically(headline, electricalPanel, objectTag, "vertical");
                     headlineCounter++;
                 }
                 else if (headlineCounter == 2){
-                    buildDropdownDynamically(template.get(i+1), installation, objectTag, "vertical");
+                    List<Object> installation = new ArrayList<>();
+                    String headline = template.get(i+1);
+                    i = readQuestionFromExcel(template, i, installation);
+                    buildDropdownDynamically(headline, installation, objectTag, "vertical");
                     headlineCounter++;
                 }
                 else if (headlineCounter == 3){
-                    buildDropdownDynamically(template.get(i+1), protection, objectTag, "vertical");
+                    List<Object> protection = new ArrayList<>();
+                    String headline = template.get(i+1);
+                    i = readQuestionFromExcel(template, i, protection);
+                    buildDropdownDynamically(headline, protection, objectTag, "vertical");
                     headlineCounter++;
                 }
                 else if (headlineCounter == 4){
-                    buildDropdownDynamically(template.get(i+1), error, objectTag, "vertical");
+                    List<Object> error = new ArrayList<>();
+                    String headline = template.get(i+1);
+                    i = readQuestionFromExcel(template, i, error);
+                    buildDropdownDynamically(headline, error, objectTag, "vertical");
                     headlineCounter++;
                 }
                 else if (headlineCounter == 5){
-                    buildDropdownDynamically(template.get(i+1), section, objectTag, "vertical");
+                    List<Object> section = new ArrayList<>();
+                    String headline = template.get(i+1);
+                    i = readQuestionFromExcel(template, i, section);
+                    buildDropdownDynamically(headline, section, objectTag, "vertical");
                     headlineCounter++;
+                }
+            } else if (template.get(i).equalsIgnoreCase("<InputHeadline>")) {
+                if(inputHeadlineCounter == 0){
+                    for (int j = i; j < template.size(); j++) {
+
+                        if (template.get(j).equals("  ")){
+
+                        }
+                        else if (template.get(j).equals("<InputHeadlineEnd>")){
+                            i = j;
+                            break;
+                        }
+                    }
                 }
             }
         }
@@ -242,7 +259,6 @@ public class FragmentAdminChecklist extends Fragment {
         parentLLH.addView(testResultsTitle);
 
         //Building dropdowns
-        buildDropdownDynamically("Kredsdetaljer", circuitDetailsResults, objectTag2, "horizontal");
         buildDropdownDynamically("Afprøvning af RCD'er", testingRCDResults, objectTag3, "horizontal");
 
         //Adding textview
@@ -378,6 +394,52 @@ public class FragmentAdminChecklist extends Fragment {
 
     }
 
+    private int readQuestionFromExcel(List<String> template, int i, List<Object> general) {
+        for (int j = i; j < template.size(); j++) {
+
+            if (template.get(j).equals("<Question>")){
+                Questions question = new Questions();
+                int answer = Integer.parseInt(template.get(j +4));
+                question.setQuestion(template.get(j +1) + " " + template.get(j +2));
+                question.setAnswer(answer);
+                question.setComment(template.get(j +6));
+                int excelRowCounter = 8;
+                while(!template.get(j + excelRowCounter).equals("<ImagesEnd>")) {
+                    question.getImages().add(template.get(j +excelRowCounter));
+                    excelRowCounter++;
+                }
+                general.add(question);
+            }
+            else if (template.get(j).equals("<HeadlineEnd>")){
+                i = j;
+                break;
+            }
+        }
+        return i;
+    }
+
+    private void setFloorHorizontalScrollBar() {
+        Thread t = new Thread(() -> {
+            ArrayList<String> hsvStructure = new ArrayList<>();
+            try {
+                hsvStructure = oDB.getAssignmentStructure(orderNr);
+            } finally {
+                floors = gUC.sortStringBeforeNumbers(gUC.getSplittedString(hsvStructure, orderNr, "/<"));
+                selectedFloorName = floors.get(0);
+//                setHorizontalFloorBar(floors);
+
+                getActivity().runOnUiThread(() -> {
+                    binding.hsvFloor.removeAllViews();
+                    setHorizontalFloorBar(floors);
+                    binding.hsvFloor.addView(floorLinearLayout);
+//                        binding.hsvRoom.addView(roomLinearLayout);
+                    binding.hsvRoom.setVisibility(View.GONE);
+                });
+            }
+        });
+        t.start();
+    }
+
     private void setHorizontalFloorBar(ArrayList<String> floors) {
         floorLinearLayout.removeAllViews();
         floorButtons.clear();
@@ -413,7 +475,9 @@ public class FragmentAdminChecklist extends Fragment {
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         TextInputLayout newFloorName = dialog.getWindow().findViewById(R.id.floor_et);
         dialog.getWindow().findViewById(R.id.rename_floor_btn).setOnClickListener(v -> new Thread(() -> {
-            opa.createFolderOnServer(orderNr, newFloorName.getEditText().getText().toString(), "");
+            String createFloorName = newFloorName.getEditText().getText().toString();
+            opa.createFolderOnServer(orderNr, createFloorName, "");
+            opa.copyFilesOnServer("DefaultElectricianChecklist.xls", orderNr, createFloorName, orderNr + "_" + createFloorName + ".xls");
             getActivity().runOnUiThread(() -> {
                 floors.add(newFloorName.getEditText().getText().toString());
                 selectedFloorName = newFloorName.getEditText().getText().toString();
@@ -454,16 +518,28 @@ public class FragmentAdminChecklist extends Fragment {
             }
         }).start());
         dialog.getWindow().findViewById(R.id.enable_delete_switch).setOnClickListener(v -> {
-            if (deleteBtn.getVisibility() == View.VISIBLE) {
-                deleteBtn.setVisibility(View.GONE);
+            if(floorButtons.size() < 2) {
+                Thread t = new Thread(() -> gUC.toastAlert(getActivity(), getString(R.string.checklist_unable_to_delete_floor)));
+                t.start();
+                Switch s = v.findViewById(R.id.enable_delete_switch);
+                s.setChecked(false);
             } else {
-                deleteBtn.setVisibility(View.VISIBLE);
+                if (deleteBtn.getVisibility() == View.VISIBLE) {
+                    deleteBtn.setVisibility(View.GONE);
+                } else {
+                    deleteBtn.setVisibility(View.VISIBLE);
+                }
             }
         });
         dialog.getWindow().findViewById(R.id.delete_floor_btn).setOnClickListener(v -> new Thread(() -> {
             // TODO Remove from server
+            String deleteDirLocation = orderNr + "/" + selectedFloorName;
+            opa.deleteDirectoryOnServer(deleteDirLocation);
             getActivity().runOnUiThread(() -> {
                 // TODO remove from list and set new name instance variable
+                for (int i = 0; i < floorButtons.size(); i++) {
+                    setFloorHorizontalScrollBar();
+                }
                 deleteBtn.setVisibility(View.GONE);
                 dialog.dismiss();
             });

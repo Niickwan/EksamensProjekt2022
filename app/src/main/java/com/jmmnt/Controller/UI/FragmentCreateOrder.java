@@ -70,7 +70,12 @@ public class FragmentCreateOrder extends Fragment {
                 }
                 if (isUpdated) {
                     AssignmentContainer.getInstance().addAssignmentsToContainer(createNewAssignment);
-
+                    String orderNum = binding.orderNumberEt.getEditText().getText().toString();
+                    String fileName = orderNum + "_" + getString(R.string.default_value_floor_name) + ".xls";
+                    oA.createFolderOnServer(orderNum, getString(R.string.default_value_floor_name), getString(R.string.default_value_room_name));
+                    // TemplateFileName Hardcoded
+                    oA.copyFilesOnServer("DefaultElectricianChecklist.xls", orderNum, getString(R.string.default_value_floor_name), fileName);
+                    AssignmentContainer.getInstance().setCurrentAssignment(AssignmentContainer.getInstance().getAssignments().get(AssignmentContainer.getInstance().getAssignments().size()-1));
                     getActivity().runOnUiThread(() -> {
                         NavHostFragment.findNavController(FragmentCreateOrder.this).navigate(R.id.action_fragmentCreateOrder_to_FragmentAdminChecklist);
                     });
@@ -105,7 +110,9 @@ public class FragmentCreateOrder extends Fragment {
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
                 User user = (User) adapterView.getAdapter().getItem(position);
                 userPicked = user.getUserID();
+
                 System.out.println("USER PICKED - USER ID "+ userPicked); //TODO sout
+
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapter) {  }
@@ -115,6 +122,7 @@ public class FragmentCreateOrder extends Fragment {
     private boolean isCreateNewCaseInformationValid() {
         boolean isCustomerNameValid = gUC.checkIfLetters(binding.customerNameEt.getEditText().getText().toString());
         boolean isCityNameValid = gUC.checkIfLetters(binding.cityEt.getEditText().getText().toString());
+        boolean isOrderNumberAvailable = operateDB.doesOrderNumberExist(binding.orderNumberEt.getEditText().getText().toString());
         boolean isInputFieldsEmpty = gUC.isFieldsEmpty(new TextInputLayout[]{
                 binding.orderNumberEt,
                 binding.customerNameEt,
@@ -127,9 +135,8 @@ public class FragmentCreateOrder extends Fragment {
             gUC.toastAlert(getActivity(), getString(R.string.create_order_invalid_customername));
         } else if (!isCityNameValid) {
             gUC.toastAlert(getActivity(), getString(R.string.create_order_invalid_cityname));
-        }
-        if (isCustomerNameValid && isCityNameValid && !isInputFieldsEmpty) return true;
-        return false;
+        } else if (!isOrderNumberAvailable) gUC.toastAlert(getActivity(), getString(R.string.create_order_order_number_is_occupied));
+        return isCustomerNameValid && isCityNameValid && !isInputFieldsEmpty && isOrderNumberAvailable;
     }
 
     @Override

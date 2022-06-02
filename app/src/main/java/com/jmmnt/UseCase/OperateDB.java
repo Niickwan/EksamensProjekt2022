@@ -62,4 +62,8 @@ public class OperateDB {
     public void fillAssignmentContainer() {
         db_con.fillAssignmentContainer();
     }
+
+    public boolean doesOrderNumberExist(String orderNumber) {
+        return db_con.doesOrderNumberExist(orderNumber);
+    }
 }

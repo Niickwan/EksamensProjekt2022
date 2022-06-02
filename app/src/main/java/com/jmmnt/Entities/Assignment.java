@@ -46,7 +46,6 @@ public class Assignment {
         this.verifiedBy = verifiedBy;
         this.statusDate = statusDate;
         this.status = status;
-
     }
 
     @Override

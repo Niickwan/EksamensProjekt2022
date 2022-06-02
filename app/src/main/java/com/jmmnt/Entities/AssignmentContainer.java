@@ -6,6 +6,7 @@ public class AssignmentContainer {
 
     private ArrayList<Assignment> assignments;
     private static AssignmentContainer assignmentContainer;
+    private Assignment currentAssignment;
 
     private AssignmentContainer() {
         assignments = new ArrayList<>();
@@ -17,6 +18,14 @@ public class AssignmentContainer {
 
     public ArrayList<Assignment> getAssignments() {
         return assignments;
+    }
+
+    public Assignment getCurrentAssignment() {
+        return currentAssignment;
+    }
+
+    public void setCurrentAssignment(Assignment currentAssignment) {
+        this.currentAssignment = currentAssignment;
     }
 
     public static AssignmentContainer getInstance() {
