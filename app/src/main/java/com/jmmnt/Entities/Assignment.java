@@ -21,13 +21,12 @@ public class Assignment {
 
     }
 
-    public Assignment(int assignmentID, String orderNumber, String customerName, String address, String postalCode, String city, LocalDate statusDate, String status) {
+    public Assignment(int assignmentID, String orderNumber, String customerName, String address, String postalCode, LocalDate statusDate, String status) {
         this.assignmentID = assignmentID;
         this.customerName = customerName;
         this.orderNumber = orderNumber;
         this.address = address;
         this.postalCode = postalCode;
-        this.city = city;
         this.status = status;
         this.statusDate = statusDate;
     }
@@ -43,7 +42,6 @@ public class Assignment {
         this.verifiedBy = verifiedBy;
         this.statusDate = statusDate;
         this.status = status;
-
     }
 
     @Override
