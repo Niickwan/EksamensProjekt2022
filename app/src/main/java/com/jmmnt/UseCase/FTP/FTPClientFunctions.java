@@ -1,25 +1,19 @@
 package com.jmmnt.UseCase.FTP;
 
 import static android.content.ContentValues.TAG;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Environment;
 import android.util.Log;
-
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
-
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
 import androidx.appcompat.app.AppCompatActivity;
-
-import java.io.InputStream;
 import java.io.OutputStream;
 
 public class FTPClientFunctions extends AppCompatActivity{
@@ -142,7 +136,7 @@ public class FTPClientFunctions extends AppCompatActivity{
 
             try {
                 doesDirectoryExist = client.changeWorkingDirectory(directory);
-                System.out.println("created");
+                System.out.println("created"); //TODO sout
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -150,7 +144,7 @@ public class FTPClientFunctions extends AppCompatActivity{
                 try {
                     client.makeDirectory(directory);
                     client.changeWorkingDirectory(directory);
-                    System.out.println("already exists");
+                    System.out.println("already exists"); //TODO sout
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

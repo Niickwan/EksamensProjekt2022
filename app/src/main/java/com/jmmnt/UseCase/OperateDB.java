@@ -2,18 +2,15 @@ package com.jmmnt.UseCase;
 
 import com.jmmnt.Controller.Database.DB_Con;
 import com.jmmnt.Entities.Assignment;
-import com.jmmnt.Entities.AssignmentContainer;
 import com.jmmnt.Entities.User;
 import com.jmmnt.Entities.UserContainer;
-
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class OperateDB {
 
     private DB_Con db_con = DB_Con.getInstance();
     private OperateUser opU = new OperateUser();
-    private static OperateDB operateDB = null;
+    private static OperateDB operateDB;
 
     private OperateDB() {
     }

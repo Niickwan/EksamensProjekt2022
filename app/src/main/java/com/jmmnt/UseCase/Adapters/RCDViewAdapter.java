@@ -22,7 +22,6 @@ public class RCDViewAdapter extends RecyclerView.Adapter<RCDViewHolder> {
         this.items = items;
     }
 
-
     @NonNull
     @Override
     public RCDViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -90,6 +89,5 @@ class RCDViewHolder extends RecyclerView.ViewHolder {
         this.adapter = rcdViewAdapter;
         return this;
     }
-
 
 }

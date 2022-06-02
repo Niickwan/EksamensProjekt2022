@@ -513,7 +513,7 @@ public class FragmentAdminChecklist extends Fragment {
             } else {
                 getActivity().runOnUiThread(() -> {
                     TextView error = dialog.getWindow().findViewById(R.id.error_message);
-                    error.setText("Fejl prøv igen");
+                    error.setText("Fejl prøv igen"); //TODO string
                 });
             }
         }).start());
@@ -750,7 +750,7 @@ public class FragmentAdminChecklist extends Fragment {
         TextInputLayout inputField = dialog.getWindow().findViewById(R.id.question_et);
         dialog.getWindow().findViewById(R.id.add_question_text_btn).setOnClickListener(view -> {
             Questions q = new Questions(inputField.getEditText().getText().toString(), -1, "");
-            if (!q.getQuestion().isEmpty()) { //TODO må kun indeholde tal og bogstaver?
+            if (!q.getQuestion().isEmpty()) {
                 dataList.add(q);
                 rv.setAdapter((RecyclerView.Adapter) adapter);
                 rv.smoothScrollToPosition(dataList.size() - 1);
@@ -758,14 +758,12 @@ public class FragmentAdminChecklist extends Fragment {
                 dialog.dismiss();
             } else
                 gUC.toastAlert(getActivity(), getString(R.string.adding_new_question_failed));
-
         });
         dialog.getWindow().findViewById(R.id.cancel_btn).setOnClickListener(v -> {
             dialog.dismiss();
         });
         dialog.show();
     }
-
 
     @Override
     public void onDestroyView() {

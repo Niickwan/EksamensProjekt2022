@@ -1,6 +1,7 @@
 package com.jmmnt.Entities;
 
 public class LoggedInUser{
+
     private static LoggedInUser loggedInUser;
     private User user;
 

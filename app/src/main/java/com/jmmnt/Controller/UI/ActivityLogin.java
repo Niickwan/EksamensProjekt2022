@@ -34,7 +34,7 @@ public class ActivityLogin extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem item) {
                 int id = item.getItemId();
                 if (id == R.id.recoverPassword) {
-                    System.out.println("GENDAN PASSWORD");
+                    System.out.println("GENDAN PASSWORD"); //TODO sout
                     return true;
                 }
                 if (id == R.id.about) {

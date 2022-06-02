@@ -22,9 +22,7 @@ public class QuestionsViewAdapter extends RecyclerView.Adapter<QuestionsViewHold
     }
 
     public QuestionsViewAdapter(){
-
     }
-
 
     @NonNull
     @Override

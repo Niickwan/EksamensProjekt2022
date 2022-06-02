@@ -3,28 +3,19 @@ package com.jmmnt.UseCase;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Looper;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.material.textfield.TextInputLayout;
-import com.jmmnt.R;
-import com.jmmnt.databinding.ActivityUserBinding;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class GeneralUseCase extends Activity {
 
-    private static final int REQUEST_IMAGE_CAPTURE = 1;
+    private static final int REQUEST_IMAGE_CAPTURE = 1; //TODO WhatToDo
     private static Toast toast = null;
     private static GeneralUseCase generalUseCase = null;
 
@@ -74,10 +65,6 @@ public class GeneralUseCase extends Activity {
         Looper.loop();
     }
 
-
-    public void createCamera(ActivityUserBinding binding, ImageView image) {
-    }
-
     public void switchScene(Context fromScene, Class toScene) {
         Intent switchActivity = new Intent(fromScene, toScene);
         fromScene.startActivity(switchActivity);
@@ -122,7 +109,7 @@ public class GeneralUseCase extends Activity {
         return split;
     }
 
-    public String[] splitStringBy(String str, String splitBy) {
+    public String[] splitStringBy(String str, String splitBy) {  //TODO WhatToDO
         String[] parts = new String[0];
         parts = str.split("[" + splitBy + "]");
         return parts;

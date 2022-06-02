@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -15,8 +14,6 @@ import com.jmmnt.Entities.AssignmentContainer;
 import com.jmmnt.Entities.User;
 import com.jmmnt.Entities.UserContainer;
 import com.jmmnt.R;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class OrderViewAdapter extends RecyclerView.Adapter<OrderViewHolder> {
@@ -52,7 +49,7 @@ public class OrderViewAdapter extends RecyclerView.Adapter<OrderViewHolder> {
         int lastIndex = AssignmentContainer.getInstance().getAssignments().size()-1;
         System.out.println("CONTAINER "+ AssignmentContainer.getInstance().getAssignments().get(lastIndex));
 
-//        if (position < itemList.size()) {
+//        if (position < itemList.size()) {     //TODO FORSÆT HER
 //            if (itemList.get(position) != null) {
 //                customerFullName_tv.setText(itemList.get(position).getCustomerName());
 //                address_tv.setText(itemList.get(position).getAddress());
@@ -89,15 +86,10 @@ class OrderViewHolder extends RecyclerView.ViewHolder {
 
     private OrderViewAdapter adapter;
 
-
-
     public OrderViewHolder(@NonNull View itemView) {
         super(itemView);
 
-
-
         //TODO Vi kan aflæse felter herfra
-
     }
 
     public OrderViewHolder linkAdapter(OrderViewAdapter orderViewAdapter) {

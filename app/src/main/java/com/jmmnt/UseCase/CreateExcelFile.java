@@ -1,18 +1,15 @@
 package com.jmmnt.UseCase;
 
 import android.os.Environment;
-
 import com.jmmnt.Entities.CircuitDetails;
 import com.jmmnt.Entities.Questions;
 import com.jmmnt.Entities.ShortCircuitCurrentAndVoltageDrop;
 import com.jmmnt.Entities.TestingRCD;
 import com.jmmnt.Entities.TransitionResistance;
 import com.jmmnt.UseCase.Adapters.AdapterFactory;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
 import jxl.Workbook;
 import jxl.WorkbookSettings;
 import jxl.write.Label;
@@ -28,14 +25,14 @@ public class CreateExcelFile {
     AdapterFactory apFac = new AdapterFactory();
     WritableSheet sheet;
     private WritableWorkbook workbook;
-//    private WritableSheet sheet;
+//    private WritableSheet sheet; //TODO WhatToDo
     private int rowCount = 0;
     private int columnCount = 0;
     int getList = 0;
     double questionSection = 1;
     String note;
 
-    // Keep track of ExcelTemplate
+    // Keep track of ExcelTemplate //TODO WhatToDo
     private int startPosition = 0;
     private int endPosition = 0;
     ArrayList<String> excelTemplate;
@@ -173,11 +170,14 @@ public class CreateExcelFile {
             for (int i = 0; i < list.get(getList).size(); i++) {
                 sheet.addCell(new Label(columnCount, rowCount, "<inputAnswer>"));
                 columnCount++;
-                sheet.addCell(new Label(columnCount, rowCount, ((ShortCircuitCurrentAndVoltageDrop) list.get(getList).get(i)).getVoltageDropGroupName()));
+                sheet.addCell(new Label(columnCount, rowCount,
+                        ((ShortCircuitCurrentAndVoltageDrop) list.get(getList).get(i)).getVoltageDropGroupName()));
                 columnCount++;
-                sheet.addCell(new Label(columnCount, rowCount, ((ShortCircuitCurrentAndVoltageDrop) list.get(getList).get(i)).getShortCircuitLk()));
+                sheet.addCell(new Label(columnCount, rowCount,
+                        ((ShortCircuitCurrentAndVoltageDrop) list.get(getList).get(i)).getShortCircuitLk()));
                 columnCount++;
-                sheet.addCell(new Label(columnCount, rowCount, ((ShortCircuitCurrentAndVoltageDrop) list.get(getList).get(i)).getVoltageDropMeasuredOnLocation()));
+                sheet.addCell(new Label(columnCount, rowCount,
+                        ((ShortCircuitCurrentAndVoltageDrop) list.get(getList).get(i)).getVoltageDropMeasuredOnLocation()));
                 columnCount = 0;
                 rowCount++;
             }
@@ -192,11 +192,14 @@ public class CreateExcelFile {
             for (int i = 0; i < list.get(getList).size(); i++) {
                 sheet.addCell(new Label(columnCount, rowCount, "<inputAnswer>"));
                 columnCount++;
-                sheet.addCell(new Label(columnCount, rowCount, ((ShortCircuitCurrentAndVoltageDrop) list.get(getList).get(i)).getShortCircuitGroupName()));
+                sheet.addCell(new Label(columnCount, rowCount,
+                        ((ShortCircuitCurrentAndVoltageDrop) list.get(getList).get(i)).getShortCircuitGroupName()));
                 columnCount++;
-                sheet.addCell(new Label(columnCount, rowCount, ((ShortCircuitCurrentAndVoltageDrop) list.get(getList).get(i)).getShortCircuitLk()));
+                sheet.addCell(new Label(columnCount, rowCount,
+                        ((ShortCircuitCurrentAndVoltageDrop) list.get(getList).get(i)).getShortCircuitLk()));
                 columnCount++;
-                sheet.addCell(new Label(columnCount, rowCount, ((ShortCircuitCurrentAndVoltageDrop) list.get(getList).get(i)).getShortCircuitMeasuredOnLocation()));
+                sheet.addCell(new Label(columnCount, rowCount,
+                        ((ShortCircuitCurrentAndVoltageDrop) list.get(getList).get(i)).getShortCircuitMeasuredOnLocation()));
                 columnCount = 0;
                 rowCount++;
             }
@@ -288,7 +291,8 @@ public class CreateExcelFile {
                 columnCount++;
                 if (((Questions) list.get(getList).get(i)).getImages().size() > 0) {
                     for (int k = 0; k < ((Questions) list.get(getList).get(i)).getImages().size(); k++) {
-                        sheet.addCell(new Label(columnCount, rowCount, ((Questions) list.get(getList).get(i)).getImages().get(k)));
+                        sheet.addCell(new Label(columnCount, rowCount,
+                                ((Questions) list.get(getList).get(i)).getImages().get(k)));
                         columnCount++;
                     }
                 } else {

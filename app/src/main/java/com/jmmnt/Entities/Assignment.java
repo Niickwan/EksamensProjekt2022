@@ -18,7 +18,11 @@ public class Assignment {
     private String identificationOfInstallation;
 
     public Assignment() {
+    }
 
+    public Assignment(int assignmentID, int userID) {
+        this.assignmentID = assignmentID;
+        this.userID = userID;
     }
 
     public Assignment(int assignmentID, String orderNumber, String customerName, String address, String postalCode, LocalDate statusDate, String status) {
