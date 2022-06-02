@@ -36,14 +36,15 @@ public class FragmentAdminHome extends Fragment {
                 getActivity().runOnUiThread(() -> NavHostFragment.findNavController(FragmentAdminHome.this).navigate(R.id.action_FragmentAdminHome_to_fragmentCreateOrder));
             }
         }).start());
+
         binding.searchBtn.setOnClickListener(view1 -> new Thread(() -> {
             try {
                 oDB.fillAssignmentContainer();
                 oDB.fillUserContainer();
+                oDB.fillUserAssignmentsIDs(LoggedInUser.getInstance().getUser().getUserID());
             } finally {
                 getActivity().runOnUiThread(() -> NavHostFragment.findNavController(FragmentAdminHome.this).navigate(R.id.action_FragmentAdminHome_to_fragmentSearchCase));
             }
-
         }).start());
     }
 
@@ -52,4 +53,6 @@ public class FragmentAdminHome extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
+
 }

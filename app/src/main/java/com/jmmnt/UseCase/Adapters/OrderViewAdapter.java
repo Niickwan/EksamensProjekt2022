@@ -28,6 +28,10 @@ public class OrderViewAdapter extends RecyclerView.Adapter<OrderViewHolder> {
         this.context = context;
     }
 
+    public OrderViewAdapter() {
+
+    }
+
     @NonNull
     @Override
     public OrderViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -80,6 +84,9 @@ public class OrderViewAdapter extends RecyclerView.Adapter<OrderViewHolder> {
         return itemList;
     }
 
+    public void setItemList(List<Assignment> itemList) {
+        this.itemList = itemList;
+    }
 }
 
 class OrderViewHolder extends RecyclerView.ViewHolder {

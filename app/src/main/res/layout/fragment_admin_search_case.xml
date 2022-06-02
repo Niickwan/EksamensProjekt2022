@@ -19,10 +19,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <Button
+                android:id="@+id/createNewAssignmentBtn2"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/design_button_darkblue"
+                android:text="@string/fragment_admin_menu_button_create_new_assignment"
+                app:layout_constraintBottom_toBottomOf="@+id/searchBar_sv"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/searchBar_sv" />
+
             <SearchView
                 android:id="@+id/searchBar_sv"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_height="47dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
@@ -31,7 +42,7 @@
                 android:inputType="textPersonName"
                 android:queryHint="@string/search_case_searchbar"
                 android:theme="@style/EditTextTheme"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/createNewAssignmentBtn2"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -57,7 +68,7 @@
                 android:buttonTint="#000000"
                 android:theme="@style/EditTextTheme"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/searchBar_sv"
+                app:layout_constraintEnd_toEndOf="@+id/createNewAssignmentBtn2"
                 app:layout_constraintTop_toBottomOf="@+id/userCases_tv"
                 tools:ignore="TouchTargetSizeCheck" />
 
@@ -136,22 +147,19 @@
                 app:layout_constraintTop_toBottomOf="@+id/waitingCases_tv"
                 tools:ignore="TouchTargetSizeCheck" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </LinearLayout>
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/nestedScrollView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:fillViewport="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layout">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/caseListView"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefreshLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </androidx.core.widget.NestedScrollView>
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/caseListView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

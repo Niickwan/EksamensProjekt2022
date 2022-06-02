@@ -4,10 +4,12 @@ package com.jmmnt.Controller.Database;
 import android.hardware.lights.LightState;
 
 import com.itextpdf.layout.element.List;
+import com.jmmnt.Controller.UI.FragmentSearchCase;
 import com.jmmnt.Entities.AssignmentContainer;
 import com.jmmnt.Entities.LoggedInUser;
 import com.jmmnt.Entities.Assignment;
 import com.jmmnt.Entities.User;
+import com.jmmnt.Entities.UserAssignmentContainer;
 import com.jmmnt.Entities.UserContainer;
 
 import java.io.BufferedReader;
@@ -104,7 +106,7 @@ public class DB_Con {
         AssignmentContainer assignmentContainer = AssignmentContainer.getInstance();
         if (!assignmentContainer.getAssignments().isEmpty())
             assignmentContainer.getAssignments().clear();
-        String fill = "SELECT Assignment_ID, Customer_Name, Order_number, Address, Postal_Code, Status, Status_Date FROM Assignment ORDER BY Status_Date";
+        String fill = "SELECT Assignment_ID, Customer_Name, Order_number, Address, Postal_Code, Status, Status_Date FROM Assignment";
         try {
             connection = connection();
             stmt = connection.createStatement();
@@ -127,8 +129,32 @@ public class DB_Con {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return isUsed;
+    }
+
+    public boolean fillUserAssignmentsContainer(int userID) {
+        UserAssignmentContainer uAC = UserAssignmentContainer.getInstance();
+        if (!uAC.getUserAssignments().isEmpty())
+            uAC.getUserAssignments().clear();
+        boolean isFilled = false;
+        String sql = "SELECT (Assignment_ID) " +
+                "FROM User_Assignment " +
+                "WHERE User_ID = "+userID+" ";
+        try {
+            connection = connection();
+            preStmt = connection.prepareStatement(sql);
+            rs = preStmt.executeQuery();
+            while (rs.next()) {
+                isFilled = true;
+                uAC.addUserAssignmentToContainer(new Assignment(rs.getInt("Assignment_ID")));
+            }
+            connection.close();
+            preStmt.close();
+            rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return isFilled;
     }
 
 
@@ -169,7 +195,6 @@ public class DB_Con {
                 + user.getSurname() + "', '"
                 + user.getUserRights() + "', '"
                 + user.getPhonenumber() + "')";
-
         return uploadMySQLCall(userInfo);
     }
 
@@ -279,28 +304,6 @@ public class DB_Con {
         }
         return arr;
     }
-
-
-    public ArrayList findUserAssignments(int userID) {
-        ArrayList<Assignment> userAssignments = null;
-        String sql = "SELECT * " +
-                "FROM User_Assignment " +
-                "WHERE User_ID = "+userID+" ";
-        try {
-            connection = connection();
-            preStmt = connection.prepareStatement(sql);
-            rs = preStmt.executeQuery();
-            while (rs.next()){
-                userAssignments = new ArrayList<>();
-                userAssignments.add(new Assignment(rs.getInt("Assignment_ID"), rs.getInt("User_ID")));
-            }
-            connection.close();
-            preStmt.close();
-            rs.close();
-          
-        return userAssignments;
-    }
-
 
     public boolean doesOrderNumberExist(String orderNumber) {
         boolean isOrderNumberAvailable = true;

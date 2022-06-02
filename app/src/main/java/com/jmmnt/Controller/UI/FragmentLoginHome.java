@@ -21,6 +21,7 @@ public class FragmentLoginHome extends Fragment {
     private FragmentLoginHomeBinding binding;
     private OperateDB opDB = OperateDB.getInstance();
     private GeneralUseCase gUC = GeneralUseCase.getInstance();
+    private OperateDB oDB = OperateDB.getInstance();
     private User user = null;
 
     @Override
