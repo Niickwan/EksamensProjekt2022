@@ -16,6 +16,9 @@ import com.jmmnt.UseCase.GeneralUseCase;
 import com.jmmnt.UseCase.OperateDB;
 import com.jmmnt.databinding.FragmentLoginHomeBinding;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class FragmentLoginHome extends Fragment {
 
     private FragmentLoginHomeBinding binding;
@@ -39,8 +42,18 @@ public class FragmentLoginHome extends Fragment {
                 System.out.println(user.getFirstname());
                 if (user != null) {
                     if (user.getUserRights() == 1) {
-                        gUC.switchScene(getActivity(), ActivityAdmin.class);
-                        getActivity().runOnUiThread(this::clearInputFields);
+                        fillContainers();
+                        //Delaying the activity switch for the containers to fill up
+                        Timer delay = new Timer();
+                        delay.schedule(new TimerTask() {
+                            @Override
+                            public void run() {
+                                getActivity().runOnUiThread(() -> {
+                                    gUC.switchScene(getActivity(), ActivityAdmin.class);
+                                    clearInputFields();
+                                });
+                            }
+                        },1000);
                     }
                 } else {
                     gUC.toastAlert(getActivity(), getString(R.string.fragment_login_wrong_input));
@@ -63,5 +76,14 @@ public class FragmentLoginHome extends Fragment {
     private void clearInputFields() {
         binding.emailEt.getEditText().getText().clear();
         binding.passwordEt.getEditText().getText().clear();
+    }
+
+    private void fillContainers() {
+        Thread fillContainersThread = new Thread(() -> {
+            oDB.fillAssignmentContainer();
+            oDB.fillUserContainer();
+            oDB.fillUserAssignmentsIDs(LoggedInUser.getInstance().getUser().getUserID());
+        });
+        fillContainersThread.start();
     }
 }

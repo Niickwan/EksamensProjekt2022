@@ -6,12 +6,14 @@ import android.view.View;
 import com.jmmnt.Entities.LoggedInUser;
 import com.jmmnt.Entities.User;
 import com.jmmnt.R;
+import com.jmmnt.UseCase.OperateDB;
 import com.jmmnt.databinding.ActivityAdminBinding;
 
 public class ActivityAdmin extends AppCompatActivity {
 
     private ActivityAdminBinding binding;
     private User user = LoggedInUser.getInstance().getUser();
+    private OperateDB oDB = OperateDB.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

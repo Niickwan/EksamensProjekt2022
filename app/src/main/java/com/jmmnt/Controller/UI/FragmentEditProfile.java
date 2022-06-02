@@ -105,7 +105,7 @@ public class FragmentEditProfile extends Fragment {
                     profileFirstname.setText(LoggedInUser.getInstance().getUser().getFirstname());
                     profileSurname.setText(LoggedInUser.getInstance().getUser().getSurname());
                     //Change fragment
-                    NavHostFragment.findNavController(FragmentEditProfile.this).navigate(R.id.action_fragmentEditProfile_to_FragmentAdminHome);
+                    NavHostFragment.findNavController(FragmentEditProfile.this).navigate(R.id.action_adminFragmentEditProfile_to_fragmentSearchCase);
                     //Show toastAlert - visual confirmation for user
                     Thread toast = new Thread(() -> gUC.toastAlert(getActivity(), getString(R.string.popup_menu_edit_profile_confirm_update)));
                     toast.start();
