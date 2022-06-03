@@ -23,6 +23,14 @@ public class CircuitDetails {
     }
 
     public CircuitDetails() {
+        this.groupName = "";
+        this.ob = "";
+        this.characteristics = "";
+        this.crossSection = "";
+        this.maxOB = "";
+        this.checkbox = -1;
+        this.omega = "";
+        this.megaOmega = "";
     }
 
     @Override

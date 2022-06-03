@@ -10,6 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.jmmnt.Entities.TestingRCD;
 import com.jmmnt.R;
+import com.jmmnt.UseCase.GeneralUseCase;
+
 import java.util.List;
 
 public class RCDViewAdapter extends RecyclerView.Adapter<RCDViewHolder> {
@@ -17,6 +19,7 @@ public class RCDViewAdapter extends RecyclerView.Adapter<RCDViewHolder> {
     private List<TestingRCD> items;
     private EditText groupName, firstResult, secondResult, thirdResult, fourthResult, fifthResult, sixthResult;
     private CheckBox checkBoxTestOK;
+    private GeneralUseCase gUC = GeneralUseCase.getInstance();
 
     public RCDViewAdapter(List<TestingRCD> items) {
         this.items = items;
@@ -42,14 +45,15 @@ public class RCDViewAdapter extends RecyclerView.Adapter<RCDViewHolder> {
 
         if (position < items.size()) {
             if (items.get(position) != null) {
-                groupName.setText(items.get(position).getGroupName());
-                firstResult.setText(items.get(position).getFirstResult());
-                secondResult.setText(items.get(position).getSecondResult());
-                thirdResult.setText(items.get(position).getThirdResult());
-                fourthResult.setText(items.get(position).getFourthResult());
+                System.out.println("KOMMER IND");
+                groupName.setText(gUC.convertMinusOneToEmptyString(items.get(position).getGroupName()));
+                firstResult.setText(gUC.convertMinusOneToEmptyString(items.get(position).getFirstResult()));
+                secondResult.setText(gUC.convertMinusOneToEmptyString(items.get(position).getSecondResult()));
+                thirdResult.setText(gUC.convertMinusOneToEmptyString(items.get(position).getThirdResult()));
+                fourthResult.setText(gUC.convertMinusOneToEmptyString(items.get(position).getFourthResult()));
                 if (items.get(position).getCheckboxOK() == 1) checkBoxTestOK.setChecked(true);
-                fifthResult.setText(items.get(position).getFifthResult());
-                sixthResult.setText(items.get(position).getSixthResult());
+                fifthResult.setText(gUC.convertMinusOneToEmptyString(items.get(position).getFifthResult()));
+                sixthResult.setText(gUC.convertMinusOneToEmptyString(items.get(position).getSixthResult()));
             }
         }
     }
