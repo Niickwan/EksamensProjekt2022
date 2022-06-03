@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -103,17 +104,6 @@ public class FragmentAdminChecklist extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        completeAssignment.add(general);
-        completeAssignment.add(electricalPanel);
-        completeAssignment.add(installation);
-        completeAssignment.add(protection);
-        completeAssignment.add(error);
-        completeAssignment.add(section);
-        completeAssignment.add(circuitDetailList);
-        completeAssignment.add(transitionResistance);
-        completeAssignment.add(testingRCDResults);
-        completeAssignment.add(voltageDropResults);
-
         selectedFloor = floorIsSelected();
         unSelectedFloor = floorIsNotSelected();
 
@@ -178,6 +168,7 @@ public class FragmentAdminChecklist extends Fragment {
         for (int i = 0; i < template.size(); i++) {
             if (template.get(i).equalsIgnoreCase("<Headline>")) {
                 if (headlineCounter == 0) {
+
                     String headline = template.get(i + 1);
                     i = readQuestionFromExcel(template, i, general);
                     buildDropdownDynamically(headline, general, objectTag, "vertical");
@@ -321,8 +312,9 @@ public class FragmentAdminChecklist extends Fragment {
                 remarkEtML.setSingleLine(false);
                 remarkEtML.setLines(10);
                 remarkEtML.setScrollBarFadeDuration(1000);
-                remarkEtML.setText(template.get(i+1));
                 documentNote = template.get(i+1);
+                if (template.get(i+1).equals("-1")) remarkEtML.setText("");
+                else remarkEtML.setText(template.get(i+1));
                 remarkEtML.addTextChangedListener(new TextWatcher() {
                     @Override
                     public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -367,7 +359,31 @@ public class FragmentAdminChecklist extends Fragment {
         //Adding button for finishing the case
         Button finishCaseBtn = new Button(getActivity());
         finishCaseBtn.setOnClickListener(v -> {
-            cEF.createExcelSheet(assignmentContainer.getCurrentAssignment().getOrderNumber() + "_" + selectedFloorName, completeAssignment, documentNote);
+            Thread createExcelT = new Thread(() -> {
+                completeAssignment.add(general);
+                completeAssignment.add(electricalPanel);
+                completeAssignment.add(installation);
+                completeAssignment.add(protection);
+                completeAssignment.add(error);
+                completeAssignment.add(section);
+                completeAssignment.add(circuitDetailList);
+                completeAssignment.add(transitionResistance);
+                completeAssignment.add(testingRCDResults);
+                completeAssignment.add(voltageDropResults);
+                cEF.createExcelSheet("current_assignment.xls", completeAssignment, documentNote);
+                completeAssignment.forEach(System.out::println);
+            });
+            Thread uploadExcelT = new Thread(() -> ftp.ftpUpload(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString(),
+                    "/public_html/assignments/" + orderNr + "/" + selectedFloorName + "/" + orderNr + "_" + selectedFloorName + ".xls"));
+            try {
+                createExcelT.start();
+                createExcelT.join();
+                uploadExcelT.join();
+                uploadExcelT.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
         });
         finishCaseBtn.setId(View.generateViewId());
         LinearLayout.LayoutParams paramsFCB = new LinearLayout.LayoutParams(
