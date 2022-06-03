@@ -50,12 +50,7 @@ import com.jmmnt.UseCase.OperateAssignment;
 import com.jmmnt.UseCase.OperateDB;
 import com.jmmnt.databinding.FragmentAdminChecklistBinding;
 
-import org.apache.poi.ss.formula.functions.T;
-
-import java.sql.SQLOutput;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class FragmentAdminChecklist extends Fragment {
@@ -78,9 +73,9 @@ public class FragmentAdminChecklist extends Fragment {
     private List<Object> general = new ArrayList<>();
     private List<Object> electricalPanel = new ArrayList<>();
     private List<Object> installation = new ArrayList<>();
-    private List<Object> protection = new ArrayList<>();
-    private List<Object> error = new ArrayList<>();
-    private List<Object> section = new ArrayList<>();
+    private List<Object> recessedLuminaire = new ArrayList<>();
+    private List<Object> protectiveConductors = new ArrayList<>();
+    private List<Object> faultyProtection = new ArrayList<>();
     private List<Object> circuitDetailList = new ArrayList<>();
     private List<Object> transitionResistance = new ArrayList<>();
     private List<Object> testingRCDResults = new ArrayList<>();
@@ -185,18 +180,18 @@ public class FragmentAdminChecklist extends Fragment {
                     headlineCounter++;
                 } else if (headlineCounter == 3) {
                     String headline = template.get(i + 1);
-                    i = readQuestionFromExcel(template, i, protection);
-                    buildDropdownDynamically(headline, protection, objectTag, "vertical");
+                    i = readQuestionFromExcel(template, i, recessedLuminaire);
+                    buildDropdownDynamically(headline, recessedLuminaire, objectTag, "vertical");
                     headlineCounter++;
                 } else if (headlineCounter == 4) {
                     String headline = template.get(i + 1);
-                    i = readQuestionFromExcel(template, i, error);
-                    buildDropdownDynamically(headline, error, objectTag, "vertical");
+                    i = readQuestionFromExcel(template, i, protectiveConductors);
+                    buildDropdownDynamically(headline, protectiveConductors, objectTag, "vertical");
                     headlineCounter++;
                 } else if (headlineCounter == 5) {
                     String headline = template.get(i + 1);
-                    i = readQuestionFromExcel(template, i, section);
-                    buildDropdownDynamically(headline, section, objectTag, "vertical");
+                    i = readQuestionFromExcel(template, i, faultyProtection);
+                    buildDropdownDynamically(headline, faultyProtection, objectTag, "vertical");
                     headlineCounter++;
 
                     //Adding textview
@@ -323,13 +318,12 @@ public class FragmentAdminChecklist extends Fragment {
 
                     @Override
                     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                        if (charSequence.toString().isEmpty()) documentNote = remarkEtML.getEditableText().toString();
+                        if (!charSequence.toString().isEmpty()) documentNote = remarkEtML.getEditableText().toString();
                         else documentNote = "-1";
                     }
 
                     @Override
                     public void afterTextChanged(Editable editable) {
-                        System.out.println(documentNote);
                     }
                 });
                 //This make it possible to scroll inside the textarea by disallowing the parentView to intercept touch event on the textarea.
@@ -363,9 +357,9 @@ public class FragmentAdminChecklist extends Fragment {
                 completeAssignment.add(general);
                 completeAssignment.add(electricalPanel);
                 completeAssignment.add(installation);
-                completeAssignment.add(protection);
-                completeAssignment.add(error);
-                completeAssignment.add(section);
+                completeAssignment.add(recessedLuminaire);
+                completeAssignment.add(protectiveConductors);
+                completeAssignment.add(faultyProtection);
                 completeAssignment.add(circuitDetailList);
                 completeAssignment.add(transitionResistance);
                 completeAssignment.add(testingRCDResults);
@@ -373,12 +367,12 @@ public class FragmentAdminChecklist extends Fragment {
                 cEF.createExcelSheet("current_assignment.xls", completeAssignment, documentNote);
                 completeAssignment.forEach(System.out::println);
             });
-            Thread uploadExcelT = new Thread(() -> ftp.ftpUpload(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString(),
+            Thread uploadExcelT = new Thread(() -> ftp.ftpUpload(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString() + "/current_assignment.xls",
                     "/public_html/assignments/" + orderNr + "/" + selectedFloorName + "/" + orderNr + "_" + selectedFloorName + ".xls"));
             try {
                 createExcelT.start();
                 createExcelT.join();
-                uploadExcelT.join();
+                uploadExcelT.start();
                 uploadExcelT.join();
             } catch (InterruptedException e) {
                 e.printStackTrace();

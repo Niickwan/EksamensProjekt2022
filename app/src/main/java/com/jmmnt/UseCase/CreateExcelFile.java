@@ -143,6 +143,8 @@ public class CreateExcelFile {
                 String okStr = String.valueOf(ok);
                 sheet.addCell(new Label(columnCount, rowCount, "<inputAnswer>"));
                 columnCount++;
+                sheet.addCell(new Label(columnCount, rowCount, ((TestingRCD) list.get(getList).get(i)).getGroupName()));
+                columnCount++;
                 sheet.addCell(new Label(columnCount, rowCount, ((TestingRCD) list.get(getList).get(i)).getFirstResult()));
                 columnCount++;
                 sheet.addCell(new Label(columnCount, rowCount, ((TestingRCD) list.get(getList).get(i)).getSecondResult()));
@@ -289,20 +291,24 @@ public class CreateExcelFile {
                 columnCount++;
                 sheet.addCell(new Label(columnCount, rowCount, "<Images>"));
                 columnCount++;
-                if (((Questions) list.get(getList).get(i)).getImages().size() > 0) {
-                    for (int k = 0; k < ((Questions) list.get(getList).get(i)).getImages().size(); k++) {
-                        sheet.addCell(new Label(columnCount, rowCount,
-                                ((Questions) list.get(getList).get(i)).getImages().get(k)));
-                        columnCount++;
-                    }
-                } else {
+//                if (((Questions) list.get(getList).get(i)).getImages().size() > 0) {
+//                    for (int k = 0; k < ((Questions) list.get(getList).get(i)).getImages().size(); k++) {
+//                        sheet.addCell(new Label(columnCount, rowCount,
+//                                ((Questions) list.get(getList).get(i)).getImages().get(k)));
+//                        columnCount++;
+//                    }
+//                } else {
                     sheet.addCell(new Label(columnCount, rowCount, "-1"));
                     columnCount++;
-                }
+                //}
+                System.out.println(((Questions) list.get(getList).get(i)).getImages().size());
+                System.out.print("AR LIST____");
+                ((Questions) list.get(getList).get(i)).getImages().forEach(System.out::println);
                 sheet.addCell(new Label(columnCount, rowCount, "<ImagesEnd>"));
                 columnCount++;
                 sheet.addCell(new Label(columnCount, rowCount, "<QuestionEnd>"));
                 columnCount = 0;
+                System.out.println(getList + "--------------------------------" + rowCount);
                 rowCount++;
             }
         } catch (Exception e) {
