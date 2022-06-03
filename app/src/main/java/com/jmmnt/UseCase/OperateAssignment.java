@@ -243,7 +243,7 @@ public class OperateAssignment {
         } catch (BiffException | IOException e) {
             e.printStackTrace();
         }
-        arr.forEach(System.out::println); //TODO sout
+//        arr.forEach(System.out::println); //TODO sout
         return arr;
     }
 //---------------------------------------------------------------------------------------------

@@ -38,7 +38,7 @@ public class CreateExcelFile {
     ArrayList<String> excelTemplate;
 
     public void createExcelSheet(String excelFileName, ArrayList<List<Object>> list, String documentNote) {
-        excelTemplate = oA.getExcelAsArrayList("TjeklisteTemplate.xls");
+        excelTemplate = oA.getExcelAsArrayList("current_assignment.xls");
         note = documentNote;
         File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
         File inputWorkbook = new File(path, excelFileName);

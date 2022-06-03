@@ -40,6 +40,7 @@ import com.jmmnt.Entities.ShortCircuitCurrentAndVoltageDrop;
 import com.jmmnt.Entities.TestingRCD;
 import com.jmmnt.R;
 import com.jmmnt.UseCase.Adapters.AdapterFactory;
+import com.jmmnt.UseCase.FTP.FTPClientFunctions;
 import com.jmmnt.UseCase.GeneralUseCase;
 import com.jmmnt.UseCase.OperateAssignment;
 import com.jmmnt.UseCase.OperateDB;
@@ -58,6 +59,7 @@ public class FragmentAdminChecklist extends Fragment {
     private OperateDB oDB = OperateDB.getInstance();
     private GeneralUseCase gUC = GeneralUseCase.getInstance();
     private AssignmentContainer assignmentContainer = AssignmentContainer.getInstance();
+    private FTPClientFunctions ftp = new FTPClientFunctions();
     private boolean isNewAssignment;
 
     private Button addFloorBtn;
@@ -103,7 +105,30 @@ public class FragmentAdminChecklist extends Fragment {
         LinearLayout roomLinearLayout = new LinearLayout(getActivity());
         roomLinearLayout.setOrientation(LinearLayout.HORIZONTAL);
 
-        setFloorHorizontalScrollBar();
+
+        Thread t1 = new Thread(() -> setFloorHorizontalScrollBar());
+
+        Thread t2 = new Thread(() -> {
+            System.out.println("SLECETED FLOOR 1---------------" + selectedFloorName);
+            String excelFileName = orderNr + "_" + selectedFloorName + ".xls";
+            ftp.ftpDownload("/public_html/assignments/" + orderNr + "/" + selectedFloorName + "/" + excelFileName, "current_assignment.xls");
+            System.out.println("/public_html/assignments/" + orderNr + "/" + selectedFloorName + "/" + excelFileName + "STIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII");
+        });
+
+        Thread t3 = new Thread(() -> getActivity().runOnUiThread(() -> generateUI()));
+
+        try {
+            t1.start();
+            t1.join();
+            t2.start();
+            t2.join();
+            t3.start();
+            t3.join();
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
 
         //TODO START - KUN FOR TESTING------------------------------------------------------------------------------------------------------------------------
         //TODO DATABASE KALD - hent data
@@ -122,7 +147,7 @@ public class FragmentAdminChecklist extends Fragment {
 
         //List<Object> protection = new ArrayList<>();
         //protection.add(new Questions("Prot", 2, "Pas på"));
-       // protection.add(new Questions("Test Prot", 2, "Hallo"));
+        // protection.add(new Questions("Test Prot", 2, "Hallo"));
 
         //List<Object> error = new ArrayList<>();
         //error.add(new Questions("Error", 1, "Pas på"));
@@ -132,6 +157,10 @@ public class FragmentAdminChecklist extends Fragment {
         //section.add(new Questions("Section Section", 3, "Pas på"));
         //section.add(new Questions("Test Section", 1, "Hallo"));
 
+
+    }
+
+    private void generateUI() {
         circuitDetailsResults = new LinkedList<>();
         circuitDetailsResults.add(new CircuitDetails("Tavlen", "400", "Lampe", "6", "500", 1, "340", "20"));
         circuitDetailsResults.add(new CircuitDetails("Stik", "40", "kontakt", "3", "300", 2, "34", "2"));
@@ -154,7 +183,7 @@ public class FragmentAdminChecklist extends Fragment {
 
         }
 
-        List<String> template = opa.getExcelAsArrayList("TjeklisteTemplate.xls");
+        List<String> template = opa.getExcelAsArrayList("current_assignment.xls");
 
 
         //Dropdown titles
@@ -173,92 +202,79 @@ public class FragmentAdminChecklist extends Fragment {
         parentLLH = getActivity().findViewById(R.id.parentLLH);
 
         //Building dropdowns
-        buildDropdownDynamically("Ordre", assignmentContainer, objectTag5, "vertical");
-
+        List<Assignment> currentListAssignment = new ArrayList<>();
+        currentListAssignment.add(AssignmentContainer.getInstance().getCurrentAssignment());
+        buildDropdownDynamically("Ordre", currentListAssignment, objectTag5, "vertical");
+        List<Object> circuitDetailList = new ArrayList<>();
         int headlineCounter = 0;
         int inputHeadlineCounter = 0;
         for (int i = 0; i < template.size(); i++) {
-            if (template.get(i).equalsIgnoreCase("<Headline>")){
-                if (headlineCounter == 0){
+            if (template.get(i).equalsIgnoreCase("<Headline>")) {
+                if (headlineCounter == 0) {
                     List<Object> general = new ArrayList<>();
-                    String headline = template.get(i+1);
+                    String headline = template.get(i + 1);
                     i = readQuestionFromExcel(template, i, general);
                     buildDropdownDynamically(headline, general, objectTag, "vertical");
                     headlineCounter++;
-                }
-                else if (headlineCounter == 1){
+                } else if (headlineCounter == 1) {
                     List<Object> electricalPanel = new ArrayList<>();
-                    String headline = template.get(i+1);
+                    String headline = template.get(i + 1);
                     i = readQuestionFromExcel(template, i, electricalPanel);
                     buildDropdownDynamically(headline, electricalPanel, objectTag, "vertical");
                     headlineCounter++;
-                }
-                else if (headlineCounter == 2){
+                } else if (headlineCounter == 2) {
                     List<Object> installation = new ArrayList<>();
-                    String headline = template.get(i+1);
+                    String headline = template.get(i + 1);
                     i = readQuestionFromExcel(template, i, installation);
                     buildDropdownDynamically(headline, installation, objectTag, "vertical");
                     headlineCounter++;
-                }
-                else if (headlineCounter == 3){
+                } else if (headlineCounter == 3) {
                     List<Object> protection = new ArrayList<>();
-                    String headline = template.get(i+1);
+                    String headline = template.get(i + 1);
                     i = readQuestionFromExcel(template, i, protection);
                     buildDropdownDynamically(headline, protection, objectTag, "vertical");
                     headlineCounter++;
-                }
-                else if (headlineCounter == 4){
+                } else if (headlineCounter == 4) {
                     List<Object> error = new ArrayList<>();
-                    String headline = template.get(i+1);
+                    String headline = template.get(i + 1);
                     i = readQuestionFromExcel(template, i, error);
                     buildDropdownDynamically(headline, error, objectTag, "vertical");
                     headlineCounter++;
-                }
-                else if (headlineCounter == 5){
+                } else if (headlineCounter == 5) {
                     List<Object> section = new ArrayList<>();
-                    String headline = template.get(i+1);
+                    String headline = template.get(i + 1);
                     i = readQuestionFromExcel(template, i, section);
                     buildDropdownDynamically(headline, section, objectTag, "vertical");
                     headlineCounter++;
+                    //Adding textview
+                    TextView testResultsTitle = new TextView(getActivity());
+                    testResultsTitle.setId(View.generateViewId());
+                    LinearLayout.LayoutParams paramsTRT = new LinearLayout.LayoutParams(
+                            ViewGroup.LayoutParams.WRAP_CONTENT,
+                            ViewGroup.LayoutParams.WRAP_CONTENT
+                    );
+                    paramsTRT.setMargins(10, 10, 10, 30);
+                    testResultsTitle.setLayoutParams(paramsTRT);
+                    testResultsTitle.setTypeface(Typeface.DEFAULT_BOLD);
+                    testResultsTitle.setText(getString(R.string.test_results_title_name));
+                    testResultsTitle.setTextSize(34);
+                    testResultsTitle.setTextColor(getActivity().getColor(R.color.darkblue));
+
+                    //Adding textview to parent
+                    parentLLH.addView(testResultsTitle);
                 }
-            } else if (template.get(i).equalsIgnoreCase("<InputHeadline>")) {
-                if(inputHeadlineCounter == 0){
-                    for (int j = i; j < template.size(); j++) {
-
-                        if (template.get(j).equals("  ")){
-
-                        }
-                        else if (template.get(j).equals("<InputHeadlineEnd>")){
-                            i = j;
-                            break;
-                        }
-                    }
+           }
+            else if (template.get(i).equalsIgnoreCase("<InputHeadline>")) {
+                if (inputHeadlineCounter == 0) {
+                    i = readExcelInputHeadline(template, i, circuitDetailList);
+                    inputHeadlineCounter++;
                 }
             }
         }
 
 
-
-
-
-        //Adding textview
-        TextView testResultsTitle = new TextView(getActivity());
-        testResultsTitle.setId(View.generateViewId());
-        LinearLayout.LayoutParams paramsTRT = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-        );
-        paramsTRT.setMargins(10, 10, 10, 30);
-        testResultsTitle.setLayoutParams(paramsTRT);
-        testResultsTitle.setTypeface(Typeface.DEFAULT_BOLD);
-        testResultsTitle.setText(getString(R.string.test_results_title_name));
-        testResultsTitle.setTextSize(34);
-        testResultsTitle.setTextColor(getActivity().getColor(R.color.darkblue));
-
-        //Adding textview to parent
-        parentLLH.addView(testResultsTitle);
-
         //Building dropdowns
+        buildDropdownDynamically("Kredsdetaljer", circuitDetailList, objectTag2, "horizontal");
         buildDropdownDynamically("Afprøvning af RCD'er", testingRCDResults, objectTag3, "horizontal");
 
         //Adding textview
@@ -391,26 +407,55 @@ public class FragmentAdminChecklist extends Fragment {
 
         //Adding the constraint layout to the parent
         parentLLH.addView(cl);
+    }
 
+    private int readExcelInputHeadline(List<String> template, int i, List<Object> circuitDetailList) {
+        for (int j = i; j < template.size(); j++) {
+            //new CircuitDetails("Tavlen", "400", "Lampe", "6", "500", 1, "340", "20"));
+            if (template.get(j).equals("<inputAnswer>")) {
+                CircuitDetails circuitDetails = new CircuitDetails();
+                circuitDetails.setGroupName(template.get(j+1));
+                circuitDetails.setOb(template.get(j+2));
+                circuitDetails.setCharacteristics(template.get(j+3));
+                circuitDetails.setCrossSection(template.get(j+4));
+                circuitDetails.setMaxOB(template.get(j+5));
+                if(template.get(j +7).equals("-1") && template.get(j +6).equals("-1")){
+                    circuitDetails.setCheckbox(0);
+                    circuitDetails.setOmega("");
+                } else if (template.get(j +7).equals("-1")){
+                    circuitDetails.setOmega(template.get(j+6));
+                    circuitDetails.setCheckbox(1);
+                } else{
+                    circuitDetails.setOmega(template.get(j+7));
+                    circuitDetails.setCheckbox(2);
+                }
+
+                circuitDetails.setMegaOmega(template.get(j+8));
+                circuitDetailList.add(circuitDetails);
+            } else if (template.get(j).equals("<InputHeadlineEnd>")) {
+                i = j;
+                break;
+            }
+        }
+        return i;
     }
 
     private int readQuestionFromExcel(List<String> template, int i, List<Object> general) {
         for (int j = i; j < template.size(); j++) {
 
-            if (template.get(j).equals("<Question>")){
+            if (template.get(j).equals("<Question>")) {
                 Questions question = new Questions();
-                int answer = Integer.parseInt(template.get(j +4));
-                question.setQuestion(template.get(j +1) + " " + template.get(j +2));
+                int answer = Integer.parseInt(template.get(j + 4));
+                question.setQuestion(template.get(j + 1) + " " + template.get(j + 2));
                 question.setAnswer(answer);
-                question.setComment(template.get(j +6));
+                question.setComment(template.get(j + 6));
                 int excelRowCounter = 8;
-                while(!template.get(j + excelRowCounter).equals("<ImagesEnd>")) {
-                    question.getImages().add(template.get(j +excelRowCounter));
+                while (!template.get(j + excelRowCounter).equals("<ImagesEnd>")) {
+                    question.getImages().add(template.get(j + excelRowCounter));
                     excelRowCounter++;
                 }
                 general.add(question);
-            }
-            else if (template.get(j).equals("<HeadlineEnd>")){
+            } else if (template.get(j).equals("<HeadlineEnd>")) {
                 i = j;
                 break;
             }
@@ -419,25 +464,24 @@ public class FragmentAdminChecklist extends Fragment {
     }
 
     private void setFloorHorizontalScrollBar() {
-        Thread t = new Thread(() -> {
-            ArrayList<String> hsvStructure = new ArrayList<>();
-            try {
-                hsvStructure = oDB.getAssignmentStructure(orderNr);
-            } finally {
-                floors = gUC.sortStringBeforeNumbers(gUC.getSplittedString(hsvStructure, orderNr, "/<"));
-                selectedFloorName = floors.get(0);
+        ArrayList<String> hsvStructure = new ArrayList<>();
+        try {
+            hsvStructure = oDB.getAssignmentStructure(orderNr);
+
+        } finally {
+            floors = gUC.sortStringBeforeNumbers(gUC.getSplittedString(hsvStructure, orderNr, "/<"));
+            selectedFloorName = floors.get(0);
+            System.out.println("SELECTED FLOOR2--------------" + selectedFloorName);
 //                setHorizontalFloorBar(floors);
 
-                getActivity().runOnUiThread(() -> {
-                    binding.hsvFloor.removeAllViews();
-                    setHorizontalFloorBar(floors);
-                    binding.hsvFloor.addView(floorLinearLayout);
+            getActivity().runOnUiThread(() -> {
+                binding.hsvFloor.removeAllViews();
+                setHorizontalFloorBar(floors);
+                binding.hsvFloor.addView(floorLinearLayout);
 //                        binding.hsvRoom.addView(roomLinearLayout);
-                    binding.hsvRoom.setVisibility(View.GONE);
-                });
-            }
-        });
-        t.start();
+                binding.hsvRoom.setVisibility(View.GONE);
+            });
+        }
     }
 
     private void setHorizontalFloorBar(ArrayList<String> floors) {
@@ -518,7 +562,7 @@ public class FragmentAdminChecklist extends Fragment {
             }
         }).start());
         dialog.getWindow().findViewById(R.id.enable_delete_switch).setOnClickListener(v -> {
-            if(floorButtons.size() < 2) {
+            if (floorButtons.size() < 2) {
                 Thread t = new Thread(() -> gUC.toastAlert(getActivity(), getString(R.string.checklist_unable_to_delete_floor)));
                 t.start();
                 Switch s = v.findViewById(R.id.enable_delete_switch);

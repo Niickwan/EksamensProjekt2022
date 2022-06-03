@@ -10,6 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.jmmnt.Entities.CircuitDetails;
 import com.jmmnt.R;
+import com.jmmnt.UseCase.GeneralUseCase;
+
 import java.util.List;
 
 public class CircuitDetailsViewAdapter extends RecyclerView.Adapter<CircuitDetailsViewHolder> {
@@ -17,6 +19,7 @@ public class CircuitDetailsViewAdapter extends RecyclerView.Adapter<CircuitDetai
     private List<CircuitDetails> items;
     private EditText groupName, ob, characteristic, crossSection, maxOB, omegaResist, megaOmegaResist;
     private CheckBox zs, ra;
+    private GeneralUseCase gUC = GeneralUseCase.getInstance();
 
     public CircuitDetailsViewAdapter(List<CircuitDetails> items) {
         this.items = items;
@@ -44,15 +47,15 @@ public class CircuitDetailsViewAdapter extends RecyclerView.Adapter<CircuitDetai
 
         if (position < items.size()) {
             if (items.get(position) != null) {
-                groupName.setText(items.get(position).getGroupName());
-                ob.setText(items.get(position).getOb());
-                characteristic.setText(items.get(position).getCharacteristics());
-                crossSection.setText(items.get(position).getCrossSection());
-                maxOB.setText(items.get(position).getMaxOB());
+                groupName.setText(gUC.convertMinusOneToEmptyString(items.get(position).getGroupName()));
+                ob.setText(gUC.convertMinusOneToEmptyString(items.get(position).getOb()));
+                characteristic.setText(gUC.convertMinusOneToEmptyString(items.get(position).getCharacteristics()));
+                crossSection.setText(gUC.convertMinusOneToEmptyString(items.get(position).getCrossSection()));
+                maxOB.setText(gUC.convertMinusOneToEmptyString(items.get(position).getMaxOB()));
                 if (items.get(position).getCheckbox() == 1) zs.setChecked(true);
                 if (items.get(position).getCheckbox() == 2) ra.setChecked(true);
-                omegaResist.setText(items.get(position).getOmega());
-                megaOmegaResist.setText(items.get(position).getMegaOmega());
+                omegaResist.setText(gUC.convertMinusOneToEmptyString(items.get(position).getOmega()));
+                megaOmegaResist.setText(gUC.convertMinusOneToEmptyString(items.get(position).getMegaOmega()));
             }
         }
     }
