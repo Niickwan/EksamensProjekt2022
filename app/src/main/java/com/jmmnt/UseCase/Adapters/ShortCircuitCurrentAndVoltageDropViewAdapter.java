@@ -1,5 +1,7 @@
 package com.jmmnt.UseCase.Adapters;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.jmmnt.Entities.ShortCircuitCurrentAndVoltageDrop;
 import com.jmmnt.R;
+import com.jmmnt.UseCase.GeneralUseCase;
+
 import java.util.List;
 
 public class ShortCircuitCurrentAndVoltageDropViewAdapter extends RecyclerView.Adapter<ShortCircuitAndVoltageDropViewHolder> {
@@ -16,12 +20,10 @@ public class ShortCircuitCurrentAndVoltageDropViewAdapter extends RecyclerView.A
     private List<ShortCircuitCurrentAndVoltageDrop> items;
     private EditText shortCircuitGroupName, lk, ShortCircuitMeasuredOnLocation, voltageDropGroupName, deltaVoltage,
             voltageDropMeasuredOnLocation;
+    private GeneralUseCase gUC = GeneralUseCase.getInstance();
 
     public ShortCircuitCurrentAndVoltageDropViewAdapter(List<ShortCircuitCurrentAndVoltageDrop> items) {
         this.items = items;
-    }
-
-    public ShortCircuitCurrentAndVoltageDropViewAdapter() {
     }
 
     @NonNull
@@ -41,12 +43,12 @@ public class ShortCircuitCurrentAndVoltageDropViewAdapter extends RecyclerView.A
         voltageDropMeasuredOnLocation = holder.itemView.findViewById(R.id.voltageDropMeasuredOnLocation_et);
 
         if (position < items.size()) {
-            shortCircuitGroupName.setText(items.get(position).getShortCircuitGroupName());
-            lk.setText(items.get(position).getShortCircuitLk());
-            ShortCircuitMeasuredOnLocation.setText(items.get(position).getShortCircuitMeasuredOnLocation());
-            voltageDropGroupName.setText(items.get(position).getVoltageDropGroupName());
-            deltaVoltage.setText(items.get(position).getVoltageDropDeltaVoltage());
-            voltageDropMeasuredOnLocation.setText(items.get(position).getVoltageDropMeasuredOnLocation());
+            shortCircuitGroupName.setText(gUC.convertMinusOneToEmptyString(items.get(position).getShortCircuitGroupName()));
+            lk.setText(gUC.convertMinusOneToEmptyString(items.get(position).getShortCircuitLk()));
+            ShortCircuitMeasuredOnLocation.setText(gUC.convertMinusOneToEmptyString(items.get(position).getShortCircuitMeasuredOnLocation()));
+            voltageDropGroupName.setText(gUC.convertMinusOneToEmptyString(items.get(position).getVoltageDropGroupName()));
+            deltaVoltage.setText(gUC.convertMinusOneToEmptyString(items.get(position).getVoltageDropDeltaVoltage()));
+            voltageDropMeasuredOnLocation.setText(gUC.convertMinusOneToEmptyString(items.get(position).getVoltageDropMeasuredOnLocation()));
         }
 
     }
@@ -76,7 +78,41 @@ class ShortCircuitAndVoltageDropViewHolder extends RecyclerView.ViewHolder {
             return true;
         });
 
-        //TODO Vi kan aflæse felter herfra
+        EditText shortCircuitGroupName = itemView.findViewById(R.id.rcdGroupName_et);
+        EditText lk = itemView.findViewById(R.id.shortCircuitlk_et);
+        EditText ShortCircuitMeasuredOnLocation = itemView.findViewById(R.id.shortCircuitMeasuredOnLocation_et);
+        EditText voltageDropGroupName = itemView.findViewById(R.id.voltageDropGroupName_et);
+        EditText deltaVoltage = itemView.findViewById(R.id.voltageDropDelta_et);
+        EditText voltageDropMeasuredOnLocation = itemView.findViewById(R.id.voltageDropMeasuredOnLocation_et);
+
+        TextWatcher textWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                adapter.getItems().get(getAdapterPosition()).setShortCircuitGroupName(shortCircuitGroupName.getEditableText().toString());
+                adapter.getItems().get(getAdapterPosition()).setShortCircuitLk(lk.getEditableText().toString());
+                adapter.getItems().get(getAdapterPosition()).setShortCircuitMeasuredOnLocation(ShortCircuitMeasuredOnLocation.getEditableText().toString());
+                adapter.getItems().get(getAdapterPosition()).setVoltageDropGroupName(voltageDropGroupName.getEditableText().toString());
+                adapter.getItems().get(getAdapterPosition()).setVoltageDropDeltaVoltage(deltaVoltage.getEditableText().toString());
+                adapter.getItems().get(getAdapterPosition()).setVoltageDropMeasuredOnLocation(voltageDropMeasuredOnLocation.getEditableText().toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        };
+
+        shortCircuitGroupName.addTextChangedListener(textWatcher);
+        lk.addTextChangedListener(textWatcher);
+        ShortCircuitMeasuredOnLocation.addTextChangedListener(textWatcher);
+        voltageDropGroupName.addTextChangedListener(textWatcher);
+        deltaVoltage.addTextChangedListener(textWatcher);
+        voltageDropMeasuredOnLocation.addTextChangedListener(textWatcher);
 
     }
 
