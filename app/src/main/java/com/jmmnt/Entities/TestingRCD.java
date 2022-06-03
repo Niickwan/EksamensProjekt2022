@@ -23,7 +23,14 @@ public class TestingRCD {
     }
 
     public TestingRCD(){
-
+        this.groupName = "";
+        this.checkboxOK = -1;
+        this.firstResult = "";
+        this.secondResult = "";
+        this.thirdResult = "";
+        this.fourthResult = "";
+        this.fifthResult = "";
+        this.sixthResult = "";
     }
 
     @Override

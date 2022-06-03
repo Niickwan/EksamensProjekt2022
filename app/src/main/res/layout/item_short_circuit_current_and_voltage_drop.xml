@@ -74,7 +74,7 @@
                 android:layout_marginStart="8dp"
                 android:background="@drawable/design_edittext"
                 android:ems="10"
-                android:inputType="textPersonName"
+                android:inputType="number"
                 android:paddingLeft="5dp"
                 android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
