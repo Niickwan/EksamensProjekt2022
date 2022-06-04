@@ -216,6 +216,7 @@ public class OperateAssignment {
     public ArrayList<String> getExcelAsArrayList (String fileName) {
         ArrayList<String> arr = new ArrayList<>();
         File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+        System.out.println("PATH " + path.toString());
         File inputWorkbook = new File(path, fileName);
         Workbook w;
         WorkbookSettings ws = new WorkbookSettings();

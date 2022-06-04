@@ -56,11 +56,11 @@ public class PDFGenerator {
         this.assignment = assignment;
     }
 
-    public void createPDF(Context context) throws IOException {
-        ArrayList<String> excel = opa.getExcelAsArrayList("sl.xls");
+    public void createPDF(Context context, String filename) throws IOException {
+        ArrayList<String> excel = opa.getExcelAsArrayList("current_assignment.xls");
 
         File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-        File file = new File(path, "abcPDFff.pdf");
+        File file = new File(path, filename + ".pdf");
         PdfWriter writer = new PdfWriter(file);
         PdfDocument pdfDocument = new PdfDocument(writer);
         //Documents comes from IText.layout and is used to create tables, cells and other layout
@@ -290,18 +290,30 @@ public class PDFGenerator {
     }
 
     private void readExcelInputAnswer(ArrayList<String> excel, Document document, String[] numberOfQuestions, String[] measuringUnits, Table table, int i) {
+        int counter = 0;
+        boolean  isEmpty = true;
         for (int k = 0; k < numberOfQuestions.length; k++) {
-            String measuringUnit = measuringUnits[k];
-            String answer = excel.get(i + 1);
-
-            if (answer.equals("-1")) {
-                table.addCell(createCell("\n", document,false));
-            } else {
-                if (measuringUnit.equals("<>")) {
-                    table.addCell(createCell(answer, document, false));
+            String answer = excel.get(i + 1 + counter);
+            if(!answer.equals("-1")){
+                isEmpty  = false;
+            }
+            counter++;
+        }
+        if (!isEmpty){
+            int answerCounter = 0;
+            for (int k = 0; k < numberOfQuestions.length; k++) {
+                String measuringUnit = measuringUnits[k];
+                String answer = excel.get(i + 1 + answerCounter);
+                if (answer.equals("-1")) {
+                    table.addCell(createCell("\n", document, false));
                 } else {
-                    table.addCell(createCell(answer + " " + measuringUnit, document, false));
+                    if (measuringUnit.equals("<>")) {
+                        table.addCell(createCell(answer, document, false));
+                    } else {
+                        table.addCell(createCell(answer + " " + measuringUnit, document, false));
+                    }
                 }
+                answerCounter++;
             }
         }
     }

@@ -13,6 +13,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 import com.jmmnt.Controller.UI.FragmentSearchCase;
 import com.jmmnt.Entities.Assignment;
+import com.jmmnt.Entities.AssignmentContainer;
 import com.jmmnt.R;
 import com.jmmnt.UseCase.GeneralUseCase;
 import com.jmmnt.UseCase.OperateAssignment;
@@ -129,6 +130,12 @@ class SearchCaseViewHolder extends RecyclerView.ViewHolder {
 
         openCaseBtn = itemView.findViewById(R.id.openCaseBtn);
         openCaseBtn.setOnClickListener(view -> {
+            TextView t =view.findViewById(R.id.orderNumber);
+            for (int i = 0; i < adapter.getItemList().size(); i++) {
+                if (t.getText().toString().equals(adapter.getItemList().get(i).getOrderNumber())){
+                    AssignmentContainer.getInstance().setCurrentAssignment(adapter.getItemList().get(i));
+                }
+            }
             NavHostFragment.findNavController(adapter.getFragment()).navigate(R.id.action_fragmentSearchCase_to_FragmentAdminChecklist);
         });
 

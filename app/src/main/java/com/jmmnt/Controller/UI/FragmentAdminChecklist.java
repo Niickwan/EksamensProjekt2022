@@ -8,7 +8,10 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
+import android.os.Environment;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -31,24 +34,25 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.textfield.TextInputLayout;
-import com.itextpdf.layout.borders.Border;
 import com.jmmnt.Entities.Assignment;
 import com.jmmnt.Entities.AssignmentContainer;
 import com.jmmnt.Entities.CircuitDetails;
 import com.jmmnt.Entities.Questions;
 import com.jmmnt.Entities.ShortCircuitCurrentAndVoltageDrop;
 import com.jmmnt.Entities.TestingRCD;
+import com.jmmnt.Entities.TransitionResistance;
 import com.jmmnt.R;
 import com.jmmnt.UseCase.Adapters.AdapterFactory;
+import com.jmmnt.UseCase.CreateExcelFile;
+import com.jmmnt.UseCase.FTP.FTPClientFunctions;
 import com.jmmnt.UseCase.GeneralUseCase;
 import com.jmmnt.UseCase.OperateAssignment;
 import com.jmmnt.UseCase.OperateDB;
+import com.jmmnt.UseCase.PDFGeneration.PDFGenerator;
 import com.jmmnt.databinding.FragmentAdminChecklistBinding;
 
-import java.time.LocalDate;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 
 public class FragmentAdminChecklist extends Fragment {
@@ -58,6 +62,8 @@ public class FragmentAdminChecklist extends Fragment {
     private OperateDB oDB = OperateDB.getInstance();
     private GeneralUseCase gUC = GeneralUseCase.getInstance();
     private AssignmentContainer assignmentContainer = AssignmentContainer.getInstance();
+    private FTPClientFunctions ftp = new FTPClientFunctions();
+    private CreateExcelFile cEF = new CreateExcelFile();
     private boolean isNewAssignment;
 
     private Button addFloorBtn;
@@ -66,10 +72,19 @@ public class FragmentAdminChecklist extends Fragment {
     private ArrayList<String> floors = new ArrayList<>();
     private ArrayList<Button> floorButtons = new ArrayList<>();
 
-    private List<Object> assignment;
-    private List<Object> circuitDetailsResults;
-    private List<Object> voltageDropResults;
-    private List<Object> testingRCDResults;
+    private List<Object> general = new ArrayList<>();
+    private List<Object> electricalPanel = new ArrayList<>();
+    private List<Object> installation = new ArrayList<>();
+    private List<Object> recessedLuminaire = new ArrayList<>();
+    private List<Object> protectiveConductors = new ArrayList<>();
+    private List<Object> faultyProtection = new ArrayList<>();
+    private List<Object> circuitDetailList = new ArrayList<>();
+    private List<Object> transitionResistance = new ArrayList<>();
+    private List<Object> testingRCDResults = new ArrayList<>();
+    private List<Object> voltageDropResults = new ArrayList<>();
+    private ArrayList<List<Object>> completeAssignment = new ArrayList<>();
+
+    private String documentNote = "";
     private LinearLayout parentLLH;
 
     // TODO SKAL VÆRE VÆRDIER FRA SERVER/DB
@@ -103,243 +118,320 @@ public class FragmentAdminChecklist extends Fragment {
         LinearLayout roomLinearLayout = new LinearLayout(getActivity());
         roomLinearLayout.setOrientation(LinearLayout.HORIZONTAL);
 
-        setFloorHorizontalScrollBar();
 
-        //TODO START - KUN FOR TESTING------------------------------------------------------------------------------------------------------------------------
-        //TODO DATABASE KALD - hent data
+        Thread t1 = new Thread(() -> setFloorHorizontalScrollBar());
 
-        //List<Object> general = new ArrayList<>();
-        //general.add(new Questions("Tavlen", 2, "Hvad sker der?"));
-        //general.add(new Questions("Elskab", 1, "Kom nu"));
+        Thread t2 = new Thread(() -> {
+            String excelFileName = orderNr + "_" + selectedFloorName + ".xls";
+            ftp.ftpDownload("/public_html/assignments/" + orderNr + "/" + selectedFloorName + "/" + excelFileName, "current_assignment.xls");
+        });
 
-        //List<Object> electricalPanel = new ArrayList<>();
-        //electricalPanel.add(new Questions("El", 3, "Pas på"));
-        //electricalPanel.add(new Questions("Test", 2, "Hallo"));
+        Thread t3 = new Thread(() -> {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            getActivity().runOnUiThread(() -> generateUI());
+        });
 
-        //List<Object> installation = new ArrayList<>();
-        //installation.add(new Questions("Installation", 3, "Pas på"));
-        //installation.add(new Questions("Test Install", 3, "Hallo"));
-
-        //List<Object> protection = new ArrayList<>();
-        //protection.add(new Questions("Prot", 2, "Pas på"));
-       // protection.add(new Questions("Test Prot", 2, "Hallo"));
-
-        //List<Object> error = new ArrayList<>();
-        //error.add(new Questions("Error", 1, "Pas på"));
-        //error.add(new Questions("Test Error", 2, "Hallo"));
-
-        //List<Object> section = new ArrayList<>();
-        //section.add(new Questions("Section Section", 3, "Pas på"));
-        //section.add(new Questions("Test Section", 1, "Hallo"));
-
-        circuitDetailsResults = new LinkedList<>();
-        circuitDetailsResults.add(new CircuitDetails("Tavlen", "400", "Lampe", "6", "500", 1, "340", "20"));
-        circuitDetailsResults.add(new CircuitDetails("Stik", "40", "kontakt", "3", "300", 2, "34", "2"));
-
-        voltageDropResults = new LinkedList<>();
-        voltageDropResults.add(new ShortCircuitCurrentAndVoltageDrop("Elskab", "lk", "Kælderen", "1.sal", "560", "Kælderen"));
-        voltageDropResults.add(new ShortCircuitCurrentAndVoltageDrop("Fryser", "lk", "Stue", "4.sal", "60", "Stue"));
-
-        testingRCDResults = new LinkedList<>();
-        testingRCDResults.add(new TestingRCD("Test", 1, "res1", "res2", "res3", "res4", "res5", "res6"));
-        testingRCDResults.add(new TestingRCD("Test", 1, "res1", "res2", "res3", "res4", "res5", "res6"));
-
-        assignment = new ArrayList<>();
-        assignment.add(new Assignment("123ASD123SD34", "Arne Pedersen", "Køgevej 2", "4700", "123984", "Lampe", 26, 26, LocalDate.now(), "active"));
-
-
-        ArrayList<Assignment> assignmentContainer = AssignmentContainer.getInstance().getAssignments();
-
-        if (isNewAssignment) {
-
+        try {
+            t1.start();
+            t1.join();
+            t2.start();
+            t2.join();
+            t3.start();
+            t3.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
 
-        List<String> template = opa.getExcelAsArrayList("TjeklisteTemplate.xls");
 
+    }
 
+    private void generateUI() {
+        List<String> template = opa.getExcelAsArrayList("current_assignment.xls");
         //Dropdown titles
         String objectTag = "question";
         String objectTag2 = "circuitDetails";
         String objectTag3 = "RCD";
         String objectTag4 = "ShortCircuitCurrent";
         String objectTag5 = "Assignment";
-        //TODO tags for adapterfactory
-
-        //TODO SLUT - KUN FOR TESTING------------------------------------------------------------------------------------------------------------------------
-
 
         //Build UI Dynamically
         //Setting parent layout for the UI
         parentLLH = getActivity().findViewById(R.id.parentLLH);
 
         //Building dropdowns
-        buildDropdownDynamically("Ordre", assignmentContainer, objectTag5, "vertical");
-
+        List<Assignment> currentListAssignment = new ArrayList<>();
+        currentListAssignment.add(AssignmentContainer.getInstance().getCurrentAssignment());
+        buildDropdownDynamically("Ordre", currentListAssignment, objectTag5, "vertical");
         int headlineCounter = 0;
         int inputHeadlineCounter = 0;
         for (int i = 0; i < template.size(); i++) {
-            if (template.get(i).equalsIgnoreCase("<Headline>")){
-                if (headlineCounter == 0){
-                    List<Object> general = new ArrayList<>();
-                    String headline = template.get(i+1);
+            if (template.get(i).equalsIgnoreCase("<Headline>")) {
+                if (headlineCounter == 0) {
+                    String headline = template.get(i + 1);
                     i = readQuestionFromExcel(template, i, general);
                     buildDropdownDynamically(headline, general, objectTag, "vertical");
                     headlineCounter++;
-                }
-                else if (headlineCounter == 1){
-                    List<Object> electricalPanel = new ArrayList<>();
-                    String headline = template.get(i+1);
+                } else if (headlineCounter == 1) {
+                    String headline = template.get(i + 1);
                     i = readQuestionFromExcel(template, i, electricalPanel);
                     buildDropdownDynamically(headline, electricalPanel, objectTag, "vertical");
                     headlineCounter++;
-                }
-                else if (headlineCounter == 2){
-                    List<Object> installation = new ArrayList<>();
-                    String headline = template.get(i+1);
+                } else if (headlineCounter == 2) {
+                    String headline = template.get(i + 1);
                     i = readQuestionFromExcel(template, i, installation);
                     buildDropdownDynamically(headline, installation, objectTag, "vertical");
                     headlineCounter++;
-                }
-                else if (headlineCounter == 3){
-                    List<Object> protection = new ArrayList<>();
-                    String headline = template.get(i+1);
-                    i = readQuestionFromExcel(template, i, protection);
-                    buildDropdownDynamically(headline, protection, objectTag, "vertical");
+                } else if (headlineCounter == 3) {
+                    String headline = template.get(i + 1);
+                    i = readQuestionFromExcel(template, i, recessedLuminaire);
+                    buildDropdownDynamically(headline, recessedLuminaire, objectTag, "vertical");
                     headlineCounter++;
-                }
-                else if (headlineCounter == 4){
-                    List<Object> error = new ArrayList<>();
-                    String headline = template.get(i+1);
-                    i = readQuestionFromExcel(template, i, error);
-                    buildDropdownDynamically(headline, error, objectTag, "vertical");
+                } else if (headlineCounter == 4) {
+                    String headline = template.get(i + 1);
+                    i = readQuestionFromExcel(template, i, protectiveConductors);
+                    buildDropdownDynamically(headline, protectiveConductors, objectTag, "vertical");
                     headlineCounter++;
-                }
-                else if (headlineCounter == 5){
-                    List<Object> section = new ArrayList<>();
-                    String headline = template.get(i+1);
-                    i = readQuestionFromExcel(template, i, section);
-                    buildDropdownDynamically(headline, section, objectTag, "vertical");
+                } else if (headlineCounter == 5) {
+                    String headline = template.get(i + 1);
+                    i = readQuestionFromExcel(template, i, faultyProtection);
+                    buildDropdownDynamically(headline, faultyProtection, objectTag, "vertical");
                     headlineCounter++;
+
+                    //Adding textview
+                    TextView testResultsTitle = new TextView(getActivity());
+                    testResultsTitle.setId(View.generateViewId());
+                    LinearLayout.LayoutParams paramsTRT = new LinearLayout.LayoutParams(
+                            ViewGroup.LayoutParams.WRAP_CONTENT,
+                            ViewGroup.LayoutParams.WRAP_CONTENT
+                    );
+                    paramsTRT.setMargins(10, 10, 10, 30);
+                    testResultsTitle.setLayoutParams(paramsTRT);
+                    testResultsTitle.setTypeface(Typeface.DEFAULT_BOLD);
+                    testResultsTitle.setText(getString(R.string.test_results_title_name));
+                    testResultsTitle.setTextSize(34);
+                    testResultsTitle.setTextColor(getActivity().getColor(R.color.darkblue));
+
+                    //Adding textview to parent
+                    parentLLH.addView(testResultsTitle);
                 }
             } else if (template.get(i).equalsIgnoreCase("<InputHeadline>")) {
-                if(inputHeadlineCounter == 0){
-                    for (int j = i; j < template.size(); j++) {
+                if (inputHeadlineCounter == 0) {
+                    i = readExcelCircuitDetails(template, i, circuitDetailList);
+                    buildDropdownDynamically("Kredsdetaljer", circuitDetailList, objectTag2, "horizontal");
+                    inputHeadlineCounter++;
 
-                        if (template.get(j).equals("  ")){
+                } else if (inputHeadlineCounter == 1) {
+                    i = readExcelTestingRCD(template, i, testingRCDResults);
+                    testingRCDResults.forEach(System.out::println);
+                    buildDropdownDynamically("Afprøvning af RCD'er", testingRCDResults, objectTag3, "horizontal");
+                    inputHeadlineCounter++;
+                } else if (inputHeadlineCounter == 2) {
+                    i = readExcelShortCircuitAndVoltageDrop(template, i, voltageDropResults);
+                    buildDropdownDynamically("Kortslutningsstrøm / Spændingsfald", voltageDropResults, objectTag4, "horizontal");
+                    inputHeadlineCounter++;
+                }
+            } else if (template.get(i).equalsIgnoreCase("<SingleInput>")) {
+                TransitionResistance t = new TransitionResistance();
+                transitionResistance.add(t);
+                //Adding textview
+                TextView groundElectrodeTv = new TextView(getActivity());
+                groundElectrodeTv.setId(View.generateViewId());
+                LinearLayout.LayoutParams paramsGET = new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT
+                );
+                paramsGET.gravity = Gravity.CENTER_HORIZONTAL;
+                paramsGET.setMargins(16, 16, 16, 5);
+                groundElectrodeTv.setLayoutParams(paramsGET);
+                groundElectrodeTv.setText(getString(R.string.ground_electrode_name));
+                groundElectrodeTv.setTextColor(getActivity().getColor(R.color.black));
+                groundElectrodeTv.setTextSize(14);
+                groundElectrodeTv.setTypeface(Typeface.DEFAULT_BOLD);
 
-                        }
-                        else if (template.get(j).equals("<InputHeadlineEnd>")){
-                            i = j;
-                            break;
+                //Adding textview to parent layout
+                parentLLH.addView(groundElectrodeTv);
+
+                //Adding edittext
+                EditText groundElectrodeResultEt = new EditText(getActivity());
+                groundElectrodeResultEt.setId(View.generateViewId());
+                LinearLayout.LayoutParams paramsGER = new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT
+                );
+                paramsGER.gravity = Gravity.CENTER_HORIZONTAL;
+                paramsGER.setMargins(16, 0, 16, 25);
+                groundElectrodeResultEt.setLayoutParams(paramsGER);
+                groundElectrodeResultEt.setBackground(getActivity().getDrawable(R.drawable.design_edittext));
+                groundElectrodeResultEt.setPadding(10, 0, 10, 0);
+                groundElectrodeResultEt.setTextColor(getActivity().getColor(R.color.black));
+                groundElectrodeResultEt.setSingleLine(true);
+                groundElectrodeResultEt.setEms(20);
+                groundElectrodeResultEt.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_CLASS_NUMBER);
+                groundElectrodeResultEt.setText(gUC.convertMinusOneToEmptyString(template.get(i + 2)));
+                groundElectrodeResultEt.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                    }
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                        if (!charSequence.toString().isEmpty())
+                            t.setTransitionResistance(Double.parseDouble(groundElectrodeResultEt.getEditableText().toString()));
+                        else t.setTransitionResistance(-1.0);
+                    }
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+                        System.out.println(t.getTransitionResistance());
+                    }
+                });
+
+                //Adding edittext to parent
+                parentLLH.addView(groundElectrodeResultEt);
+            } else if (template.get(i).equals("<Document Note>")) {
+                //Adding edittext with multiple lines
+                ContextThemeWrapper ctw = new ContextThemeWrapper(getActivity(), R.style.ViewWithScrollbars);
+                EditText remarkEtML = new EditText(ctw);
+                remarkEtML.setId(View.generateViewId());
+                LinearLayout.LayoutParams paramsRETML = new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT
+                );
+                paramsRETML.setMargins(10, 50, 10, 100);
+                remarkEtML.setLayoutParams(paramsRETML);
+                remarkEtML.setGravity(Gravity.START);
+                remarkEtML.setPadding(10, 0, 10, 0);
+                remarkEtML.setBackground(getActivity().getDrawable(R.drawable.design_edittext));
+                remarkEtML.setTextColor(getActivity().getColor(R.color.black));
+                remarkEtML.setInputType(InputType.TYPE_TEXT_FLAG_IME_MULTI_LINE);
+                remarkEtML.setHint(getString(R.string.comment));
+                remarkEtML.setHintTextColor(getActivity().getColor(R.color.black));
+                remarkEtML.setSingleLine(false);
+                remarkEtML.setLines(10);
+                remarkEtML.setScrollBarFadeDuration(1000);
+                documentNote = template.get(i + 1);
+                if (template.get(i + 1).equals("-1")) remarkEtML.setText("");
+                else remarkEtML.setText(template.get(i + 1));
+                remarkEtML.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                    }
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                        if (!charSequence.toString().isEmpty())
+                            documentNote = remarkEtML.getEditableText().toString();
+                        else documentNote = "-1";
+                    }
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+                    }
+                });
+                //This make it possible to scroll inside the textarea by disallowing the parentView to intercept touch event on the textarea.
+                remarkEtML.setOnTouchListener((v, motionEvent) -> {
+                    if (v.getId() == remarkEtML.getId()) {
+                        v.getParent().requestDisallowInterceptTouchEvent(true);
+                        switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
+                            case MotionEvent.ACTION_UP:
+                                v.getParent().requestDisallowInterceptTouchEvent(false);
+                                break;
                         }
                     }
-                }
+                    return false;
+                });
+
+                //Adding edittext with multiple lines to parent
+                parentLLH.addView(remarkEtML);
             }
         }
 
-
-
-
-
-        //Adding textview
-        TextView testResultsTitle = new TextView(getActivity());
-        testResultsTitle.setId(View.generateViewId());
-        LinearLayout.LayoutParams paramsTRT = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-        );
-        paramsTRT.setMargins(10, 10, 10, 30);
-        testResultsTitle.setLayoutParams(paramsTRT);
-        testResultsTitle.setTypeface(Typeface.DEFAULT_BOLD);
-        testResultsTitle.setText(getString(R.string.test_results_title_name));
-        testResultsTitle.setTextSize(34);
-        testResultsTitle.setTextColor(getActivity().getColor(R.color.darkblue));
-
-        //Adding textview to parent
-        parentLLH.addView(testResultsTitle);
-
-        //Building dropdowns
-        buildDropdownDynamically("Afprøvning af RCD'er", testingRCDResults, objectTag3, "horizontal");
-
-        //Adding textview
-        TextView groundElectrodeTv = new TextView(getActivity());
-        groundElectrodeTv.setId(View.generateViewId());
-        LinearLayout.LayoutParams paramsGET = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-        );
-        paramsGET.gravity = Gravity.CENTER_HORIZONTAL;
-        paramsGET.setMargins(16, 16, 16, 5);
-        groundElectrodeTv.setLayoutParams(paramsGET);
-        groundElectrodeTv.setText(getString(R.string.ground_electrode_name));
-        groundElectrodeTv.setTextColor(getActivity().getColor(R.color.black));
-        groundElectrodeTv.setTextSize(14);
-        groundElectrodeTv.setTypeface(Typeface.DEFAULT_BOLD);
-
-        //Adding textview to parent layout
-        parentLLH.addView(groundElectrodeTv);
-
-        //Adding edittext
-        EditText groundElectrodeResultEt = new EditText(getActivity());
-        groundElectrodeResultEt.setId(View.generateViewId());
-        LinearLayout.LayoutParams paramsGER = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-        );
-        paramsGER.gravity = Gravity.CENTER_HORIZONTAL;
-        paramsGER.setMargins(16, 0, 16, 25);
-        groundElectrodeResultEt.setLayoutParams(paramsGER);
-        groundElectrodeResultEt.setBackground(getActivity().getDrawable(R.drawable.design_edittext));
-        groundElectrodeResultEt.setPadding(10, 0, 10, 0);
-        groundElectrodeResultEt.setTextColor(getActivity().getColor(R.color.black));
-        groundElectrodeResultEt.setSingleLine(true);
-        groundElectrodeResultEt.setEms(20);
-
-        //Adding edittext to parent
-        parentLLH.addView(groundElectrodeResultEt);
-
-        //Building dropdown
-        buildDropdownDynamically("Kortslutningsstrøm / Spændingsfald", voltageDropResults, objectTag4, "horizontal");
-
-        //Adding edittext with multiple lines
-        ContextThemeWrapper ctw = new ContextThemeWrapper(getActivity(), R.style.ViewWithScrollbars);
-        EditText remarkEtML = new EditText(ctw);
-        remarkEtML.setId(View.generateViewId());
-        LinearLayout.LayoutParams paramsRETML = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-        );
-        paramsRETML.setMargins(10, 50, 10, 100);
-        remarkEtML.setLayoutParams(paramsRETML);
-        remarkEtML.setGravity(Gravity.START);
-        remarkEtML.setPadding(10, 0, 10, 0);
-        remarkEtML.setBackground(getActivity().getDrawable(R.drawable.design_edittext));
-        remarkEtML.setTextColor(getActivity().getColor(R.color.black));
-        remarkEtML.setInputType(InputType.TYPE_TEXT_FLAG_IME_MULTI_LINE);
-        remarkEtML.setHint(getString(R.string.comment));
-        remarkEtML.setHintTextColor(getActivity().getColor(R.color.black));
-        remarkEtML.setSingleLine(false);
-        remarkEtML.setLines(10);
-        remarkEtML.setScrollBarFadeDuration(1000);
-
-        //This make it possible to scroll inside the textarea by disallowing the parentView to intercept touch event on the textarea.
-        remarkEtML.setOnTouchListener((v, motionEvent) -> {
-            if (v.getId() == remarkEtML.getId()) {
-                v.getParent().requestDisallowInterceptTouchEvent(true);
-                switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
-                    case MotionEvent.ACTION_UP:
-                        v.getParent().requestDisallowInterceptTouchEvent(false);
-                        break;
-                }
-            }
-            return false;
-        });
-
-        //Adding edittext with multiple lines to parent
-        parentLLH.addView(remarkEtML);
-
         //Adding button for finishing the case
         Button finishCaseBtn = new Button(getActivity());
+        finishCaseBtn.setOnClickListener(v -> {
+            Thread createExcelT = new Thread(() -> {
+
+                for (int i = 0; i < circuitDetailList.size(); i++) {
+                    CircuitDetails objVar = (CircuitDetails) circuitDetailList.get(i);
+                    if (objVar.getGroupName().isEmpty()) ((CircuitDetails) circuitDetailList.get(i)).setGroupName("-1");
+                    if (objVar.getOb().isEmpty()) ((CircuitDetails) circuitDetailList.get(i)).setOb("-1");
+                    if (objVar.getCharacteristics().isEmpty()) ((CircuitDetails) circuitDetailList.get(i)).setCharacteristics("-1");
+                    if (objVar.getCrossSection().isEmpty()) ((CircuitDetails) circuitDetailList.get(i)).setCrossSection("-1");
+                    if (objVar.getMaxOB().isEmpty()) ((CircuitDetails) circuitDetailList.get(i)).setMaxOB("-1");
+                    if (objVar.getOmega().isEmpty()) ((CircuitDetails) circuitDetailList.get(i)).setOmega("-1");
+                    if (objVar.getOmega().isEmpty()) ((CircuitDetails) circuitDetailList.get(i)).setMilliOmega("-1");
+                }
+
+                for (int i = 0; i < testingRCDResults.size(); i++) {
+                    TestingRCD objVar = (TestingRCD) testingRCDResults.get(i);
+                    if (objVar.getGroupName().isEmpty()) ((TestingRCD) testingRCDResults.get(i)).setGroupName("-1");
+                    if (objVar.getFirstResult().isEmpty()) ((TestingRCD) testingRCDResults.get(i)).setFirstResult("-1");
+                    if (objVar.getSecondResult().isEmpty()) ((TestingRCD) testingRCDResults.get(i)).setSecondResult("-1");
+                    if (objVar.getThirdResult().isEmpty()) ((TestingRCD) testingRCDResults.get(i)).setThirdResult("-1");
+                    if (objVar.getFourthResult().isEmpty()) ((TestingRCD) testingRCDResults.get(i)).setFourthResult("-1");
+                    if (objVar.getFifthResult().isEmpty()) ((TestingRCD) testingRCDResults.get(i)).setFifthResult("-1");
+                    if (objVar.getSixthResult().isEmpty()) ((TestingRCD) testingRCDResults.get(i)).setSixthResult("-1");
+                }
+
+                for (int i = 0; i < voltageDropResults.size(); i++) {
+                    ShortCircuitCurrentAndVoltageDrop objVar = (ShortCircuitCurrentAndVoltageDrop) voltageDropResults.get(i);
+                    if (objVar.getShortCircuitGroupName().isEmpty()) ((ShortCircuitCurrentAndVoltageDrop) voltageDropResults.get(i)).setShortCircuitGroupName("-1");
+                    if (objVar.getShortCircuitLk().isEmpty()) ((ShortCircuitCurrentAndVoltageDrop) voltageDropResults.get(i)).setShortCircuitLk("-1");
+                    if (objVar.getShortCircuitMeasuredOnLocation().isEmpty()) ((ShortCircuitCurrentAndVoltageDrop) voltageDropResults.get(i)).setShortCircuitMeasuredOnLocation("-1");
+                    if (objVar.getVoltageDropGroupName().isEmpty()) ((ShortCircuitCurrentAndVoltageDrop) voltageDropResults.get(i)).setVoltageDropGroupName("-1");
+                    if (objVar.getVoltageDropDeltaVoltage().isEmpty()) ((ShortCircuitCurrentAndVoltageDrop) voltageDropResults.get(i)).setVoltageDropDeltaVoltage("-1");
+                    if (objVar.getVoltageDropMeasuredOnLocation().isEmpty()) ((ShortCircuitCurrentAndVoltageDrop) voltageDropResults.get(i)).setVoltageDropMeasuredOnLocation("-1");
+                }
+
+                completeAssignment.add(general);
+                completeAssignment.add(electricalPanel);
+                completeAssignment.add(installation);
+                completeAssignment.add(recessedLuminaire);
+                completeAssignment.add(protectiveConductors);
+                completeAssignment.add(faultyProtection);
+                completeAssignment.add(circuitDetailList);
+                completeAssignment.add(transitionResistance);
+                completeAssignment.add(testingRCDResults);
+                completeAssignment.add(voltageDropResults);
+
+                cEF.createExcelSheet("current_assignment.xls", completeAssignment, documentNote);
+            });
+            String filename = orderNr + "_" + selectedFloorName;
+            Thread createPdfT = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    PDFGenerator pdfg = new PDFGenerator(assignmentContainer.getCurrentAssignment());
+                    try {
+                        pdfg.createPDF(getContext(), filename);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+            Thread uploadExcelT = new Thread(() -> ftp.ftpUpload(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString() + "/current_assignment.xls",
+                    "/public_html/assignments/" + orderNr + "/" + selectedFloorName + "/" + filename + ".xls"));
+
+            Thread uploadPdfT = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    ftp.ftpUpload(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString() + "/" + filename + ".pdf",
+                            "/public_html/assignments/" + orderNr + "/" + selectedFloorName + "/" + filename + ".pdf");
+                }
+            });
+            try {
+                createExcelT.start();
+                createExcelT.join();
+                createPdfT.start();
+                createPdfT.join();
+                uploadExcelT.start();
+                uploadExcelT.join();
+                uploadPdfT.start();
+                uploadPdfT.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+        });
         finishCaseBtn.setId(View.generateViewId());
         LinearLayout.LayoutParams paramsFCB = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -361,6 +453,15 @@ public class FragmentAdminChecklist extends Fragment {
         sendCaseBtn.setText(getString(R.string.checklist_send));
         sendCaseBtn.setTextColor(getActivity().getColor(R.color.white));
         sendCaseBtn.setBackground(getActivity().getDrawable(R.drawable.design_button_darkblue));
+        sendCaseBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("SIZE "+ circuitDetailList.size());
+                for (int i = 0; i < circuitDetailList.size(); i++) {
+                    System.out.println("Objekt nr: "+ i + " --- " + circuitDetailList.get(i));
+                }
+            }
+        });
 
         //Adding a constraint layout
         ConstraintLayout cl = new ConstraintLayout(getActivity());
@@ -391,8 +492,94 @@ public class FragmentAdminChecklist extends Fragment {
 
         //Adding the constraint layout to the parent
         parentLLH.addView(cl);
-
     }
+
+    private int readExcelShortCircuitAndVoltageDrop(List<String> template, int i, List<Object> voltageDropResults) {
+        int counter = 0;
+        for (int j = i; j < template.size(); j++) {
+            if (template.get(j).equalsIgnoreCase("<inputAnswer>")) {
+                ShortCircuitCurrentAndVoltageDrop s = new ShortCircuitCurrentAndVoltageDrop();
+                s.setShortCircuitGroupName(template.get(j + 1));
+                s.setShortCircuitLk(template.get(j + 2));
+                s.setShortCircuitMeasuredOnLocation(template.get(j + 3));
+                for (int k = j; k < template.size(); k++) {
+                    if (template.get(k).equalsIgnoreCase("<InputHeadline>")) {
+                        for (int l = k; l < template.size(); l++) {
+                            if (template.get(l).equalsIgnoreCase("<inputAnswer>")) {
+                                s.setVoltageDropGroupName(template.get(l + 1 + counter));
+                                s.setVoltageDropDeltaVoltage(template.get(l + 2 + counter));
+                                s.setVoltageDropMeasuredOnLocation(template.get(l + 3 + counter));
+                                counter += 4;
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+                voltageDropResults.add(s);
+            } else if (template.get(j).equals("<InputHeadlineEnd>")) {
+                i = j;
+                break;
+            }
+        }
+        return i;
+    }
+
+    private int readExcelTestingRCD(List<String> template, int i, List<Object> testingRCDResults) {
+        for (int j = i; j < template.size(); j++) {
+            if (template.get(j).equals("<inputAnswer>")) {
+                TestingRCD t = new TestingRCD();
+                t.setGroupName(template.get(j + 1));
+                t.setFirstResult(template.get(j + 2));
+                t.setSecondResult(template.get(j + 3));
+                t.setThirdResult(template.get(j + 4));
+                t.setFourthResult(template.get(j + 5));
+                t.setFifthResult(template.get(j + 6));
+                t.setSixthResult(template.get(j + 7));
+                if (template.get(j + 8).equalsIgnoreCase("ok")) {{
+                    t.setCheckboxOK(1);
+                }} else {
+                    t.setCheckboxOK(-1);
+                }
+                testingRCDResults.add(t);
+            } else if (template.get(j).equals("<InputHeadlineEnd>")) {
+                i = j;
+                break;
+            }
+        }
+        return i;
+    }
+
+    private int readExcelCircuitDetails(List<String> template, int i, List<Object> circuitDetailList) {
+        for (int j = i; j < template.size(); j++) {
+            //new CircuitDetails("Tavlen", "400", "Lampe", "6", "500", 1, "340", "20"));
+            if (template.get(j).equals("<inputAnswer>")) {
+                CircuitDetails circuitDetails = new CircuitDetails();
+                circuitDetails.setGroupName(template.get(j + 1));
+                circuitDetails.setOb(template.get(j + 2));
+                circuitDetails.setCharacteristics(template.get(j + 3));
+                circuitDetails.setCrossSection(template.get(j + 4));
+                circuitDetails.setMaxOB(template.get(j + 5));
+                if (template.get(j + 7).equals("-1") && template.get(j + 6).equals("-1")) {
+                    circuitDetails.setCheckbox(0);
+                    circuitDetails.setOmega("");
+                } else if (template.get(j + 7).equals("-1")) {
+                    circuitDetails.setOmega(template.get(j + 6));
+                    circuitDetails.setCheckbox(1);
+                } else {
+                    circuitDetails.setOmega(template.get(j + 7));
+                    circuitDetails.setCheckbox(2);
+                }
+                circuitDetails.setMilliOmega(template.get(j + 8));
+                circuitDetailList.add(circuitDetails);
+            } else if (template.get(j).equals("<InputHeadlineEnd>")) {
+                i = j;
+                break;
+            }
+        }
+        return i;
+    }
+
 
     private int readQuestionFromExcel(List<String> template, int i, List<Object> general) {
         for (int j = i; j < template.size(); j++) {
@@ -419,25 +606,22 @@ public class FragmentAdminChecklist extends Fragment {
     }
 
     private void setFloorHorizontalScrollBar() {
-        Thread t = new Thread(() -> {
-            ArrayList<String> hsvStructure = new ArrayList<>();
-            try {
-                hsvStructure = oDB.getAssignmentStructure(orderNr);
-            } finally {
-                floors = gUC.sortStringBeforeNumbers(gUC.getSplittedString(hsvStructure, orderNr, "/<"));
-                selectedFloorName = floors.get(0);
-//                setHorizontalFloorBar(floors);
+        ArrayList<String> hsvStructure = new ArrayList<>();
+        try {
+            hsvStructure = oDB.getAssignmentStructure(orderNr);
 
-                getActivity().runOnUiThread(() -> {
-                    binding.hsvFloor.removeAllViews();
-                    setHorizontalFloorBar(floors);
-                    binding.hsvFloor.addView(floorLinearLayout);
+        } finally {
+            floors = gUC.sortStringBeforeNumbers(gUC.getSplittedString(hsvStructure, orderNr, "/<"));
+            selectedFloorName = floors.get(0);
+//                setHorizontalFloorBar(floors);
+            getActivity().runOnUiThread(() -> {
+                binding.hsvFloor.removeAllViews();
+                setHorizontalFloorBar(floors);
+                binding.hsvFloor.addView(floorLinearLayout);
 //                        binding.hsvRoom.addView(roomLinearLayout);
-                    binding.hsvRoom.setVisibility(View.GONE);
-                });
-            }
-        });
-        t.start();
+                binding.hsvRoom.setVisibility(View.GONE);
+            });
+        }
     }
 
     private void setHorizontalFloorBar(ArrayList<String> floors) {
@@ -728,8 +912,8 @@ public class FragmentAdminChecklist extends Fragment {
                 addQuestion(dataList, rv, adapter);
             } else {
                 dataList.add(addNewObject);
-                rv.smoothScrollToPosition(dataList.size() - 1);
-                ((RecyclerView.Adapter<?>) adapter).notifyItemInserted(dataList.size() - 1);
+                rv.smoothScrollToPosition(dataList.size());
+                ((RecyclerView.Adapter<?>) adapter).notifyItemInserted(dataList.size());
             }
         });
     }

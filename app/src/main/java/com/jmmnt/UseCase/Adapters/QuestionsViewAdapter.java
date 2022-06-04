@@ -74,23 +74,35 @@ class QuestionsViewHolder extends RecyclerView.ViewHolder {
             if (isChecked) {
                 checkBoxNo.setChecked(false);
                 checkBoxNotRelevant.setChecked(false);
+                adapter.getItems().get(getAdapterPosition()).setAnswer(1);
             }
+            areCheckBoxesUnchecked();
         });
         checkBoxNo.setOnCheckedChangeListener((compoundButton, isChecked) -> {
             if (isChecked) {
                 checkBoxYes.setChecked(false);
                 checkBoxNotRelevant.setChecked(false);
+                adapter.getItems().get(getAdapterPosition()).setAnswer(2);
             }
+            areCheckBoxesUnchecked();
         });
         checkBoxNotRelevant.setOnCheckedChangeListener((compoundButton, isChecked) -> {
             if (isChecked) {
                 checkBoxYes.setChecked(false);
                 checkBoxNo.setChecked(false);
+                adapter.getItems().get(getAdapterPosition()).setAnswer(3);
             }
+            areCheckBoxesUnchecked();
         });
 
         //TODO Vi kan aflæse felter herfra
 
+    }
+
+    private void areCheckBoxesUnchecked(){
+        if(!checkBoxNo.isChecked() && !checkBoxYes.isChecked() && !checkBoxNotRelevant.isChecked()){
+            adapter.getItems().get(getAdapterPosition()).setAnswer(-1);
+        }
     }
 
     public QuestionsViewHolder linkAdapter(QuestionsViewAdapter questionsViewAdapter){

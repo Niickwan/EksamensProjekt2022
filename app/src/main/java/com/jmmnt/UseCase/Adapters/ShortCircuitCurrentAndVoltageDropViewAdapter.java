@@ -33,9 +33,9 @@ public class ShortCircuitCurrentAndVoltageDropViewAdapter extends RecyclerView.A
 
     @Override
     public void onBindViewHolder(@NonNull ShortCircuitAndVoltageDropViewHolder holder, int position) {
-        shortCircuitGroupName = holder.itemView.findViewById(R.id.rcdGroupName_et);
-        lk = holder.itemView.findViewById(R.id.shortCircuitlk_et);
-        ShortCircuitMeasuredOnLocation = holder.itemView.findViewById(R.id.shortCircuitMeasuredOnLocation_et);
+        shortCircuitGroupName = holder.itemView.findViewById(R.id.shortCircuitCurrentGroupName_et);
+        lk = holder.itemView.findViewById(R.id.shortCircuitCurrentlk_et);
+        ShortCircuitMeasuredOnLocation = holder.itemView.findViewById(R.id.shortCircuitCurrentMeasuredOnLocation_et);
         voltageDropGroupName = holder.itemView.findViewById(R.id.voltageDropGroupName_et);
         deltaVoltage = holder.itemView.findViewById(R.id.voltageDropDelta_et);
         voltageDropMeasuredOnLocation = holder.itemView.findViewById(R.id.voltageDropMeasuredOnLocation_et);
@@ -69,7 +69,7 @@ class ShortCircuitAndVoltageDropViewHolder extends RecyclerView.ViewHolder {
 
     public ShortCircuitAndVoltageDropViewHolder(@NonNull View itemView) {
         super(itemView);
-        deleteBtn = itemView.findViewById(R.id.rdcDeleteBtn);
+        deleteBtn = itemView.findViewById(R.id.voltageDropDeleteBtn);
         deleteBtn.setOnLongClickListener(view -> {
             adapter.getItems().remove(getAdapterPosition());
             adapter.notifyItemRemoved(getAdapterPosition());

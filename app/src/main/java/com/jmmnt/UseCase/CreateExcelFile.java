@@ -25,7 +25,7 @@ public class CreateExcelFile {
     AdapterFactory apFac = new AdapterFactory();
     WritableSheet sheet;
     private WritableWorkbook workbook;
-//    private WritableSheet sheet; //TODO WhatToDo
+    //    private WritableSheet sheet; //TODO WhatToDo
     private int rowCount = 0;
     private int columnCount = 0;
     int getList = 0;
@@ -38,7 +38,7 @@ public class CreateExcelFile {
     ArrayList<String> excelTemplate;
 
     public void createExcelSheet(String excelFileName, ArrayList<List<Object>> list, String documentNote) {
-        excelTemplate = oA.getExcelAsArrayList("TjeklisteTemplate.xls");
+        excelTemplate = oA.getExcelAsArrayList("current_assignment.xls");
         note = documentNote;
         File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
         File inputWorkbook = new File(path, excelFileName);
@@ -143,6 +143,8 @@ public class CreateExcelFile {
                 String okStr = String.valueOf(ok);
                 sheet.addCell(new Label(columnCount, rowCount, "<inputAnswer>"));
                 columnCount++;
+                sheet.addCell(new Label(columnCount, rowCount, ((TestingRCD) list.get(getList).get(i)).getGroupName()));
+                columnCount++;
                 sheet.addCell(new Label(columnCount, rowCount, ((TestingRCD) list.get(getList).get(i)).getFirstResult()));
                 columnCount++;
                 sheet.addCell(new Label(columnCount, rowCount, ((TestingRCD) list.get(getList).get(i)).getSecondResult()));
@@ -155,7 +157,9 @@ public class CreateExcelFile {
                 columnCount++;
                 sheet.addCell(new Label(columnCount, rowCount, ((TestingRCD) list.get(getList).get(i)).getSixthResult()));
                 columnCount++;
-                sheet.addCell(new Label(columnCount, rowCount, okStr));
+                if (okStr.equals("1")) sheet.addCell(new Label(columnCount, rowCount, "ok"));
+                else sheet.addCell(new Label(columnCount, rowCount, "-1"));
+
                 columnCount = 0;
                 rowCount++;
             }
@@ -174,7 +178,7 @@ public class CreateExcelFile {
                         ((ShortCircuitCurrentAndVoltageDrop) list.get(getList).get(i)).getVoltageDropGroupName()));
                 columnCount++;
                 sheet.addCell(new Label(columnCount, rowCount,
-                        ((ShortCircuitCurrentAndVoltageDrop) list.get(getList).get(i)).getShortCircuitLk()));
+                        ((ShortCircuitCurrentAndVoltageDrop) list.get(getList).get(i)).getVoltageDropDeltaVoltage()));
                 columnCount++;
                 sheet.addCell(new Label(columnCount, rowCount,
                         ((ShortCircuitCurrentAndVoltageDrop) list.get(getList).get(i)).getVoltageDropMeasuredOnLocation()));
@@ -203,6 +207,8 @@ public class CreateExcelFile {
                 columnCount = 0;
                 rowCount++;
             }
+            sheet.addCell(new Label(columnCount, rowCount, "<InputHeadlineEnd>"));
+            rowCount++;
         } catch (WriteException e) {
             e.printStackTrace();
         }
@@ -247,17 +253,22 @@ public class CreateExcelFile {
                 sheet.addCell(new Label(columnCount, rowCount, ((CircuitDetails) list.get(getList).get(i)).getMaxOB()));
                 columnCount++;
                 if (((CircuitDetails) list.get(getList).get(i)).getCheckbox() == 1) {
-                    sheet.addCell(new Label(columnCount, rowCount, "1"));
+                    sheet.addCell(new Label(columnCount, rowCount, ((CircuitDetails) list.get(getList).get(i)).getOmega()));
                     columnCount++;
                     sheet.addCell(new Label(columnCount, rowCount, "-1"));
                     columnCount++;
-                } else {
+                } else if  (((CircuitDetails) list.get(getList).get(i)).getCheckbox() == 2){
                     sheet.addCell(new Label(columnCount, rowCount, "-1"));
                     columnCount++;
-                    sheet.addCell(new Label(columnCount, rowCount, "1"));
+                    sheet.addCell(new Label(columnCount, rowCount, ((CircuitDetails) list.get(getList).get(i)).getOmega()));
+                    columnCount++;
+                }  else {
+                    sheet.addCell(new Label(columnCount, rowCount, "-1"));
+                    columnCount++;
+                    sheet.addCell(new Label(columnCount, rowCount, "-1"));
                     columnCount++;
                 }
-                sheet.addCell(new Label(columnCount, rowCount, ((CircuitDetails) list.get(getList).get(i)).getMegaOmega()));
+                sheet.addCell(new Label(columnCount, rowCount, ((CircuitDetails) list.get(getList).get(i)).getMilliOmega()));
                 columnCount = 0;
                 rowCount++;
             }

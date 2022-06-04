@@ -1,5 +1,7 @@
 package com.jmmnt.UseCase.Adapters;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,7 +83,45 @@ class RCDViewHolder extends RecyclerView.ViewHolder {
             return true;
         });
 
-        //TODO Vi kan aflæse felter herfra
+        EditText groupName = itemView.findViewById(R.id.rcdGroupName_et);
+        EditText firstResult = itemView.findViewById(R.id.rcdFirstResult_et);
+        EditText secondResult = itemView.findViewById(R.id.rcdSecondResult_et);
+        EditText thirdResult = itemView.findViewById(R.id.rcdThirdResult_et);
+        EditText fourthResult = itemView.findViewById(R.id.rcdFourthResult_et);
+        EditText fifthResult = itemView.findViewById(R.id.rcdFifthResult_et);
+        EditText sixthResult = itemView.findViewById(R.id.rcdSixthResult_et);
+
+        TextWatcher textWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                adapter.getItems().get(getAdapterPosition()).setGroupName(groupName.getEditableText().toString());
+                adapter.getItems().get(getAdapterPosition()).setFirstResult(firstResult.getEditableText().toString());
+                adapter.getItems().get(getAdapterPosition()).setSecondResult(secondResult.getEditableText().toString());
+                adapter.getItems().get(getAdapterPosition()).setThirdResult(thirdResult.getEditableText().toString());
+                adapter.getItems().get(getAdapterPosition()).setFourthResult(fourthResult.getEditableText().toString());
+                adapter.getItems().get(getAdapterPosition()).setFifthResult(fifthResult.getEditableText().toString());
+                adapter.getItems().get(getAdapterPosition()).setSixthResult(sixthResult.getEditableText().toString());
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        };
+
+        groupName.addTextChangedListener(textWatcher);
+        firstResult.addTextChangedListener(textWatcher);
+        secondResult.addTextChangedListener(textWatcher);
+        thirdResult.addTextChangedListener(textWatcher);
+        fourthResult.addTextChangedListener(textWatcher);
+        fifthResult.addTextChangedListener(textWatcher);
+        sixthResult.addTextChangedListener(textWatcher);
+
+        checkBoxTestOK.setOnClickListener(v -> {
+            if (checkBoxTestOK.isChecked()) adapter.getItems().get(getAdapterPosition()).setCheckboxOK(1);
+            else adapter.getItems().get(getAdapterPosition()).setCheckboxOK(-1);
+        });
 
     }
 

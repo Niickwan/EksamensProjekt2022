@@ -20,7 +20,7 @@
             android:backgroundTint="#000000">
 
             <TextView
-                android:id="@+id/rcdGroupOneTitle_tv"
+                android:id="@+id/shortCircuitCurrentGroupOneTitle_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -36,7 +36,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/rcdGroupTitle_tv"
+                android:id="@+id/shortCircuitCurrentGroupTitle_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -49,10 +49,10 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rcdGroupOneTitle_tv" />
+                app:layout_constraintTop_toBottomOf="@+id/shortCircuitCurrentGroupOneTitle_tv" />
 
             <EditText
-                android:id="@+id/rcdGroupName_et"
+                android:id="@+id/shortCircuitCurrentGroupName_et"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -64,23 +64,23 @@
                 android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rcdGroupTitle_tv"
+                app:layout_constraintTop_toBottomOf="@+id/shortCircuitCurrentGroupTitle_tv"
                 tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
             <EditText
-                android:id="@+id/shortCircuitlk_et"
+                android:id="@+id/shortCircuitCurrentlk_et"
                 android:layout_width="0dp"
                 android:layout_height="23dp"
                 android:layout_marginStart="8dp"
                 android:background="@drawable/design_edittext"
                 android:ems="10"
-                android:inputType="textPersonName"
+                android:inputType="number"
                 android:paddingLeft="5dp"
                 android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/lkAmp_tv"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/shortCircuitlk_tv"
+                app:layout_constraintTop_toBottomOf="@+id/shortCircuitCurrentlk_tv"
                 tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
             <TextView
@@ -92,12 +92,12 @@
                 android:textColor="@color/black"
                 android:textSize="32sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/shortCircuitlk_et"
+                app:layout_constraintBottom_toBottomOf="@+id/shortCircuitCurrentlk_et"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/shortCircuitlk_et" />
+                app:layout_constraintTop_toTopOf="@+id/shortCircuitCurrentlk_et" />
 
             <TextView
-                android:id="@+id/shortCircuitlk_tv"
+                android:id="@+id/shortCircuitCurrentlk_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -108,10 +108,10 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rcdGroupName_et" />
+                app:layout_constraintTop_toBottomOf="@+id/shortCircuitCurrentGroupName_et" />
 
             <EditText
-                android:id="@+id/shortCircuitMeasuredOnLocation_et"
+                android:id="@+id/shortCircuitCurrentMeasuredOnLocation_et"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -124,11 +124,11 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/shortCircuitMeasuredOnLocation_tv"
+                app:layout_constraintTop_toBottomOf="@+id/shortCircuitCurrentMeasuredOnLocation_tv"
                 tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
             <TextView
-                android:id="@+id/shortCircuitMeasuredOnLocation_tv"
+                android:id="@+id/shortCircuitCurrentMeasuredOnLocation_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -139,7 +139,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/shortCircuitlk_et" />
+                app:layout_constraintTop_toBottomOf="@+id/shortCircuitCurrentlk_et" />
 
             <EditText
                 android:id="@+id/voltageDropGroupName_et"
@@ -185,7 +185,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/shortCircuitMeasuredOnLocation_et" />
+                app:layout_constraintTop_toBottomOf="@+id/shortCircuitCurrentMeasuredOnLocation_et" />
 
             <EditText
                 android:id="@+id/voltageDropDelta_et"
@@ -262,7 +262,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/voltageDropDelta_et" />
 
             <Button
-                android:id="@+id/rdcDeleteBtn"
+                android:id="@+id/voltageDropDeleteBtn"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center_vertical"

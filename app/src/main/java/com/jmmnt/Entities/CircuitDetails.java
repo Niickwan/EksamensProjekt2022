@@ -9,7 +9,7 @@ public class CircuitDetails {
     private String maxOB;
     private int checkbox;
     private String omega;
-    private String megaOmega;
+    private String milliOmega;
 
     public CircuitDetails(String groupName, String ob, String characteristics, String crossSection, String maxOB, int checkbox, String omega, String megaOmega) {
         this.groupName = groupName;
@@ -19,10 +19,18 @@ public class CircuitDetails {
         this.maxOB = maxOB;
         this.checkbox = checkbox;
         this.omega = omega;
-        this.megaOmega = megaOmega;
+        this.milliOmega = megaOmega;
     }
 
     public CircuitDetails() {
+        this.groupName = "";
+        this.ob = "";
+        this.characteristics = "";
+        this.crossSection = "";
+        this.maxOB = "";
+        this.checkbox = -1;
+        this.omega = "";
+        this.milliOmega = "";
     }
 
     @Override
@@ -35,7 +43,7 @@ public class CircuitDetails {
                 ", maxOB='" + maxOB + '\'' +
                 ", checkbox=" + checkbox +
                 ", omega='" + omega + '\'' +
-                ", megaOmega='" + megaOmega + '\'' +
+                ", megaOmega='" + milliOmega + '\'' +
                 '}';
     }
 
@@ -96,11 +104,11 @@ public class CircuitDetails {
         this.omega = omega;
     }
 
-    public String getMegaOmega() {
-        return megaOmega;
+    public String getMilliOmega() {
+        return milliOmega;
     }
 
-    public void setMegaOmega(String megaOmega) {
-        this.megaOmega = megaOmega;
+    public void setMilliOmega(String megaOmega) {
+        this.milliOmega = megaOmega;
     }
 }
