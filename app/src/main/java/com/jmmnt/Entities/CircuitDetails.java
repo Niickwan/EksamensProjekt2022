@@ -31,6 +31,7 @@ public class CircuitDetails {
         this.checkbox = -1;
         this.omega = "";
         this.milliOmega = "";
+
     }
 
     @Override

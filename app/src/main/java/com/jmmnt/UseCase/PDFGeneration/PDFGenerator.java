@@ -290,7 +290,7 @@ public class PDFGenerator {
     }
 
     private void readExcelInputAnswer(ArrayList<String> excel, Document document, String[] numberOfQuestions, String[] measuringUnits, Table table, int i) {
-        int counter = 0;
+      int counter = 0;
         boolean  isEmpty = true;
         for (int k = 0; k < numberOfQuestions.length; k++) {
             String answer = excel.get(i + 1 + counter);
@@ -367,7 +367,7 @@ public class PDFGenerator {
                             - (document.getRightMargin() + document.getLeftMargin()));
         }
         else{
-            return new Cell().add(createLinkParagraph(input))
+            return new Cell().add(createParagraph(input))
                     .setMaxWidth(document.getPageEffectiveArea(PageSize.A4).getWidth()
                             - (document.getRightMargin() + document.getLeftMargin()));
         }

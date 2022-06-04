@@ -28,6 +28,13 @@ public class GeneralUseCase extends Activity {
         return generalUseCase;
     }
 
+    public String convertMinusOneToEmptyString(String s){
+        if(s.equals("-1")) {
+            return "";
+        }
+        return s;
+    }
+
     //This method takes two strings and checks if one of the strings (s)
     //Contains the same chars as the other string (input)
     //The method then returns true if they do contain the same chars, and false if they do not.

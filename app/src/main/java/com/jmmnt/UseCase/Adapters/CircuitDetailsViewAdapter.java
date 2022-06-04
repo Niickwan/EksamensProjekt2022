@@ -27,7 +27,6 @@ public class CircuitDetailsViewAdapter extends RecyclerView.Adapter<CircuitDetai
         this.items = items;
     }
 
-
     @NonNull
     @Override
     public CircuitDetailsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -48,10 +47,6 @@ public class CircuitDetailsViewAdapter extends RecyclerView.Adapter<CircuitDetai
         isolation = holder.itemView.findViewById(R.id.circuitDetailsIsolation_et);
 
 
-
-        items.get(items.size()-1).setGroupName("");
-
-
         if (position < items.size()) {
             if (items.get(position) != null) {
                 groupName.setText(gUC.convertMinusOneToEmptyString(items.get(position).getGroupName()));
@@ -63,6 +58,7 @@ public class CircuitDetailsViewAdapter extends RecyclerView.Adapter<CircuitDetai
                 if (items.get(position).getCheckbox() == 2) ra.setChecked(true);
                 omegaResist.setText(gUC.convertMinusOneToEmptyString(items.get(position).getOmega()));
                 isolation.setText(gUC.convertMinusOneToEmptyString(items.get(position).getMilliOmega()));
+
             }
         }
 
@@ -114,6 +110,40 @@ class CircuitDetailsViewHolder extends RecyclerView.ViewHolder {
 
     public CircuitDetailsViewHolder(@NonNull View itemView) {
         super(itemView);
+        EditText groupName = itemView.findViewById(R.id.circuitDetailsGroupName_et);
+        EditText ob = itemView.findViewById(R.id.circuitDetailsOB_et);
+        EditText characteristic = itemView.findViewById(R.id.circuitDetailsCharacteristic_et);
+        EditText crossSection = itemView.findViewById(R.id.circuitDetailsCrossSection_et);
+        EditText maxOB = itemView.findViewById(R.id.circuitDetailsMaxOB_et);
+        EditText omegaResist = itemView.findViewById(R.id.zsra_et);
+        EditText megaOmegaResist = itemView.findViewById(R.id.circuitDetailsIsolation_et);
+
+        TextWatcher textWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                adapter.getItems().get(getAdapterPosition()).setGroupName(groupName.getEditableText().toString());
+                adapter.getItems().get(getAdapterPosition()).setOb(ob.getEditableText().toString());
+                adapter.getItems().get(getAdapterPosition()).setCharacteristics(characteristic.getEditableText().toString());
+                adapter.getItems().get(getAdapterPosition()).setCrossSection(crossSection.getEditableText().toString());
+                adapter.getItems().get(getAdapterPosition()).setMaxOB(maxOB.getEditableText().toString());
+                adapter.getItems().get(getAdapterPosition()).setOmega(omegaResist.getEditableText().toString());
+                adapter.getItems().get(getAdapterPosition()).setMegaOmega(megaOmegaResist.getEditableText().toString());
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        };
+
+        groupName.addTextChangedListener(textWatcher);
+        ob.addTextChangedListener(textWatcher);
+        characteristic.addTextChangedListener(textWatcher);
+        crossSection.addTextChangedListener(textWatcher);
+        maxOB.addTextChangedListener(textWatcher);
+        omegaResist.addTextChangedListener(textWatcher);
+        megaOmegaResist.addTextChangedListener(textWatcher);
 
 //        EditText groupName = itemView.findViewById(R.id.circuitDetailsGroupName_et);
 //        EditText ob = itemView.findViewById(R.id.circuitDetailsOB_et);
@@ -161,10 +191,16 @@ class CircuitDetailsViewHolder extends RecyclerView.ViewHolder {
         checkBoxZs = itemView.findViewById(R.id.checkBoxZs);
         checkboxRa = itemView.findViewById(R.id.checkBoxRa);
         checkBoxZs.setOnCheckedChangeListener((compoundButton, isChecked) -> {
-            if (isChecked) checkboxRa.setChecked(false);
+            if (isChecked) {
+                adapter.getItems().get(getAdapterPosition()).setCheckbox(1);
+                checkboxRa.setChecked(false);
+            }
         });
         checkboxRa.setOnCheckedChangeListener((compoundButton, isChecked) -> {
-            if (isChecked) checkBoxZs.setChecked(false);
+            if (isChecked) {
+                adapter.getItems().get(getAdapterPosition()).setCheckbox(2);
+                checkBoxZs.setChecked(false);
+            }
         });
 
     }

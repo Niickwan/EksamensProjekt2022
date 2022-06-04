@@ -29,6 +29,7 @@ public class SearchCaseViewAdapter extends RecyclerView.Adapter<SearchCaseViewHo
     private GeneralUseCase gUC = GeneralUseCase.getInstance();
     private OperateAssignment oA = OperateAssignment.getInstance();
 
+
     public SearchCaseViewAdapter(List<Assignment> items, FragmentSearchCase fragmentSearchCase) {
         this.fragment = fragmentSearchCase;
         this.itemList = items;
