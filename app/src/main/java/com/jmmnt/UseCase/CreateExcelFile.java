@@ -157,7 +157,10 @@ public class CreateExcelFile {
                 columnCount++;
                 sheet.addCell(new Label(columnCount, rowCount, ((TestingRCD) list.get(getList).get(i)).getSixthResult()));
                 columnCount++;
-                sheet.addCell(new Label(columnCount, rowCount, okStr));
+                if (okStr.equals("1")){
+                    sheet.addCell(new Label(columnCount, rowCount, "ok"));
+                }
+
                 columnCount = 0;
                 rowCount++;
             }
@@ -176,7 +179,7 @@ public class CreateExcelFile {
                         ((ShortCircuitCurrentAndVoltageDrop) list.get(getList).get(i)).getVoltageDropGroupName()));
                 columnCount++;
                 sheet.addCell(new Label(columnCount, rowCount,
-                        ((ShortCircuitCurrentAndVoltageDrop) list.get(getList).get(i)).getShortCircuitLk()));
+                        ((ShortCircuitCurrentAndVoltageDrop) list.get(getList).get(i)).getVoltageDropDeltaVoltage()));
                 columnCount++;
                 sheet.addCell(new Label(columnCount, rowCount,
                         ((ShortCircuitCurrentAndVoltageDrop) list.get(getList).get(i)).getVoltageDropMeasuredOnLocation()));
@@ -205,6 +208,8 @@ public class CreateExcelFile {
                 columnCount = 0;
                 rowCount++;
             }
+            sheet.addCell(new Label(columnCount, rowCount, "<InputHeadlineEnd>"));
+            rowCount++;
         } catch (WriteException e) {
             e.printStackTrace();
         }
@@ -249,14 +254,14 @@ public class CreateExcelFile {
                 sheet.addCell(new Label(columnCount, rowCount, ((CircuitDetails) list.get(getList).get(i)).getMaxOB()));
                 columnCount++;
                 if (((CircuitDetails) list.get(getList).get(i)).getCheckbox() == 1) {
-                    sheet.addCell(new Label(columnCount, rowCount, "1"));
+                    sheet.addCell(new Label(columnCount, rowCount, ((CircuitDetails) list.get(getList).get(i)).getOmega()));
                     columnCount++;
                     sheet.addCell(new Label(columnCount, rowCount, "-1"));
                     columnCount++;
                 } else {
                     sheet.addCell(new Label(columnCount, rowCount, "-1"));
                     columnCount++;
-                    sheet.addCell(new Label(columnCount, rowCount, "1"));
+                    sheet.addCell(new Label(columnCount, rowCount, ((CircuitDetails) list.get(getList).get(i)).getOmega()));
                     columnCount++;
                 }
                 sheet.addCell(new Label(columnCount, rowCount, ((CircuitDetails) list.get(getList).get(i)).getMegaOmega()));
@@ -291,16 +296,17 @@ public class CreateExcelFile {
                 columnCount++;
                 sheet.addCell(new Label(columnCount, rowCount, "<Images>"));
                 columnCount++;
-//                if (((Questions) list.get(getList).get(i)).getImages().size() > 0) {
-//                    for (int k = 0; k < ((Questions) list.get(getList).get(i)).getImages().size(); k++) {
-//                        sheet.addCell(new Label(columnCount, rowCount,
-//                                ((Questions) list.get(getList).get(i)).getImages().get(k)));
-//                        columnCount++;
-//                    }
-//                } else {
+              if (((Questions) list.get(getList).get(i)).getImages().size() > 0) {
+                   for (int k = 0; k < ((Questions) list.get(getList).get(i)).getImages().size(); k++) {
+                       sheet.addCell(new Label(columnCount, rowCount,
+                                ((Questions) list.get(getList).get(i)).getImages().get(k)));
+                            columnCount++;
+                        }
+                    } else {
                     sheet.addCell(new Label(columnCount, rowCount, "-1"));
                     columnCount++;
-                //}
+                }
+              //TODO sout
                 System.out.println(((Questions) list.get(getList).get(i)).getImages().size());
                 System.out.print("AR LIST____");
                 ((Questions) list.get(getList).get(i)).getImages().forEach(System.out::println);

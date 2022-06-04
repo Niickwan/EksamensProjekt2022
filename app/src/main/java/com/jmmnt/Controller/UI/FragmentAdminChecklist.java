@@ -48,8 +48,10 @@ import com.jmmnt.UseCase.FTP.FTPClientFunctions;
 import com.jmmnt.UseCase.GeneralUseCase;
 import com.jmmnt.UseCase.OperateAssignment;
 import com.jmmnt.UseCase.OperateDB;
+import com.jmmnt.UseCase.PDFGeneration.PDFGenerator;
 import com.jmmnt.databinding.FragmentAdminChecklistBinding;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -223,6 +225,7 @@ public class FragmentAdminChecklist extends Fragment {
                     inputHeadlineCounter++;
                 } else if (inputHeadlineCounter == 2) {
                     i = readExcelShortCircuitAndVoltageDrop(template, i, voltageDropResults);
+                    voltageDropResults.forEach(System.out::println);
                     buildDropdownDynamically("Kortslutningsstrøm / Spændingsfald", voltageDropResults, objectTag4, "horizontal");
                     inputHeadlineCounter++;
                 }
@@ -367,13 +370,37 @@ public class FragmentAdminChecklist extends Fragment {
                 cEF.createExcelSheet("current_assignment.xls", completeAssignment, documentNote);
                 completeAssignment.forEach(System.out::println);
             });
+            String filename = orderNr + "_" + selectedFloorName;
+            Thread createPdfT = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    PDFGenerator pdfg = new PDFGenerator(assignmentContainer.getCurrentAssignment());
+                    try {
+                        pdfg.createPDF(getContext(), filename);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
             Thread uploadExcelT = new Thread(() -> ftp.ftpUpload(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString() + "/current_assignment.xls",
-                    "/public_html/assignments/" + orderNr + "/" + selectedFloorName + "/" + orderNr + "_" + selectedFloorName + ".xls"));
+                    "/public_html/assignments/" + orderNr + "/" + selectedFloorName + "/" + filename + ".xls"));
+
+            Thread uploadPdfT = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    ftp.ftpUpload(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString() + "/" +filename +".pdf",
+                            "/public_html/assignments/" + orderNr + "/" + selectedFloorName + "/" + filename + ".pdf");
+                }
+            });
             try {
                 createExcelT.start();
                 createExcelT.join();
+                createPdfT.start();
+                createPdfT.join();
                 uploadExcelT.start();
                 uploadExcelT.join();
+                uploadPdfT.start();
+                uploadPdfT.join();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

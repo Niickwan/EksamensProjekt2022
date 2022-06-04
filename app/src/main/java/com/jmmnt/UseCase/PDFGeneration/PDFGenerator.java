@@ -56,11 +56,11 @@ public class PDFGenerator {
         this.assignment = assignment;
     }
 
-    public void createPDF(Context context) throws IOException {
-        ArrayList<String> excel = opa.getExcelAsArrayList("sl.xls");
+    public void createPDF(Context context, String filename) throws IOException {
+        ArrayList<String> excel = opa.getExcelAsArrayList("current_assignment.xls");
 
         File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-        File file = new File(path, "abcPDFff.pdf");
+        File file = new File(path, filename + ".pdf");
         PdfWriter writer = new PdfWriter(file);
         PdfDocument pdfDocument = new PdfDocument(writer);
         //Documents comes from IText.layout and is used to create tables, cells and other layout
@@ -290,9 +290,10 @@ public class PDFGenerator {
     }
 
     private void readExcelInputAnswer(ArrayList<String> excel, Document document, String[] numberOfQuestions, String[] measuringUnits, Table table, int i) {
+        int counter = 0;
         for (int k = 0; k < numberOfQuestions.length; k++) {
             String measuringUnit = measuringUnits[k];
-            String answer = excel.get(i + 1);
+            String answer = excel.get(i + 1 + counter);
 
             if (answer.equals("-1")) {
                 table.addCell(createCell("\n", document,false));
@@ -303,6 +304,7 @@ public class PDFGenerator {
                     table.addCell(createCell(answer + " " + measuringUnit, document, false));
                 }
             }
+            counter++;
         }
     }
 
@@ -355,7 +357,7 @@ public class PDFGenerator {
                             - (document.getRightMargin() + document.getLeftMargin()));
         }
         else{
-            return new Cell().add(createLinkParagraph(input))
+            return new Cell().add(createParagraph(input))
                     .setMaxWidth(document.getPageEffectiveArea(PageSize.A4).getWidth()
                             - (document.getRightMargin() + document.getLeftMargin()));
         }
