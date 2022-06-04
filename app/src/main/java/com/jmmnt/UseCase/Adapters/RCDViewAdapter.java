@@ -111,6 +111,22 @@ class RCDViewHolder extends RecyclerView.ViewHolder {
 
             @Override
             public void afterTextChanged(Editable editable) {
+            }
+        };
+
+        groupName.addTextChangedListener(textWatcher);
+        firstResult.addTextChangedListener(textWatcher);
+        secondResult.addTextChangedListener(textWatcher);
+        thirdResult.addTextChangedListener(textWatcher);
+        fourthResult.addTextChangedListener(textWatcher);
+        fifthResult.addTextChangedListener(textWatcher);
+        sixthResult.addTextChangedListener(textWatcher);
+
+        checkBoxTestOK.setOnClickListener(v -> {
+            if (checkBoxTestOK.isChecked()) adapter.getItems().get(getAdapterPosition()).setCheckboxOK(1);
+            else adapter.getItems().get(getAdapterPosition()).setCheckboxOK(-1);
+        });
+
 
             }
         };

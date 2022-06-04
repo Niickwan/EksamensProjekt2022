@@ -46,6 +46,7 @@ public class CircuitDetailsViewAdapter extends RecyclerView.Adapter<CircuitDetai
         omegaResist = holder.itemView.findViewById(R.id.zsra_et);
         isolation = holder.itemView.findViewById(R.id.circuitDetailsIsolation_et);
 
+
         if (position < items.size()) {
             if (items.get(position) != null) {
                 groupName.setText(gUC.convertMinusOneToEmptyString(items.get(position).getGroupName()));
@@ -56,9 +57,38 @@ public class CircuitDetailsViewAdapter extends RecyclerView.Adapter<CircuitDetai
                 if (items.get(position).getCheckbox() == 1) zs.setChecked(true);
                 if (items.get(position).getCheckbox() == 2) ra.setChecked(true);
                 omegaResist.setText(gUC.convertMinusOneToEmptyString(items.get(position).getOmega()));
-                isolation.setText(gUC.convertMinusOneToEmptyString(items.get(position).getMegaOmega()));
+                isolation.setText(gUC.convertMinusOneToEmptyString(items.get(position).getMilliOmega()));
+
             }
         }
+
+            EditText t = groupName;
+            t.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+
+                    System.out.println("start : " + start + " ---> before : " + before + " ---> i2 : " + count);
+                    System.out.println("HOLDER GetAdapterPosition : " + holder.getAdapterPosition());
+                    System.out.println("SIZE " + items.size());
+                    System.out.println("ITEMS SECOND LAST " + items.get(items.size() - 2));
+                    System.out.println("ITEMS LAST INDEX " + items.get(items.size() - 1));
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+                    items.get(holder.getAdapterPosition()).setGroupName(editable.toString());
+                }
+            });
+
+
+
     }
 
     @Override
@@ -115,6 +145,41 @@ class CircuitDetailsViewHolder extends RecyclerView.ViewHolder {
         omegaResist.addTextChangedListener(textWatcher);
         megaOmegaResist.addTextChangedListener(textWatcher);
 
+//        EditText groupName = itemView.findViewById(R.id.circuitDetailsGroupName_et);
+//        EditText ob = itemView.findViewById(R.id.circuitDetailsOB_et);
+//        EditText characteristic = itemView.findViewById(R.id.circuitDetailsCharacteristic_et);
+//        EditText crossSection = itemView.findViewById(R.id.circuitDetailsCrossSection_et);
+//        EditText maxOB = itemView.findViewById(R.id.circuitDetailsMaxOB_et);
+//        EditText omegaResist = itemView.findViewById(R.id.zsra_et);
+//        EditText megaOmegaResist = itemView.findViewById(R.id.circuitDetailsIsolation_et);
+//
+//        TextWatcher textWatcher = new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//            }
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//                adapter.getItems().get(getAdapterPosition()).setGroupName(groupName.getEditableText().toString());
+//                adapter.getItems().get(getAdapterPosition()).setOb(ob.getEditableText().toString());
+//                adapter.getItems().get(getAdapterPosition()).setCharacteristics(characteristic.getEditableText().toString());
+//                adapter.getItems().get(getAdapterPosition()).setCrossSection(crossSection.getEditableText().toString());
+//                adapter.getItems().get(getAdapterPosition()).setMaxOB(maxOB.getEditableText().toString());
+//                adapter.getItems().get(getAdapterPosition()).setOmega(omegaResist.getEditableText().toString());
+//                adapter.getItems().get(getAdapterPosition()).setMilliOmega(megaOmegaResist.getEditableText().toString());
+//            }
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//            }
+//        };
+//
+//        groupName.addTextChangedListener(textWatcher);
+//        ob.addTextChangedListener(textWatcher);
+//        characteristic.addTextChangedListener(textWatcher);
+//        crossSection.addTextChangedListener(textWatcher);
+//        maxOB.addTextChangedListener(textWatcher);
+//        omegaResist.addTextChangedListener(textWatcher);
+//        megaOmegaResist.addTextChangedListener(textWatcher);
+
         deleteBtn = itemView.findViewById(R.id.circuitDetailsDeleteBtn);
         deleteBtn.setOnLongClickListener(view -> {
             checkboxRa.setChecked(false);
@@ -137,8 +202,6 @@ class CircuitDetailsViewHolder extends RecyclerView.ViewHolder {
                 checkBoxZs.setChecked(false);
             }
         });
-
-        //TODO Vi kan aflæse felter herfra
 
     }
 

@@ -290,21 +290,31 @@ public class PDFGenerator {
     }
 
     private void readExcelInputAnswer(ArrayList<String> excel, Document document, String[] numberOfQuestions, String[] measuringUnits, Table table, int i) {
-        int counter = 0;
+      int counter = 0;
+        boolean  isEmpty = true;
         for (int k = 0; k < numberOfQuestions.length; k++) {
-            String measuringUnit = measuringUnits[k];
             String answer = excel.get(i + 1 + counter);
-
-            if (answer.equals("-1")) {
-                table.addCell(createCell("\n", document,false));
-            } else {
-                if (measuringUnit.equals("<>")) {
-                    table.addCell(createCell(answer, document, false));
-                } else {
-                    table.addCell(createCell(answer + " " + measuringUnit, document, false));
-                }
+            if(!answer.equals("-1")){
+                isEmpty  = false;
             }
             counter++;
+        }
+        if (!isEmpty){
+            int answerCounter = 0;
+            for (int k = 0; k < numberOfQuestions.length; k++) {
+                String measuringUnit = measuringUnits[k];
+                String answer = excel.get(i + 1 + answerCounter);
+                if (answer.equals("-1")) {
+                    table.addCell(createCell("\n", document, false));
+                } else {
+                    if (measuringUnit.equals("<>")) {
+                        table.addCell(createCell(answer, document, false));
+                    } else {
+                        table.addCell(createCell(answer + " " + measuringUnit, document, false));
+                    }
+                }
+                answerCounter++;
+            }
         }
     }
 

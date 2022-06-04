@@ -70,7 +70,7 @@ class ShortCircuitAndVoltageDropViewHolder extends RecyclerView.ViewHolder {
 
     public ShortCircuitAndVoltageDropViewHolder(@NonNull View itemView) {
         super(itemView);
-        deleteBtn = itemView.findViewById(R.id.rdcDeleteBtn);
+        deleteBtn = itemView.findViewById(R.id.voltageDropDeleteBtn);
         deleteBtn.setOnLongClickListener(view -> {
             adapter.getItems().remove(getAdapterPosition());
             adapter.notifyItemRemoved(getAdapterPosition());

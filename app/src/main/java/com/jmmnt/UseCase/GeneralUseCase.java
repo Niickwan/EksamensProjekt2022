@@ -163,5 +163,12 @@ public class GeneralUseCase extends Activity {
         return (double) Math.round(value * scale) / scale;
     }
 
+    public String convertMinusOneToEmptyString(String s){
+        if(s.equals("-1")) {
+            return "";
+        }
+        return s;
+    }
+
 
 }

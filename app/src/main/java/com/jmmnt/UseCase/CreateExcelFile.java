@@ -25,7 +25,7 @@ public class CreateExcelFile {
     AdapterFactory apFac = new AdapterFactory();
     WritableSheet sheet;
     private WritableWorkbook workbook;
-//    private WritableSheet sheet; //TODO WhatToDo
+    //    private WritableSheet sheet; //TODO WhatToDo
     private int rowCount = 0;
     private int columnCount = 0;
     int getList = 0;
@@ -157,9 +157,14 @@ public class CreateExcelFile {
                 columnCount++;
                 sheet.addCell(new Label(columnCount, rowCount, ((TestingRCD) list.get(getList).get(i)).getSixthResult()));
                 columnCount++;
-                if (okStr.equals("1")){
-                    sheet.addCell(new Label(columnCount, rowCount, "ok"));
-                }
+
+                if (okStr.equals("1")) sheet.addCell(new Label(columnCount, rowCount, "ok"));
+                else sheet.addCell(new Label(columnCount, rowCount, "-1"));
+
+            //    if (okStr.equals("1")){
+              //      sheet.addCell(new Label(columnCount, rowCount, "ok")); //TODO se her
+                //}
+
 
                 columnCount = 0;
                 rowCount++;
@@ -258,13 +263,18 @@ public class CreateExcelFile {
                     columnCount++;
                     sheet.addCell(new Label(columnCount, rowCount, "-1"));
                     columnCount++;
-                } else {
+                } else if  (((CircuitDetails) list.get(getList).get(i)).getCheckbox() == 2){
                     sheet.addCell(new Label(columnCount, rowCount, "-1"));
                     columnCount++;
                     sheet.addCell(new Label(columnCount, rowCount, ((CircuitDetails) list.get(getList).get(i)).getOmega()));
                     columnCount++;
+                }  else {
+                    sheet.addCell(new Label(columnCount, rowCount, "-1"));
+                    columnCount++;
+                    sheet.addCell(new Label(columnCount, rowCount, "-1"));
+                    columnCount++;
                 }
-                sheet.addCell(new Label(columnCount, rowCount, ((CircuitDetails) list.get(getList).get(i)).getMegaOmega()));
+                sheet.addCell(new Label(columnCount, rowCount, ((CircuitDetails) list.get(getList).get(i)).getMilliOmega()));
                 columnCount = 0;
                 rowCount++;
             }

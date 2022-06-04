@@ -51,7 +51,6 @@ public class OrderViewAdapter extends RecyclerView.Adapter<OrderViewHolder> {
         verifiedBy_spinner.setSelection(2);
 
         int lastIndex = AssignmentContainer.getInstance().getAssignments().size()-1;
-        System.out.println("CONTAINER "+ AssignmentContainer.getInstance().getAssignments().get(lastIndex));
 
 //        if (position < itemList.size()) {     //TODO FORSÆT HER
 //            if (itemList.get(position) != null) {

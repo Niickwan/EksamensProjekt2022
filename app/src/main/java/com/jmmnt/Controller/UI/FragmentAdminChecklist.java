@@ -124,9 +124,16 @@ public class FragmentAdminChecklist extends Fragment {
         Thread t2 = new Thread(() -> {
             String excelFileName = orderNr + "_" + selectedFloorName + ".xls";
             ftp.ftpDownload("/public_html/assignments/" + orderNr + "/" + selectedFloorName + "/" + excelFileName, "current_assignment.xls");
-          });
+        });
 
-        Thread t3 = new Thread(() -> getActivity().runOnUiThread(() -> generateUI()));
+        Thread t3 = new Thread(() -> {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            getActivity().runOnUiThread(() -> generateUI());
+        });
 
         try {
             t1.start();
@@ -135,7 +142,6 @@ public class FragmentAdminChecklist extends Fragment {
             t2.join();
             t3.start();
             t3.join();
-            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -165,7 +171,6 @@ public class FragmentAdminChecklist extends Fragment {
         for (int i = 0; i < template.size(); i++) {
             if (template.get(i).equalsIgnoreCase("<Headline>")) {
                 if (headlineCounter == 0) {
-
                     String headline = template.get(i + 1);
                     i = readQuestionFromExcel(template, i, general);
                     buildDropdownDynamically(headline, general, objectTag, "vertical");
@@ -213,7 +218,7 @@ public class FragmentAdminChecklist extends Fragment {
                     //Adding textview to parent
                     parentLLH.addView(testResultsTitle);
                 }
-           } else if (template.get(i).equalsIgnoreCase("<InputHeadline>")) {
+            } else if (template.get(i).equalsIgnoreCase("<InputHeadline>")) {
                 if (inputHeadlineCounter == 0) {
                     i = readExcelCircuitDetails(template, i, circuitDetailList);
                     buildDropdownDynamically("Kredsdetaljer", circuitDetailList, objectTag2, "horizontal");
@@ -221,16 +226,15 @@ public class FragmentAdminChecklist extends Fragment {
 
                 } else if (inputHeadlineCounter == 1) {
                     i = readExcelTestingRCD(template, i, testingRCDResults);
+                    testingRCDResults.forEach(System.out::println);
                     buildDropdownDynamically("Afprøvning af RCD'er", testingRCDResults, objectTag3, "horizontal");
                     inputHeadlineCounter++;
                 } else if (inputHeadlineCounter == 2) {
                     i = readExcelShortCircuitAndVoltageDrop(template, i, voltageDropResults);
-                    voltageDropResults.forEach(System.out::println);
                     buildDropdownDynamically("Kortslutningsstrøm / Spændingsfald", voltageDropResults, objectTag4, "horizontal");
                     inputHeadlineCounter++;
                 }
-            }
-            else if(template.get(i).equalsIgnoreCase("<SingleInput>")){
+            } else if (template.get(i).equalsIgnoreCase("<SingleInput>")) {
                 TransitionResistance t = new TransitionResistance();
                 transitionResistance.add(t);
                 //Adding textview
@@ -271,15 +275,13 @@ public class FragmentAdminChecklist extends Fragment {
                 groundElectrodeResultEt.addTextChangedListener(new TextWatcher() {
                     @Override
                     public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
                     }
-
                     @Override
                     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                        if (!charSequence.toString().isEmpty()) t.setTransitionResistance(Double.parseDouble(groundElectrodeResultEt.getEditableText().toString()));
+                        if (!charSequence.toString().isEmpty())
+                            t.setTransitionResistance(Double.parseDouble(groundElectrodeResultEt.getEditableText().toString()));
                         else t.setTransitionResistance(-1.0);
                     }
-
                     @Override
                     public void afterTextChanged(Editable editable) {
                         System.out.println(t.getTransitionResistance());
@@ -288,8 +290,7 @@ public class FragmentAdminChecklist extends Fragment {
 
                 //Adding edittext to parent
                 parentLLH.addView(groundElectrodeResultEt);
-            }
-            else if (template.get(i).equals("<Document Note>")){
+            } else if (template.get(i).equals("<Document Note>")) {
                 //Adding edittext with multiple lines
                 ContextThemeWrapper ctw = new ContextThemeWrapper(getActivity(), R.style.ViewWithScrollbars);
                 EditText remarkEtML = new EditText(ctw);
@@ -310,21 +311,19 @@ public class FragmentAdminChecklist extends Fragment {
                 remarkEtML.setSingleLine(false);
                 remarkEtML.setLines(10);
                 remarkEtML.setScrollBarFadeDuration(1000);
-                documentNote = template.get(i+1);
-                if (template.get(i+1).equals("-1")) remarkEtML.setText("");
-                else remarkEtML.setText(template.get(i+1));
+                documentNote = template.get(i + 1);
+                if (template.get(i + 1).equals("-1")) remarkEtML.setText("");
+                else remarkEtML.setText(template.get(i + 1));
                 remarkEtML.addTextChangedListener(new TextWatcher() {
                     @Override
                     public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
                     }
-
                     @Override
                     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                        if (!charSequence.toString().isEmpty()) documentNote = remarkEtML.getEditableText().toString();
+                        if (!charSequence.toString().isEmpty())
+                            documentNote = remarkEtML.getEditableText().toString();
                         else documentNote = "-1";
                     }
-
                     @Override
                     public void afterTextChanged(Editable editable) {
                     }
@@ -347,16 +346,43 @@ public class FragmentAdminChecklist extends Fragment {
             }
         }
 
-
-        //Building dropdowns
-
-
-
-
         //Adding button for finishing the case
         Button finishCaseBtn = new Button(getActivity());
         finishCaseBtn.setOnClickListener(v -> {
             Thread createExcelT = new Thread(() -> {
+
+                for (int i = 0; i < circuitDetailList.size(); i++) {
+                    CircuitDetails objVar = (CircuitDetails) circuitDetailList.get(i);
+                    if (objVar.getGroupName().isEmpty()) ((CircuitDetails) circuitDetailList.get(i)).setGroupName("-1");
+                    if (objVar.getOb().isEmpty()) ((CircuitDetails) circuitDetailList.get(i)).setOb("-1");
+                    if (objVar.getCharacteristics().isEmpty()) ((CircuitDetails) circuitDetailList.get(i)).setCharacteristics("-1");
+                    if (objVar.getCrossSection().isEmpty()) ((CircuitDetails) circuitDetailList.get(i)).setCrossSection("-1");
+                    if (objVar.getMaxOB().isEmpty()) ((CircuitDetails) circuitDetailList.get(i)).setMaxOB("-1");
+                    if (objVar.getOmega().isEmpty()) ((CircuitDetails) circuitDetailList.get(i)).setOmega("-1");
+                    if (objVar.getOmega().isEmpty()) ((CircuitDetails) circuitDetailList.get(i)).setMilliOmega("-1");
+                }
+
+                for (int i = 0; i < testingRCDResults.size(); i++) {
+                    TestingRCD objVar = (TestingRCD) testingRCDResults.get(i);
+                    if (objVar.getGroupName().isEmpty()) ((TestingRCD) testingRCDResults.get(i)).setGroupName("-1");
+                    if (objVar.getFirstResult().isEmpty()) ((TestingRCD) testingRCDResults.get(i)).setFirstResult("-1");
+                    if (objVar.getSecondResult().isEmpty()) ((TestingRCD) testingRCDResults.get(i)).setSecondResult("-1");
+                    if (objVar.getThirdResult().isEmpty()) ((TestingRCD) testingRCDResults.get(i)).setThirdResult("-1");
+                    if (objVar.getFourthResult().isEmpty()) ((TestingRCD) testingRCDResults.get(i)).setFourthResult("-1");
+                    if (objVar.getFifthResult().isEmpty()) ((TestingRCD) testingRCDResults.get(i)).setFifthResult("-1");
+                    if (objVar.getSixthResult().isEmpty()) ((TestingRCD) testingRCDResults.get(i)).setSixthResult("-1");
+                }
+
+                for (int i = 0; i < voltageDropResults.size(); i++) {
+                    ShortCircuitCurrentAndVoltageDrop objVar = (ShortCircuitCurrentAndVoltageDrop) voltageDropResults.get(i);
+                    if (objVar.getShortCircuitGroupName().isEmpty()) ((ShortCircuitCurrentAndVoltageDrop) voltageDropResults.get(i)).setShortCircuitGroupName("-1");
+                    if (objVar.getShortCircuitLk().isEmpty()) ((ShortCircuitCurrentAndVoltageDrop) voltageDropResults.get(i)).setShortCircuitLk("-1");
+                    if (objVar.getShortCircuitMeasuredOnLocation().isEmpty()) ((ShortCircuitCurrentAndVoltageDrop) voltageDropResults.get(i)).setShortCircuitMeasuredOnLocation("-1");
+                    if (objVar.getVoltageDropGroupName().isEmpty()) ((ShortCircuitCurrentAndVoltageDrop) voltageDropResults.get(i)).setVoltageDropGroupName("-1");
+                    if (objVar.getVoltageDropDeltaVoltage().isEmpty()) ((ShortCircuitCurrentAndVoltageDrop) voltageDropResults.get(i)).setVoltageDropDeltaVoltage("-1");
+                    if (objVar.getVoltageDropMeasuredOnLocation().isEmpty()) ((ShortCircuitCurrentAndVoltageDrop) voltageDropResults.get(i)).setVoltageDropMeasuredOnLocation("-1");
+                }
+
                 completeAssignment.add(general);
                 completeAssignment.add(electricalPanel);
                 completeAssignment.add(installation);
@@ -367,8 +393,8 @@ public class FragmentAdminChecklist extends Fragment {
                 completeAssignment.add(transitionResistance);
                 completeAssignment.add(testingRCDResults);
                 completeAssignment.add(voltageDropResults);
+
                 cEF.createExcelSheet("current_assignment.xls", completeAssignment, documentNote);
-                completeAssignment.forEach(System.out::println);
             });
             String filename = orderNr + "_" + selectedFloorName;
             Thread createPdfT = new Thread(new Runnable() {
@@ -388,7 +414,7 @@ public class FragmentAdminChecklist extends Fragment {
             Thread uploadPdfT = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    ftp.ftpUpload(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString() + "/" +filename +".pdf",
+                    ftp.ftpUpload(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString() + "/" + filename + ".pdf",
                             "/public_html/assignments/" + orderNr + "/" + selectedFloorName + "/" + filename + ".pdf");
                 }
             });
@@ -427,6 +453,15 @@ public class FragmentAdminChecklist extends Fragment {
         sendCaseBtn.setText(getString(R.string.checklist_send));
         sendCaseBtn.setTextColor(getActivity().getColor(R.color.white));
         sendCaseBtn.setBackground(getActivity().getDrawable(R.drawable.design_button_darkblue));
+        sendCaseBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("SIZE "+ circuitDetailList.size());
+                for (int i = 0; i < circuitDetailList.size(); i++) {
+                    System.out.println("Objekt nr: "+ i + " --- " + circuitDetailList.get(i));
+                }
+            }
+        });
 
         //Adding a constraint layout
         ConstraintLayout cl = new ConstraintLayout(getActivity());
@@ -464,16 +499,16 @@ public class FragmentAdminChecklist extends Fragment {
         for (int j = i; j < template.size(); j++) {
             if (template.get(j).equalsIgnoreCase("<inputAnswer>")) {
                 ShortCircuitCurrentAndVoltageDrop s = new ShortCircuitCurrentAndVoltageDrop();
-                s.setShortCircuitGroupName(template.get(j+1));
-                s.setShortCircuitLk(template.get(j+2));
-                s.setShortCircuitMeasuredOnLocation(template.get(j+3));
+                s.setShortCircuitGroupName(template.get(j + 1));
+                s.setShortCircuitLk(template.get(j + 2));
+                s.setShortCircuitMeasuredOnLocation(template.get(j + 3));
                 for (int k = j; k < template.size(); k++) {
                     if (template.get(k).equalsIgnoreCase("<InputHeadline>")) {
                         for (int l = k; l < template.size(); l++) {
                             if (template.get(l).equalsIgnoreCase("<inputAnswer>")) {
-                                s.setVoltageDropGroupName(template.get(l+1+counter));
-                                s.setVoltageDropDeltaVoltage(template.get(l+2+counter));
-                                s.setVoltageDropMeasuredOnLocation(template.get(l+3+counter));
+                                s.setVoltageDropGroupName(template.get(l + 1 + counter));
+                                s.setVoltageDropDeltaVoltage(template.get(l + 2 + counter));
+                                s.setVoltageDropMeasuredOnLocation(template.get(l + 3 + counter));
                                 counter += 4;
                                 break;
                             }
@@ -482,8 +517,7 @@ public class FragmentAdminChecklist extends Fragment {
                     }
                 }
                 voltageDropResults.add(s);
-            }
-            else if(template.get(j).equals("<InputHeadlineEnd>")){
+            } else if (template.get(j).equals("<InputHeadlineEnd>")) {
                 i = j;
                 break;
             }
@@ -495,14 +529,18 @@ public class FragmentAdminChecklist extends Fragment {
         for (int j = i; j < template.size(); j++) {
             if (template.get(j).equals("<inputAnswer>")) {
                 TestingRCD t = new TestingRCD();
-                t.setGroupName(template.get(j +1));
-                t.setFirstResult(template.get(j +2));
-                t.setSecondResult(template.get(j +3));
-                t.setThirdResult(template.get(j +4));
-                t.setFourthResult(template.get(j +5));
-                t.setFifthResult(template.get(j +6));
-                t.setSixthResult(template.get(j +7));
-                t.setCheckboxOK(Integer.parseInt(template.get(j+8)));
+                t.setGroupName(template.get(j + 1));
+                t.setFirstResult(template.get(j + 2));
+                t.setSecondResult(template.get(j + 3));
+                t.setThirdResult(template.get(j + 4));
+                t.setFourthResult(template.get(j + 5));
+                t.setFifthResult(template.get(j + 6));
+                t.setSixthResult(template.get(j + 7));
+                if (template.get(j + 8).equalsIgnoreCase("ok")) {{
+                    t.setCheckboxOK(1);
+                }} else {
+                    t.setCheckboxOK(-1);
+                }
                 testingRCDResults.add(t);
             } else if (template.get(j).equals("<InputHeadlineEnd>")) {
                 i = j;
@@ -517,23 +555,22 @@ public class FragmentAdminChecklist extends Fragment {
             //new CircuitDetails("Tavlen", "400", "Lampe", "6", "500", 1, "340", "20"));
             if (template.get(j).equals("<inputAnswer>")) {
                 CircuitDetails circuitDetails = new CircuitDetails();
-                circuitDetails.setGroupName(template.get(j+1));
-                circuitDetails.setOb(template.get(j+2));
-                circuitDetails.setCharacteristics(template.get(j+3));
-                circuitDetails.setCrossSection(template.get(j+4));
-                circuitDetails.setMaxOB(template.get(j+5));
-                if(template.get(j +7).equals("-1") && template.get(j +6).equals("-1")){
+                circuitDetails.setGroupName(template.get(j + 1));
+                circuitDetails.setOb(template.get(j + 2));
+                circuitDetails.setCharacteristics(template.get(j + 3));
+                circuitDetails.setCrossSection(template.get(j + 4));
+                circuitDetails.setMaxOB(template.get(j + 5));
+                if (template.get(j + 7).equals("-1") && template.get(j + 6).equals("-1")) {
                     circuitDetails.setCheckbox(0);
                     circuitDetails.setOmega("");
-                } else if (template.get(j +7).equals("-1")){
-                    circuitDetails.setOmega(template.get(j+6));
+                } else if (template.get(j + 7).equals("-1")) {
+                    circuitDetails.setOmega(template.get(j + 6));
                     circuitDetails.setCheckbox(1);
-                } else{
-                    circuitDetails.setOmega(template.get(j+7));
+                } else {
+                    circuitDetails.setOmega(template.get(j + 7));
                     circuitDetails.setCheckbox(2);
                 }
-
-                circuitDetails.setMegaOmega(template.get(j+8));
+                circuitDetails.setMilliOmega(template.get(j + 8));
                 circuitDetailList.add(circuitDetails);
             } else if (template.get(j).equals("<InputHeadlineEnd>")) {
                 i = j;
@@ -543,22 +580,24 @@ public class FragmentAdminChecklist extends Fragment {
         return i;
     }
 
+
     private int readQuestionFromExcel(List<String> template, int i, List<Object> general) {
         for (int j = i; j < template.size(); j++) {
 
-            if (template.get(j).equals("<Question>")) {
+            if (template.get(j).equals("<Question>")){
                 Questions question = new Questions();
-                int answer = Integer.parseInt(template.get(j + 4));
-                question.setQuestion(template.get(j + 1) + " " + template.get(j + 2));
+                int answer = Integer.parseInt(template.get(j +4));
+                question.setQuestion(template.get(j +1) + " " + template.get(j +2));
                 question.setAnswer(answer);
-                question.setComment(template.get(j + 6));
+                question.setComment(template.get(j +6));
                 int excelRowCounter = 8;
-                while (!template.get(j + excelRowCounter).equals("<ImagesEnd>")) {
-                    question.getImages().add(template.get(j + excelRowCounter));
+                while(!template.get(j + excelRowCounter).equals("<ImagesEnd>")) {
+                    question.getImages().add(template.get(j +excelRowCounter));
                     excelRowCounter++;
                 }
                 general.add(question);
-            } else if (template.get(j).equals("<HeadlineEnd>")) {
+            }
+            else if (template.get(j).equals("<HeadlineEnd>")){
                 i = j;
                 break;
             }
@@ -663,7 +702,7 @@ public class FragmentAdminChecklist extends Fragment {
             }
         }).start());
         dialog.getWindow().findViewById(R.id.enable_delete_switch).setOnClickListener(v -> {
-            if (floorButtons.size() < 2) {
+            if(floorButtons.size() < 2) {
                 Thread t = new Thread(() -> gUC.toastAlert(getActivity(), getString(R.string.checklist_unable_to_delete_floor)));
                 t.start();
                 Switch s = v.findViewById(R.id.enable_delete_switch);
@@ -873,8 +912,8 @@ public class FragmentAdminChecklist extends Fragment {
                 addQuestion(dataList, rv, adapter);
             } else {
                 dataList.add(addNewObject);
-                rv.smoothScrollToPosition(dataList.size() - 1);
-                ((RecyclerView.Adapter<?>) adapter).notifyItemInserted(dataList.size() - 1);
+                rv.smoothScrollToPosition(dataList.size());
+                ((RecyclerView.Adapter<?>) adapter).notifyItemInserted(dataList.size());
             }
         });
     }
