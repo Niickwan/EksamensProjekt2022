@@ -35,9 +35,9 @@ public class ShortCircuitCurrentAndVoltageDropViewAdapter extends RecyclerView.A
 
     @Override
     public void onBindViewHolder(@NonNull ShortCircuitAndVoltageDropViewHolder holder, int position) {
-        shortCircuitGroupName = holder.itemView.findViewById(R.id.rcdGroupName_et);
-        lk = holder.itemView.findViewById(R.id.shortCircuitlk_et);
-        ShortCircuitMeasuredOnLocation = holder.itemView.findViewById(R.id.shortCircuitMeasuredOnLocation_et);
+        shortCircuitGroupName = holder.itemView.findViewById(R.id.shortCircuitCurrentGroupName_et);
+        lk = holder.itemView.findViewById(R.id.shortCircuitCurrentlk_et);
+        ShortCircuitMeasuredOnLocation = holder.itemView.findViewById(R.id.shortCircuitCurrentMeasuredOnLocation_et);
         voltageDropGroupName = holder.itemView.findViewById(R.id.voltageDropGroupName_et);
         deltaVoltage = holder.itemView.findViewById(R.id.voltageDropDelta_et);
         voltageDropMeasuredOnLocation = holder.itemView.findViewById(R.id.voltageDropMeasuredOnLocation_et);
@@ -50,7 +50,6 @@ public class ShortCircuitCurrentAndVoltageDropViewAdapter extends RecyclerView.A
             deltaVoltage.setText(gUC.convertMinusOneToEmptyString(items.get(position).getVoltageDropDeltaVoltage()));
             voltageDropMeasuredOnLocation.setText(gUC.convertMinusOneToEmptyString(items.get(position).getVoltageDropMeasuredOnLocation()));
         }
-
     }
 
     @Override
@@ -79,8 +78,8 @@ class ShortCircuitAndVoltageDropViewHolder extends RecyclerView.ViewHolder {
         });
 
         EditText shortCircuitGroupName = itemView.findViewById(R.id.rcdGroupName_et);
-        EditText lk = itemView.findViewById(R.id.shortCircuitlk_et);
-        EditText ShortCircuitMeasuredOnLocation = itemView.findViewById(R.id.shortCircuitMeasuredOnLocation_et);
+        EditText lk = itemView.findViewById(R.id.shortCircuitCurrentlk_et);
+        EditText ShortCircuitMeasuredOnLocation = itemView.findViewById(R.id.shortCircuitCurrentMeasuredOnLocation_et);
         EditText voltageDropGroupName = itemView.findViewById(R.id.voltageDropGroupName_et);
         EditText deltaVoltage = itemView.findViewById(R.id.voltageDropDelta_et);
         EditText voltageDropMeasuredOnLocation = itemView.findViewById(R.id.voltageDropMeasuredOnLocation_et);
@@ -88,9 +87,7 @@ class ShortCircuitAndVoltageDropViewHolder extends RecyclerView.ViewHolder {
         TextWatcher textWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
-
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 adapter.getItems().get(getAdapterPosition()).setShortCircuitGroupName(shortCircuitGroupName.getEditableText().toString());
@@ -100,20 +97,16 @@ class ShortCircuitAndVoltageDropViewHolder extends RecyclerView.ViewHolder {
                 adapter.getItems().get(getAdapterPosition()).setVoltageDropDeltaVoltage(deltaVoltage.getEditableText().toString());
                 adapter.getItems().get(getAdapterPosition()).setVoltageDropMeasuredOnLocation(voltageDropMeasuredOnLocation.getEditableText().toString());
             }
-
             @Override
             public void afterTextChanged(Editable editable) {
-
             }
         };
-
         shortCircuitGroupName.addTextChangedListener(textWatcher);
         lk.addTextChangedListener(textWatcher);
         ShortCircuitMeasuredOnLocation.addTextChangedListener(textWatcher);
         voltageDropGroupName.addTextChangedListener(textWatcher);
         deltaVoltage.addTextChangedListener(textWatcher);
         voltageDropMeasuredOnLocation.addTextChangedListener(textWatcher);
-
     }
 
     public ShortCircuitAndVoltageDropViewHolder linkAdapter(ShortCircuitCurrentAndVoltageDropViewAdapter shortCircuitAndVoltageDropViewAdapter){

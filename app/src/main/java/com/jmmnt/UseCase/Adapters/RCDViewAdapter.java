@@ -97,9 +97,7 @@ class RCDViewHolder extends RecyclerView.ViewHolder {
         TextWatcher textWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
-
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 adapter.getItems().get(getAdapterPosition()).setGroupName(groupName.getEditableText().toString());
@@ -117,11 +115,6 @@ class RCDViewHolder extends RecyclerView.ViewHolder {
             }
         };
 
-        checkBoxTestOK.setOnClickListener(v -> {
-            if (checkBoxTestOK.isChecked()) adapter.getItems().get(getAdapterPosition()).setCheckboxOK(1);
-            else adapter.getItems().get(getAdapterPosition()).setCheckboxOK(-1);
-        });
-
         groupName.addTextChangedListener(textWatcher);
         firstResult.addTextChangedListener(textWatcher);
         secondResult.addTextChangedListener(textWatcher);
@@ -129,6 +122,11 @@ class RCDViewHolder extends RecyclerView.ViewHolder {
         fourthResult.addTextChangedListener(textWatcher);
         fifthResult.addTextChangedListener(textWatcher);
         sixthResult.addTextChangedListener(textWatcher);
+
+        checkBoxTestOK.setOnClickListener(v -> {
+            if (checkBoxTestOK.isChecked()) adapter.getItems().get(getAdapterPosition()).setCheckboxOK(1);
+            else adapter.getItems().get(getAdapterPosition()).setCheckboxOK(-1);
+        });
     }
 
     public RCDViewHolder linkAdapter(RCDViewAdapter rcdViewAdapter){
