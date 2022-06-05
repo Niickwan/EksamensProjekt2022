@@ -72,11 +72,9 @@ public class OrderViewAdapter extends RecyclerView.Adapter<OrderViewHolder> {
         verifiedBy_spinner.setAdapter(adapter);
         verifiedBy_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-                User verifiedBy = (User) adapterView.getAdapter().getItem(position);
-                System.out.println("VERI BY "+ verifiedBy);
-                items.get(position).setVerifiedBy(verifiedBy.getUserID());
-                System.out.println("VERI BY "+ items.get(position).getVerifiedBy()); //TODO FORSÆT HER
+            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long id) {
+                User verifiedBy = (User) adapterView.getAdapter().getItem(pos);
+                items.get(holder.getAdapterPosition()).setVerifiedBy(verifiedBy.getUserID());
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapter) {  }

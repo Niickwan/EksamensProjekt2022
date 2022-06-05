@@ -130,7 +130,7 @@ class CircuitDetailsViewHolder extends RecyclerView.ViewHolder {
                 adapter.getItems().get(getAdapterPosition()).setCrossSection(crossSection.getEditableText().toString());
                 adapter.getItems().get(getAdapterPosition()).setMaxOB(maxOB.getEditableText().toString());
                 adapter.getItems().get(getAdapterPosition()).setOmega(omegaResist.getEditableText().toString());
-                adapter.getItems().get(getAdapterPosition()).setMegaOmega(megaOmegaResist.getEditableText().toString());
+                adapter.getItems().get(getAdapterPosition()).setMilliOmega(megaOmegaResist.getEditableText().toString());
             }
             @Override
             public void afterTextChanged(Editable editable) {
