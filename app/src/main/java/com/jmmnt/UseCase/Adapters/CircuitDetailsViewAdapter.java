@@ -48,10 +48,6 @@ public class CircuitDetailsViewAdapter extends RecyclerView.Adapter<CircuitDetai
         isolation = holder.itemView.findViewById(R.id.circuitDetailsIsolation_et);
 
 
-
-        items.get(items.size()-1).setGroupName("");
-
-
         if (position < items.size()) {
             if (items.get(position) != null) {
                 groupName.setText(gUC.convertMinusOneToEmptyString(items.get(position).getGroupName()));

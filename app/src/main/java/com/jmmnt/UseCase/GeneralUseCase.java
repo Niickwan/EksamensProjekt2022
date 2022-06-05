@@ -100,7 +100,6 @@ public class GeneralUseCase extends Activity {
         for (int i = 0; i < arr.size(); i++) {
             parts = arr.get(i).split("[" + splitBy + "]");
         }
-
         for (int i = 0; i < parts.length; i++) {
             if (parts[i].equals(orderNr)) {
                 split.add(parts[i+1]);
@@ -138,12 +137,6 @@ public class GeneralUseCase extends Activity {
         ArrayList<String> sortedList = new ArrayList<>(strings);
         sortedList.addAll(numbers);
         return sortedList;
-    }
-
-    public void clearList(List<?> list) {
-        if (!list.isEmpty()) {
-            list.clear();
-        }
     }
 
     public String formatDate(LocalDate date) {

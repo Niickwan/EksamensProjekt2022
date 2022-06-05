@@ -117,8 +117,6 @@ public class FragmentSearchCase extends Fragment {
                 }
             }, 1000);
         });
-
-
     }
 
     private List sortAssignments() {

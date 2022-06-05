@@ -315,28 +315,30 @@ public class OperateAssignment {
     }
 
 
-    public List sortAssignmentsByCheckboxIsChecked(List<Assignment> assignments, List<Assignment> userAssignmentIDs, boolean activeCase, boolean waitingCase, boolean finishedCase, boolean userCase){
+    public List sortAssignmentsByCheckboxIsChecked(List<Assignment> assignments, List<Assignment> userAssignmentIDs, boolean isActive, boolean isWaiting, boolean isFinished, boolean isUserCasesChecked){
         List<Assignment> sortedList = new ArrayList<>();
         for (int i = 0; i < userAssignmentIDs.size(); i++) {
             for (int j = 0; j < assignments.size(); j++) {
-                if (userCase && userAssignmentIDs.get(i).getAssignmentID() == assignments.get(j).getAssignmentID()) {
-                    if (activeCase && assignments.get(j).getStatus().equalsIgnoreCase("active"))
+                if (isUserCasesChecked && userAssignmentIDs.get(i).getAssignmentID() == assignments.get(j).getAssignmentID()) {
+                    if (isActive && assignments.get(j).getStatus().equalsIgnoreCase("active"))
                         sortedList.add(assignments.get(j));
-                    else if (finishedCase && assignments.get(j).getStatus().equalsIgnoreCase("finished"))
+                    else if (isFinished && assignments.get(j).getStatus().equalsIgnoreCase("finished"))
                         sortedList.add(assignments.get(j));
                 }
             }
         }
         for (int i = 0; i < assignments.size(); i++) {
-            if (activeCase && assignments.get(i).getStatus().equalsIgnoreCase("active") && !userCase)
+            if (isActive && assignments.get(i).getStatus().equalsIgnoreCase("active") && !isUserCasesChecked)
                 sortedList.add(assignments.get(i));
-            else if (waitingCase && assignments.get(i).getStatus().equalsIgnoreCase("waiting"))
+            else if (isWaiting && assignments.get(i).getStatus().equalsIgnoreCase("waiting"))
                 sortedList.add(assignments.get(i));
-            else if (finishedCase && assignments.get(i).getStatus().equalsIgnoreCase("finished") && !userCase)
+            else if (isFinished && assignments.get(i).getStatus().equalsIgnoreCase("finished") && !isUserCasesChecked)
                 sortedList.add(assignments.get(i));
         }
         return sortedList;
     }
+
+
 
     public List bubbleSortAssignmentsByDate(List<Assignment> list) {
         Assignment temp;

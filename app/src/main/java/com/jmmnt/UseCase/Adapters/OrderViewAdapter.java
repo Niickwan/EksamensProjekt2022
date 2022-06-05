@@ -10,21 +10,23 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.jmmnt.Entities.Assignment;
-import com.jmmnt.Entities.AssignmentContainer;
 import com.jmmnt.Entities.User;
 import com.jmmnt.Entities.UserContainer;
 import com.jmmnt.R;
+import com.jmmnt.UseCase.GeneralUseCase;
+
 import java.util.List;
 
 public class OrderViewAdapter extends RecyclerView.Adapter<OrderViewHolder> {
 
-    private List<Assignment> itemList;
+    private List<Assignment> items;
     private TextView customerFullName_tv, address_tv, orderNumber_tv, identification_et, date_tv, installedBy_tv;
     private Spinner verifiedBy_spinner;
     private Context context;
+    private GeneralUseCase gUC = GeneralUseCase.getInstance();
 
     public OrderViewAdapter(List<Assignment> items, Context context) {
-        this.itemList = items;
+        this.items = items;
         this.context = context;
     }
 
@@ -41,26 +43,30 @@ public class OrderViewAdapter extends RecyclerView.Adapter<OrderViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull OrderViewHolder holder, int position) {
-        customerFullName_tv = holder.itemView.findViewById(R.id.customerName_tv);
-        address_tv = holder.itemView.findViewById(R.id.address_et);
-        orderNumber_tv = holder.itemView.findViewById(R.id.orderNumber_et);
+        customerFullName_tv = holder.itemView.findViewById(R.id.customerFullName_tv);
+        address_tv = holder.itemView.findViewById(R.id.address_tv);
+        orderNumber_tv = holder.itemView.findViewById(R.id.orderNumber_tv);
         identification_et = holder.itemView.findViewById(R.id.identification_et);
         date_tv = holder.itemView.findViewById(R.id.date_tv);
         installedBy_tv = holder.itemView.findViewById(R.id.installedBy_tv);
         verifiedBy_spinner = holder.itemView.findViewById(R.id.verifiedBy_spinner);
         verifiedBy_spinner.setSelection(2);
 
-        int lastIndex = AssignmentContainer.getInstance().getAssignments().size()-1;
+        System.out.println("ITEM ITEM "+items.get(position));
 
-//        if (position < itemList.size()) {     //TODO FORSÆT HER
-//            if (itemList.get(position) != null) {
-//                customerFullName_tv.setText(itemList.get(position).getCustomerName());
-//                address_tv.setText(itemList.get(position).getAddress());
-//                orderNumber_tv.setText(itemList.get(position).getOrderNumber());
-//
-//
-//            }
-//        }
+        if (position < items.size()) {
+            customerFullName_tv.setText(gUC.convertMinusOneToEmptyString(items.get(position).getCustomerName()));
+            address_tv.setText(gUC.convertMinusOneToEmptyString(items.get(position).getAddress()));
+            orderNumber_tv.setText(gUC.convertMinusOneToEmptyString(items.get(position).getOrderNumber()));
+            for (int i = 0; i < UserContainer.getUsers().size(); i++) {
+                if (UserContainer.getUsers().get(i).getUserID() == items.get(position).getUserID()){
+                    String installedBy = UserContainer.getUsers().get(i).getFullName();
+                    installedBy_tv.setText(gUC.convertMinusOneToEmptyString(installedBy));
+                }
+            }
+            String statusDate = gUC.formatDate(items.get(position).getStatusDate());
+            date_tv.setText(gUC.convertMinusOneToEmptyString(statusDate));
+        }
 
         SpinnerAdapter adapter = new SpinnerAdapter(context, android.R.layout.simple_spinner_item, UserContainer.getUsers());
         verifiedBy_spinner.setAdapter(adapter);
@@ -68,6 +74,9 @@ public class OrderViewAdapter extends RecyclerView.Adapter<OrderViewHolder> {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
                 User verifiedBy = (User) adapterView.getAdapter().getItem(position);
+                System.out.println("VERI BY "+ verifiedBy);
+                items.get(position).setVerifiedBy(verifiedBy.getUserID());
+                System.out.println("VERI BY "+ items.get(position).getVerifiedBy()); //TODO FORSÆT HER
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapter) {  }
@@ -76,15 +85,15 @@ public class OrderViewAdapter extends RecyclerView.Adapter<OrderViewHolder> {
 
     @Override
     public int getItemCount() {
-        return itemList.size();
+        return items.size();
     }
 
-    public List<Assignment> getItemList() {
-        return itemList;
+    public List<Assignment> getItems() {
+        return items;
     }
 
-    public void setItemList(List<Assignment> itemList) {
-        this.itemList = itemList;
+    public void setItems(List<Assignment> items) {
+        this.items = items;
     }
 }
 
