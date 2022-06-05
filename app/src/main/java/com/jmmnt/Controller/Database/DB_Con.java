@@ -1,17 +1,11 @@
 package com.jmmnt.Controller.Database;
 
-
-import android.hardware.lights.LightState;
-
-import com.itextpdf.layout.element.List;
-import com.jmmnt.Controller.UI.FragmentSearchCase;
 import com.jmmnt.Entities.AssignmentContainer;
 import com.jmmnt.Entities.LoggedInUser;
 import com.jmmnt.Entities.Assignment;
 import com.jmmnt.Entities.User;
 import com.jmmnt.Entities.UserAssignmentContainer;
 import com.jmmnt.Entities.UserContainer;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -24,7 +18,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.sql.Date;
 
 public class DB_Con {
     private Connection connection;
@@ -33,8 +26,17 @@ public class DB_Con {
     private ResultSet rs;
     private static DB_Con dbCon;
     private final String URL = "jdbc:mysql://mysql61.unoeuro.com:3306/dat32_dk_db_eksamen?useSSL=true"; //TODO SSL Run error "autoReconnect=true&useSSL=false"
-    private final String format = "yyyy-MM-dd";
+    private final String format = "yyyy-MM-dd"; //TODO brug dateformatter i generalUsecase?
 
+    private DB_Con(){
+    }
+
+    public static DB_Con getInstance() {
+        if (dbCon == null) {
+            return dbCon = new DB_Con();
+        } else
+            return dbCon;
+    }
 
     private boolean uploadMySQLCall(String sqlString) {
         int SQLCallSucceded = 0;
@@ -66,14 +68,6 @@ public class DB_Con {
             e.printStackTrace();
         }
         return connection;
-    }
-
-    public static DB_Con getInstance() {
-        if (dbCon == null) {
-            System.out.println("DB_Con Created");
-            return dbCon = new DB_Con();
-        } else
-            return dbCon;
     }
 
     public void fillUserContainer() {

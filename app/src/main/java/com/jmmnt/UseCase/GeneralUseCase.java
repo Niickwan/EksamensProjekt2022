@@ -107,7 +107,6 @@ public class GeneralUseCase extends Activity {
         for (int i = 0; i < arr.size(); i++) {
             parts = arr.get(i).split("[" + splitBy + "]");
         }
-
         for (int i = 0; i < parts.length; i++) {
             if (parts[i].equals(orderNr)) {
                 split.add(parts[i+1]);
@@ -147,12 +146,6 @@ public class GeneralUseCase extends Activity {
         return sortedList;
     }
 
-    public void clearList(List<?> list) {
-        if (!list.isEmpty()) {
-            list.clear();
-        }
-    }
-
     public String formatDate(LocalDate date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return date.format(formatter);
@@ -162,13 +155,5 @@ public class GeneralUseCase extends Activity {
         int scale = (int) Math.pow(10, precision);
         return (double) Math.round(value * scale) / scale;
     }
-
-    public String convertMinusOneToEmptyString(String s){
-        if(s.equals("-1")) {
-            return "";
-        }
-        return s;
-    }
-
 
 }
