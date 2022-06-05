@@ -19,7 +19,12 @@ public class ShortCircuitCurrentAndVoltageDrop {
     }
 
     public ShortCircuitCurrentAndVoltageDrop(){
-
+        this.shortCircuitGroupName = "";
+        this.shortCircuitLk = "";
+        this.shortCircuitMeasuredOnLocation = "";
+        this.voltageDropGroupName = "";
+        this.voltageDropDeltaVoltage = "";
+        this.voltageDropMeasuredOnLocation = "";
     }
 
     @Override

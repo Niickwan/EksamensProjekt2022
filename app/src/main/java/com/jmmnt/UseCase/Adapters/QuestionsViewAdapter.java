@@ -95,6 +95,7 @@ class QuestionsViewHolder extends RecyclerView.ViewHolder {
             areCheckBoxesUnchecked();
         });
 
+
         //TODO Vi kan aflæse felter herfra
 
     }
