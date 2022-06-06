@@ -18,6 +18,11 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
 public class Encryption {
+
+    /**
+     * This is for the encryption of the users password.
+     */
+
     private static final String SECRET_KEY = "ewifbweibertfw";
     private static final String SALTVALUE = "pinfiegewebu";
 

@@ -2,6 +2,10 @@ package com.jmmnt.Entities;
 
 public class ShortCircuitCurrentAndVoltageDrop {
 
+    /**
+     * Short-Circuit current and voltage drop keeps all the necessary measurements for one assignment.
+     */
+
     private String shortCircuitGroupName;
     private String shortCircuitLk;
     private String shortCircuitMeasuredOnLocation;

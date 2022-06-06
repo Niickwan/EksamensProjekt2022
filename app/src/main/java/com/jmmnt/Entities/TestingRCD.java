@@ -2,6 +2,10 @@ package com.jmmnt.Entities;
 
 public class TestingRCD {
 
+    /**
+     * Testing RCD keeps all the necessary measurements for one assignment.
+     */
+
     private String groupName;
     private int checkboxOK;
     private String firstResult;

@@ -2,13 +2,10 @@ package com.jmmnt.Controller.UI;
 
 import static android.view.KeyEvent.ACTION_DOWN;
 import static android.view.KeyEvent.KEYCODE_ENTER;
-
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
-
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -110,9 +107,6 @@ public class FragmentCreateOrder extends Fragment {
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
                 User user = (User) adapterView.getAdapter().getItem(position);
                 userPicked = user.getUserID();
-
-                System.out.println("USER PICKED - USER ID "+ userPicked); //TODO sout
-
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapter) {  }

@@ -17,6 +17,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.io.OutputStream;
 
 public class FTPClientFunctions extends AppCompatActivity{
+
+    /**
+     * Methods for processing images taken with the camera.
+     */
+
+
     private final String host = "linux160.unoeuro.com";
     private final String username = "dat32.dk";
     private final String password = "9hkdpBFtAg34";
@@ -136,7 +142,6 @@ public class FTPClientFunctions extends AppCompatActivity{
 
             try {
                 doesDirectoryExist = client.changeWorkingDirectory(directory);
-                System.out.println("created"); //TODO sout
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -144,7 +149,6 @@ public class FTPClientFunctions extends AppCompatActivity{
                 try {
                     client.makeDirectory(directory);
                     client.changeWorkingDirectory(directory);
-                    System.out.println("already exists"); //TODO sout
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

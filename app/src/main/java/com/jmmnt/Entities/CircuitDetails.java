@@ -2,6 +2,10 @@ package com.jmmnt.Entities;
 
 public class CircuitDetails {
 
+    /**
+     * Circuit details keeps all the necessary measurements for one assignment.
+     */
+
     private String groupName;
     private String ob;
     private String characteristics;

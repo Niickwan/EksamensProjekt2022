@@ -4,6 +4,10 @@ import java.util.ArrayList;
 
 public class AssignmentContainer {
 
+    /**
+     * This is the container for all assignments gathered from the database.
+     */
+
     private ArrayList<Assignment> assignments;
     private static AssignmentContainer assignmentContainer;
     private Assignment currentAssignment;

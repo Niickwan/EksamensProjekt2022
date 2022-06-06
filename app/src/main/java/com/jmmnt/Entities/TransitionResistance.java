@@ -1,6 +1,11 @@
 package com.jmmnt.Entities;
 
 public class TransitionResistance {
+
+    /**
+     * Transition resistance keeps the data for one assignment.
+     */
+
     private double transitionResistance;
 
     public TransitionResistance() {

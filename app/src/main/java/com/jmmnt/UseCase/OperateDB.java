@@ -8,6 +8,10 @@ import java.util.ArrayList;
 
 public class OperateDB {
 
+    /**
+     * This class is forwarding information from the UI controllers to the database controller (DB_Con).
+     */
+
     private DB_Con db_con = DB_Con.getInstance();
     private OperateUser opU = new OperateUser();
     private static OperateDB operateDB;
@@ -70,4 +74,6 @@ public class OperateDB {
     public void fillUserAssignmentsIDs(int userID) {
         db_con.fillUserAssignmentsContainer(userID);
     }
+
+
 }

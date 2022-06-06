@@ -15,7 +15,6 @@
         <!-- Customize your theme here. -->
         <item name="android:itemBackground">@color/darkblue</item>
         <item name="android:textColor">#FFFFFF</item>
-
     </style>
 
     <style name="Theme.EksamensProjekt2022.NoActionBar">

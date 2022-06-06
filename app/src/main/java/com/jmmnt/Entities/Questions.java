@@ -4,6 +4,10 @@ import java.util.ArrayList;
 
 public class Questions {
 
+    /**
+     * Question keeps all the answers for one assignment.
+     */
+
     private String question;
     private int answer;
     private String comment;
@@ -57,7 +61,4 @@ public class Questions {
         return images;
     }
 
-    public void setImages(String imagePath) {
-        this.images.add(imagePath);
-    }
 }
