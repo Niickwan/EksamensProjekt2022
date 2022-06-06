@@ -2,52 +2,6 @@
 
 ![image](https://user-images.githubusercontent.com/89922905/172152423-7bba8fc8-1423-416d-9a62-dbca251f321c.png)
 
-# Projektbeskrivelse
-
-<details close>
-<summary>Projektbeskrivelse</summary>
-<br>
-
-Vores gruppe blev stillet opgaven med følgende breskrivelse, afsendt af vores undervisere.
- 
-Faglige (uddannelsesmæssige) krav:
-• Der skal anvendes systemudviklingsmetoder og i skal overveje hvordan Clean Architechture kan
-anvendes i projektet.
-• Systemet skal som udgangspunkt programmeres i Java.
-
-Jeres opgave er at konstruere et system som kan løse de hårde krav – hvis det er muligt må I også gerne
-prøve at løse nogle af de bløde krav. Det væsentlige i denne opgave er ikke nødvendigvis at gøre
-programmet færdigt, men at nå så langt og så meget som muligt – det handler rigtigt meget om at anvende
-systemudvikling og programmering i sammenhæng.
-
-Forløb:
-Projektet skal løses i grupper af 2-4 personer (det kan aftales at løse opgaven individuelt), og projektet
-præsenteres for klassen til sidst. (Præmie til den bedste løsning?)
-Projektstart: Tirsdag d. 29. marts 2022.
-Projektafslutning: Onsdag d. 27. april 2022.
-
- </details>
- 
-# Processen
- 
- <details close>
-<summary>Processen</summary>
-<br>  
-
-Vi har i gruppen haft en iterativ proces, hvor vi har gjort aktivt brug af et Agile-board -> [Agile-Board] (https://trello.com/invite/b/WYk9SA0K/1b9117bf51931f3e12b0fce39ebb083b/initial) til at projektstyre med.
-
-Gruppen har arbejdet sammen og hver for sig over en myriade af opgaver, funktioner og tilgange.
-
-Vores arbejde i gruppen har båret præg af en sund synergi medlemmerne imellem, og det er med godt humør og ildhu, vi har mødt de mange udfordringer, der opstår i forbindelse med et sådant projekt.
-
-Konstellationen i gruppen har været på tværs af ancienniteter og niveauer, men alle har været til stor gavn for det fælles resultat, og vi har oplevet konstellationens integritet som værende intakt fra start til slut.
-
-Undervejs har vi konsulteret hinanden i vores arbejder, og budt ind med løsninger og stillet spørgsmål, der med sine forskelligheder har stået for et positivt fremmende miljø og en tendens til at man gerne måtte netop dette, ligesom man ikke behøvede at holde sig tilbage fra at spørge ind til sit hold, for at søge hjælp/støtte eller for at lave fejl - indenfor rimelighedernes grænser.
-
-Vi har ført delvis logbog, men dette gled desværre ud i sandet, da ferien satte en stopper for fremmødet og dermed den fælles opsamling slut på dagen.
-I fremtiden ønsker vi at gøre mere brug af logbog - i form af en Sprint-Log, daglige SCRUM-møder og vores paradigme om at vi er fælles om opgaver udfordringer og løsningerne derfor.
- 
- Nedenfor ønsker vi at fremvise vores program i nærværende ReadMe.
 
  </details>
   
@@ -189,16 +143,6 @@ Login: Administrator
  Øvrige knapper i administratoren har ingen eller ringe funktion og er ikke værd at nævne heri
 
  </details>
-
-# Konklusion
- 
-<details close>
-<summary>Konklusion</summary>
-<br>  
-
-Vores konkluderende bemærkninger sammenflettes med vores resulterede program, der ses i sin helhed via nærværende GIT, samt vores fremstilling af samme i denne ReadMe.
-Vi har skabt et program, der overholder samtlige af de hårde krav, samt adskillige af de bløde krav ligeledes.
-Vores gruppe har formået at skabe et fuldt færdigt system, der med relativ simpel modifikation kan anvendes i professionel sammenhæng.
 
  </details>
 
