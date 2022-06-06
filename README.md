@@ -98,6 +98,7 @@
 <br>  
 
 Funktionalitets liste
+ 
 Programmets funktioner:
 I det man åbner appen, bliver man mødt af en loginskærm, hvor man kan logge ind eller registrere sig som ny bruge. Hvis man går ind under registrer bruger, bliver man bedt om at udfylde forskellige inputfelter, som navn, e-mail, telefon og adgangskode. Efter det er udfyldt og alle felter er blevet valideret er man oprettet som bruger.
  
