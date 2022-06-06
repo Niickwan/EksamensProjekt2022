@@ -1,6 +1,6 @@
 # EL-INSTALLATØR
 
-![image](https://user-images.githubusercontent.com/89922905/163845693-f7a5a590-bb81-47b2-bc76-413d2113257b.png)
+![image](https://user-images.githubusercontent.com/89922905/172152423-7bba8fc8-1423-416d-9a62-dbca251f321c.png)
 
 # Projektbeskrivelse
 
@@ -10,26 +10,6 @@
 
 Vores gruppe blev stillet opgaven med følgende breskrivelse, afsendt af vores undervisere.
  
-Monika har frisørsalonen ”Hårmoni’ka”
-Hårde krav:
-• Medarbejdere skal kunne logge ind og ud af systemet.
-• Det skal være muligt at oprette og slette tidsbestillinger
-• Det skal være muligt at slå tidsbestillinger op og rette i dem.
-• Tidsbestillinger må ikke gå i konflikt – en medarbejder kan kun klippe en kunde ad gangen.
-• Tidsbestillingen skal indeholde behandling og hvor lang tid behandlingen tager.
-• Systemet skal opbevare data struktureret og permanent.
-Tilføjelse:
-• 5. april – Skat kræver at aftaler bliver liggende i 5 år som dokumentation – en aftale må dog godt
-aflyses men skal blive i systemet som aflyst. Efter 5 år skal aftaler slettes automatisk med passende
-interval – f.eks. en gang om måneden eller året.
-Bløde krav:
-• Brugergrænsefladen må gerne være grafisk.
-• Medarbejdere og kunders data bør sikres – hvad kan man gøre i forhold til det?
-• Kunderne kunne måske modtage kvittering eller notifikationer per mail eller sms – hvordan kunne
-man lave det?
-• Der må på sigt godt være adgang til at kunderne selv kan bestille tid – det kunne være på nettet
-og/eller via en app. Hvordan kan systemet laves så det kunne være muligt?
-• Monika kunne måske også selv tænke sig at følge med på sin computer og/eller telefon.
 Faglige (uddannelsesmæssige) krav:
 • Der skal anvendes systemudviklingsmetoder og i skal overveje hvordan Clean Architechture kan
 anvendes i projektet.
