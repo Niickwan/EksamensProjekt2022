@@ -48,6 +48,10 @@ import java.util.Arrays;
 
 public class PDFGenerator {
 
+    /**
+     * This class contains methods for the creation and generation of a pdf document from data
+     * stored in a string ArrayList
+     */
     private Assignment assignment;
     private OperateAssignment opa = OperateAssignment.getInstance();
     private Table table;
@@ -56,6 +60,10 @@ public class PDFGenerator {
         this.assignment = assignment;
     }
 
+
+    //createPDF creates a pdf document and runs several methods that contain algorithms for reading
+    //a string array. These algorithms adds tables to the pdfdocument so that a document can be generated
+    //from the data in the string array.
     public void createPDF(Context context, String filename) throws IOException {
         ArrayList<String> excel = opa.getExcelAsArrayList("current_assignment.xls");
 
@@ -118,6 +126,7 @@ public class PDFGenerator {
         pdfDocument.close();
     }
 
+    //method that inserts the Table member variabel noteTable into the pdf document
     public void insertExcelDocumentNoteToNoteTable(ArrayList<String> excel){
         if(!excel.get(excel.size()-1).equals("-1")){
             noteTable.addCell(createParagraph("General Bemærkning: \n" + excel.get(excel.size()-1))); //TODO string
@@ -129,6 +138,8 @@ public class PDFGenerator {
 
 //↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ INSERT HEADLINE TAG METHODS ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓v
 
+    //method that reads an arraylist from start to end. The method has selections that are true,
+    //when specific strings in the arraylist are reached.
     public void insertExcelHeadlineAlgorithm(ArrayList<String> excel, Document document, Context context){
         for (int j = 0; j < excel.size(); j++) {
             if (excel.get(j).equals("<Headline>")){
@@ -241,6 +252,8 @@ public class PDFGenerator {
 
     //↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓INSERT INPUT HEADLINE TAG METHODS ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 
+    //method that reads an arraylist from start to end. The method has selections that are true,
+    //when specific strings in the arraylist are reached.
     public void insertExcelInputHeadlineAlgorithm(ArrayList<String> excel, Document document, PdfFont font) {
 
         for (int j = 0; j < excel.size(); j++) {
@@ -459,21 +472,21 @@ public class PDFGenerator {
         checkbox.setHeight(13f);
         checkbox.setWidth(13f);
         if(onOrOff){
-            checkbox.addCell(new Cell().add(createTick(context)).setHorizontalAlignment(HorizontalAlignment.CENTER).setVerticalAlignment(VerticalAlignment.MIDDLE));
+            checkbox.addCell(new Cell().add(createCheckMark(context)).setHorizontalAlignment(HorizontalAlignment.CENTER).setVerticalAlignment(VerticalAlignment.MIDDLE));
             return new Cell().add(checkbox.setHorizontalAlignment(HorizontalAlignment.CENTER)).setBorder(Border.NO_BORDER);
         }
         checkbox.addCell(new Cell().setHorizontalAlignment(HorizontalAlignment.CENTER));
         return new Cell().add(checkbox.setHorizontalAlignment(HorizontalAlignment.CENTER)).setBorder(Border.NO_BORDER);
     }
 
-    public Image createTick(Context context) {
-        Drawable drawable = context.getDrawable(R.drawable.tick);
+    public Image createCheckMark(Context context) {
+        Drawable drawable = context.getDrawable(R.drawable.checkmark);
 
-        Image tick = createImage(drawable);
-        tick.setHeight(8f);
-        tick.setWidth(8f);
-        tick.setHorizontalAlignment(HorizontalAlignment.CENTER);
+        Image checkmark = createImage(drawable);
+        checkmark.setHeight(8f);
+        checkmark.setWidth(8f);
+        checkmark.setHorizontalAlignment(HorizontalAlignment.CENTER);
 
-        return tick;
+        return checkmark;
     }
 }
