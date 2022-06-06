@@ -5,14 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import com.jmmnt.Entities.Assignment;
 import com.jmmnt.Entities.AssignmentContainer;
 import com.jmmnt.Entities.LoggedInUser;
@@ -24,7 +22,6 @@ import com.jmmnt.UseCase.GeneralUseCase;
 import com.jmmnt.UseCase.OperateAssignment;
 import com.jmmnt.UseCase.OperateDB;
 import com.jmmnt.databinding.FragmentAdminSearchCaseBinding;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -44,7 +41,6 @@ public class FragmentSearchCase extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentAdminSearchCaseBinding.inflate(inflater, container, false);
-
         return binding.getRoot();
     }
 
@@ -99,23 +95,26 @@ public class FragmentSearchCase extends Fragment {
         //This refreshes the two assignment containers when the listView is swiped from top towards the bottom
         SwipeRefreshLayout sFL = binding.swipeRefreshLayout.findViewById(R.id.swipeRefreshLayout);
         sFL.setOnRefreshListener(() -> {
-            Thread thread = new Thread(() -> {
+            Thread t1 = new Thread(() -> {
                 oDB.fillAssignmentContainer();
                 oDB.fillUserAssignmentsIDs(LoggedInUser.getInstance().getUser().getUserID());
             });
-            thread.start();
-            Timer delay = new Timer();
-            delay.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    getActivity().runOnUiThread(() -> {
-                        if (assignmentsSorted != null) assignmentsSorted.clear();
-                        assignmentsSorted.addAll(sortAssignments());
-                        sva.notifyDataSetChanged();
-                    });
-                    sFL.setRefreshing(false);
-                }
-            }, 1000);
+            Thread t2 = new Thread(() -> {
+                getActivity().runOnUiThread(() -> {
+                    if (assignmentsSorted != null) assignmentsSorted.clear();
+                    assignmentsSorted.addAll(sortAssignments());
+                    sva.notifyDataSetChanged();
+                });
+                sFL.setRefreshing(false);
+            });
+            try {
+                t1.start();
+                t1.join();
+                t2.start();
+                t2.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();  //TODO Test om det virker rigtigt med mere data
+            }
         });
     }
 

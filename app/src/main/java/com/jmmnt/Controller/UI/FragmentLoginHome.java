@@ -15,7 +15,6 @@ import com.jmmnt.UseCase.Encryption;
 import com.jmmnt.UseCase.GeneralUseCase;
 import com.jmmnt.UseCase.OperateDB;
 import com.jmmnt.databinding.FragmentLoginHomeBinding;
-
 import java.util.Timer;
 import java.util.TimerTask;
 

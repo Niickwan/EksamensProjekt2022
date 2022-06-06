@@ -15,7 +15,10 @@ import java.util.List;
 
 public class GeneralUseCase extends Activity {
 
-    private static final int REQUEST_IMAGE_CAPTURE = 1; //TODO WhatToDo
+    /**
+     * This is for minor general methods used in the entire system.
+     */
+
     private static Toast toast = null;
     private static GeneralUseCase generalUseCase = null;
 
@@ -62,6 +65,7 @@ public class GeneralUseCase extends Activity {
         return text.matches(emailTjek);
     }
 
+    //Alerts giving to the user by popup messages in the bottom of the screen.
     public void toastAlert(Context activity, String text) {
         if (toast != null) {
             toast.cancel();
@@ -90,6 +94,7 @@ public class GeneralUseCase extends Activity {
         }
         return false;
     }
+
     public boolean isFieldsEmpty(TextInputLayout[] fields){
         for(int i = 0; i < fields.length; i++){
             TextInputLayout currentField = fields[i];
@@ -99,7 +104,6 @@ public class GeneralUseCase extends Activity {
         }
         return false;
     }
-
 
     public ArrayList<String> getSplittedString(ArrayList<String> arr, String orderNr, String splitBy) {
         ArrayList<String> split = new ArrayList<>();
@@ -113,12 +117,6 @@ public class GeneralUseCase extends Activity {
             }
         }
         return split;
-    }
-
-    public String[] splitStringBy(String str, String splitBy) {  //TODO WhatToDO
-        String[] parts = new String[0];
-        parts = str.split("[" + splitBy + "]");
-        return parts;
     }
 
     public Button createBtnForHSV(String name, Activity activity, int height, int width) {

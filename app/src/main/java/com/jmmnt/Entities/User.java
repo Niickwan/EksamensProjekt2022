@@ -1,6 +1,11 @@
 package com.jmmnt.Entities;
 
 public class User {
+
+    /**
+     * User class storing information about a user.
+     */
+
     private String email;
     private String password;
     private String firstname;
@@ -107,11 +112,4 @@ public class User {
         return userID;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
-    public void setUserID(int userID) {
-        this.userID = userID;
-    }
 }

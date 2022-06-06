@@ -1,35 +1,20 @@
 package com.jmmnt.Controller.UI;
 
 import static android.app.Activity.RESULT_OK;
-
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-
-import com.jmmnt.Entities.Assignment;
-import com.jmmnt.Entities.CircuitDetails;
-import com.jmmnt.Entities.Questions;
-import com.jmmnt.Entities.ShortCircuitCurrentAndVoltageDrop;
-import com.jmmnt.Entities.TestingRCD;
-import com.jmmnt.Entities.TransitionResistance;
 import com.jmmnt.Entities.User;
-import com.jmmnt.UseCase.CreateExcelFile;
 import com.jmmnt.UseCase.Encryption;
 import com.jmmnt.UseCase.FTP.FTPClientFunctions;
 import com.jmmnt.R;
@@ -37,17 +22,7 @@ import com.jmmnt.UseCase.GeneralUseCase;
 import com.jmmnt.UseCase.OperateAssignment;
 import com.jmmnt.UseCase.OperateDB;
 import com.jmmnt.UseCase.OperateUser;
-import com.jmmnt.UseCase.PDFGeneration.PDFGenerator;
 import com.jmmnt.databinding.FragmentLoginRegisterBinding;
-
-import org.apache.commons.net.ntp.TimeStamp;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 
 public class FragmentLoginRegister extends Fragment{
 
@@ -59,9 +34,6 @@ public class FragmentLoginRegister extends Fragment{
     private FragmentLoginRegisterBinding binding;
     private ActivityResultLauncher<Intent> activityResultLauncher;
     private FTPClientFunctions ftpMethodClass = new FTPClientFunctions();
-    private PDFGenerator pdfg = new PDFGenerator(new Assignment(1,"1","s","4700","s", LocalDate.now(),"s"));
-    //TODO pdfGenerator skal tage det assignment som brugeren er inde på.
-    //TODO SKAL INDSÆTTES I DEN RIGTIGE KLASSE
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -114,95 +86,6 @@ public class FragmentLoginRegister extends Fragment{
 //            } //TODO UDKOMMENTERET
 
         }).start());
-
-        binding.TrykForBillede.setOnClickListener(v -> {
-            oAs.getExcelAsArrayList("TjeklisteTemplate.xls");
-
-        });
-
-        binding.writeExcelFile.setOnClickListener(v -> {
-            // VARIABLES FROM CURRENT FOLDER AND DOCUMENT
-            String fileName = "ExcelTest.xls";
-            String folder = "/public_html/assignments/8888/3. Sal/";
-
-
-            // TEST DATA //
-            ArrayList<List<Object>> samletListe = new ArrayList<>();
-
-            List<Object> general = new ArrayList<>();
-            general.add(new Questions("Tavlen", 2, "Hvad sker der?"));
-            general.add(new Questions("Elskab", 1, "Kom nu"));
-
-            List<Object> electricalPanel = new ArrayList<>();
-            electricalPanel.add(new Questions("El", 3, "Pas på"));
-            electricalPanel.add(new Questions("Test", 2, "Hallo"));
-
-            List<Object> installation = new ArrayList<>();
-            installation.add(new Questions("Installation", 3, "Pas på"));
-            installation.add(new Questions("Test Install", 3, "Hallo"));
-
-            List<Object> protection = new ArrayList<>();
-            protection.add(new Questions("Prot", 2, "Pas på"));
-            protection.add(new Questions("Test Prot", 2, "Hallo"));
-
-            List<Object> error = new ArrayList<>();
-            error.add(new Questions("Error", 1, "Pas på"));
-            error.add(new Questions("Test Error", 2, "Hallo"));
-
-            List<Object> section = new ArrayList<>();
-            section.add(new Questions("Section Section", 3, "Pas på"));
-            section.add(new Questions("Test Section", 1, "Hallo"));
-
-            List<Object> circuitDetailsResults = new ArrayList<>();
-            circuitDetailsResults.add(new CircuitDetails("Tavlen", "400", "Lampe", "6", "500", 1, "340", "20"));
-            circuitDetailsResults.add(new CircuitDetails("Stik", "40", "kontakt", "3", "300", 2, "34", "2"));
-
-            List<Object> resistance = new ArrayList<>();
-            resistance.add(new TransitionResistance(5.2));
-
-            List<Object> voltageDropResults = new ArrayList<>();
-            voltageDropResults.add(new ShortCircuitCurrentAndVoltageDrop("Elskab", "lk", "Kælderen", "1.sal", "560", "Kælderen"));
-            voltageDropResults.add(new ShortCircuitCurrentAndVoltageDrop("Fryser", "lk", "Stue", "4.sal", "60", "Stue"));
-
-            List<Object> testingRCDResults = new ArrayList<>();
-            testingRCDResults.add(new TestingRCD("Test",1,"res1","res2","res3","res4","res5","res6"));
-            testingRCDResults.add(new TestingRCD("Test",1,"res1","res2","res3","res4","res5","res6"));
-
-            samletListe.add(general);
-            samletListe.add(electricalPanel);
-            samletListe.add(installation);
-            samletListe.add(protection);
-            samletListe.add(error);
-            samletListe.add(section);
-            samletListe.add(circuitDetailsResults);
-            samletListe.add(resistance);
-            samletListe.add(testingRCDResults);
-            samletListe.add(voltageDropResults);
-
-            //END TEST DATA //
-
-
-            CreateExcelFile c = new CreateExcelFile();
-            c.createExcelSheet(fileName, samletListe,"idfjiofdjgodjfoi");
-
-            FTPClientFunctions ftp = new FTPClientFunctions();
-            String uploadExcelToServerPath = folder + fileName;
-            ftp.ftpUpload(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/" + fileName, uploadExcelToServerPath);
-
-        });
-
-
-        //METODER TIL KAMERA------------------------------------------------------------
-
-
-        //ftp.sendPicToFTP();
-
-
-        //binding.FTPButton.setOnClickListener(new Thread(() -> {
-           //ftpMethodClass.sendPicToFTP();
-     //   }).start());
-
-
 
 
         //METODER TIL CREATE USER-------------------------------------------------------
@@ -267,6 +150,7 @@ public class FragmentLoginRegister extends Fragment{
                    break;
            }
        };
+
         binding.registerFirstNameEt.setOnFocusChangeListener(setOnFocusChangeListener);
         binding.registerSurnameEt.setOnFocusChangeListener(setOnFocusChangeListener);
         binding.registerEmailEt.setOnFocusChangeListener(setOnFocusChangeListener);
@@ -280,6 +164,7 @@ public class FragmentLoginRegister extends Fragment{
         super.onDestroyView();
         binding = null;
     }
+
     //TODO skal flyttes til det fragment, hvor der bliver taget billeder
     public void openCamera(){
         Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);

@@ -4,6 +4,10 @@ import java.util.ArrayList;
 
 public class UserAssignmentContainer {
 
+    /**
+     * User related assignments is kept in this container.
+     */
+
     private ArrayList<Assignment> userAssignments;
     private static UserAssignmentContainer userAssignmentContainer;
 

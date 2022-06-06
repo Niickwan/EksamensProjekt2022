@@ -19,6 +19,10 @@ import jxl.write.WriteException;
 
 public class CreateExcelFile {
 
+    /**
+     * This class is creating an excel document by getting objects from the UI controller.
+     */
+
     private OperateAssignment oA = OperateAssignment.getInstance();
     private GeneralUseCase gUC = GeneralUseCase.getInstance();
 

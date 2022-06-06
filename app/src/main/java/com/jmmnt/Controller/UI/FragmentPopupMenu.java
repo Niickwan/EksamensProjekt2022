@@ -70,6 +70,7 @@ public class FragmentPopupMenu extends Fragment {
                 }
             }
         };
+
         pw.getContentView().findViewById(R.id.popupMenuAbout_tv).setOnClickListener(pwMenuItemClicked);
         pw.getContentView().findViewById(R.id.popupMenuEditProfile_tv).setOnClickListener(pwMenuItemClicked);
         pw.getContentView().findViewById(R.id.popupMenuLogout_tv).setOnClickListener(pwMenuItemClicked);

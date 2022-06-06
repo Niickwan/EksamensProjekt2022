@@ -25,12 +25,13 @@ public class DB_Con {
     private Statement stmt;
     private ResultSet rs;
     private static DB_Con dbCon;
-    private final String URL = "jdbc:mysql://mysql61.unoeuro.com:3306/dat32_dk_db_eksamen?useSSL=true"; //TODO SSL Run error "autoReconnect=true&useSSL=false"
-    private final String format = "yyyy-MM-dd"; //TODO brug dateformatter i generalUsecase?
+    private final String URL = "jdbc:mysql://mysql61.unoeuro.com:3306/dat32_dk_db_eksamen?useSSL=true";
 
+    //Default constructor
     private DB_Con(){
     }
 
+    //Getinstance for singleton
     public static DB_Con getInstance() {
         if (dbCon == null) {
             return dbCon = new DB_Con();
@@ -38,6 +39,7 @@ public class DB_Con {
             return dbCon;
     }
 
+    //Excutes sql queries
     private boolean uploadMySQLCall(String sqlString) {
         int SQLCallSucceded = 0;
         try {
@@ -52,6 +54,7 @@ public class DB_Con {
         return SQLCallSucceded == 1;
     }
 
+    //Closes the connection to the database
     private void closeConnection(Connection connection) {
         try {
             preStmt.close();
@@ -61,6 +64,7 @@ public class DB_Con {
         }
     }
 
+    //Establish connection to the database
     private Connection connection() {
         try {
             connection = DriverManager.getConnection(URL, "dat32_dk", "9hkdpBFtAg34");
@@ -70,6 +74,7 @@ public class DB_Con {
         return connection;
     }
 
+    //Get all user data and add it to a container
     public void fillUserContainer() {
         UserContainer userContainer = UserContainer.getInstance();
         if (!UserContainer.getUsers().isEmpty()) UserContainer.getUsers().clear();
@@ -94,6 +99,7 @@ public class DB_Con {
 
     }
 
+    //Get all assignment data and add it to a container
     public boolean fillAssignmentContainer() {
         LocalDate localDate;
         boolean isUsed = false;
@@ -126,6 +132,7 @@ public class DB_Con {
         return isUsed;
     }
 
+    //Get all user related assignment data and add it to a container
     public boolean fillUserAssignmentsContainer(int userID) {
         UserAssignmentContainer uAC = UserAssignmentContainer.getInstance();
         if (!uAC.getUserAssignments().isEmpty())
@@ -152,6 +159,7 @@ public class DB_Con {
     }
 
 
+    //Check if given arguments matches data in the database
     public User validateLogin(String email, String password) {
         User user = null;
         String mySQL = "SELECT * FROM User WHERE Email = ? AND Password = ?";
@@ -179,6 +187,7 @@ public class DB_Con {
         return user;
     }
 
+    //Insert given argument data into the database
     public boolean createNewUser(User user) {
         connection = connection();
         String userInfo = "INSERT INTO User (Email, Password, Firstname, Surname, User_Rights, Phonenumber) "
@@ -192,6 +201,7 @@ public class DB_Con {
         return uploadMySQLCall(userInfo);
     }
 
+    //Check if given argument matches data in the database
     public boolean isPhonenumberOccupied(String phoneNumber) {
         boolean isPhoneNumberAvailable = false;
         String mySQL = "SELECT * FROM User WHERE Phonenumber = '" + phoneNumber + "'";
@@ -210,6 +220,7 @@ public class DB_Con {
         return isPhoneNumberAvailable;
     }
 
+    //Check if given argument matches data in the database
     public boolean isEmailOccupied(String email) {
         boolean isEmailAvailable = false;
         String mySQL = "SELECT * FROM User WHERE Email = '" + email + "'";
@@ -228,7 +239,7 @@ public class DB_Con {
         return isEmailAvailable;
     }
 
-
+    //Update a specific user in the database
     public boolean updateUser(User user) {
         connection = connection();
         String updateUser = "UPDATE User " +
@@ -241,7 +252,8 @@ public class DB_Con {
         return uploadMySQLCall(updateUser);
     }
 
-    public boolean createNewAssignment(Assignment assignment) {  //TODO INSERT INTO SKAL RETTES TIL DEET NYE ASSIGMNET OBJEKT
+    //Insert new assignment without userID as a parameter
+    public boolean createNewAssignment(Assignment assignment) {
         connection = connection();
         String userInfo = "INSERT INTO Assignment (Address, Postal_Code, Status, Order_Number, Status_Date, Customer_Name) "
                 + "VALUES ('"
@@ -254,7 +266,8 @@ public class DB_Con {
         return uploadMySQLCall(userInfo);
     }
 
-    public boolean createNewAssignment(Assignment assignment, int userID) {  //TODO INSERT INTO SKAL RETTES TIL DEET NYE ASSIGMNET OBJEKT
+    //Insert new assignment with userID as a parameter
+    public boolean createNewAssignment(Assignment assignment, int userID) {
         int isUpdated;
         String userInfo = "INSERT INTO Assignment (Address, Postal_Code, Status, Order_Number, Status_Date, Customer_Name) "
                 + "VALUES ('"
@@ -284,7 +297,7 @@ public class DB_Con {
         return false;
     }
 
-
+    //Gathering directory paths for a specific order
     public ArrayList<String> getAssignmentStructure(String orderNr) {
         ArrayList<String> arr = new ArrayList<>();
         try {
@@ -299,6 +312,7 @@ public class DB_Con {
         return arr;
     }
 
+    //Check if order exist in the database
     public boolean doesOrderNumberExist(String orderNumber) {
         boolean isOrderNumberAvailable = true;
         String mySQL = "SELECT * FROM Assignment WHERE Order_Number = '" + orderNumber + "'";

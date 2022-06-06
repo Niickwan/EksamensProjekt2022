@@ -4,6 +4,10 @@ import java.util.ArrayList;
 
 public class UserContainer {
 
+    /**
+     * User container keeps all the users gathered from the database.
+     */
+
     private static ArrayList<User> users;
     private static UserContainer uc;
     private static int created = 0;
@@ -23,10 +27,6 @@ public class UserContainer {
 
     public void addUserToContainer(User user) {
         this.users.add(user);
-    }
-
-    public static ArrayList<User> getUserByName() {
-        return users;
     }
 
     public static ArrayList<User> getUsers() {
