@@ -111,14 +111,6 @@ Under udvikling af appen, og under vores første møde med kunden, fik vi stille
   
 </details> 
 
-# Design Model
-<details close>
-<summary>Klassediagram</summary>
-<br>  
- 
-![Klassediagram foreløbig (3) vpd (1)](https://user-images.githubusercontent.com/89967398/165056209-1e065d61-6170-442f-b712-a6b859397fea.png)
-
-</details>
 
 # Holdet  
 - *SoftwareSmeden* -> [Profile](https://github.com/SoftwareSmeden "SoftwareSmeden")
