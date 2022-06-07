@@ -401,7 +401,6 @@ public class FragmentAdminChecklist extends Fragment {
             });
             Thread uploadExcelT = new Thread(() -> ftp.ftpUpload(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString() + "/current_assignment.xls",
                     "/public_html/assignments/" + orderNr + "/" + selectedFloorName + "/" + filename + ".xls"));
-
             Thread uploadPdfT = new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -449,7 +448,7 @@ public class FragmentAdminChecklist extends Fragment {
             public void onClick(View view) {
                 System.out.println("SIZE "+ circuitDetailList.size());
                 for (int i = 0; i < circuitDetailList.size(); i++) {
-                    System.out.println("Objekt nr: "+ i + " --- " + circuitDetailList.get(i));
+                    System.out.println("Objekt nr: "+ i + " --- " + circuitDetailList.get(i)); //TODO FJERN INDEN AFLEVERING
                 }
             }
         });
@@ -634,12 +633,6 @@ public class FragmentAdminChecklist extends Fragment {
             changeSelectedMenuButton();
         }
         floorLinearLayout.addView(addFloorBtn);
-    }
-
-    private void editOrDeleteRoom() {
-        /**
-         * GØR SÅ MAN KAN REDIGERE NAVNET PÅ ETAGEN ELLER SLETTE EN ETAGE
-         */
     }
 
     // TODO Gøres til generelle metoder
@@ -897,11 +890,11 @@ public class FragmentAdminChecklist extends Fragment {
         rv.setLayoutManager(new LinearLayoutManager(getActivity(), orientation, false));
         rv.setAdapter((RecyclerView.Adapter) adapter);
 
-        Object addNewObject = adapterFactory.setObjectType(objectTag);
         addBtn.setOnClickListener(view -> {
             if (objectTag.equals("question")) {
                 addQuestion(dataList, rv, adapter);
             } else {
+                Object addNewObject = adapterFactory.setObjectType(objectTag);
                 dataList.add(addNewObject);
                 rv.smoothScrollToPosition(dataList.size());
                 ((RecyclerView.Adapter<?>) adapter).notifyItemInserted(dataList.size());
