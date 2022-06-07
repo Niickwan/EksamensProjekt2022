@@ -21,9 +21,6 @@ public class QuestionsViewAdapter extends RecyclerView.Adapter<QuestionsViewHold
         this.items = items;
     }
 
-    public QuestionsViewAdapter(){
-    }
-
     @NonNull
     @Override
     public QuestionsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -57,7 +54,6 @@ public class QuestionsViewAdapter extends RecyclerView.Adapter<QuestionsViewHold
     }
 
 }
-
 
 class QuestionsViewHolder extends RecyclerView.ViewHolder {
 
@@ -94,9 +90,6 @@ class QuestionsViewHolder extends RecyclerView.ViewHolder {
             }
             areCheckBoxesUnchecked();
         });
-
-
-        //TODO Vi kan aflæse felter herfra
 
     }
 

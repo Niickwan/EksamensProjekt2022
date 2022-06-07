@@ -14,6 +14,8 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
+
 import com.jmmnt.Entities.User;
 import com.jmmnt.UseCase.Encryption;
 import com.jmmnt.UseCase.FTP.FTPClientFunctions;
@@ -43,19 +45,19 @@ public class FragmentLoginRegister extends Fragment{
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //METODER TIL KAMERA------------------------------------------------------------
-        //TODO skal flyttes til det fragment, hvor der bliver taget billeder
-        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
-           @Override
-            public void onActivityResult(ActivityResult result) {
-                if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                    Bundle bundle = result.getData().getExtras();
-                    Bitmap bitmap = (Bitmap) bundle.get("data");
-                    ftpMethodClass.sendPicToFTP(bitmap, "TempName.png","/public_html/assignments",requireContext());
-                }
-            }
-        });
 
+        //METODER TIL KAMERA------------------------------------------------------------
+//        //TODO skal flyttes til det fragment, hvor der bliver taget billeder
+//        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+//           @Override
+//            public void onActivityResult(ActivityResult result) {
+//                if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+//                    Bundle bundle = result.getData().getExtras();
+//                    Bitmap bitmap = (Bitmap) bundle.get("data");
+//                    ftpMethodClass.sendPicToFTP(bitmap, "TempName.png","/public_html/assignments",requireContext());
+//                }
+//            }
+//        });
         //TODO skal flyttes til det fragment, hvor der bliver taget billeder
 //        binding.TrykForBillede.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -69,10 +71,9 @@ public class FragmentLoginRegister extends Fragment{
 //            }
 //        });
 
-
-        binding.FTPButton.setOnClickListener(v -> new Thread(() -> {
-            ftpMethodClass.ftpDownload("/TjekListeNy (7).xls", "TjeklisteTemplate.xls");
-            //ftpMethodClass.ftpDownload("/public_html/assignments/8888/3. Sal/ExcelTest.xls", "sl.xls");
+//        binding.FTPButton.setOnClickListener(v -> new Thread(() -> {
+//            ftpMethodClass.ftpDownload("/TjekListeNy (7).xls", "TjeklisteTemplate.xls");
+//            //ftpMethodClass.ftpDownload("/public_html/assignments/8888/3. Sal/ExcelTest.xls", "sl.xls");
 //            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
 //                ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 101);
 //            }
@@ -81,11 +82,10 @@ public class FragmentLoginRegister extends Fragment{
 //                    pdfg.createPDF(getContext());
 //                } catch (IOException e) {
 //                    e.printStackTrace();
-//
 //                }
-//            } //TODO UDKOMMENTERET
-
-        }).start());
+//            }
+//        }).start());
+        //METODER TIL KAMERA------------------------------------------------------------
 
 
         //METODER TIL CREATE USER-------------------------------------------------------
@@ -117,7 +117,7 @@ public class FragmentLoginRegister extends Fragment{
             else if(binding.registerPasswordEt.getText().toString().isEmpty()){
                 gUC.toastAlert(getActivity(),"Password er ikke udfyldt");
             }
-            else{
+            else {
                 User user = opUsr.CreateDefaultUserLoginInfo(
                         binding.registerFirstNameEt.getText().toString(),
                         binding.registerSurnameEt.getText().toString(),
@@ -125,6 +125,9 @@ public class FragmentLoginRegister extends Fragment{
                         binding.registerEmailEt.getText().toString(),
                         Encryption.encrypt(binding.registerPasswordEt.getText().toString()));
                 opDB.createUserInDB(user);
+                getActivity().runOnUiThread(() ->
+                        NavHostFragment.findNavController(FragmentLoginRegister.this).navigate(R.id.action_FragmentLoginRegister_to_FragmentLoginHome));
+                gUC.toastAlert(getActivity(), "Bruger oprettet");
             }
         }).start());
 

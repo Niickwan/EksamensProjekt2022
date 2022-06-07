@@ -60,8 +60,9 @@ public class ShortCircuitCurrentAndVoltageDropViewAdapter extends RecyclerView.A
     public List<ShortCircuitCurrentAndVoltageDrop> getItems() {
         return items;
     }
-}
 
+
+}
 
 class ShortCircuitAndVoltageDropViewHolder extends RecyclerView.ViewHolder {
 

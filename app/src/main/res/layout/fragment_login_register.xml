@@ -93,14 +93,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/registerEmail_et" />
 
-                <ImageView
-                    android:id="@+id/imageView32"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    tools:src="@tools:sample/avatars" />
-
                 <TextView
                     android:id="@+id/login_tv2"
                     android:layout_width="wrap_content"
@@ -135,14 +127,6 @@
                     app:layout_constraintTop_toBottomOf="@+id/registerPhoneNumber_et" />
 
                 <Button
-                    android:id="@+id/FTPButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Tryk For FTP :)"
-                    app:layout_constraintBottom_toTopOf="@+id/imageView32"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-                <Button
                     android:id="@+id/create_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -152,17 +136,6 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/registerConfirmPassword_et" />
-
-                <Button
-                    android:id="@+id/TrykForBillede"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="28dp"
-                    android:text="Tryk for billede :)"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.145"
-                    app:layout_constraintStart_toStartOf="parent" />
 
                 <EditText
                     android:id="@+id/registerEmail_et"
@@ -182,13 +155,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/registerSurname_et" />
 
-                <Button
-                    android:id="@+id/write_excel_file"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="WriteExcelFile"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

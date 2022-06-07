@@ -19,5 +19,9 @@
         android:id="@+id/FragmentLoginRegister"
         android:name="com.jmmnt.Controller.UI.FragmentLoginRegister"
         android:label="@string/fragment_login_register_label"
-        tools:layout="@layout/fragment_login_register" />
+        tools:layout="@layout/fragment_login_register" >
+        <action
+            android:id="@+id/action_FragmentLoginRegister_to_FragmentLoginHome"
+            app:destination="@id/FragmentLoginHome" />
+    </fragment>
 </navigation>

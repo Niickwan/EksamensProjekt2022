@@ -29,14 +29,14 @@ public class CreateExcelFile {
     AdapterFactory apFac = new AdapterFactory();
     WritableSheet sheet;
     private WritableWorkbook workbook;
-    //    private WritableSheet sheet; //TODO WhatToDo
+    // private WritableSheet sheet;
     private int rowCount = 0;
     private int columnCount = 0;
     int getList = 0;
     double questionSection = 1;
     String note;
 
-    // Keep track of ExcelTemplate //TODO WhatToDo
+    // Keep track of ExcelTemplate
     private int startPosition = 0;
     private int endPosition = 0;
     ArrayList<String> excelTemplate;
@@ -320,9 +320,6 @@ public class CreateExcelFile {
                     sheet.addCell(new Label(columnCount, rowCount, "-1"));
                     columnCount++;
                 }
-              //TODO sout
-                System.out.println(((Questions) list.get(getList).get(i)).getImages().size());
-                System.out.print("AR LIST____");
                 ((Questions) list.get(getList).get(i)).getImages().forEach(System.out::println);
                 sheet.addCell(new Label(columnCount, rowCount, "<ImagesEnd>"));
                 columnCount++;
