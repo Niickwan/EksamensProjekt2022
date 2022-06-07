@@ -12,7 +12,7 @@ public class OperateUser {
     private LoggedInUser loggedInUser = LoggedInUser.getInstance();
 
     public User CreateDefaultUserLoginInfo(String firstName, String surname, String phoneNumber, String email, String password) {
-        return new User(firstName, surname, phoneNumber, email, password, 2);
+        return new User(firstName, surname, phoneNumber, email, password, 1);
     }
 
     public void setLoggedInUser(User user){

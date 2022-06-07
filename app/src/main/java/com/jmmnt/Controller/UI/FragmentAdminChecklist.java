@@ -64,14 +64,11 @@ public class FragmentAdminChecklist extends Fragment {
     private AssignmentContainer assignmentContainer = AssignmentContainer.getInstance();
     private FTPClientFunctions ftp = new FTPClientFunctions();
     private CreateExcelFile cEF = new CreateExcelFile();
-    private boolean isNewAssignment;
-
     private Button addFloorBtn;
     private LayerDrawable selectedFloor;
     private LayerDrawable unSelectedFloor;
     private ArrayList<String> floors = new ArrayList<>();
     private ArrayList<Button> floorButtons = new ArrayList<>();
-
     private List<Object> general = new ArrayList<>();
     private List<Object> electricalPanel = new ArrayList<>();
     private List<Object> installation = new ArrayList<>();
@@ -83,7 +80,6 @@ public class FragmentAdminChecklist extends Fragment {
     private List<Object> testingRCDResults = new ArrayList<>();
     private List<Object> voltageDropResults = new ArrayList<>();
     private ArrayList<List<Object>> completeAssignment = new ArrayList<>();
-
     private String documentNote = "";
     private LinearLayout parentLLH;
 
@@ -118,14 +114,11 @@ public class FragmentAdminChecklist extends Fragment {
         LinearLayout roomLinearLayout = new LinearLayout(getActivity());
         roomLinearLayout.setOrientation(LinearLayout.HORIZONTAL);
 
-
         Thread t1 = new Thread(() -> setFloorHorizontalScrollBar());
-
         Thread t2 = new Thread(() -> {
             String excelFileName = orderNr + "_" + selectedFloorName + ".xls";
             ftp.ftpDownload("/public_html/assignments/" + orderNr + "/" + selectedFloorName + "/" + excelFileName, "current_assignment.xls");
         });
-
         Thread t3 = new Thread(() -> {
             try {
                 Thread.sleep(1000);
@@ -134,7 +127,6 @@ public class FragmentAdminChecklist extends Fragment {
             }
             getActivity().runOnUiThread(() -> generateUI());
         });
-
         try {
             t1.start();
             t1.join();
@@ -145,7 +137,6 @@ public class FragmentAdminChecklist extends Fragment {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
 
     }
 

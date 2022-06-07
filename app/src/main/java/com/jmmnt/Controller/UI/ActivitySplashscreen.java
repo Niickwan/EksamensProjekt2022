@@ -15,7 +15,7 @@ public class ActivitySplashscreen extends AppCompatActivity {
             startActivity(new Intent(ActivitySplashscreen.this, ActivityLogin.class));
             finish();
 
-        }, 500); //TODO FIX DELAY TIMER
+        }, 3000);
 
     }
 

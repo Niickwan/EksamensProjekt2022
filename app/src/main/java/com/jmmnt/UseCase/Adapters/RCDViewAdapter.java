@@ -108,7 +108,6 @@ class RCDViewHolder extends RecyclerView.ViewHolder {
                 adapter.getItems().get(getAdapterPosition()).setFifthResult(fifthResult.getEditableText().toString());
                 adapter.getItems().get(getAdapterPosition()).setSixthResult(sixthResult.getEditableText().toString());
             }
-
             @Override
             public void afterTextChanged(Editable editable) {
             }

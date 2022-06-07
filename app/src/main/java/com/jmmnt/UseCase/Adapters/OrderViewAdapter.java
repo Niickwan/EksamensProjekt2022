@@ -31,7 +31,6 @@ public class OrderViewAdapter extends RecyclerView.Adapter<OrderViewHolder> {
     }
 
     public OrderViewAdapter() {
-
     }
 
     @NonNull
@@ -51,8 +50,6 @@ public class OrderViewAdapter extends RecyclerView.Adapter<OrderViewHolder> {
         installedBy_tv = holder.itemView.findViewById(R.id.installedBy_tv);
         verifiedBy_spinner = holder.itemView.findViewById(R.id.verifiedBy_spinner);
         verifiedBy_spinner.setSelection(2);
-
-        System.out.println("ITEM ITEM "+items.get(position));
 
         if (position < items.size()) {
             customerFullName_tv.setText(gUC.convertMinusOneToEmptyString(items.get(position).getCustomerName()));
@@ -79,6 +76,7 @@ public class OrderViewAdapter extends RecyclerView.Adapter<OrderViewHolder> {
             @Override
             public void onNothingSelected(AdapterView<?> adapter) {  }
         });
+
     }
 
     @Override
@@ -86,13 +84,6 @@ public class OrderViewAdapter extends RecyclerView.Adapter<OrderViewHolder> {
         return items.size();
     }
 
-    public List<Assignment> getItems() {
-        return items;
-    }
-
-    public void setItems(List<Assignment> items) {
-        this.items = items;
-    }
 }
 
 class OrderViewHolder extends RecyclerView.ViewHolder {
@@ -101,8 +92,6 @@ class OrderViewHolder extends RecyclerView.ViewHolder {
 
     public OrderViewHolder(@NonNull View itemView) {
         super(itemView);
-
-        //TODO Vi kan aflæse felter herfra
     }
 
     public OrderViewHolder linkAdapter(OrderViewAdapter orderViewAdapter) {

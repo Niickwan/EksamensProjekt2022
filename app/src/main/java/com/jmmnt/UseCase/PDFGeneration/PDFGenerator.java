@@ -453,7 +453,6 @@ public class PDFGenerator {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         ImageData imageData = ImageDataFactory.create(BitmapData);
         return new Image(imageData);
     }
@@ -481,12 +480,10 @@ public class PDFGenerator {
 
     public Image createCheckMark(Context context) {
         Drawable drawable = context.getDrawable(R.drawable.checkmark);
-
         Image checkmark = createImage(drawable);
         checkmark.setHeight(8f);
         checkmark.setWidth(8f);
         checkmark.setHorizontalAlignment(HorizontalAlignment.CENTER);
-
         return checkmark;
     }
 }
