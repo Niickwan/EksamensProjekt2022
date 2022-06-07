@@ -10,7 +10,7 @@ import org.junit.Test;
 import java.sql.SQLException;
 
 public class DB_ConTest {
-    DB_Con db = new DB_Con();
+    DB_Con db = DB_Con.getInstance();
 
     @Test
     public void createNewUser() throws SQLException {
