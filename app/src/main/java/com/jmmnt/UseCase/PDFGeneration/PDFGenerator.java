@@ -77,21 +77,32 @@ public class PDFGenerator {
         //initialize notetable
         noteTable = new Table(getWidthMatchingPageSize(1,document)).useAllAvailableWidth();
 
+        //creates an input stream reading the arial.tff file inside the assets folder
         InputStream inputStreamArial = context.getAssets().open("font/arial.ttf");
+        //converts the input stream to a byte array in preparation for creaing a FontProgram
         byte[] bytesArial = IOUtils.toByteArray(inputStreamArial);
+        //creates a FontProgram using the .ttf file containing the font "arial"
         FontProgram createArial = FontProgramFactory.createFont(bytesArial);
+        //creates a PdfFont from the FontProgram above. the font uses the encoding IDENTITY_H.
         PdfFont fontArial = PdfFontFactory.createFont(createArial, PdfEncodings.IDENTITY_H,true);
+        //sets the pdf documents font to the font created above.
         document.setFont(fontArial);
 
+
+        //starts an EventHandler that runs everytime the pdf document creates a new page
         pdfDocument.addEventHandler(PdfDocumentEvent.START_PAGE, new IEventHandler() {
             @Override
             public void handleEvent(Event event) {
                 PdfDocumentEvent docEvent = (PdfDocumentEvent) event;
                 PdfPage page = docEvent.getPage();
+                //saves the current page's page number in an int.
                 int pageNumber = docEvent.getDocument().getPageNumber(page);
+                //instantiates a PdfCanvas
                 PdfCanvas canvas = new PdfCanvas(page.newContentStreamBefore(), page.getResources(), pdfDocument);
                 //CREATING BACKGROUND COLOR AFTER A NEW PAGE IS STARTED
+                //instantiates a rectangle that fits the entire pdf page
                 Rectangle rect = page.getPageSize();
+                //fills the entire page with the ColorConstants yellow
                 canvas.saveState().setFillColor(ColorConstants.YELLOW)
                         .rectangle(rect.getLeft(), rect.getBottom(), rect.getWidth(), rect.getHeight())
                         .fillStroke().restoreState();
@@ -109,15 +120,19 @@ public class PDFGenerator {
         document.add(createParagraph("\n"));
 
         //ALGORITHM FOR READING EXCELSHEET
+        //method call
         insertExcelHeadlineAlgorithm(excel, document, context);
 
         //ALGORITHM FOR READING EXCELSHEET
+        //method call
         insertExcelInputHeadlineAlgorithm(excel, document,fontArial);
 
         //INSERTS DOCUMENT NOTE FROM EXCELSHEET INTO noteTable
+        //method call
         insertExcelDocumentNoteToNoteTable(excel);
 
         //METHOD FOR CREATING NOTE TABLE AT BOTTOM OF LAST PAGE
+        //method call
         document.add(noteTable);
 
 
@@ -140,35 +155,75 @@ public class PDFGenerator {
 
     //method that reads an arraylist from start to end. The method has selections that are true,
     //when specific strings in the arraylist are reached.
-    public void insertExcelHeadlineAlgorithm(ArrayList<String> excel, Document document, Context context){
-        for (int j = 0; j < excel.size(); j++) {
-            if (excel.get(j).equals("<Headline>")){
 
+    /**
+     *
+     * @param excel
+     * @param document
+     * @param context
+     * This method is called inside the method createPDF
+     */
+    public void insertExcelHeadlineAlgorithm(ArrayList<String> excel, Document document, Context context){
+        //runs a forloop through the entire excel string arraylist
+        for (int j = 0; j < excel.size(); j++) {
+            //if statement that is true when the forloop reaches a string containing "<Headline>"
+            if (excel.get(j).equals("<Headline>")){
+                //instantiates a string array, choices, to the same size as the number of
+                //question choices a headline contains. this number can always be found
+                //3 indexes ahead of the "<Headline>" string, hence the j+3.
                 String[] choices = new String[Integer.parseInt(excel.get(j+3))];
 
+                //runs a forloop through the entire excel string arraylist, starting at the same
+                //index as the one the j-loop has currently reached.
                 for (int i = j; i < excel.size(); i++) {
+                    //if statement that is true when the forloop reaches a string containing "<Headline>"
                     if (excel.get(i).equals("<QuestionOptions>")) {
+                        //method call
                         readExcelQuestionOptions(excel,i,j,choices,document);
                     }
+                    //if statement that is true when the forloop reaches a string containing "<Headline>"
                     else if (excel.get(i).equals("<Question>")){
+                        //method call
                         readExcelQuestion(excel, document, context, choices, i);
                     }
+                    //if statement that is true when the forloop reaches a string containing "<Headline>"
+                    //this if statement is used to stop the loop when the tag <HeadlineEnd>
+                    //it also sets j to the same index i has currently reached, so that the j-loop
+                    //doesn't have to read through indexes that have already been read.
                     else if (excel.get(i).equals("<HeadlineEnd>")){
                         j = i;
                         break;
                     }
                 }
+                //adds a new line in the pdf document
                 document.add(createParagraph("\n"));
             }
         }
     }
+
+    /**
+     *
+     * @param excel
+     * @param document
+     * @param context
+     * @param choices
+     * @param i - represents the current index of the excel arraylist, from the loop
+     *            in the method that calls this method
+     * This method is called inside the method insertExcelHeadlineAlgorithm
+     */
     private void readExcelQuestion(ArrayList<String> excel, Document document, Context context, String[] choices, int i) {
+        //initializes the answer of the question in an int-type.
+        //the answer to the question will always be found 4 indexes after the "<Question>" string
+        //hence the i+4
         int answer = Integer.parseInt(excel.get(i +4));
+
+        //if statement that sets the answer to 3 if the answer is -1
         if (answer == -1){
             answer = 3;
         }
+        //method call
         readExcelNotesAndImages(excel, document, i);
-
+        //adds a table to the pdf document by calling the method createMultipleChoiceTable
         document.add(createMultipleChoiceTable(excel.get(i +1) + " " + excel.get(i +2), choices.length,
                 answer,getColumnWidths(table), context));
 
