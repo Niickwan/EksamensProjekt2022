@@ -67,7 +67,7 @@ public class DB_Con {
     //Establish connection to the database
     private Connection connection() {
         try {
-            connection = DriverManager.getConnection(URL, "dat32_dk", "9hkdpBFtAg34");
+            connection = DriverManager.getConnection(URL, "", "");
         } catch (SQLException e) {
             e.printStackTrace();
         }
