@@ -9,15 +9,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.jmmnt.Entities.Questions;
 import com.jmmnt.R;
-import java.util.List;
+import java.util.ArrayList;
 
 public class QuestionsViewAdapter extends RecyclerView.Adapter<QuestionsViewHolder> {
 
-    private List<Questions> items;
+    private ArrayList<Questions> items;
     private TextView question;
     private CheckBox checkBoxYes, checkBoxNo, checkBoxNotRelevant;
 
-    public QuestionsViewAdapter(List<Questions> items) {
+    public QuestionsViewAdapter(ArrayList<Questions> items) {
         this.items = items;
     }
 
@@ -49,7 +49,7 @@ public class QuestionsViewAdapter extends RecyclerView.Adapter<QuestionsViewHold
         return items.size();
     }
 
-    public List<Questions> getItems() {
+    public ArrayList<Questions> getItems() {
         return items;
     }
 

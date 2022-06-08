@@ -47,7 +47,6 @@ public class FragmentEditProfile extends Fragment {
         binding.editSurnameEt.setText(loggedInUser.getSurname());
         binding.editPhoneNumberEt.setText(loggedInUser.getPhonenumber());
         binding.editEmailEt.setText(loggedInUser.getEmail());
-
     }
 
     @Override

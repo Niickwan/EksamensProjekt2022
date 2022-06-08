@@ -10,28 +10,23 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.jmmnt.Entities.Assignment;
-import com.jmmnt.Entities.AssignmentContainer;
 import com.jmmnt.Entities.User;
 import com.jmmnt.Entities.UserContainer;
 import com.jmmnt.R;
 import com.jmmnt.UseCase.GeneralUseCase;
-
-import java.util.List;
+import java.util.ArrayList;
 
 public class OrderViewAdapter extends RecyclerView.Adapter<OrderViewHolder> {
 
-    private List<Assignment> items;
+    private ArrayList<Assignment> items;
     private TextView customerFullName_tv, address_tv, orderNumber_tv, identification_et, date_tv, installedBy_tv;
     private Spinner verifiedBy_spinner;
     private Context context;
     private GeneralUseCase gUC = GeneralUseCase.getInstance();
 
-    public OrderViewAdapter(List<Assignment> items, Context context) {
+    public OrderViewAdapter(ArrayList<Assignment> items, Context context) {
         this.items = items;
         this.context = context;
-    }
-
-    public OrderViewAdapter() {
     }
 
     @NonNull

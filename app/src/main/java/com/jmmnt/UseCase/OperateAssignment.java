@@ -12,7 +12,6 @@ import java.io.Reader;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 import jxl.Cell;
@@ -177,8 +176,8 @@ public class OperateAssignment {
         return arr;
     }
 
-    public List sortAssignmentsByCheckboxIsChecked(List<Assignment> assignments, List<Assignment> userAssignmentIDs, boolean isActive, boolean isWaiting, boolean isFinished, boolean isUserCasesChecked){
-        List<Assignment> sortedList = new ArrayList<>();
+    public ArrayList sortAssignmentsByCheckboxIsChecked(ArrayList<Assignment> assignments, ArrayList<Assignment> userAssignmentIDs, boolean isActive, boolean isWaiting, boolean isFinished, boolean isUserCasesChecked){
+        ArrayList<Assignment> sortedList = new ArrayList<>();
         for (int i = 0; i < userAssignmentIDs.size(); i++) {
             for (int j = 0; j < assignments.size(); j++) {
                 if (isUserCasesChecked && userAssignmentIDs.get(i).getAssignmentID() == assignments.get(j).getAssignmentID()) {
@@ -200,7 +199,7 @@ public class OperateAssignment {
         return sortedList;
     }
 
-    public List bubbleSortAssignmentsByDate(List<Assignment> list) {
+    public ArrayList bubbleSortAssignmentsByDate(ArrayList<Assignment> list) {
         Assignment temp;
         for (int i = 0; i < list.size() - 1; i++) {
             for (int j = i + 1; j < list.size(); j++) {

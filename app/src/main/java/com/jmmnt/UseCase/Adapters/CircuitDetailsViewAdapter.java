@@ -8,26 +8,21 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.jmmnt.Controller.UI.FragmentAdminChecklist;
 import com.jmmnt.Entities.CircuitDetails;
 import com.jmmnt.R;
 import com.jmmnt.UseCase.GeneralUseCase;
-
-import java.util.List;
+import java.util.ArrayList;
 
 public class CircuitDetailsViewAdapter extends RecyclerView.Adapter<CircuitDetailsViewHolder> {
 
-    private List<CircuitDetails> items;
+    private ArrayList<CircuitDetails> items;
     private EditText groupName, ob, characteristic, crossSection, maxOB, omegaResist, isolation;
     private CheckBox zs, ra;
     private GeneralUseCase gUC = GeneralUseCase.getInstance();
 
-    public CircuitDetailsViewAdapter(List<CircuitDetails> items) {
+    public CircuitDetailsViewAdapter(ArrayList<CircuitDetails> items) {
         this.items = items;
     }
 
@@ -76,7 +71,7 @@ public class CircuitDetailsViewAdapter extends RecyclerView.Adapter<CircuitDetai
         return items.size();
     }
 
-    public List<CircuitDetails> getItems() {
+    public ArrayList<CircuitDetails> getItems() {
         return items;
     }
 }
@@ -151,8 +146,8 @@ class CircuitDetailsViewHolder extends RecyclerView.ViewHolder {
 
     }
 
-    public CircuitDetailsViewHolder linkAdapter(CircuitDetailsViewAdapter demoAdapter) {
-        this.adapter = demoAdapter;
+    public CircuitDetailsViewHolder linkAdapter(CircuitDetailsViewAdapter circuitDetailsViewAdapter) {
+        this.adapter = circuitDetailsViewAdapter;
         return this;
     }
 

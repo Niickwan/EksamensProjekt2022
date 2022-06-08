@@ -71,13 +71,11 @@ public class FTPClientFunctions extends AppCompatActivity{
 
             try {
                 boolean b = ftpConnect(host, username, password, port);
-                System.out.println(b);
                 FileInputStream srcFileStream = new FileInputStream(srcFilePath);
                 // change working directory to the destination directory
                 // if (ftpChangeDirectory(desDirectory)) {
                 isUploadSuccessful = mFTPClient.storeFile(desFileName, srcFileStream);
                 // }
-                System.out.println(isUploadSuccessful);
                 srcFileStream.close();
                 ftpDisconnect();
             } catch (Exception e) {

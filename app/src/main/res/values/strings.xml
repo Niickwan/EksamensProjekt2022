@@ -78,8 +78,9 @@
     <string name="create_order_invalid_cityname">By må kun indeholde bogstaver</string>
     <string name="create_order_order_number_is_occupied">Ordrenummer eksistere allerede!</string>
     <!-- checklist -->
-    <string name="adding_new_question_failed" />
     <string name="checklist_unable_to_delete_floor">Minimum 1 etage påkrævet</string>
+    <string name="checklist_unable_to_create_floor">Fejl prøv igen</string>
+    <string name="adding_new_question_failed" />
 
     <!-- Popup menu edit profile -->
     <string name="popup_menu_edit_password_not_matching">Password matcher ikke</string>

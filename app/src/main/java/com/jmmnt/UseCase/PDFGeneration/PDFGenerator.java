@@ -6,6 +6,9 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Environment;
+
+import androidx.fragment.app.Fragment;
+
 import com.itextpdf.io.font.FontProgram;
 import com.itextpdf.io.font.FontProgramFactory;
 import com.itextpdf.io.font.PdfEncodings;
@@ -46,7 +49,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class PDFGenerator {
+public class PDFGenerator extends Fragment {
 
     /**
      * This class contains methods for the creation and generation of a pdf document from data

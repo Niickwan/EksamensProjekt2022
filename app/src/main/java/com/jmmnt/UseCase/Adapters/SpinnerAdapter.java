@@ -10,14 +10,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.jmmnt.Entities.User;
 import com.jmmnt.Entities.UserContainer;
-import java.util.List;
+import java.util.ArrayList;
 
 public class SpinnerAdapter extends ArrayAdapter {
 
     private Context context;
-    private List<User> container;
+    private ArrayList<User> container;
 
-    public SpinnerAdapter(Context context, int textViewResourceId, List<User> container) {
+    public SpinnerAdapter(Context context, int textViewResourceId, ArrayList<User> container) {
         super(context, textViewResourceId);
         this.container = container;
         this.context = context;
@@ -84,7 +84,7 @@ public class SpinnerAdapter extends ArrayAdapter {
         return innerLabel;
     }
 
-    private boolean isPhoneNumberEmpty(List<User> container, int position){
+    private boolean isPhoneNumberEmpty(ArrayList<User> container, int position){
         return container.get(position).getPhonenumber() != null;
     }
 }

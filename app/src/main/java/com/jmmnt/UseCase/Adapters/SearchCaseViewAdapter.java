@@ -16,20 +16,17 @@ import com.jmmnt.Entities.Assignment;
 import com.jmmnt.Entities.AssignmentContainer;
 import com.jmmnt.R;
 import com.jmmnt.UseCase.GeneralUseCase;
-import com.jmmnt.UseCase.OperateAssignment;
 import java.util.ArrayList;
-import java.util.List;
 
 public class SearchCaseViewAdapter extends RecyclerView.Adapter<SearchCaseViewHolder> implements Filterable {
 
-    private List<Assignment> itemList;
-    private List<Assignment> itemsFilterable;
+    private ArrayList<Assignment> itemList;
+    private ArrayList<Assignment> itemsFilterable;
     private TextView customerName_tv, address_tv, orderNumber_tv, statusDate_tv, statusCase_tv;
     private Fragment fragment;
     private GeneralUseCase gUC = GeneralUseCase.getInstance();
-    private OperateAssignment oA = OperateAssignment.getInstance();
 
-    public SearchCaseViewAdapter(List<Assignment> items, FragmentSearchCase fragmentSearchCase) {
+    public SearchCaseViewAdapter(ArrayList<Assignment> items, FragmentSearchCase fragmentSearchCase) {
         this.fragment = fragmentSearchCase;
         this.itemList = items;
         itemsFilterable = new ArrayList<>(items);
@@ -76,7 +73,7 @@ public class SearchCaseViewAdapter extends RecyclerView.Adapter<SearchCaseViewHo
         return itemList.size();
     }
 
-    public List<Assignment> getItemList() {
+    public ArrayList<Assignment> getItemList() {
         return itemList;
     }
 
@@ -92,7 +89,7 @@ public class SearchCaseViewAdapter extends RecyclerView.Adapter<SearchCaseViewHo
     private Filter filter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence charSequence) {
-            List<Assignment> filteredItemList = new ArrayList<>();
+            ArrayList<Assignment> filteredItemList = new ArrayList<>();
             if (charSequence == null || charSequence.length() == 0) {
                 filteredItemList.addAll(itemsFilterable);
             } else {
@@ -114,7 +111,7 @@ public class SearchCaseViewAdapter extends RecyclerView.Adapter<SearchCaseViewHo
         @Override
         protected void publishResults(CharSequence charSequence, FilterResults results) {
             itemList.clear();
-            itemList.addAll((List) results.values);
+            itemList.addAll((ArrayList) results.values);
             notifyDataSetChanged();
         }
     };
