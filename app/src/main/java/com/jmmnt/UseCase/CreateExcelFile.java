@@ -6,10 +6,8 @@ import com.jmmnt.Entities.Questions;
 import com.jmmnt.Entities.ShortCircuitCurrentAndVoltageDrop;
 import com.jmmnt.Entities.TestingRCD;
 import com.jmmnt.Entities.TransitionResistance;
-import com.jmmnt.UseCase.Adapters.AdapterFactory;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 import jxl.Workbook;
 import jxl.WorkbookSettings;
 import jxl.write.Label;
@@ -26,10 +24,8 @@ public class CreateExcelFile {
     private OperateAssignment oA = OperateAssignment.getInstance();
     private GeneralUseCase gUC = GeneralUseCase.getInstance();
 
-    AdapterFactory apFac = new AdapterFactory();
     WritableSheet sheet;
     private WritableWorkbook workbook;
-    // private WritableSheet sheet;
     private int rowCount = 0;
     private int columnCount = 0;
     int getList = 0;
@@ -41,7 +37,7 @@ public class CreateExcelFile {
     private int endPosition = 0;
     ArrayList<String> excelTemplate;
 
-    public void createExcelSheet(String excelFileName, ArrayList<List<Object>> list, String documentNote) {
+    public void createExcelSheet(String excelFileName, ArrayList<ArrayList<Object>> list, String documentNote) {
         excelTemplate = oA.getExcelAsArrayList("current_assignment.xls");
         note = documentNote;
         File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
@@ -51,7 +47,6 @@ public class CreateExcelFile {
         try {
             workbook = Workbook.createWorkbook(inputWorkbook, wbSettings);
             createFirstSheet(list);
-//            createSecondSheet();
             workbook.write();
             workbook.close();
         } catch (Exception e) {
@@ -59,7 +54,7 @@ public class CreateExcelFile {
         }
     }
 
-    private void createFirstSheet(ArrayList<List<Object>> list) {
+    private void createFirstSheet(ArrayList<ArrayList<Object>> list) {
         try {
             sheet = workbook.createSheet("Ark1", 0);
             for (int i = 0; i < excelTemplate.size(); i++) {
@@ -140,7 +135,7 @@ public class CreateExcelFile {
         }
     }
 
-    private void writeTestingRCD(ArrayList<List<Object>> list, WritableSheet sheet) {
+    private void writeTestingRCD(ArrayList<ArrayList<Object>> list, WritableSheet sheet) {
         try {
             for (int i = 0; i < list.get(getList).size(); i++) {
                 int ok = ((TestingRCD) list.get(getList).get(i)).getCheckboxOK();
@@ -173,7 +168,7 @@ public class CreateExcelFile {
         getList++;
     }
 
-    private void writeVoltageDrop(ArrayList<List<Object>> list, WritableSheet sheet) {
+    private void writeVoltageDrop(ArrayList<ArrayList<Object>> list, WritableSheet sheet) {
         try {
             for (int i = 0; i < list.get(getList).size(); i++) {
                 sheet.addCell(new Label(columnCount, rowCount, "<inputAnswer>"));
@@ -195,7 +190,7 @@ public class CreateExcelFile {
         getList++;
     }
 
-    private void writeShortCircuitCurrent(ArrayList<List<Object>> list, WritableSheet sheet) {
+    private void writeShortCircuitCurrent(ArrayList<ArrayList<Object>> list, WritableSheet sheet) {
         try {
             for (int i = 0; i < list.get(getList).size(); i++) {
                 sheet.addCell(new Label(columnCount, rowCount, "<inputAnswer>"));
@@ -218,7 +213,7 @@ public class CreateExcelFile {
         }
     }
 
-    private void writeTransitionResistance(ArrayList<List<Object>> list, WritableSheet sheet) {
+    private void writeTransitionResistance(ArrayList<ArrayList<Object>> list, WritableSheet sheet) {
         try {
             for (int i = 0; i < list.get(getList).size(); i++) {
                 double resist = ((TransitionResistance) list.get(getList).get(i)).getTransitionResistance();
@@ -241,7 +236,7 @@ public class CreateExcelFile {
         getList++;
     }
 
-    private void writeCircuitDetails(ArrayList<List<Object>> list, WritableSheet sheet) {
+    private void writeCircuitDetails(ArrayList<ArrayList<Object>> list, WritableSheet sheet) {
         try {
             for (int i = 0; i < list.get(getList).size(); i++) {
                 sheet.addCell(new Label(columnCount, rowCount, "<inputAnswer>"));
@@ -282,7 +277,7 @@ public class CreateExcelFile {
         getList++;
     }
 
-    private void writeQuestions(ArrayList<List<Object>> list, WritableSheet sheet) {
+    private void writeQuestions(ArrayList<ArrayList<Object>> list, WritableSheet sheet) {
         int answer;
         try {
             for (int i = 0; i < list.get(getList).size(); i++) {
@@ -314,12 +309,10 @@ public class CreateExcelFile {
                     sheet.addCell(new Label(columnCount, rowCount, "-1"));
                     columnCount++;
                 }
-                ((Questions) list.get(getList).get(i)).getImages().forEach(System.out::println);
                 sheet.addCell(new Label(columnCount, rowCount, "<ImagesEnd>"));
                 columnCount++;
                 sheet.addCell(new Label(columnCount, rowCount, "<QuestionEnd>"));
                 columnCount = 0;
-                System.out.println(getList + "--------------------------------" + rowCount);
                 rowCount++;
             }
         } catch (Exception e) {

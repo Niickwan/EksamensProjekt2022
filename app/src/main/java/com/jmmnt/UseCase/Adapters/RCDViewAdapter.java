@@ -13,17 +13,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.jmmnt.Entities.TestingRCD;
 import com.jmmnt.R;
 import com.jmmnt.UseCase.GeneralUseCase;
-
-import java.util.List;
+import java.util.ArrayList;
 
 public class RCDViewAdapter extends RecyclerView.Adapter<RCDViewHolder> {
 
-    private List<TestingRCD> items;
+    private ArrayList<TestingRCD> items;
     private EditText groupName, firstResult, secondResult, thirdResult, fourthResult, fifthResult, sixthResult;
     private CheckBox checkBoxTestOK;
     private GeneralUseCase gUC = GeneralUseCase.getInstance();
 
-    public RCDViewAdapter(List<TestingRCD> items) {
+    public RCDViewAdapter(ArrayList<TestingRCD> items) {
         this.items = items;
     }
 
@@ -70,7 +69,7 @@ public class RCDViewAdapter extends RecyclerView.Adapter<RCDViewHolder> {
         return items.size();
     }
 
-    public List<TestingRCD> getItems() {
+    public ArrayList<TestingRCD> getItems() {
         return items;
     }
 }

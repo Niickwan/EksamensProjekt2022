@@ -16,16 +16,12 @@ import com.jmmnt.Entities.AssignmentContainer;
 import com.jmmnt.Entities.LoggedInUser;
 import com.jmmnt.Entities.UserAssignmentContainer;
 import com.jmmnt.R;
-import com.jmmnt.UseCase.Adapters.OrderViewAdapter;
 import com.jmmnt.UseCase.Adapters.SearchCaseViewAdapter;
 import com.jmmnt.UseCase.GeneralUseCase;
 import com.jmmnt.UseCase.OperateAssignment;
 import com.jmmnt.UseCase.OperateDB;
 import com.jmmnt.databinding.FragmentAdminSearchCaseBinding;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class FragmentSearchCase extends Fragment {
 
@@ -34,9 +30,8 @@ public class FragmentSearchCase extends Fragment {
     private AssignmentContainer assignmentContainer = AssignmentContainer.getInstance();
     private GeneralUseCase gUC = GeneralUseCase.getInstance();
     private OperateAssignment operateAssignment = OperateAssignment.getInstance();
-    private static List<Assignment> assignmentsSorted = new ArrayList<>();
+    private static ArrayList<Assignment> assignmentsSorted = new ArrayList<>();
     private OperateDB oDB = OperateDB.getInstance();
-    private OrderViewAdapter orderViewAdapter = new OrderViewAdapter();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -118,8 +113,8 @@ public class FragmentSearchCase extends Fragment {
         });
     }
 
-    private List sortAssignments() {
-        List<Assignment> sorted;
+    private ArrayList sortAssignments() {
+        ArrayList<Assignment> sorted;
         boolean activeCase = binding.checkBoxSearchActiveCases.isChecked();
         boolean waitingCase = binding.checkBoxSearchWaitingCases.isChecked();
         boolean finishedCase = binding.checkBoxSearchFinishedCases.isChecked();

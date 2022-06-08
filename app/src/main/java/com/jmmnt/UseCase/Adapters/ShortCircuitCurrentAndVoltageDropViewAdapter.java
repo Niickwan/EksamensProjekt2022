@@ -12,17 +12,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.jmmnt.Entities.ShortCircuitCurrentAndVoltageDrop;
 import com.jmmnt.R;
 import com.jmmnt.UseCase.GeneralUseCase;
-
-import java.util.List;
+import java.util.ArrayList;
 
 public class ShortCircuitCurrentAndVoltageDropViewAdapter extends RecyclerView.Adapter<ShortCircuitAndVoltageDropViewHolder> {
 
-    private List<ShortCircuitCurrentAndVoltageDrop> items;
+    private ArrayList<ShortCircuitCurrentAndVoltageDrop> items;
     private EditText shortCircuitGroupName, lk, ShortCircuitMeasuredOnLocation, voltageDropGroupName, deltaVoltage,
             voltageDropMeasuredOnLocation;
     private GeneralUseCase gUC = GeneralUseCase.getInstance();
 
-    public ShortCircuitCurrentAndVoltageDropViewAdapter(List<ShortCircuitCurrentAndVoltageDrop> items) {
+    public ShortCircuitCurrentAndVoltageDropViewAdapter(ArrayList<ShortCircuitCurrentAndVoltageDrop> items) {
         this.items = items;
     }
 
@@ -63,7 +62,7 @@ public class ShortCircuitCurrentAndVoltageDropViewAdapter extends RecyclerView.A
         return items.size();
     }
 
-    public List<ShortCircuitCurrentAndVoltageDrop> getItems() {
+    public ArrayList<ShortCircuitCurrentAndVoltageDrop> getItems() {
         return items;
     }
 

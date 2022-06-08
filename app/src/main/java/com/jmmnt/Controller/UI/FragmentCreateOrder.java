@@ -70,7 +70,6 @@ public class FragmentCreateOrder extends Fragment {
                     String orderNum = binding.orderNumberEt.getEditText().getText().toString();
                     String fileName = orderNum + "_" + getString(R.string.default_value_floor_name) + ".xls";
                     oA.createFolderOnServer(orderNum, getString(R.string.default_value_floor_name), getString(R.string.default_value_room_name));
-                    // TemplateFileName Hardcoded
                     oA.copyFilesOnServer("DefaultElectricianChecklist.xls", orderNum, getString(R.string.default_value_floor_name), fileName);
                     AssignmentContainer.getInstance().setCurrentAssignment(AssignmentContainer.getInstance().getAssignments().get(AssignmentContainer.getInstance().getAssignments().size()-1));
                     getActivity().runOnUiThread(() -> {
@@ -97,7 +96,6 @@ public class FragmentCreateOrder extends Fragment {
                 return false;
             }
         });
-
 
         SpinnerAdapter adapter = new SpinnerAdapter(getContext(), android.R.layout.simple_spinner_item, UserContainer.getUsers());
         Spinner spinner = binding.chooseUserSpinner;

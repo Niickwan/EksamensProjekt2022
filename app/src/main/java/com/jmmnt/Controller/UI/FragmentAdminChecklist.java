@@ -24,7 +24,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -32,7 +31,6 @@ import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.google.android.material.textfield.TextInputLayout;
 import com.jmmnt.Entities.Assignment;
 import com.jmmnt.Entities.AssignmentContainer;
@@ -69,17 +67,17 @@ public class FragmentAdminChecklist extends Fragment {
     private LayerDrawable unSelectedFloor;
     private ArrayList<String> floors = new ArrayList<>();
     private ArrayList<Button> floorButtons = new ArrayList<>();
-    private List<Object> general = new ArrayList<>();
-    private List<Object> electricalPanel = new ArrayList<>();
-    private List<Object> installation = new ArrayList<>();
-    private List<Object> recessedLuminaire = new ArrayList<>();
-    private List<Object> protectiveConductors = new ArrayList<>();
-    private List<Object> faultyProtection = new ArrayList<>();
-    private List<Object> circuitDetailList = new ArrayList<>();
-    private List<Object> transitionResistance = new ArrayList<>();
-    private List<Object> testingRCDResults = new ArrayList<>();
-    private List<Object> voltageDropResults = new ArrayList<>();
-    private ArrayList<List<Object>> completeAssignment = new ArrayList<>();
+    private ArrayList<Object> general = new ArrayList<>();
+    private ArrayList<Object> electricalPanel = new ArrayList<>();
+    private ArrayList<Object> installation = new ArrayList<>();
+    private ArrayList<Object> recessedLuminaire = new ArrayList<>();
+    private ArrayList<Object> protectiveConductors = new ArrayList<>();
+    private ArrayList<Object> faultyProtection = new ArrayList<>();
+    private ArrayList<Object> circuitDetailList = new ArrayList<>();
+    private ArrayList<Object> transitionResistance = new ArrayList<>();
+    private ArrayList<Object> testingRCDResults = new ArrayList<>();
+    private ArrayList<Object> voltageDropResults = new ArrayList<>();
+    private ArrayList<ArrayList<Object>> completeAssignment = new ArrayList<>();
     private String documentNote = "";
     private LinearLayout parentLLH;
     private String orderNr = assignmentContainer.getCurrentAssignment().getOrderNumber();
@@ -139,7 +137,7 @@ public class FragmentAdminChecklist extends Fragment {
     }
 
     private void generateUI() {
-        List<String> template = opa.getExcelAsArrayList("current_assignment.xls");
+        ArrayList<String> template = opa.getExcelAsArrayList("current_assignment.xls");
         //Dropdown titles
         String objectTag = "question";
         String objectTag2 = "circuitDetails";
@@ -152,13 +150,8 @@ public class FragmentAdminChecklist extends Fragment {
         parentLLH = getActivity().findViewById(R.id.parentLLH);
 
         //Building dropdowns
-        List<Assignment> currentListAssignment = new ArrayList<>();
+        ArrayList<Assignment> currentListAssignment = new ArrayList<>();
         currentListAssignment.add(AssignmentContainer.getInstance().getCurrentAssignment());
-
-        for (int i = 0; i < currentListAssignment.size(); i++) {
-            System.out.println("CURR ASSIGNMENT " + currentListAssignment.get(i));
-        };
-
         buildDropdownDynamically("Ordre", currentListAssignment, objectTag5, "vertical");
         int headlineCounter = 0;
         int inputHeadlineCounter = 0;
@@ -220,7 +213,6 @@ public class FragmentAdminChecklist extends Fragment {
 
                 } else if (inputHeadlineCounter == 1) {
                     i = readExcelTestingRCD(template, i, testingRCDResults);
-                    testingRCDResults.forEach(System.out::println);
                     buildDropdownDynamically("Afprøvning af RCD'er", testingRCDResults, objectTag3, "horizontal");
                     inputHeadlineCounter++;
                 } else if (inputHeadlineCounter == 2) {
@@ -229,8 +221,8 @@ public class FragmentAdminChecklist extends Fragment {
                     inputHeadlineCounter++;
                 }
             } else if (template.get(i).equalsIgnoreCase("<SingleInput>")) {
-                TransitionResistance t = new TransitionResistance();
-                transitionResistance.add(t);
+                TransitionResistance transitionResistance = new TransitionResistance();
+                this.transitionResistance.add(transitionResistance);
                 //Adding textview
                 TextView groundElectrodeTv = new TextView(getActivity());
                 groundElectrodeTv.setId(View.generateViewId());
@@ -273,12 +265,11 @@ public class FragmentAdminChecklist extends Fragment {
                     @Override
                     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                         if (!charSequence.toString().isEmpty())
-                            t.setTransitionResistance(Double.parseDouble(groundElectrodeResultEt.getEditableText().toString()));
-                        else t.setTransitionResistance(-1.0);
+                            transitionResistance.setTransitionResistance(Double.parseDouble(groundElectrodeResultEt.getEditableText().toString()));
+                        else transitionResistance.setTransitionResistance(-1.0);
                     }
                     @Override
                     public void afterTextChanged(Editable editable) {
-                        System.out.println(t.getTransitionResistance());
                     }
                 });
 
@@ -423,7 +414,6 @@ public class FragmentAdminChecklist extends Fragment {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
         });
         finishCaseBtn.setId(View.generateViewId());
         LinearLayout.LayoutParams paramsFCB = new LinearLayout.LayoutParams(
@@ -484,7 +474,7 @@ public class FragmentAdminChecklist extends Fragment {
         parentLLH.addView(cl);
     }
 
-    private int readExcelShortCircuitAndVoltageDrop(List<String> template, int i, List<Object> voltageDropResults) {
+    private int readExcelShortCircuitAndVoltageDrop(ArrayList<String> template, int i, ArrayList<Object> voltageDropResults) {
         int counter = 0;
         for (int j = i; j < template.size(); j++) {
             if (template.get(j).equalsIgnoreCase("<inputAnswer>")) {
@@ -515,7 +505,7 @@ public class FragmentAdminChecklist extends Fragment {
         return i;
     }
 
-    private int readExcelTestingRCD(List<String> template, int i, List<Object> testingRCDResults) {
+    private int readExcelTestingRCD(ArrayList<String> template, int i, ArrayList<Object> testingRCDResults) {
         for (int j = i; j < template.size(); j++) {
             if (template.get(j).equals("<inputAnswer>")) {
                 TestingRCD t = new TestingRCD();
@@ -540,9 +530,8 @@ public class FragmentAdminChecklist extends Fragment {
         return i;
     }
 
-    private int readExcelCircuitDetails(List<String> template, int i, List<Object> circuitDetailList) {
+    private int readExcelCircuitDetails(ArrayList<String> template, int i, ArrayList<Object> circuitDetailList) {
         for (int j = i; j < template.size(); j++) {
-            //new CircuitDetails("Tavlen", "400", "Lampe", "6", "500", 1, "340", "20"));
             if (template.get(j).equals("<inputAnswer>")) {
                 CircuitDetails circuitDetails = new CircuitDetails();
                 circuitDetails.setGroupName(template.get(j + 1));
@@ -571,9 +560,8 @@ public class FragmentAdminChecklist extends Fragment {
     }
 
 
-    private int readQuestionFromExcel(List<String> template, int i, List<Object> general) {
+    private int readQuestionFromExcel(ArrayList<String> template, int i, ArrayList<Object> general) {
         for (int j = i; j < template.size(); j++) {
-
             if (template.get(j).equals("<Question>")){
                 Questions question = new Questions();
                 int answer = Integer.parseInt(template.get(j +4));
@@ -599,16 +587,13 @@ public class FragmentAdminChecklist extends Fragment {
         ArrayList<String> hsvStructure = new ArrayList<>();
         try {
             hsvStructure = oDB.getAssignmentStructure(orderNr);
-
         } finally {
             floors = gUC.sortStringBeforeNumbers(gUC.getSplittedString(hsvStructure, orderNr, "/<"));
             selectedFloorName = floors.get(0);
-//                setHorizontalFloorBar(floors);
             getActivity().runOnUiThread(() -> {
                 binding.hsvFloor.removeAllViews();
                 setHorizontalFloorBar(floors);
                 binding.hsvFloor.addView(floorLinearLayout);
-//                        binding.hsvRoom.addView(roomLinearLayout);
                 binding.hsvRoom.setVisibility(View.GONE);
             });
         }
@@ -681,7 +666,7 @@ public class FragmentAdminChecklist extends Fragment {
             } else {
                 getActivity().runOnUiThread(() -> {
                     TextView error = dialog.getWindow().findViewById(R.id.error_message);
-                    error.setText("Fejl prøv igen"); //TODO string
+                    error.setText(getString(R.string.checklist_unable_to_create_floor));
                 });
             }
         }).start());
@@ -734,7 +719,6 @@ public class FragmentAdminChecklist extends Fragment {
         borderSelected.setAlpha(150);
         borderSelected.setStroke(7, Color.BLACK);
         borderSelected.setShape(GradientDrawable.RECTANGLE);
-        //        bSelected.setLayerInset(0, 0, 7, 0, 5);
         return new LayerDrawable(new Drawable[]{borderSelected});
     }
 
@@ -743,7 +727,6 @@ public class FragmentAdminChecklist extends Fragment {
         borderNotSelected.setColor(getResources().getColor(R.color.purple_700, getActivity().getTheme()));
         borderNotSelected.setShape(GradientDrawable.RECTANGLE);
         borderNotSelected.setAlpha(220);
-        //        bNotSelected.setLayerInset(0, 0, 0, 0, 0);
         return new LayerDrawable(new Drawable[]{borderNotSelected});
     }
 
@@ -754,7 +737,7 @@ public class FragmentAdminChecklist extends Fragment {
      * @param objectTag   - used for adapterFactory
      * @param orientation - used for defining the view orientation (vertical/horizontal)
      */
-    public void buildDropdownDynamically(String title, List<?> dataList, String objectTag, String orientation) {
+    public void buildDropdownDynamically(String title, ArrayList<?> dataList, String objectTag, String orientation) {
         ContextThemeWrapper ctw = new ContextThemeWrapper(getActivity(), R.style.ViewWithScrollbars);
         ImageView img = new ImageView(getActivity());
         RecyclerView rv = new RecyclerView(ctw);
@@ -876,12 +859,12 @@ public class FragmentAdminChecklist extends Fragment {
 
         //Setting up the adapter
         if (objectTag.equalsIgnoreCase("Assignment"))
-            setAdapter(rv, (List<Object>) dataList, recyclerViewOrientation, objectTag);
+            setAdapter(rv, (ArrayList<Object>) dataList, recyclerViewOrientation, objectTag);
         else
-            setAdapter(rv, addBtn, (List<Object>) dataList, recyclerViewOrientation, objectTag);
+            setAdapter(rv, addBtn, (ArrayList<Object>) dataList, recyclerViewOrientation, objectTag);
     }
 
-    public void setAdapter(RecyclerView rv, Button addBtn, List<Object> dataList, int orientation, String objectTag) {
+    public void setAdapter(RecyclerView rv, Button addBtn, ArrayList<Object> dataList, int orientation, String objectTag) {
         AdapterFactory adapterFactory = new AdapterFactory();
         adapterFactory.setAdapterType(objectTag, dataList, getContext());
         Object adapter = adapterFactory.setAdapterType(objectTag, dataList, getContext());
@@ -901,7 +884,7 @@ public class FragmentAdminChecklist extends Fragment {
         });
     }
 
-    public void setAdapter(RecyclerView rv, List<Object> dataList, int orientation, String objectTag) {
+    public void setAdapter(RecyclerView rv, ArrayList<Object> dataList, int orientation, String objectTag) {
         AdapterFactory adapterFactory = new AdapterFactory();
         adapterFactory.setAdapterType(objectTag, dataList, getContext());
         Object adapter = adapterFactory.setAdapterType(objectTag, dataList, getContext());
@@ -909,7 +892,7 @@ public class FragmentAdminChecklist extends Fragment {
         rv.setAdapter((RecyclerView.Adapter) adapter);
     }
 
-    public void addQuestion(List<Object> dataList, RecyclerView rv, Object adapter) {
+    public void addQuestion(ArrayList<Object> dataList, RecyclerView rv, Object adapter) {
         Dialog dialog = new Dialog(getActivity());
         dialog.setContentView(R.layout.popup_add_question);
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
