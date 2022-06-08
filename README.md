@@ -33,7 +33,7 @@ Under udvikling af appen, og under vores første møde med kunden, fik vi stille
 For at kunne se PDF-filen, skal man åbne filerne på "telefonen" inde i emulatoren.
 Se evt. billede nedenfor:
  
- ![image]![image](https://user-images.githubusercontent.com/89967283/172572441-c786ae6f-1db9-4087-8f01-85b7885f4afc.png)
+ ![image](https://user-images.githubusercontent.com/89967283/172572441-c786ae6f-1db9-4087-8f01-85b7885f4afc.png)
  
  </details>
 
