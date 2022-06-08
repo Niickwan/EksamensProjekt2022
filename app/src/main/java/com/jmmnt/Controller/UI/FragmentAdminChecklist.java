@@ -156,6 +156,11 @@ public class FragmentAdminChecklist extends Fragment {
         //Building dropdowns
         List<Assignment> currentListAssignment = new ArrayList<>();
         currentListAssignment.add(AssignmentContainer.getInstance().getCurrentAssignment());
+
+        for (int i = 0; i < currentListAssignment.size(); i++) {
+            System.out.println("CURR ASSIGNMENT " + currentListAssignment.get(i));
+        };
+
         buildDropdownDynamically("Ordre", currentListAssignment, objectTag5, "vertical");
         int headlineCounter = 0;
         int inputHeadlineCounter = 0;
