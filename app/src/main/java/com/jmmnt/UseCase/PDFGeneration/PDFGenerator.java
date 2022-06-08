@@ -144,10 +144,10 @@ public class PDFGenerator {
     //method that inserts the Table member variabel noteTable into the pdf document
     public void insertExcelDocumentNoteToNoteTable(ArrayList<String> excel){
         if(!excel.get(excel.size()-1).equals("-1")){
-            noteTable.addCell(createParagraph(R.string.pdf_generation_note_info+"\n" + excel.get(excel.size()-1)));
+            noteTable.addCell(createParagraph("General Bemærkning: \n" + excel.get(excel.size()-1)));
         }
         else{
-            noteTable.addCell(createParagraph(R.string.pdf_generation_note_info+"\n"));
+            noteTable.addCell(createParagraph("General Bemærkning: \n"));
         }
     }
 
@@ -236,7 +236,7 @@ public class PDFGenerator {
             int pictureCounter = 1;
             while(!excel.get(i + excelRowCounter).equals("<ImagesEnd>")) {
 
-                noteTable.addCell(createCell(R.string.pdf_generation_picture_info + " " + pictureCounter + ": " +
+                noteTable.addCell(createCell("Billede " + pictureCounter + ": " +
                         excel.get(i + 8), document, true).setBorderTop(Border.NO_BORDER).setBorderBottom(Border.NO_BORDER));
 
                 pictureCounter++;
@@ -248,7 +248,7 @@ public class PDFGenerator {
             int excelRowCounter = 8;
             int pictureCounter = 1;
             while(!excel.get(i + excelRowCounter).equals("<ImagesEnd>")) {
-                noteTable.addCell(createCell(excel.get(i +1) + ":\n"+ R.string.pdf_generation_picture_info + pictureCounter + ": " +
+                noteTable.addCell(createCell(excel.get(i +1) + ":\nBillede " + pictureCounter + ": " +
                         excel.get(i +8), document,true).setBorderTop(Border.NO_BORDER).setBorderBottom(Border.NO_BORDER));
                 pictureCounter++;
                 excelRowCounter++;
@@ -358,7 +358,7 @@ public class PDFGenerator {
     }
 
     private void readExcelInputAnswer(ArrayList<String> excel, Document document, String[] numberOfQuestions, String[] measuringUnits, Table table, int i) {
-      int counter = 0;
+        int counter = 0;
         boolean  isEmpty = true;
         for (int k = 0; k < numberOfQuestions.length; k++) {
             String answer = excel.get(i + 1 + counter);
@@ -461,10 +461,10 @@ public class PDFGenerator {
         Table table = new Table(getWidthMatchingPageSize(3,document)).useAllAvailableWidth();
 
         table.addCell(new Cell(2,1).add(logoImage));
-        table.addCell(new Cell(2,1).add(createParagraph(R.string.pdf_generation_header_checklist + "").setTextAlignment(TextAlignment.CENTER)
+        table.addCell(new Cell(2,1).add(createParagraph("TJEKLISTE").setTextAlignment(TextAlignment.CENTER)
                 .setVerticalAlignment(VerticalAlignment.TOP).setFontColor(ColorConstants.ORANGE).setFontSize(25f)));
-        table.addCell(new Cell().add(createParagraph(R.string.pdf_generation_page+ ": " + pageNumber)));
-        table.addCell(new Cell().add(createParagraph(R.string.pdf_generation_installation+"")));
+        table.addCell(new Cell().add(createParagraph("side: " + pageNumber)));
+        table.addCell(new Cell().add(createParagraph("Elinstallation")));
         return table;
     }
 
@@ -480,19 +480,19 @@ public class PDFGenerator {
         Table table = new Table(getWidthMatchingPageSize(3,document)).useAllAvailableWidth();
 
         table.addCell(new Cell(1,3).add
-                (createParagraph(R.string.pdf_generation_customer_name+ ": " + assignment.getCustomerName())));
+                (createParagraph("Kundenavn: " + assignment.getCustomerName())));
 
         table.addCell(new Cell(1,3).add
-                (createParagraph(R.string.pdf_generation_customer_Address+": " + assignment.getAddress())));
+                (createParagraph("Adresse: " + assignment.getAddress())));
 
         table.addCell(new Cell().add
-                (createParagraph(R.string.pdf_generation_zip_code+": " + assignment.getPostalCode())));
+                (createParagraph("Post nr.: " + assignment.getPostalCode())));
 
         table.addCell(new Cell().add
-                (createParagraph(R.string.pdf_generation_city+": " + opa.getCityMatchingZipCode(assignment.getPostalCode()))));
+                (createParagraph("By: " + opa.getCityMatchingZipCode(assignment.getPostalCode()))));
 
         table.addCell(new Cell().add
-                (createParagraph(R.string.pdf_generation_order_number+": " + assignment.getOrderNumber())));
+                (createParagraph("Ordrenummer: " + assignment.getOrderNumber())));
 
         return table;
     }
