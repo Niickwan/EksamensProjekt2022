@@ -282,12 +282,14 @@ public class CreateExcelFile {
         try {
             for (int i = 0; i < list.get(getList).size(); i++) {
                 answer = ((Questions) list.get(getList).get(i)).getAnswer();
+                String questionNumber = ((Questions) list.get(getList).get(i)).getQuestion().substring(0, ((Questions) list.get(getList).get(i)).getQuestion().indexOf(' '));
+                String question = ((Questions) list.get(getList).get(i)).getQuestion().substring(((Questions) list.get(getList).get(i)).getQuestion().indexOf(' ') + 1);
                 questionSection = questionSection + 0.1;
                 sheet.addCell(new Label(columnCount, rowCount, "<Question>"));
                 columnCount++;
-                sheet.addCell(new Label(columnCount, rowCount, String.valueOf(gUC.round(questionSection, 1))));
+                sheet.addCell(new Label(columnCount, rowCount, questionNumber));
                 columnCount++;
-                sheet.addCell(new Label(columnCount, rowCount, ((Questions) list.get(getList).get(i)).getQuestion()));
+                sheet.addCell(new Label(columnCount, rowCount, question));
                 columnCount++;
                 sheet.addCell(new Label(columnCount, rowCount, "<QuestionAnwsered>"));
                 columnCount++;
