@@ -82,8 +82,6 @@ public class FragmentAdminChecklist extends Fragment {
     private ArrayList<List<Object>> completeAssignment = new ArrayList<>();
     private String documentNote = "";
     private LinearLayout parentLLH;
-
-    // TODO SKAL VÆRE VÆRDIER FRA SERVER/DB
     private String orderNr = assignmentContainer.getCurrentAssignment().getOrderNumber();
     private LinearLayout floorLinearLayout;
     private String selectedFloorName = "";
@@ -451,10 +449,7 @@ public class FragmentAdminChecklist extends Fragment {
         sendCaseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("SIZE "+ circuitDetailList.size());
-                for (int i = 0; i < circuitDetailList.size(); i++) {
-                    System.out.println("Objekt nr: "+ i + " --- " + circuitDetailList.get(i)); //TODO FJERN INDEN AFLEVERING
-                }
+               //TODO Send tjekliste
             }
         });
 
@@ -705,11 +700,10 @@ public class FragmentAdminChecklist extends Fragment {
             }
         });
         dialog.getWindow().findViewById(R.id.delete_floor_btn).setOnClickListener(v -> new Thread(() -> {
-            // TODO Remove from server
             String deleteDirLocation = orderNr + "/" + selectedFloorName;
             opa.deleteDirectoryOnServer(deleteDirLocation);
             getActivity().runOnUiThread(() -> {
-                // TODO remove from list and set new name instance variable
+                //Remove from list and set new name instance variable
                 for (int i = 0; i < floorButtons.size(); i++) {
                     setFloorHorizontalScrollBar();
                 }
