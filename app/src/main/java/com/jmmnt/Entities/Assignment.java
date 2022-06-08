@@ -105,4 +105,7 @@ public class Assignment {
         this.verifiedBy = verifiedBy;
     }
 
+    public int getInstalledBy() {
+        return installedBy;
+    }
 }

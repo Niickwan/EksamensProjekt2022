@@ -60,7 +60,7 @@ public class OperateDB {
 
     public void fillUserContainer(){
         db_con.fillUserContainer();
-        UserContainer.getUsers().set(0, new User());
+        //UserContainer.getUsers().set(0, new User());
     }
 
     public boolean fillAssignmentContainer() {

@@ -83,6 +83,7 @@ public class DB_Con {
             connection = connection();
             stmt = connection.createStatement();
             rs = stmt.executeQuery(fill);
+            userContainer.addUserToContainer(new User()); //Add default user
             while (rs.next()) {
                 userContainer.addUserToContainer(new User(
                         rs.getString("Firstname"),
