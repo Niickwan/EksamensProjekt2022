@@ -180,6 +180,19 @@
     <string name="item_assignment_info_verified_by">Verificeret af:</string>
     <string name="item_assignment_info_date">Dato:</string>
 
+    <!-- LOGIN FRAGMENT - REGISTER -->
+    <string name="pdf_generation_note_info">General Bemærkning:</string>
+    <string name="pdf_generation_picture_info">Billede</string>
+    <string name="pdf_generation_header_checklist">TJEKLISTE</string>
+    <string name="pdf_generation_page">Side</string>
+    <string name="pdf_generation_installation">Elinstallation</string>
+    <string name="pdf_generation_customer_name">Kundenavn</string>
+    <string name="pdf_generation_customer_Address">Adresse</string>
+    <string name="pdf_generation_zip_code">Post nr.</string>
+    <string name="pdf_generation_city">By</string>
+    <string name="pdf_generation_order_number">Ordrernummer</string>
+
+
     <!-- Default Values -->
     <string name="default_value_floor_name">STUEETAGE</string>
     <string name="default_value_room_name"></string>
