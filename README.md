@@ -28,7 +28,13 @@ App-baren i toppen:
 Trykker man på ens profilbillede i toppen af højre hjørne, kan man se navn, e-mail og tlf. Her har man også mulighed for at redigere sin profil og ændre ens personline oplysninger. Samt se ”om” som viser info omkring firmaet og app-version, og ”log ud” som logger ens bruger ud og sender brugeren tilbage til forsiden.
  
 Ændringer i løbet af processen:
-Under udvikling af appen, og under vores første møde med kunden, fik vi stillet rigtig mange relevante spørgsmål, og med go input fra kunden, gjorde det, det muligt for os, at kører videre med den tanke og det design vi havde bygget op og gjort klar til første møde. Under andet møde med kunde fik vi ny information, som gjorde at vi kunne skære nogle features, og noget arbejde fra som vi havde gjort klar, og havde arbejdet på. Under tredje møde, var der som sådan ikke nogen spørgsmål, og var mere en fremvisning af appen til kunden, så han kunne prøve den og se om der evt. var noget der skulle laves om, kunden var tilfreds og havde ingen indvendinger. 
+Under udvikling af appen, og under vores første møde med kunden, fik vi stillet rigtig mange relevante spørgsmål, og med go input fra kunden, gjorde det, det muligt for os, at kører videre med den tanke og det design vi havde bygget op og gjort klar til første møde. Under andet møde med kunde fik vi ny information, som gjorde at vi kunne skære nogle features, og noget arbejde fra som vi havde gjort klar, og havde arbejdet på. Under tredje møde, var der som sådan ikke nogen spørgsmål, og var mere en fremvisning af appen til kunden, så han kunne prøve den og se om der evt. var noget der skulle laves om, kunden var tilfreds og havde ingen indvendinger.
+ 
+For at kunne se PDF-filen, skal man åbne filerne på "telefonen" inde i emulatoren.
+Se evt. billede nedenfor:
+ 
+ ![image]![image](https://user-images.githubusercontent.com/89967283/172572441-c786ae6f-1db9-4087-8f01-85b7885f4afc.png)
+ 
  </details>
 
 
