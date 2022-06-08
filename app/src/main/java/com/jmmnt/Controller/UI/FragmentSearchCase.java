@@ -113,7 +113,7 @@ public class FragmentSearchCase extends Fragment {
                 t2.start();
                 t2.join();
             } catch (InterruptedException e) {
-                e.printStackTrace();  //TODO Test om det virker rigtigt med mere data
+                e.printStackTrace();
             }
         });
     }

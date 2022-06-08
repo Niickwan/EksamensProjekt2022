@@ -164,12 +164,6 @@ public class CreateExcelFile {
 
                 if (okStr.equals("1")) sheet.addCell(new Label(columnCount, rowCount, "ok"));
                 else sheet.addCell(new Label(columnCount, rowCount, "-1"));
-
-            //    if (okStr.equals("1")){
-              //      sheet.addCell(new Label(columnCount, rowCount, "ok")); //TODO se her
-                //}
-
-
                 columnCount = 0;
                 rowCount++;
             }
