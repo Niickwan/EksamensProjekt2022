@@ -43,12 +43,18 @@ public class ShortCircuitCurrentAndVoltageDropViewAdapter extends RecyclerView.A
         voltageDropMeasuredOnLocation = holder.itemView.findViewById(R.id.voltageDropMeasuredOnLocation_et);
 
         if (position < items.size()) {
-            shortCircuitGroupName.setText(gUC.convertMinusOneToEmptyString(items.get(position).getShortCircuitGroupName()));
-            lk.setText(gUC.convertMinusOneToEmptyString(items.get(position).getShortCircuitLk()));
-            ShortCircuitMeasuredOnLocation.setText(gUC.convertMinusOneToEmptyString(items.get(position).getShortCircuitMeasuredOnLocation()));
-            voltageDropGroupName.setText(gUC.convertMinusOneToEmptyString(items.get(position).getVoltageDropGroupName()));
-            deltaVoltage.setText(gUC.convertMinusOneToEmptyString(items.get(position).getVoltageDropDeltaVoltage()));
-            voltageDropMeasuredOnLocation.setText(gUC.convertMinusOneToEmptyString(items.get(position).getVoltageDropMeasuredOnLocation()));
+            String shortCircuitGroupNameResultString =  items.get(position).getShortCircuitGroupName();
+            String lkResultString = items.get(position).getShortCircuitLk();
+            String ResultString = items.get(position).getShortCircuitMeasuredOnLocation();
+            String shortCircuitMeasuredOnLocationResultString = items.get(position).getVoltageDropGroupName();
+            String deltaVoltageResultString = items.get(position).getVoltageDropDeltaVoltage();
+            String voltageDropMeasuredOnLocationResultString = items.get(position).getVoltageDropMeasuredOnLocation();
+            shortCircuitGroupName.setText(gUC.convertMinusOneToEmptyString(shortCircuitGroupNameResultString));
+            lk.setText(gUC.convertMinusOneToEmptyString(lkResultString));
+            ShortCircuitMeasuredOnLocation.setText(gUC.convertMinusOneToEmptyString(ResultString));
+            voltageDropGroupName.setText(gUC.convertMinusOneToEmptyString(shortCircuitMeasuredOnLocationResultString));
+            deltaVoltage.setText(gUC.convertMinusOneToEmptyString(deltaVoltageResultString));
+            voltageDropMeasuredOnLocation.setText(gUC.convertMinusOneToEmptyString(voltageDropMeasuredOnLocationResultString));
         }
     }
 
@@ -60,8 +66,9 @@ public class ShortCircuitCurrentAndVoltageDropViewAdapter extends RecyclerView.A
     public List<ShortCircuitCurrentAndVoltageDrop> getItems() {
         return items;
     }
-}
 
+
+}
 
 class ShortCircuitAndVoltageDropViewHolder extends RecyclerView.ViewHolder {
 
@@ -77,7 +84,7 @@ class ShortCircuitAndVoltageDropViewHolder extends RecyclerView.ViewHolder {
             return true;
         });
 
-        EditText shortCircuitGroupName = itemView.findViewById(R.id.rcdGroupName_et);
+        EditText shortCircuitGroupName = itemView.findViewById(R.id.shortCircuitCurrentGroupName_et);
         EditText lk = itemView.findViewById(R.id.shortCircuitCurrentlk_et);
         EditText ShortCircuitMeasuredOnLocation = itemView.findViewById(R.id.shortCircuitCurrentMeasuredOnLocation_et);
         EditText voltageDropGroupName = itemView.findViewById(R.id.voltageDropGroupName_et);

@@ -64,14 +64,11 @@ public class FragmentAdminChecklist extends Fragment {
     private AssignmentContainer assignmentContainer = AssignmentContainer.getInstance();
     private FTPClientFunctions ftp = new FTPClientFunctions();
     private CreateExcelFile cEF = new CreateExcelFile();
-    private boolean isNewAssignment;
-
     private Button addFloorBtn;
     private LayerDrawable selectedFloor;
     private LayerDrawable unSelectedFloor;
     private ArrayList<String> floors = new ArrayList<>();
     private ArrayList<Button> floorButtons = new ArrayList<>();
-
     private List<Object> general = new ArrayList<>();
     private List<Object> electricalPanel = new ArrayList<>();
     private List<Object> installation = new ArrayList<>();
@@ -83,11 +80,8 @@ public class FragmentAdminChecklist extends Fragment {
     private List<Object> testingRCDResults = new ArrayList<>();
     private List<Object> voltageDropResults = new ArrayList<>();
     private ArrayList<List<Object>> completeAssignment = new ArrayList<>();
-
     private String documentNote = "";
     private LinearLayout parentLLH;
-
-    // TODO SKAL VÆRE VÆRDIER FRA SERVER/DB
     private String orderNr = assignmentContainer.getCurrentAssignment().getOrderNumber();
     private LinearLayout floorLinearLayout;
     private String selectedFloorName = "";
@@ -118,14 +112,11 @@ public class FragmentAdminChecklist extends Fragment {
         LinearLayout roomLinearLayout = new LinearLayout(getActivity());
         roomLinearLayout.setOrientation(LinearLayout.HORIZONTAL);
 
-
         Thread t1 = new Thread(() -> setFloorHorizontalScrollBar());
-
         Thread t2 = new Thread(() -> {
             String excelFileName = orderNr + "_" + selectedFloorName + ".xls";
             ftp.ftpDownload("/public_html/assignments/" + orderNr + "/" + selectedFloorName + "/" + excelFileName, "current_assignment.xls");
         });
-
         Thread t3 = new Thread(() -> {
             try {
                 Thread.sleep(1000);
@@ -134,7 +125,6 @@ public class FragmentAdminChecklist extends Fragment {
             }
             getActivity().runOnUiThread(() -> generateUI());
         });
-
         try {
             t1.start();
             t1.join();
@@ -145,7 +135,6 @@ public class FragmentAdminChecklist extends Fragment {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
 
     }
 
@@ -165,6 +154,11 @@ public class FragmentAdminChecklist extends Fragment {
         //Building dropdowns
         List<Assignment> currentListAssignment = new ArrayList<>();
         currentListAssignment.add(AssignmentContainer.getInstance().getCurrentAssignment());
+
+        for (int i = 0; i < currentListAssignment.size(); i++) {
+            System.out.println("CURR ASSIGNMENT " + currentListAssignment.get(i));
+        };
+
         buildDropdownDynamically("Ordre", currentListAssignment, objectTag5, "vertical");
         int headlineCounter = 0;
         int inputHeadlineCounter = 0;
@@ -410,7 +404,6 @@ public class FragmentAdminChecklist extends Fragment {
             });
             Thread uploadExcelT = new Thread(() -> ftp.ftpUpload(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString() + "/current_assignment.xls",
                     "/public_html/assignments/" + orderNr + "/" + selectedFloorName + "/" + filename + ".xls"));
-
             Thread uploadPdfT = new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -456,10 +449,7 @@ public class FragmentAdminChecklist extends Fragment {
         sendCaseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("SIZE "+ circuitDetailList.size());
-                for (int i = 0; i < circuitDetailList.size(); i++) {
-                    System.out.println("Objekt nr: "+ i + " --- " + circuitDetailList.get(i));
-                }
+               //TODO Send tjekliste
             }
         });
 
@@ -645,12 +635,6 @@ public class FragmentAdminChecklist extends Fragment {
         floorLinearLayout.addView(addFloorBtn);
     }
 
-    private void editOrDeleteRoom() {
-        /**
-         * GØR SÅ MAN KAN REDIGERE NAVNET PÅ ETAGEN ELLER SLETTE EN ETAGE
-         */
-    }
-
     // TODO Gøres til generelle metoder
     // TODO man får ikke fejl hvis man opretter flere af samme navn RET!
     public void popupAddFloor() {
@@ -716,11 +700,10 @@ public class FragmentAdminChecklist extends Fragment {
             }
         });
         dialog.getWindow().findViewById(R.id.delete_floor_btn).setOnClickListener(v -> new Thread(() -> {
-            // TODO Remove from server
             String deleteDirLocation = orderNr + "/" + selectedFloorName;
             opa.deleteDirectoryOnServer(deleteDirLocation);
             getActivity().runOnUiThread(() -> {
-                // TODO remove from list and set new name instance variable
+                //Remove from list and set new name instance variable
                 for (int i = 0; i < floorButtons.size(); i++) {
                     setFloorHorizontalScrollBar();
                 }
@@ -906,11 +889,11 @@ public class FragmentAdminChecklist extends Fragment {
         rv.setLayoutManager(new LinearLayoutManager(getActivity(), orientation, false));
         rv.setAdapter((RecyclerView.Adapter) adapter);
 
-        Object addNewObject = adapterFactory.setObjectType(objectTag);
         addBtn.setOnClickListener(view -> {
             if (objectTag.equals("question")) {
                 addQuestion(dataList, rv, adapter);
             } else {
+                Object addNewObject = adapterFactory.setObjectType(objectTag);
                 dataList.add(addNewObject);
                 rv.smoothScrollToPosition(dataList.size());
                 ((RecyclerView.Adapter<?>) adapter).notifyItemInserted(dataList.size());

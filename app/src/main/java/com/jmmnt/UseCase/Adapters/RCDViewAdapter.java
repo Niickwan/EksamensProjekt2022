@@ -46,16 +46,22 @@ public class RCDViewAdapter extends RecyclerView.Adapter<RCDViewHolder> {
         sixthResult = holder.itemView.findViewById(R.id.rcdSixthResult_et);
 
         if (position < items.size()) {
-            if (items.get(position) != null) {
-                groupName.setText(gUC.convertMinusOneToEmptyString(items.get(position).getGroupName()));
-                firstResult.setText(gUC.convertMinusOneToEmptyString(items.get(position).getFirstResult()));
-                secondResult.setText(gUC.convertMinusOneToEmptyString(items.get(position).getSecondResult()));
-                thirdResult.setText(gUC.convertMinusOneToEmptyString(items.get(position).getThirdResult()));
-                fourthResult.setText(gUC.convertMinusOneToEmptyString(items.get(position).getFourthResult()));
-                if (items.get(position).getCheckboxOK() == 1) checkBoxTestOK.setChecked(true);
-                fifthResult.setText(gUC.convertMinusOneToEmptyString(items.get(position).getFifthResult()));
-                sixthResult.setText(gUC.convertMinusOneToEmptyString(items.get(position).getSixthResult()));
-            }
+            String firstResultString = items.get(position).getFirstResult();
+            String secondResultString = items.get(position).getSecondResult();
+            String thirdResultString = items.get(position).getThirdResult();
+            String fourthResultString = items.get(position).getFourthResult();
+            String fifthResultString = items.get(position).getFifthResult();
+            String sixthResultString = items.get(position).getSixthResult();
+            groupName.setText(gUC.convertMinusOneToEmptyString(items.get(position).getGroupName()));
+            firstResult.setText(gUC.convertMinusOneToEmptyString(firstResultString));
+            secondResult.setText(gUC.convertMinusOneToEmptyString(secondResultString));
+            thirdResult.setText(gUC.convertMinusOneToEmptyString(thirdResultString));
+            fourthResult.setText(gUC.convertMinusOneToEmptyString(fourthResultString));
+            if (items.get(position).getCheckboxOK() == 1) checkBoxTestOK.setChecked(true);
+            fifthResult.setText(gUC.convertMinusOneToEmptyString(fifthResultString));
+            sixthResult.setText(gUC.convertMinusOneToEmptyString(sixthResultString));
+
+
         }
     }
 
@@ -108,7 +114,6 @@ class RCDViewHolder extends RecyclerView.ViewHolder {
                 adapter.getItems().get(getAdapterPosition()).setFifthResult(fifthResult.getEditableText().toString());
                 adapter.getItems().get(getAdapterPosition()).setSixthResult(sixthResult.getEditableText().toString());
             }
-
             @Override
             public void afterTextChanged(Editable editable) {
             }

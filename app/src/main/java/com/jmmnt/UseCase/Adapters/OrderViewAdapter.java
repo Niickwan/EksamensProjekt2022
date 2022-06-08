@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.jmmnt.Entities.Assignment;
+import com.jmmnt.Entities.AssignmentContainer;
 import com.jmmnt.Entities.User;
 import com.jmmnt.Entities.UserContainer;
 import com.jmmnt.R;
@@ -31,7 +32,6 @@ public class OrderViewAdapter extends RecyclerView.Adapter<OrderViewHolder> {
     }
 
     public OrderViewAdapter() {
-
     }
 
     @NonNull
@@ -50,16 +50,13 @@ public class OrderViewAdapter extends RecyclerView.Adapter<OrderViewHolder> {
         date_tv = holder.itemView.findViewById(R.id.date_tv);
         installedBy_tv = holder.itemView.findViewById(R.id.installedBy_tv);
         verifiedBy_spinner = holder.itemView.findViewById(R.id.verifiedBy_spinner);
-        verifiedBy_spinner.setSelection(2);
-
-        System.out.println("ITEM ITEM "+items.get(position));
 
         if (position < items.size()) {
             customerFullName_tv.setText(gUC.convertMinusOneToEmptyString(items.get(position).getCustomerName()));
             address_tv.setText(gUC.convertMinusOneToEmptyString(items.get(position).getAddress()));
             orderNumber_tv.setText(gUC.convertMinusOneToEmptyString(items.get(position).getOrderNumber()));
             for (int i = 0; i < UserContainer.getUsers().size(); i++) {
-                if (UserContainer.getUsers().get(i).getUserID() == items.get(position).getUserID()){
+                if (UserContainer.getUsers().get(i).getUserID() == items.get(position).getInstalledBy()){
                     String installedBy = UserContainer.getUsers().get(i).getFullName();
                     installedBy_tv.setText(gUC.convertMinusOneToEmptyString(installedBy));
                 }
@@ -79,6 +76,7 @@ public class OrderViewAdapter extends RecyclerView.Adapter<OrderViewHolder> {
             @Override
             public void onNothingSelected(AdapterView<?> adapter) {  }
         });
+
     }
 
     @Override
@@ -86,13 +84,6 @@ public class OrderViewAdapter extends RecyclerView.Adapter<OrderViewHolder> {
         return items.size();
     }
 
-    public List<Assignment> getItems() {
-        return items;
-    }
-
-    public void setItems(List<Assignment> items) {
-        this.items = items;
-    }
 }
 
 class OrderViewHolder extends RecyclerView.ViewHolder {
@@ -101,8 +92,6 @@ class OrderViewHolder extends RecyclerView.ViewHolder {
 
     public OrderViewHolder(@NonNull View itemView) {
         super(itemView);
-
-        //TODO Vi kan aflæse felter herfra
     }
 
     public OrderViewHolder linkAdapter(OrderViewAdapter orderViewAdapter) {

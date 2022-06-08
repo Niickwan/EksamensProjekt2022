@@ -42,7 +42,7 @@ public class GeneralUseCaseTest extends Activity {
     }
 
     @Test
-    public void testIsFieldsEmpty() { //TODO FROSÆT HER
+    public void testIsFieldsEmpty() {
         EditText firstname = findViewById(R.id.editFirstName_et);
         EditText surname = findViewById(R.id.editSurname_et);
         EditText phone = findViewById(R.id.editPhoneNumber_et);
@@ -59,7 +59,6 @@ public class GeneralUseCaseTest extends Activity {
         boolean test = gUC.isFieldsEmpty(editText);
 
         assertFalse(test);
-
     }
 
     @Test

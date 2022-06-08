@@ -29,7 +29,6 @@ public class SearchCaseViewAdapter extends RecyclerView.Adapter<SearchCaseViewHo
     private GeneralUseCase gUC = GeneralUseCase.getInstance();
     private OperateAssignment oA = OperateAssignment.getInstance();
 
-
     public SearchCaseViewAdapter(List<Assignment> items, FragmentSearchCase fragmentSearchCase) {
         this.fragment = fragmentSearchCase;
         this.itemList = items;
@@ -119,6 +118,8 @@ public class SearchCaseViewAdapter extends RecyclerView.Adapter<SearchCaseViewHo
             notifyDataSetChanged();
         }
     };
+
+
 }
 
 class SearchCaseViewHolder extends RecyclerView.ViewHolder {
@@ -139,8 +140,6 @@ class SearchCaseViewHolder extends RecyclerView.ViewHolder {
             }
             NavHostFragment.findNavController(adapter.getFragment()).navigate(R.id.action_fragmentSearchCase_to_FragmentAdminChecklist);
         });
-
-        //TODO Vi kan aflæse felter herfra
     }
 
     public SearchCaseViewHolder linkAdapter(SearchCaseViewAdapter searchCaseViewAdapter) {

@@ -6,8 +6,8 @@
         <bitmap
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="fill_horizontal"
-            android:src="@drawable/zealand_company_logo_with_subheading" />
+            android:gravity="center_horizontal"
+            android:src="@drawable/splashscreen_img" />
     </item>
 
 
